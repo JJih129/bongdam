@@ -38,7 +38,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>봉담 안전지도 대작전</title><!-- build v386 -->
+<title>봉담 안전지도 대작전</title><!-- build v387 -->
 <style id="bd-v268-cleanup">
 /* (v268) 사용하지 않는 도구 제거 — 게임저장 버튼·위험요소 배치(개발)·복사/붙여넣기·기본 배치·창 정리·대화 편집·쉬운 모드·프리팹·구세대 자료함 */
 #save-btn, [data-bdmb="dev"],
@@ -25075,7 +25075,7 @@ function showTitle(opts){
     + '<button class="bd-title-hit" id="bd-title-options" data-x="0.120" data-y="0.671" data-w="0.200" data-h="0.080" onclick="window.BD_openTitleOptions&&window.BD_openTitleOptions()" aria-label="설정"></button>'
     + '<button class="bd-title-hit" id="bd-title-reset" data-x="0.120" data-y="0.767" data-w="0.200" data-h="0.080" onclick="window.BD_openQuitConfirm&&window.BD_openQuitConfirm()" aria-label="종료하기"></button>'
     + '</div>'
-    + '<div class="bd-title-foot">Ver. 1.0.0 · Build 386</div>';
+    + '<div class="bd-title-foot">Ver. 1.0.0 · Build 387</div>';
   m.classList.add('show');
   // 버튼 위치를 배경 이미지의 실제 표시 영역에 맞춰 보정
   positionTitleButtons();
@@ -43477,8 +43477,8 @@ body.bd-cinematic [class*="bge-open"] { opacity: 0 !important; pointer-events: n
     try{
       var bar = document.getElementById('bd-keybar');
       if (!bar) return;
-      var want = '🕹️ 조이스틱 <b>이동</b>&nbsp;&nbsp;👆 <b>조사</b> 버튼으로 대화·조사'
-               + '&nbsp;&nbsp;🎒 <b>가방</b> 버튼&nbsp;&nbsp;💬 화면 <b>탭</b>으로 대사 넘기기';
+      var want = '👆 화면을 <b>누른 채 드래그</b>해 이동&nbsp;&nbsp;⌨️ <b>외장 키보드 이동</b>도 지원'
+               + '&nbsp;&nbsp;💬 가까운 NPC를 <b>탭</b>하거나 <b>F</b>&nbsp;&nbsp;🎒 가방 버튼';
       if (bar.innerHTML !== want){ bar.innerHTML = want; bar.style.fontSize = '13px'; }
     }catch(e){}
   }
@@ -46555,8 +46555,8 @@ body.bd-panel-open #bd-guide-ov { opacity:0 !important; pointer-events:none !imp
        그래서 글자 단위 치환으로는 «WASD» 라는 낱말을 잡을 수 없었다.
        카드 전체 문장을 보고 통째로 바꿔 준다. */
     var WHOLE = [
-      [/WASD.*움직여.*대화는/, '🕹️ 왼쪽 조이스틱으로 움직여 보세요  ·  💬 화면을 탭하면 대사가 넘어가요'],
-      [/WASD.*움직여/, '🕹️ 왼쪽 조이스틱으로 움직여 보세요'],
+      [/WASD.*움직여.*대화는/, '👆 화면을 누른 채 드래그해서 움직여 보세요  ·  💬 화면을 탭하면 대사가 넘어가요'],
+      [/WASD.*움직여/, '👆 화면을 누른 채 드래그해서 움직여 보세요'],
       [/대화는.*넘겨요/, '💬 화면을 탭하면 대사가 넘어가요'],
       [/안내데스크.*말을 걸/, '👆 안내데스크 앞에서 [조사] 버튼을 눌러요'],
       [/가방을 열어/, '🎒 [가방] 버튼을 눌러 배지를 확인해요'],
@@ -52802,6 +52802,9 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       tap={id:e.pointerId,x:e.clientX,y:e.clientY,t:Date.now()};
     },true);
     canvas.addEventListener('pointerup',function(e){
+      /* (v387) 플로팅 조이스틱/대상 직접 탭 레이어가 짧은 탭과 드래그를
+         함께 판정한다. 구형 «근처면 화면 아무 곳 탭» 처리는 중복 실행하지 않는다. */
+      if(window.__bdFloatingTouchV387){ tap=null; return; }
       if(!tap || tap.id!==e.pointerId) return;
       var t=tap; tap=null;
       if(Math.hypot(e.clientX-t.x,e.clientY-t.y)>14 || Date.now()-t.t>650) return;
@@ -52895,6 +52898,200 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
   /* 초기 부팅은 같은 스크립트의 지역 함수 showTitle()을 직접 호출하므로 window 래퍼를
      거치지 않을 수 있다. 타이틀 표시 시점을 가볍게 감시해 최초 1회만 보정한다. */
   if(window.BD_addTick) BD_addTick(enhanceTitle,250); else setInterval(enhanceTitle,250);
+})();
+</script>
+<script id="bd-floating-touch-v387">/* (v387) 모바일 플로팅 조이스틱 + 화면 속 대상 직접 탭
+   - 키보드 WASD/F 입력은 기존 경로를 그대로 유지한다.
+   - 터치 시작점에 조이스틱을 띄우고 드래그 방향을 moveKeys로 전달한다.
+   - 짧은 탭은 «상호작용 거리 안의 실제 대상»을 눌렀을 때만 F로 전달한다. */
+(function(){
+  'use strict';
+  if(!(window.matchMedia && matchMedia('(pointer: coarse)').matches)) return;
+  window.__bdFloatingTouchV387 = true;
+
+  var canvas=document.getElementById('game-canvas');
+  var wrap=document.getElementById('tc-joystick');
+  var base=document.getElementById('tc-joy-base');
+  var knob=document.getElementById('tc-joy-knob');
+  if(!canvas || !wrap || !base || !knob) return;
+
+  var active=null;
+  var MOVE_THRESHOLD=12;
+  var TAP_LIMIT=650;
+  var DEAD=0.24;
+  var DIAG=0.34;
+
+  function bodyZoom(){
+    try{ var z=parseFloat(getComputedStyle(document.body).zoom)||1; return z>0?z:1; }
+    catch(e){ return 1; }
+  }
+  function setMove(w,a,s,d){
+    try{
+      if(typeof moveKeys==='undefined') return;
+      moveKeys.w=!!w; moveKeys.a=!!a; moveKeys.s=!!s; moveKeys.d=!!d;
+    }catch(e){}
+  }
+  function playable(){
+    try{
+      var game=document.getElementById('game-screen');
+      if(!game || game.style.display!=='block') return false;
+      if(window.HSR&&HSR.active) return false;
+      if(window.BongdamEditor&&BongdamEditor.state&&BongdamEditor.state.enabled) return false;
+      if(window.__bdGuideOpen || window.__bdSceneActive) return false;
+      if(window.BD_isInputBlocked&&BD_isInputBlocked()) return false;
+      return true;
+    }catch(e){ return false; }
+  }
+  function anchorAt(x,y){
+    var z=bodyZoom();
+    var size=112;
+    var half=(size*z)/2;
+    var cx=Math.max(half+8,Math.min(innerWidth-half-8,x));
+    var cy=Math.max(half+8,Math.min(innerHeight-half-8,y));
+    base.style.left=(cx/z-size/2)+'px';
+    base.style.top=(cy/z-size/2)+'px';
+    base.style.right='auto'; base.style.bottom='auto';
+    knob.style.transform='translate(0px,0px)';
+    wrap.classList.add('active');
+    return {x:cx,y:cy};
+  }
+  function updateMove(x,y){
+    if(!active) return;
+    var z=bodyZoom();
+    var dx=x-active.cx,dy=y-active.cy;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    var radius=Math.max(38,base.getBoundingClientRect().width/2);
+    var clamped=Math.min(dist,radius);
+    var nx=dist?dx/dist:0,ny=dist?dy/dist:0;
+    knob.style.transform='translate('+(nx*clamped/z)+'px,'+(ny*clamped/z)+'px)';
+    if(dist>=MOVE_THRESHOLD) active.dragged=true;
+    if(clamped/radius<DEAD){ setMove(false,false,false,false); return; }
+    setMove(ny<-DIAG,nx<-DIAG,ny>DIAG,nx>DIAG);
+  }
+  function reset(){
+    active=null;
+    wrap.classList.remove('active');
+    knob.style.transform='translate(0px,0px)';
+    setMove(false,false,false,false);
+  }
+  function inRect(x,y,r,pad){
+    if(!r) return false;
+    pad=pad||0;
+    return x>=r.left-pad&&x<=r.left+r.width+pad&&y>=r.top-pad&&y<=r.top+r.height+pad;
+  }
+  function worldRect(rx,ry,rw,rh){
+    try{ return window.BD_screenRectOfWorld&&BD_screenRectOfWorld(rx,ry,rw,rh); }
+    catch(e){ return null; }
+  }
+  function objectNear(o){
+    if(!o) return false;
+    try{
+      if(o.resident) return !!(window.BD_nearResident&&BD_nearResident()===o);
+      if(o.conceptFacility) return !!(window.BD_getNearConceptFacility&&BD_getNearConceptFacility()===o);
+      var x0=Number(o.rx)||0,y0=Number(o.ry)||0;
+      var x1=x0+(Number(o.rw)||0),y1=y0+(Number(o.rh)||0);
+      var dx=Math.max(x0-heroX,0,heroX-x1),dy=Math.max(y0-heroY,0,heroY-y1);
+      var limit=o.interactable==='hazard'?0.075:0.12;
+      return Math.sqrt(dx*dx+dy*dy)<=limit;
+    }catch(e){ return false; }
+  }
+  function tappedObject(x,y){
+    try{
+      var st=STAGES[currentStage];
+      if(!st||!Array.isArray(st.objects)) return null;
+      for(var i=st.objects.length-1;i>=0;i--){
+        var o=st.objects[i];
+        if(!o||o.hidden||o.__bdGone) continue;
+        var usable=!!o.resident||!!o.conceptFacility||['hazard','facility','info','shop','quest','bus_stop'].indexOf(o.interactable)>=0;
+        if(!usable||!objectNear(o)) continue;
+        var r=worldRect(Number(o.rx)||0,Number(o.ry)||0,Number(o.rw)||.05,Number(o.rh)||.075);
+        if(inRect(x,y,r,o.resident?14:8)) return o;
+      }
+    }catch(e){}
+    return null;
+  }
+  function tappedLegacyNpc(x,y){
+    try{
+      if(typeof getNearNPC==='function'&&getNearNPC()&&typeof NPC_X!=='undefined'&&typeof NPC_Y!=='undefined'){
+        if(inRect(x,y,worldRect(NPC_X-.032,NPC_Y-.10,.064,.11),16)) return true;
+      }
+    }catch(e){}
+    try{
+      if(typeof getNearQuestNpc==='function'&&getNearQuestNpc()&&typeof QNPC_X!=='undefined'&&typeof QNPC_Y!=='undefined'){
+        if(inRect(x,y,worldRect(QNPC_X-.032,QNPC_Y-.10,.064,.11),16)) return true;
+      }
+    }catch(e){}
+    return false;
+  }
+  function tapInteract(x,y){
+    if(!playable()) return false;
+    if(!tappedObject(x,y)&&!tappedLegacyNpc(x,y)) return false;
+    try{
+      var pulse=document.createElement('div');
+      pulse.className='bd-touch-target-pulse-v387';
+      pulse.style.left=x+'px'; pulse.style.top=y+'px';
+      document.body.appendChild(pulse);
+      setTimeout(function(){ try{ pulse.remove(); }catch(e){} },420);
+    }catch(e){}
+    if(typeof window.BD_touchInteract==='function') BD_touchInteract();
+    else document.dispatchEvent(new KeyboardEvent('keydown',{key:'f',code:'KeyF',bubbles:true,cancelable:true}));
+    return true;
+  }
+
+  canvas.addEventListener('pointerdown',function(e){
+    if(active||e.button!==0||!playable()) return;
+    e.preventDefault();
+    var c=anchorAt(e.clientX,e.clientY);
+    active={id:e.pointerId,startX:e.clientX,startY:e.clientY,cx:c.x,cy:c.y,at:Date.now(),dragged:false};
+    try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+  },true);
+  canvas.addEventListener('pointermove',function(e){
+    if(!active||active.id!==e.pointerId) return;
+    e.preventDefault(); updateMove(e.clientX,e.clientY);
+  },true);
+  function end(e,cancelled){
+    if(!active||active.id!==e.pointerId) return;
+    e.preventDefault();
+    var a=active;
+    var dist=Math.hypot(e.clientX-a.startX,e.clientY-a.startY);
+    var tap=!cancelled&&!a.dragged&&dist<MOVE_THRESHOLD&&Date.now()-a.at<=TAP_LIMIT;
+    reset();
+    if(tap) tapInteract(e.clientX,e.clientY);
+  }
+  canvas.addEventListener('pointerup',function(e){ end(e,false); },true);
+  canvas.addEventListener('pointercancel',function(e){ end(e,true); },true);
+  window.addEventListener('blur',reset);
+
+  /* 구형 고정 조이스틱의 터치 영역을 제거하고 시각 요소만 플로팅으로 사용한다. */
+  var style=document.createElement('style');
+  style.id='bd-floating-touch-style-v387';
+  style.textContent=[
+    'html.bd-touch-mode #tc-joystick{position:fixed!important;inset:0!important;width:auto!important;height:auto!important;max-height:none!important;pointer-events:none!important}',
+    'html.bd-touch-mode #tc-joy-base{position:fixed!important;width:112px!important;height:112px!important;right:auto;bottom:auto;opacity:0!important;visibility:hidden;pointer-events:none!important;transition:none!important}',
+    'html.bd-touch-mode #tc-joystick.active #tc-joy-base{opacity:.92!important;visibility:visible!important}',
+    '.bd-touch-target-pulse-v387{position:fixed;z-index:100200;width:22px;height:22px;border:3px solid #ffe17b;border-radius:50%;pointer-events:none;animation:bdTouchTargetV387 .4s ease-out forwards}',
+    '@keyframes bdTouchTargetV387{from{opacity:1;transform:translate(-50%,-50%) scale(.55)}to{opacity:0;transform:translate(-50%,-50%) scale(2.1)}}'
+  ].join('');
+  document.head.appendChild(style);
+
+  /* 터치 안내도 실제 조작 방식에 맞춘다. */
+  function refreshHint(){
+    try{
+      var bar=document.getElementById('bd-keybar');
+      if(!bar) return;
+      var want='👆 화면을 <b>누른 채 드래그</b>해 이동&nbsp;&nbsp;⌨️ <b>외장 키보드 이동</b>도 지원'
+        +'&nbsp;&nbsp;💬 가까운 NPC를 <b>탭</b>하거나 <b>F</b>&nbsp;&nbsp;🎒 가방 버튼';
+      if(bar.innerHTML!==want) bar.innerHTML=want;
+    }catch(e){}
+  }
+  setInterval(refreshHint,500);
+  refreshHint();
+
+  window.BD_FLOATING_TOUCH={
+    active:function(){ return active?{id:active.id,start:[active.startX,active.startY],center:[active.cx,active.cy],dragged:active.dragged}:null; },
+    reset:reset,
+    tapInteract:tapInteract
+  };
 })();
 </script>
 <script>(function(){if(!("serviceWorker" in navigator)||location.protocol==="file:")return;addEventListener("load",function(){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="installed"&&navigator.serviceWorker.controller){try{var d=document.createElement("div");d.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;background:#1d2333;color:#ffd86b;padding:10px 18px;border-radius:12px;border:1px solid #ffd86b;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)";d.textContent="🔄 새 버전이 있어요 — 눌러서 새로고침";d.onclick=function(){location.reload();};document.body.appendChild(d);}catch(e){}}});});}).catch(function(){});});})();</script></body>
