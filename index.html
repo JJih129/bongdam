@@ -38,7 +38,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>봉담 안전지도 대작전</title><!-- build v385 -->
+<title>봉담 안전지도 대작전</title><!-- build v386 -->
 <style id="bd-v268-cleanup">
 /* (v268) 사용하지 않는 도구 제거 — 게임저장 버튼·위험요소 배치(개발)·복사/붙여넣기·기본 배치·창 정리·대화 편집·쉬운 모드·프리팹·구세대 자료함 */
 #save-btn, [data-bdmb="dev"],
@@ -12499,7 +12499,10 @@ if(!window.BD_DEV_MODE){
     // (v267) 위험요소·보스·몬스터 스폰은 게임 렌더의 스프라이트가 곧 표식 —
     //  제작 모드의 큰 빨간 타원 배지를 그리지 않는다 (선택 박스는 drawEditorOverlay가 담당).
     if (obj.hazardId || obj.interactable === 'hazard' || obj.isBoss || obj.type === 'hazard' || obj.type === 'monster_spawn') return;
-    if (obj.type === 'building' || obj.type === 'wall' || obj.type === 'shelf' || obj.type === 'desk' || obj.type === 'stair' || obj.type === 'platform' || obj.type === 'seats' || obj.type === 'piano' || obj.type === 'park' || obj.type === 'library') return;
+    /* (v386) prop/decoration의 P·D 원형 표식도 제작용 의미밖에 없다.
+       이미지 로딩 전 첫 프레임에 선생님 위로 회색 P가 번쩍이던 문제를 막고,
+       실제 편집 선택 표시는 drawEditorOverlay의 선택 박스만 사용한다. */
+    if (obj.type === 'building' || obj.type === 'wall' || obj.type === 'shelf' || obj.type === 'desk' || obj.type === 'stair' || obj.type === 'platform' || obj.type === 'seats' || obj.type === 'piano' || obj.type === 'park' || obj.type === 'library' || obj.type === 'prop' || obj.type === 'decoration') return;
     // (v187) 실제 이미지가 렌더되는 오브젝트(주민 NPC·에디터 배치 이미지)는 P/NPC 배지를 그리지 않는다.
     //  배지가 캐릭터 스프라이트를 흰 타원으로 덮어버리는 문제 수정.
     if (obj.assetId || String(obj.key || '').startsWith('asset:') || obj.resident) {
@@ -25072,7 +25075,7 @@ function showTitle(opts){
     + '<button class="bd-title-hit" id="bd-title-options" data-x="0.120" data-y="0.671" data-w="0.200" data-h="0.080" onclick="window.BD_openTitleOptions&&window.BD_openTitleOptions()" aria-label="설정"></button>'
     + '<button class="bd-title-hit" id="bd-title-reset" data-x="0.120" data-y="0.767" data-w="0.200" data-h="0.080" onclick="window.BD_openQuitConfirm&&window.BD_openQuitConfirm()" aria-label="종료하기"></button>'
     + '</div>'
-    + '<div class="bd-title-foot">Ver. 1.0.0 · Build 385</div>';
+    + '<div class="bd-title-foot">Ver. 1.0.0 · Build 386</div>';
   m.classList.add('show');
   // 버튼 위치를 배경 이미지의 실제 표시 영역에 맞춰 보정
   positionTitleButtons();
@@ -46635,10 +46638,9 @@ body.bd-editor-open #bd-build-tag, body.bd-editor-open [id^="bd-build-tag"]{ dis
     }catch(e){}
   }, 800);
 
-  /* ── 카메라 줌아웃 ──
-     4개 리 월드(210~213)와 문화의집(101)은 시야 배율이 정의돼 있지 않아 1.0(가장 가깝게)이었다.
-     건물 하나가 화면을 넘어가 «어디가 어딘지» 가늠하기 어려웠다.
-     값↑ = 더 넓게 보임. 이동 속도는 getMoveSpeed가 배율을 곱해 자동 보정된다. */
+  /* ── 카메라 기준 시야 ──
+     (v386) 임시 1.8배 줌아웃은 PC·모바일 모두 인물과 시설을 지나치게 작게 만들었다.
+     반응형 카메라가 화면비의 긴 축을 자동 확장하므로 실제 플레이 맵은 1.0으로 통일한다. */
   /* district 런타임(v24)이 부팅 시 210~213을 «1.0(가장 가깝게)»으로 강제한다.
      1.0 그대로면 아직 우리 값이 안 들어간 것 — 계속 다시 적용한다.
      (개발자가 Ctrl+Shift+]/[ 로 다른 값을 잡으면 1.0이 아니므로 존중된다) */
@@ -46652,10 +46654,10 @@ body.bd-editor-open #bd-build-tag, body.bd-editor-open [id^="bd-build-tag"]{ dis
       window.BD_DISTRICT_LOGICAL_PIXEL_SIZE = Object.assign(
         {}, window.BD_DISTRICT_LOGICAL_PIXEL_SIZE || {},
         { 210: 1, 211: 1, 212: 1, 213: 1 });
-      var WANT = { 210: 1.8, 211: 1.8, 212: 1.8, 213: 1.8, 101: 1.35 };
+      var WANT = { 210: 1.0, 211: 1.0, 212: 1.0, 213: 1.0, 101: 1.0 };
       Object.keys(WANT).forEach(function(sid){
         var v = window.BD_VIEW_SCALE[sid];
-        if (v == null || v === 1 || v === 1.45) window.BD_VIEW_SCALE[sid] = WANT[sid];
+        if (v == null || v === 1 || v === 1.35 || v === 1.45 || v === 1.8) window.BD_VIEW_SCALE[sid] = WANT[sid];
       });
     }catch(e){}
   }
@@ -51866,7 +51868,13 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
   }
   function run(after){
     try{ localStorage.setItem(KEY, '1'); }catch(e){}
-    var fin = function(){ try{ if (after) after(); }catch(e){} };
+    /* (v386) 지도 모달이 평상시 담이 말풍선을 숨기더라도, 지도 튜토리얼 대사는
+       반드시 지도보다 위에서 보이도록 전용 상태 클래스를 유지한다. */
+    try{ document.body.classList.add('bd-map-tuto-speaking'); }catch(e){}
+    var fin = function(){
+      try{ document.body.classList.remove('bd-map-tuto-speaking'); }catch(e){}
+      try{ if (after) after(); }catch(e){}
+    };
     if (!window.BD_TUTOR || typeof BD_TUTOR.run !== 'function'){ fin(); return; }
     window.BD_TUTOR.run([
       { id: 'map_open', face: 'proud', block: false,
@@ -52194,6 +52202,15 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     if(endingModal) endingModal.classList.remove('show');
 
     var view = buildView(window.BD_CREDITS_DATA || DEFAULT_CREDITS_DATA);
+    /* 타이틀의 「개발진」 버튼으로 연 경우 마지막 주 동선을 안전지도가 아니라
+       타이틀 복귀로 바꾼다. 크레딧 데이터/뷰는 그대로 재사용한다. */
+    if(options.source === 'title' || options.source === 'dev'){
+      var titlePrimary = view.root.querySelector('[data-action="map"]');
+      if(titlePrimary){
+        titlePrimary.setAttribute('data-action', 'title');
+        titlePrimary.textContent = '타이틀로 돌아가기';
+      }
+    }
     var reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     var state = {
       root: view.root,
@@ -52257,7 +52274,7 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       state.root.classList.add('bd-cr-ended');
       state.pauseButton.textContent = '✓ 크레딧 완료';
       state.pauseButton.disabled = true;
-      var primary = state.root.querySelector('[data-action="map"]');
+      var primary = state.root.querySelector('[data-action="map"],[data-action="title"]');
       if(primary) setTimeout(function(){ try{ primary.focus(); }catch(e){} }, 650);
     }
 
@@ -52340,7 +52357,7 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       state.root.classList.add('bd-cr-visible');
       if(state.reduced){
         state.progressBar.style.transform = 'scaleX(1)';
-        var primary = state.root.querySelector('[data-action="map"]');
+        var primary = state.root.querySelector('[data-action="map"],[data-action="title"]');
         if(primary) primary.focus();
         return;
       }
@@ -52661,6 +52678,223 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
   ensurePanel();
   if (window.BD_addTick) BD_addTick(ensurePanel, 500); else setInterval(ensurePanel, 500);
   window.BD_DEV_TEST = { start:applyPreset, restore:restoreAndReload, presets:PRESETS.slice() };
+})();
+</script>
+<script id="bd-responsive-title-touch-v386">/* (v386) 기기별 카메라 프레이밍 · 직접 탭 상호작용 · 타이틀 메뉴 개편
+   런타임 저장 데이터는 건드리지 않고 View/Input 어댑터만 교체한다. */
+(function(){
+  'use strict';
+
+  /* v147에서 임시로 넣은 1.8배 줌아웃이 현재 4개 리 원화에도 남아 모든 기기에서
+     인물과 시설이 지나치게 작았다. 실제 플레이 맵은 한 기준 시야로 정규화한다. */
+  window.BD_RESPONSIVE_VIEW_SCALE = {101:1.0,210:1.0,211:1.0,212:1.0,213:1.0};
+  window.BD_VIEW_SCALE = window.BD_VIEW_SCALE || {};
+  Object.keys(window.BD_RESPONSIVE_VIEW_SCALE).forEach(function(id){
+    window.BD_VIEW_SCALE[id]=window.BD_RESPONSIVE_VIEW_SCALE[id];
+  });
+
+  /* ── 1. 신규 지역 맵 카메라: 해상도·DPR과 무관한 CSS 화면 기준 프레이밍 ──
+     기존 고정 2배 논리 픽셀은 작은 화면에서도 같은 물리 픽셀 수를 강제해
+     맵이 과하게 멀어지고 세로가 잘렸다. VIEWPORT_W/H는 BD_applyViewScale이
+     정한 게임 카메라 값을 유지하고, 긴 축만 화면 비율만큼 자연스럽게 확장한다. */
+  window.BD_applyConceptPixelPerfectScale = function(canvas, stage){
+    if (!canvas || !stage || !stage.__conceptMap) return false;
+    var cssW = Math.max(1, Number(canvas.clientWidth || canvas.offsetWidth || 0));
+    var cssH = Math.max(1, Number(canvas.clientHeight || canvas.offsetHeight || 0));
+    var sourceWidth = Math.max(1, Number(stage.bgW || 1));
+    var sourceHeight = Math.max(1, Number(stage.bgH || 1));
+    var logicalWidth = sourceWidth / 2;
+    var logicalHeight = sourceHeight / 2;
+    var cssLogicalPixel = (cssW / logicalWidth + cssH / logicalHeight) * 0.5;
+    window.BD_CONCEPT_PIXEL_PERFECT_STATE = {
+      enabled:true,
+      stageId:Number(typeof currentStage !== 'undefined' ? currentStage : 0),
+      framing:'responsive-css-contain',
+      sourcePixelGrid:2,
+      logicalWidth:logicalWidth,
+      logicalHeight:logicalHeight,
+      logicalPixelSize:cssLogicalPixel,
+      rawLogicalPixelSize:cssLogicalPixel,
+      effectiveViewScale:(typeof VIEWPORT_BASE_W !== 'undefined' && VIEWPORT_BASE_W) ? VIEWPORT_W / VIEWPORT_BASE_W : 1,
+      zoomRatio:1,
+      canvasWidth:canvas.width,
+      canvasHeight:canvas.height,
+      canvasCssWidth:cssW,
+      canvasCssHeight:cssH,
+      aspectRatio:cssW/cssH
+    };
+    document.documentElement.dataset.bdConceptFraming = 'responsive-css-contain';
+    document.documentElement.dataset.bdConceptAspect = (cssW/cssH).toFixed(4);
+    return true;
+  };
+
+  /* ── 2. 주변 상호작용 단일 조회 ── */
+  function safeCall(name){
+    try{ return typeof window[name] === 'function' ? window[name]() : null; }catch(e){ return null; }
+  }
+  function rectDistance(o){
+    var left=Number(o.rx)||0, top=Number(o.ry)||0;
+    var right=left+(Number(o.rw)||0), bottom=top+(Number(o.rh)||0);
+    var dx=Math.max(left-heroX,0,heroX-right), dy=Math.max(top-heroY,0,heroY-bottom);
+    return Math.sqrt(dx*dx+dy*dy);
+  }
+  function nearbyInteraction(){
+    try{
+      var game = document.getElementById('game-screen');
+      if (!game || game.style.display !== 'block') return null;
+      var vn = document.getElementById('dialogue-box');
+      if (vn && vn.offsetHeight > 0 && parseFloat(getComputedStyle(vn).opacity) > 0.05) return {icon:'▶',label:'다음'};
+      if (window.HSR && HSR.active) return null;
+      if (window.BongdamEditor && BongdamEditor.state && BongdamEditor.state.enabled) return null;
+      if (window.BD_isInputBlocked && BD_isInputBlocked()) return null;
+      var resident = safeCall('BD_nearResident');
+      if (resident) return {icon:'💬',label:'대화'};
+      if (safeCall('getNearNPC') || safeCall('getNearQuestNpc')) return {icon:'💬',label:'대화'};
+      var facility = safeCall('BD_getNearConceptFacility');
+      if (facility) return {icon:'🏛️',label:'이용'};
+      var st = (typeof STAGES !== 'undefined' && typeof currentStage !== 'undefined') ? STAGES[currentStage] : null;
+      if (st && Array.isArray(st.objects)){
+        var awareness = 0.055;
+        try{ if(typeof getSafetyBonus === 'function') awareness *= 1 + getSafetyBonus('awareness') * 0.15; }catch(e){}
+        for (var i=0;i<st.objects.length;i++){
+          var o=st.objects[i]; if(!o || o.hidden || o.__bdGone) continue;
+          if(o.interactable==='hazard'){
+            var purified=!!o._purified;
+            try{ purified=purified || !!(window.BD_isPurified && BD_isPurified(o.hazardId||o.id||o.label)); }catch(e){}
+            var locked=false;
+            try{ locked=!!(window.BD_hazardLocked && BD_hazardLocked(o)); }catch(e){}
+            if(!purified && !locked && rectDistance(o)<=awareness) return {icon:'🔍',label:'조사'};
+          }
+          if(o.interactable==='facility'){
+            var cx=(Number(o.rx)||0)+(Number(o.rw)||0)/2, cy=(Number(o.ry)||0)+(Number(o.rh)||0)/2;
+            if(Math.hypot(heroX-cx,heroY-cy)<=awareness) return {icon:'✨',label:'이용'};
+          }
+          if(o.interactable==='info' || o.interactable==='shop' || o.interactable==='quest'){
+            var inX=heroX>=(Number(o.rx)||0)-.05 && heroX<=(Number(o.rx)||0)+(Number(o.rw)||0)+.05;
+            var doorY=(Number(o.ry)||0)+(Number(o.rh)||0), ddy=heroY-doorY;
+            if(inX && ddy>=-.02 && ddy<.20) return {icon:o.interactable==='info'?'ℹ️':(o.interactable==='shop'?'🏪':'📋'),label:o.interactable==='info'?'안내':'입장'};
+          }
+        }
+      }
+      if (st && st.interior){
+        if (safeCall('getNearStair')) return {icon:'🪜',label:'이동'};
+        try{ if(typeof isNearLibraryDoor==='function' && isNearLibraryDoor()) return {icon:'🚪',label:'나가기'}; }catch(e){}
+      }
+      try{ if(typeof isNearStore24==='function' && isNearStore24()) return {icon:'🏪',label:'입장'}; }catch(e){}
+      try{ if(typeof getNearQuest==='function' && getNearQuest()) return {icon:'📋',label:'입장'}; }catch(e){}
+    }catch(e){}
+    return null;
+  }
+  window.BD_hasNearbyInteraction = nearbyInteraction;
+
+  function dispatchInteraction(){
+    var vn=document.getElementById('dialogue-box');
+    var talking=vn && vn.offsetHeight>0 && parseFloat(getComputedStyle(vn).opacity)>.05;
+    document.dispatchEvent(new KeyboardEvent('keydown',{key:talking?' ':'f',code:talking?'Space':'KeyF',bubbles:true,cancelable:true}));
+  }
+  window.BD_touchInteract = dispatchInteraction;
+
+  /* 화면 탭도 F 버튼과 같은 단일 입력 경로를 사용한다. 드래그/조이스틱/메뉴는 제외한다. */
+  var canvas=document.getElementById('game-canvas'), tap=null;
+  if(canvas && window.PointerEvent){
+    canvas.addEventListener('pointerdown',function(e){
+      if(e.button!==0 || (window.BongdamEditor&&BongdamEditor.state&&BongdamEditor.state.enabled)) return;
+      tap={id:e.pointerId,x:e.clientX,y:e.clientY,t:Date.now()};
+    },true);
+    canvas.addEventListener('pointerup',function(e){
+      if(!tap || tap.id!==e.pointerId) return;
+      var t=tap; tap=null;
+      if(Math.hypot(e.clientX-t.x,e.clientY-t.y)>14 || Date.now()-t.t>650) return;
+      if(!nearbyInteraction()) return;
+      e.preventDefault();
+      dispatchInteraction();
+    },true);
+    canvas.addEventListener('pointercancel',function(){ tap=null; },true);
+  }
+
+  /* 기존 모바일 F 버튼도 위험요소·시설·계단까지 동일하게 활성화한다. */
+  function refreshTouchButton(){
+    var btn=document.getElementById('tc-btn-f'); if(!btn) return;
+    var info=nearbyInteraction(), icon=document.getElementById('tc-f-icon'), label=document.getElementById('tc-f-label');
+    btn.classList.toggle('tc-disabled',!info);
+    btn.classList.toggle('tc-pulse',!!info);
+    if(icon) icon.textContent=info?info.icon:'🔍';
+    if(label) label.textContent=info?info.label:'조사';
+  }
+  if(window.BD_addTick) BD_addTick(refreshTouchButton,120); else setInterval(refreshTouchButton,120);
+
+  /* ── 3. 타이틀 메뉴: 이어하기 제거, 2열 메뉴 + 생성 버튼 판 ── */
+  function titleButton(id,label,icon,x,y,w,handler,extra){
+    var b=document.createElement('button');
+    b.type='button'; b.id=id; b.className='bd-title-hit bd-title-v386 '+(extra||'');
+    b.dataset.x=String(x); b.dataset.y=String(y); b.dataset.w=String(w); b.dataset.h='0.080';
+    b.setAttribute('aria-label',label);
+    b.innerHTML='<span class="bd-title-v386-icon" aria-hidden="true">'+icon+'</span><span>'+label+'</span>';
+    b.addEventListener('click',handler);
+    return b;
+  }
+  function openMiniGames(){ if(typeof window.BD_openGameSelect==='function') window.BD_openGameSelect(); }
+  function openTitleCredits(){ if(typeof window.BD_showCredits==='function') window.BD_showCredits({source:'title'}); }
+  window.BD_openTitleMiniGames=openMiniGames;
+  window.BD_openTitleCredits=openTitleCredits;
+
+  function enhanceTitle(){
+    var root=document.getElementById('bd-title-screen'), frame=document.getElementById('bd-title-frame');
+    if(!root || !frame || !root.classList.contains('show')) return;
+    var needsPosition=!document.getElementById('bd-title-minigames') || !document.getElementById('bd-title-credits');
+    root.dataset.v386Title='1';
+    var oldContinue=document.getElementById('bd-title-continue'); if(oldContinue) oldContinue.remove();
+    var start=document.getElementById('bd-title-start');
+    var options=document.getElementById('bd-title-options');
+    var quit=document.getElementById('bd-title-reset');
+    var rows=[[start,'⚔️','시작하기'],[options,'⚙️','설정'],[quit,'🚪','종료하기']];
+    rows.forEach(function(row){
+      var b=row[0]; if(!b) return;
+      b.classList.add('bd-title-v386');
+      b.setAttribute('aria-label',row[2]);
+      b.dataset.x='0.120'; b.dataset.w='0.200'; b.dataset.h='0.080';
+    });
+    var mini=document.getElementById('bd-title-minigames');
+    var credits=document.getElementById('bd-title-credits');
+    if(!mini){ mini=titleButton('bd-title-minigames','미니게임','🕹️',.120,.574,.097,openMiniGames,'bd-title-v386-half'); frame.appendChild(mini); }
+    if(!credits){ credits=titleButton('bd-title-credits','개발진','🎬',.223,.574,.097,openTitleCredits,'bd-title-v386-half'); frame.appendChild(credits); }
+    /* 기존 위치 계산기는 원화 표시 영역(object-fit 여백)을 정확히 알고 있다. 새 버튼을
+       추가한 최초 한 번만 호출하고, 계산 과정에서 비운 텍스트는 바로 아래에서 복원한다. */
+    if(needsPosition){ try{ if(typeof window.BD_positionTitleButtons==='function') window.BD_positionTitleButtons(); }catch(e){} }
+    rows.concat([[mini,'🕹️','미니게임'],[credits,'🎬','개발진']]).forEach(function(row){
+      var b=row[0]; if(!b) return;
+      var wanted=row[1]+row[2];
+      if(b.textContent.replace(/\s/g,'')!==wanted) b.innerHTML='<span class="bd-title-v386-icon" aria-hidden="true">'+row[1]+'</span><span>'+row[2]+'</span>';
+    });
+  }
+  var priorTitle=window.BD_showTitle;
+  if(typeof priorTitle==='function' && !priorTitle.__bdTitleV386){
+    window.BD_showTitle=function(){
+      var result=priorTitle.apply(this,arguments);
+      var root=document.getElementById('bd-title-screen'); if(root) delete root.dataset.v386Title;
+      enhanceTitle();
+      return result;
+    };
+    window.BD_showTitle.__bdTitleV386=true;
+  }
+
+  var style=document.createElement('style');
+  style.id='bd-responsive-title-touch-style-v386';
+  style.textContent=[
+    '.bd-title-hit.bd-title-v386{display:flex!important;align-items:center;justify-content:center;gap:clamp(5px,.65vw,12px);background-color:#f3e1b8!important;background-image:url(assets/bd_title_button_v386.png)!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;color:#2e241c!important;font-family:"Noto Serif KR",serif!important;font-size:clamp(12px,1.62vw,27px)!important;font-weight:900!important;line-height:1!important;text-shadow:0 1px 0 rgba(255,255,255,.7)!important;border-radius:10px!important;box-shadow:0 3px 0 rgba(48,27,14,.46)!important;overflow:hidden!important}',
+    '.bd-title-hit.bd-title-v386:hover,.bd-title-hit.bd-title-v386:focus-visible{filter:brightness(1.06) saturate(1.08);transform:translateY(-1px);outline:3px solid rgba(255,224,116,.8)!important;outline-offset:2px}',
+    '.bd-title-hit.bd-title-v386:active{filter:brightness(.96);transform:translateY(2px)}',
+    '.bd-title-v386-icon{font-size:1.05em;filter:drop-shadow(0 1px 0 rgba(255,255,255,.5))}',
+    '.bd-title-v386-half{font-size:clamp(10px,1.25vw,20px)!important;gap:clamp(2px,.35vw,7px)!important}',
+    'body.bd-map-open.bd-map-tuto-speaking #bd-dami-hud{display:flex!important;opacity:1!important;visibility:visible!important;z-index:100050!important;left:max(10px,env(safe-area-inset-left))!important;bottom:max(12px,env(safe-area-inset-bottom))!important;transform:scale(.95)!important;transform-origin:left bottom!important;pointer-events:none!important}',
+    'body.bd-map-open.bd-map-tuto-speaking #bd-dami-hud #bd-dami-bubble{opacity:1!important;visibility:visible!important;max-width:min(390px,48vw)!important;box-shadow:0 10px 34px rgba(0,0,0,.55)!important}',
+    '@media(max-width:700px),(max-height:480px){.bd-title-hit.bd-title-v386{font-size:clamp(10px,2.4vh,16px)!important}.bd-title-v386-half{font-size:clamp(9px,2vh,13px)!important}body.bd-map-open.bd-map-tuto-speaking #bd-dami-hud{transform:scale(.78)!important}body.bd-map-open.bd-map-tuto-speaking #bd-dami-hud #bd-dami-bubble{max-width:min(330px,56vw)!important}}'
+  ].join('');
+  document.head.appendChild(style);
+  enhanceTitle();
+  /* 초기 부팅은 같은 스크립트의 지역 함수 showTitle()을 직접 호출하므로 window 래퍼를
+     거치지 않을 수 있다. 타이틀 표시 시점을 가볍게 감시해 최초 1회만 보정한다. */
+  if(window.BD_addTick) BD_addTick(enhanceTitle,250); else setInterval(enhanceTitle,250);
 })();
 </script>
 <script>(function(){if(!("serviceWorker" in navigator)||location.protocol==="file:")return;addEventListener("load",function(){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="installed"&&navigator.serviceWorker.controller){try{var d=document.createElement("div");d.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;background:#1d2333;color:#ffd86b;padding:10px 18px;border-radius:12px;border:1px solid #ffd86b;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)";d.textContent="🔄 새 버전이 있어요 — 눌러서 새로고침";d.onclick=function(){location.reload();};document.body.appendChild(d);}catch(e){}}});});}).catch(function(){});});})();</script></body>
