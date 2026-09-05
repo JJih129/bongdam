@@ -48115,7 +48115,15 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
          가짜 요소 대신 box-shadow 로 어두운 테두리를 두른다.
          (::before + z-index:-1 은 버튼의 배경 «위»에 그려져 버튼이 흐려진다) */
       '.bd-modal-box>.modal-btn{position:sticky;bottom:0;z-index:2;' +
-      'box-shadow:0 0 0 7px rgba(13,19,36,.96), 0 -8px 14px 6px rgba(13,19,36,.85);}';
+      'box-shadow:0 0 0 7px rgba(13,19,36,.96), 0 -8px 14px 6px rgba(13,19,36,.85);}' +
+      /* 하단 조작 힌트 바 — white-space:nowrap + 가운데 정렬이라 화면보다 길면
+         «양쪽»으로 잘려 나간다(아이폰 가로 실기기에서 확인). 0011 에 짧은 화면용
+         display:none 규칙이 있지만 게임 코드가 인라인 display:block 을 박아 무력화된다.
+         그래서 여기서는 숨기는 대신 «어떤 폭에서도 들어가게» 만든다. */
+      '#bd-keybar{max-width:min(94vw,720px)!important;white-space:normal!important;' +
+      'text-align:center;line-height:1.5;word-break:keep-all;}' +
+      /* 아주 낮은 화면에서는 세로 공간이 더 급하다 — 0011 의 원래 의도를 인라인보다 세게 */
+      '@media (max-height:430px){#bd-keybar{display:none!important;}}';
     (document.head || document.documentElement).appendChild(st);
   }
 
@@ -48145,7 +48153,45 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     } catch (e) {}
   }
 
-  function run() { css(); clamp(); }
+  /* ── UI 가독성 보정 ──
+     body zoom 은 «월드»를 화면에 맞추려고 거는 것인데, UI 텍스트까지 같이 줄어든다.
+     874x300(아이폰 가로 + 주소창)에서 zoom 0.541 이면 13px 선언이 화면상 7px 이 되고,
+     실측으로 12px 미만 텍스트가 21개 나왔다(모험 시작 8.1px · 대사 8.7px · HP 8.7px).
+     유니티로 치면 월드 카메라와 UI 캔버스가 같이 축소된 상태다 — UI 만 되돌린다.
+
+     대상은 «고정 UI 레이어»로 한정한다. 캔버스(월드)는 건드리지 않는다. */
+  var MIN_PX = 11.5;      /* 확보하려는 화면상 최소 글자 크기 */
+  var BASE_PX = 13;       /* HUD 의 대표 선언 크기 */
+  var MAX_BOOST = 1.55;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
+  var UI_SEL = ['.bd-modal-box', '#dialogue-overlay', '#bd-hp-dom', '#bd-keybar',
+                '#bd-district-hud', '#bd-district-minimap', '#bd-startsetup-modal',
+                '#bd-fullscreen-return'];
+
+  function boost() {
+    try {
+      if (!document.body || window.__bdZoomOK === false) return;
+      var z = parseFloat(getComputedStyle(document.body).zoom) || 1;
+      if (z >= 0.995) { UI_SEL.forEach(clearBoost); return; }   /* 축소가 없으면 보정 불필요 */
+      var need = MIN_PX / (BASE_PX * z);
+      var b = Math.max(1, Math.min(MAX_BOOST, need));
+      if (b <= 1.01) { UI_SEL.forEach(clearBoost); return; }
+      var v = b.toFixed(3);
+      UI_SEL.forEach(function (s) {
+        var list = document.querySelectorAll(s);
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].style.zoom !== v) list[i].style.zoom = v;
+        }
+      });
+    } catch (e) {}
+  }
+  function clearBoost(s) {
+    try {
+      var list = document.querySelectorAll(s);
+      for (var i = 0; i < list.length; i++) if (list[i].style.zoom) list[i].style.zoom = '';
+    } catch (e) {}
+  }
+
+  function run() { css(); clamp(); boost(); }
 
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', run);
   else run();
