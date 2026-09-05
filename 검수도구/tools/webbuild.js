@@ -32,6 +32,17 @@ html = html.replace(/@@BLOCK:(\d{4})@@/g, (_, idx) => {
 // 남은 토큰 검사 (data: 프리픽스 없는 예외 발견용)
 const leftover = html.match(/@@B64:[^@]+@@/g);
 if (leftover) { console.error('✖ 외부화 안 된 토큰: ' + leftover.slice(0, 5).join(', ')); process.exit(2); }
+/* (v398) 이미지 지연 로딩 심 주입 — 웹판 전용.
+   외부화 때문에 최상위 스코프의 `new Image(); img.src=...` 가 부팅 즉시 수백 개 요청을
+   발사한다. 심은 그 요청을 실제 사용 시점으로 미룬다. 개발 빌드(bundle.js)는 data URI 라
+   해당 문제가 없으므로 주입하지 않는다. 반드시 첫 블록보다 먼저 실행돼야 한다. */
+{
+  const at = html.indexOf('<head>');
+  if (at < 0 || at > 200) { console.error('<head> 를 문서 앞부분에서 찾지 못했습니다 (idx ' + at + ')'); process.exit(3); }
+  const shim = utf8AsLatin1('<script id="bd-web-lazyimg-v398">'
+    + fs.readFileSync(path.join(__dirname, 'web_lazyimg.js'), 'utf8') + '\n</script>');
+  html = html.slice(0, at + 6) + shim + html.slice(at + 6);
+}
 // 에셋 복사
 let bytes = 0;
 for (const name of used) {
