@@ -110,7 +110,34 @@
     } catch (e) {}
   }
 
-  function run() { css(); clamp(); boost(); }
+  /* ── 조이스틱: 손을 뗐을 때는 숨긴다 ──
+     0249(v387)는 «터치 시작점에 조이스틱을 띄우는» 플로팅 방식이고, 대기 중 숨김 규칙도
+     이미 갖고 있다. 다만 그 규칙이 전부 `html.bd-touch-mode` 를 전제로 한다.
+     그 클래스는 0136 이 붙이는데, 0136 과 0249 는 조건이 미묘하게 달라 0249 는 살아 있는데
+     클래스가 없는 상태가 생길 수 있다. 그러면 0018 의 기본값 opacity:.6 이 그대로 남아
+     좌하단에 원이 «고정 패드»처럼 계속 보인다(실기기에서 보고된 증상).
+
+     그래서 0249 가 실제로 동작할 때는 클래스를 확실히 붙이고, 보조로 숨김 규칙도 넣는다.
+     0249 가 없으면(구형 브라우저) 고정 패드가 유일한 조작 수단이므로 절대 건드리지 않는다. */
+  var JOY_ID = 'bd-joy-style-v398';
+  function joystick() {
+    try {
+      if (!window.__bdFloatingTouchV387) return;          /* 플로팅 방식이 아닐 때는 그대로 */
+      var de = document.documentElement;
+      if (!de.classList.contains('bd-touch-mode')) de.classList.add('bd-touch-mode');
+      if (document.getElementById(JOY_ID)) return;
+      var st = document.createElement('style');
+      st.id = JOY_ID;
+      st.textContent =
+        '#tc-joy-base{opacity:0!important;transition:opacity .12s;}' +
+        '#tc-joystick.active #tc-joy-base{opacity:.92!important;}' +
+        '#tc-joy-knob{opacity:0!important;transition:opacity .12s;}' +
+        '#tc-joystick.active #tc-joy-knob{opacity:1!important;}';
+      (document.head || document.documentElement).appendChild(st);
+    } catch (e) {}
+  }
+
+  function run() { css(); clamp(); boost(); joystick(); }
 
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', run);
   else run();

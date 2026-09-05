@@ -55,10 +55,16 @@
       if (!r || !(r.width > 0)){ hide(); return; }
       var el = ensureRing();
       var pad = 8;
-      el.style.left = (r.left - pad) + 'px';
-      el.style.top = (r.top - pad) + 'px';
-      el.style.width = (r.width + pad*2) + 'px';
-      el.style.height = (r.height + pad*2) + 'px';
+      /* (v398) UI 배율 보정 — BD_screenRectOfWorld 는 getBoundingClientRect 기반이라
+         «화면(zoom 적용 후)» 좌표를 준다. 이 링은 zoom 이 걸린 document.body 안에 있으므로
+         그대로 넣으면 zoom 이 두 번 적용돼 엉뚱한 곳을 가리킨다.
+         (아이폰 가로 zoom 0.54 에서 강조가 실제 대상 왼쪽 빈 칸을 가리키던 원인.
+          0183 스포트라이트는 이미 같은 보정을 하고 있어 둘이 어긋나 보였다.) */
+      var z = 1; try{ z = parseFloat(getComputedStyle(document.body).zoom) || 1; if (!(z > 0)) z = 1; }catch(eZ){}
+      el.style.left = ((r.left - pad) / z) + 'px';
+      el.style.top = ((r.top - pad) / z) + 'px';
+      el.style.width = ((r.width + pad*2) / z) + 'px';
+      el.style.height = ((r.height + pad*2) / z) + 'px';
       el.style.display = 'block';
     }catch(e){ hide(); }
   }

@@ -70,10 +70,13 @@
       if (!r || !(r.width > 0)){ hideRing(); return; }
       var el = ensureRing();
       var pad = 8;
-      el.style.left = (r.left - pad) + 'px';
-      el.style.top = (r.top - pad) + 'px';
-      el.style.width = (r.width + pad*2) + 'px';
-      el.style.height = (r.height + pad*2) + 'px';
+      /* (v398) UI 배율 보정 — 0255 와 같은 문제. BD_screenRectOfWorld 는 화면(zoom 적용 후)
+         좌표를 주는데 이 링은 zoom 이 걸린 body 안에 있어 그대로 넣으면 두 번 적용된다. */
+      var z = 1; try{ z = parseFloat(getComputedStyle(document.body).zoom) || 1; if (!(z > 0)) z = 1; }catch(eZ){}
+      el.style.left = ((r.left - pad) / z) + 'px';
+      el.style.top = ((r.top - pad) / z) + 'px';
+      el.style.width = ((r.width + pad*2) / z) + 'px';
+      el.style.height = ((r.height + pad*2) / z) + 'px';
       el.style.display = 'block';
     }catch(e){ hideRing(); }
   }
