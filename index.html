@@ -49555,7 +49555,15 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     } catch (e) {}
   }
 
+  /* 조종 타이머는 «이동 중에만» 돈다.
+     상시 33ms 로 돌리면 아무것도 안 할 때도 초당 30회를 깨우게 된다 —
+     이 게임은 이미 폴링 루프가 159개(초당 약 560회)라 한 개라도 줄이는 편이 낫다. */
+  var ticker = null;
+  function startTicker() { if (!ticker) ticker = setInterval(step, 33); }
+  function stopTicker() { if (ticker) { clearInterval(ticker); ticker = null; } }
+
   function stop(sendF, why) {
+    stopTicker();
     setMove(false, false, false, false);
     var t = travel; travel = null;
     window.__bdTravelLastStop = why || (sendF ? '도착' : '중단');
@@ -49578,13 +49586,24 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       var now = Date.now();
       if (now - travel.t0 > MAX_MS) { stop(false, '시간초과'); return; }
 
-      var d = Math.hypot(heroX - travel.tx, heroY - travel.ty);
-      if (d <= ARRIVE) { stop(true, '도착'); return; }
+      /* 도착 판정은 «누른 지점»이 아니라 «경로의 끝»을 기준으로 한다.
+         건물을 누르면 목표 지점이 벽 «안»이라 영원히 닿을 수 없다 — 길찾기는 그 옆의
+         닿을 수 있는 칸까지만 경로를 낸다. 누른 지점까지의 거리로 판정하면 건물·NPC 같은
+         주 사용처에서 항상 «진행없음»으로 끝난다. */
+      var goal = travel.path[travel.path.length - 1];
+      var dGoal = Math.hypot(heroX - goal[0], heroY - goal[1]);
+      var dTap = Math.hypot(heroX - travel.tx, heroY - travel.ty);
+      if (dGoal <= ARRIVE || dTap <= ARRIVE) { stop(true, '도착'); return; }
 
-      /* 진행이 없으면 포기 — 벽에 끼었거나 경로가 막힌 경우 */
+      /* 진행이 없으면 포기 — 벽에 끼었거나 경로가 막힌 경우.
+         다만 목표 «근처»까지 왔다면 상호작용 사거리에 든 것이므로 도착으로 친다. */
       if (Math.hypot(heroX - travel.lastX, heroY - travel.lastY) > 0.004) {
         travel.lastX = heroX; travel.lastY = heroY; travel.lastMoveAt = now;
-      } else if (now - travel.lastMoveAt > STUCK_MS) { stop(false, '진행없음'); return; }
+      } else if (now - travel.lastMoveAt > STUCK_MS) {
+        if (Math.min(dGoal, dTap) <= ARRIVE * 2.2) stop(true, '근처 도착');
+        else stop(false, '진행없음');
+        return;
+      }
 
       /* 다음 경유점 — 이미 지난 점은 건너뛴다 */
       var p = travel.path;
@@ -49635,18 +49654,19 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     if (!path || path.length < 2) return;
     travel = { path: path, i: 0, tx: w.x, ty: w.y, t0: Date.now(),
                lastX: heroX, lastY: heroY, lastMoveAt: Date.now() };
+    startTicker();
     showMark(true);
   }, true);
 
   addEventListener('pointercancel', function () { armed = false; if (travel) stop(false); }, true);
 
-  setInterval(step, 33);   /* 이동 조종 — rAF 대신 고정 주기(백그라운드에서도 안전하게 멈춘다) */
 
   window.BD_TRAVEL = {
     active: function () { return !!travel; },
     stop: function () { stop(false); },
     to: function (x, y) { var p = findPath(x, y); if (!p) return false;
       travel = { path: p, i: 0, tx: x, ty: y, t0: Date.now(), lastX: heroX, lastY: heroY, lastMoveAt: Date.now() };
+      startTicker();
       return true; },
     toScreen: screenToWorld, path: findPath
   };
