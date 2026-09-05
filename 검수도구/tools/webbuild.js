@@ -87,12 +87,27 @@ fs.writeFileSync(path.join(OUT, 'sw.js'),
   + 'const CORE=' + JSON.stringify(['index.html', 'manifest.webmanifest']) + ';\n'
   + 'self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});\n'
   + 'self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});\n'
-  + '// 에셋은 요청 시 캐시(런타임 캐싱) — 첫 설치를 가볍게, 재방문·오프라인은 빠르게\n'
+  + '// 에셋은 요청 시 캐시(런타임 캐싱) — 첫 설치를 가볍게, 재방문·오프라인은 빠르게.\n'
+  + '// (v398) 다만 문서(index.html)만은 «네트워크 우선 + 2.5초 타임아웃»으로 가져온다.\n'
+  + '//   캐시 우선이면 배포해도 기존 접속자가 계속 옛 버전을 본다. match 의 ignoreSearch\n'
+  + '//   때문에 ?쿼리를 붙여도 캐시가 나와 강제 새로고침 수단이 없었다.\n'
+  + '//   네트워크가 느리거나 끊기면 캐시로 떨어지므로 오프라인 동작은 그대로다.\n'
   + 'self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;\n'
-  + ' e.respondWith(caches.open(CACHE).then(async c=>{const hit=await c.match(e.request,{ignoreSearch:true});\n'
+  + ' const nav=(e.request.mode==="navigate");\n'
+  + ' e.respondWith(caches.open(CACHE).then(async c=>{\n'
+  + '  if(nav){\n'
+  + '   try{\n'
+  + '    const net=fetch(e.request);\n'
+  + '    const r=await Promise.race([net,new Promise((_,rj)=>setTimeout(()=>rj(new Error("slow")),2500))]);\n'
+  + '    if(r&&r.ok){try{c.put("index.html",r.clone());}catch(_){}return r;}\n'
+  + '   }catch(_){}\n'
+  + '   const idx=await c.match("index.html");if(idx)return idx;\n'
+  + '   return fetch(e.request);\n'
+  + '  }\n'
+  + '  const hit=await c.match(e.request,{ignoreSearch:true});\n'
   + '  if(hit)return hit;\n'
   + '  try{const r=await fetch(e.request);if(r.ok&&(new URL(e.request.url).origin===location.origin))c.put(e.request,r.clone());return r;}\n'
-  + '  catch(err){if(e.request.mode==="navigate"){const idx=await c.match("index.html");if(idx)return idx;}throw err;}}));});\n');
+  + '  catch(err){throw err;}}));});\n');
 fs.writeFileSync(path.join(OUT, 'manifest.webmanifest'), JSON.stringify({
   name: '봉담 안전지도 대작전', short_name: '안전지도 대작전', description: '봉담 청소년 안전 교육 RPG',
   start_url: '.', display: 'fullscreen', display_override: ['fullscreen', 'standalone'], orientation: 'landscape',
