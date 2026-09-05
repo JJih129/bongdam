@@ -181,13 +181,24 @@
       var now = Date.now();
       if (now - travel.t0 > MAX_MS) { stop(false, '시간초과'); return; }
 
-      var d = Math.hypot(heroX - travel.tx, heroY - travel.ty);
-      if (d <= ARRIVE) { stop(true, '도착'); return; }
+      /* 도착 판정은 «누른 지점»이 아니라 «경로의 끝»을 기준으로 한다.
+         건물을 누르면 목표 지점이 벽 «안»이라 영원히 닿을 수 없다 — 길찾기는 그 옆의
+         닿을 수 있는 칸까지만 경로를 낸다. 누른 지점까지의 거리로 판정하면 건물·NPC 같은
+         주 사용처에서 항상 «진행없음»으로 끝난다. */
+      var goal = travel.path[travel.path.length - 1];
+      var dGoal = Math.hypot(heroX - goal[0], heroY - goal[1]);
+      var dTap = Math.hypot(heroX - travel.tx, heroY - travel.ty);
+      if (dGoal <= ARRIVE || dTap <= ARRIVE) { stop(true, '도착'); return; }
 
-      /* 진행이 없으면 포기 — 벽에 끼었거나 경로가 막힌 경우 */
+      /* 진행이 없으면 포기 — 벽에 끼었거나 경로가 막힌 경우.
+         다만 목표 «근처»까지 왔다면 상호작용 사거리에 든 것이므로 도착으로 친다. */
       if (Math.hypot(heroX - travel.lastX, heroY - travel.lastY) > 0.004) {
         travel.lastX = heroX; travel.lastY = heroY; travel.lastMoveAt = now;
-      } else if (now - travel.lastMoveAt > STUCK_MS) { stop(false, '진행없음'); return; }
+      } else if (now - travel.lastMoveAt > STUCK_MS) {
+        if (Math.min(dGoal, dTap) <= ARRIVE * 2.2) stop(true, '근처 도착');
+        else stop(false, '진행없음');
+        return;
+      }
 
       /* 다음 경유점 — 이미 지난 점은 건너뛴다 */
       var p = travel.path;
