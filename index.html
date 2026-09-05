@@ -48680,10 +48680,70 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     } catch (e) {}
   }
 
-  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', function () { setInterval(tick, 500); });
-  else setInterval(tick, 500);
+  /* ── 스크롤 힌트 ──
+     설정·안전지도·안전 수첩은 «스크롤이 되긴 한다». 실측:
+       설정      보임 252 / 전체 536 (284px 숨음) — 저장 버튼은 스크롤하면 눌린다
+       안전지도  보임 256 / 전체 312 (56px 숨음)
+     즉 «못 누른다»가 아니라 «더 있다는 걸 알 방법이 없다»가 문제다.
+     좁은 화면에서는 스크롤바도 안 보이고 잘린 카드 한 줄이 우연히 힌트가 될 뿐이다.
+     그래서 숨은 내용이 있는 동안만 아래쪽에 표시를 띄운다. */
+  var HINT_ID = 'bd-scroll-hint-v398';
 
-  window.BD_MODAL_ESCAPE = { tick: tick, id: ID, find: strandedClose };
+  function biggestHidden() {
+    var best = null, bestHidden = 24;      /* 이 정도는 잘림으로 안 친다 */
+    var list = document.querySelectorAll('div,section');
+    for (var i = 0; i < list.length; i++) {
+      var el = list[i];
+      if (!visible(el)) continue;
+      var s = getComputedStyle(el);
+      if (!/(auto|scroll)/.test(s.overflowY + ' ' + s.overflow)) continue;
+      var hidden = el.scrollHeight - el.clientHeight - el.scrollTop;
+      if (hidden <= bestHidden) continue;
+      var r = el.getBoundingClientRect();
+      if (r.width < 120 || r.height < 60) continue;
+      if (r.bottom < 40 || r.top > innerHeight - 20) continue;
+      bestHidden = hidden; best = el;
+    }
+    return best;
+  }
+
+  function ensureHint() {
+    var d = document.getElementById(HINT_ID);
+    if (d) return d;
+    d = document.createElement('div');
+    d.id = HINT_ID;
+    d.textContent = '▾ 아래로 더 있어요';
+    d.style.cssText =
+      'position:fixed;z-index:2147482999;pointer-events:none;display:none;' +
+      'background:rgba(13,19,36,.94);color:#ffd86b;border:1px solid rgba(255,216,107,.5);' +
+      'border-radius:999px;padding:4px 12px;white-space:nowrap;' +
+      'box-shadow:0 3px 10px rgba(0,0,0,.5);';
+    (document.body || document.documentElement).appendChild(d);
+    return d;
+  }
+
+  function hintTick() {
+    try {
+      var el = biggestHidden();
+      var d = document.getElementById(HINT_ID);
+      if (!el) { if (d) d.style.display = 'none'; return; }
+      d = ensureHint();
+      var z = 1;
+      try { z = parseFloat(getComputedStyle(document.body).zoom) || 1; if (!(z > 0)) z = 1; } catch (e) {}
+      d.style.fontSize = Math.round(12 / z) + 'px';
+      var r = el.getBoundingClientRect();
+      /* 컨테이너 하단 안쪽에 붙인다 */
+      var w = d.getBoundingClientRect().width || 120;
+      d.style.left = Math.round((r.left + r.width / 2 - w / 2) / z) + 'px';
+      d.style.top = Math.round((Math.min(r.bottom, innerHeight) - 26) / z) + 'px';
+      d.style.display = 'block';
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', function () { setInterval(tick, 500); setInterval(hintTick, 600); });
+  else { setInterval(tick, 500); setInterval(hintTick, 600); }
+
+  window.BD_MODAL_ESCAPE = { tick: tick, id: ID, find: strandedClose, hint: hintTick };
 })();
 </script>
 <script>(function(){if(!("serviceWorker" in navigator)||location.protocol==="file:")return;addEventListener("load",function(){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="installed"&&navigator.serviceWorker.controller){try{var d=document.createElement("div");d.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;background:#1d2333;color:#ffd86b;padding:10px 18px;border-radius:12px;border:1px solid #ffd86b;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)";d.textContent="🔄 새 버전이 있어요 — 눌러서 새로고침";d.onclick=function(){location.reload();};document.body.appendChild(d);}catch(e){}}});});}).catch(function(){});});})();</script></body>
