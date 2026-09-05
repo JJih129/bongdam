@@ -1,0 +1,15 @@
+
+.bd-safetip{ margin:12px 0 4px; padding:10px 14px; border-radius:12px; text-align:left;
+  background:rgba(52,211,153,.10); border:1px solid rgba(52,211,153,.45);
+  color:#c9f7dd; font-size:13.5px; line-height:1.55; }
+.bd-safetip b{ color:#8effc0; }
+.bd-gatechip{ position:fixed; z-index:820; display:none; align-items:center; gap:6px;
+  background:rgba(13,19,36,.92); border:1px solid rgba(255,216,107,.65); color:#ffd86b;
+  border-radius:999px; padding:7px 14px; font-size:14px; font-weight:800;
+  font-family:'Noto Sans KR',sans-serif; pointer-events:none;
+  animation:bdGatePulse 1.2s ease-in-out infinite; }
+@keyframes bdGatePulse{ 0%,100%{ opacity:.85; } 50%{ opacity:1; } }
+#bd-gate-right{ right:14px; top:50%; transform:translateY(-50%); }
+#bd-gate-left{ left:14px; top:50%; transform:translateY(-50%); }
+#bd-gate-top{ top:64px; left:50%; transform:translateX(-50%); }
+#bd-gate-bottom{ bottom:64px; left:50%; transform:translateX(-50%); }

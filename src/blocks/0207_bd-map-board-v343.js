@@ -1,0 +1,1 @@
+window.__BD_MAP_BOARD = "data:image/webp;base64,@@B64:beee372c___BD_MAP_BOARD.webp@@"; window.__BD_MAP_DONE = {"210":"data:image/webp;base64,@@B64:7aae1b4f_210.webp@@","211":"data:image/webp;base64,@@B64:fdfcd981_211.webp@@","212":"data:image/webp;base64,@@B64:b95fbd92_212.webp@@","213":"data:image/webp;base64,@@B64:73d8e3cb_213.webp@@"}; window.__BD_BOARD_GEN = 4;

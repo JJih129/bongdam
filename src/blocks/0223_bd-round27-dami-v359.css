@@ -1,0 +1,8 @@
+
+/* (v359) 담이 HUD 2배(v339) → 1.35배 — 좌하단 유지, 게임 신 가림 완화 */
+#bd-dami-hud{ transform: scale(1.35) !important; transform-origin: left bottom !important; }
+#bd-dami-bubble{ max-width: min(380px, 42vw) !important; }
+@media (max-width: 900px){
+  #bd-dami-hud{ transform: scale(1.25) !important; }
+  #bd-dami-bubble{ max-width: min(330px, 48vw) !important; }
+}

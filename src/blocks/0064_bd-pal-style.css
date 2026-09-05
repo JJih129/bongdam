@@ -1,0 +1,24 @@
+
+/* (v199) 구식 배치 버튼 정리 — 건물 팔레트로 대체 */
+#bge-v31-place-mode, #bge-v37-place, #bge-v40-place-btn, #bge-kid-place { display:none !important; }
+#bd-pal-panel{ display:none; position:fixed; left:14px; top:110px; z-index:903; width:236px;
+  max-height:72vh; overflow-y:auto; background:linear-gradient(160deg,#101a30 0%,#0b1220 100%);
+  border:1px solid rgba(232,201,115,.45); border-radius:12px; padding:10px;
+  box-shadow:0 8px 28px rgba(0,0,0,.55); font-family:'Noto Serif KR',serif; color:#dbe4f5; }
+#bd-pal-panel h3{ margin:0 0 8px; font-size:14px; color:#e8c973; letter-spacing:.5px; }
+#bd-pal-panel .bd-pal-row{ margin:6px 0; font-size:11px; }
+#bd-pal-panel select,#bd-pal-panel input[type=text]{ width:100%; background:#0d1526; color:#dbe4f5;
+  border:1px solid rgba(232,201,115,.3); border-radius:6px; padding:4px 6px; font-size:11px; }
+#bd-pal-panel input[type=range]{ width:100%; }
+#bd-pal-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:8px; }
+.bd-pal-item{ cursor:pointer; text-align:center; border:1px solid rgba(255,255,255,.10);
+  border-radius:8px; padding:4px 2px; background:rgba(255,255,255,.03); transition:all .12s; }
+.bd-pal-item:hover{ border-color:rgba(232,201,115,.55); background:rgba(232,201,115,.08); }
+.bd-pal-item.sel{ border-color:#e8c973; background:rgba(232,201,115,.16); box-shadow:0 0 8px rgba(232,201,115,.35); }
+.bd-pal-item img{ width:56px; height:56px; object-fit:contain; image-rendering:pixelated; }
+.bd-pal-item div{ font-size:9px; line-height:1.2; margin-top:2px; color:#b9c6de;
+  overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+#bd-pal-hint{ font-size:10px; color:#8fa0bd; margin-top:8px; line-height:1.5; }
+#bd-pal-save{ width:100%; margin-top:8px; background:rgba(232,201,115,.14); color:#e8c973;
+  border:1px solid rgba(232,201,115,.5); border-radius:8px; padding:5px 0; cursor:pointer; font-size:11px; }
+#bd-pal-save:hover{ background:rgba(232,201,115,.25); }

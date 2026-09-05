@@ -1,0 +1,12 @@
+
+  #bge-v31-quick-inspector { margin-top: 10px; padding: 10px; border: 1px solid rgba(116,217,255,.35); border-radius: 10px; background: rgba(20,38,58,.55); }
+  #bge-v31-quick-inspector label { display:block; margin: 6px 0 4px; color:#a8ddff; font-size:12px; }
+  #bge-v31-quick-inspector select, #bge-v31-quick-inspector input { width:100%; padding:6px 8px; border-radius:6px; border:1px solid rgba(168,221,255,.3); background:#101927; color:#eaf6ff; }
+  #bge-v31-quick-inspector .row { display:grid; grid-template-columns: 1fr 1fr; gap:6px; }
+  #bge-v31-quick-inspector .btnrow { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  #bge-v31-quick-inspector button { flex:1; min-width:88px; padding:7px 8px; border:0; border-radius:8px; background:#266f9e; color:white; cursor:pointer; font-size:12px; }
+  #bge-v31-quick-inspector button.warn { background:#9b6a22; }
+  #bge-v31-quick-inspector button.danger { background:#9b3434; }
+  #bge-v31-preview { min-height:42px; display:flex; align-items:center; gap:8px; padding:6px; border-radius:8px; background:rgba(0,0,0,.25); color:#d7edff; font-size:12px; }
+  #bge-v31-preview img { width:44px; height:44px; object-fit:cover; border-radius:6px; border:1px solid rgba(168,221,255,.35); }
+  .bge-v31-handle-label { font-size:10px; color:#102c46; text-align:center; }

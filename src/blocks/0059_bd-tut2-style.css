@@ -1,0 +1,5 @@
+
+#bd-tut2-mark{ display:none; position:fixed; z-index:893; font-size:24px; color:#7CFC9A;
+  text-shadow:0 0 8px rgba(0,0,0,.85); pointer-events:none;
+  animation:bdTutBounce .7s ease-in-out infinite alternate; }
+@keyframes bdTutBounce{ from{ transform:translate(-50%,0); } to{ transform:translate(-50%,-10px); } }

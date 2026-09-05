@@ -1,0 +1,242 @@
+
+  #bd-concept-map-button {
+    position: absolute;
+    top: 62px;
+    right: 18px;
+    z-index: 5200;
+    border: 1px solid rgba(255, 220, 126, .8);
+    border-radius: 7px;
+    padding: 8px 11px;
+    color: #fff4ca;
+    background: rgba(23, 28, 43, .92);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, .35);
+    font: 700 13px/1.2 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  #bd-concept-map-button:hover,
+  #bd-concept-map-button:focus-visible {
+    background: rgba(55, 68, 95, .97);
+    outline: 2px solid rgba(255, 220, 126, .55);
+  }
+  #bd-concept-map-panel {
+    position: absolute;
+    top: 104px;
+    right: 18px;
+    z-index: 5199;
+    width: min(350px, calc(100% - 36px));
+    max-height: calc(100% - 128px);
+    overflow: auto;
+    display: none;
+    color: #f5f2e9;
+    background: rgba(17, 21, 33, .97);
+    border: 1px solid rgba(255, 220, 126, .55);
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .48);
+    padding: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  #bd-concept-map-panel.open { display: block; }
+  #bd-concept-map-panel h3 {
+    margin: 0 0 6px;
+    color: #ffeaa5;
+    font-size: 16px;
+  }
+  #bd-concept-map-panel p {
+    margin: 0 0 10px;
+    color: #bfc8dc;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .bd-concept-section-title {
+    margin: 11px 0 6px;
+    color: #99d9ff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .03em;
+  }
+  .bd-concept-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .bd-concept-stage-button {
+    min-height: 39px;
+    border: 1px solid rgba(152, 170, 207, .38);
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-align: left;
+    color: #e8edf8;
+    background: rgba(48, 59, 82, .78);
+    font: 700 11px/1.35 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  .bd-concept-stage-button:hover,
+  .bd-concept-stage-button.active {
+    border-color: #ffe07f;
+    color: #fff4c8;
+    background: rgba(88, 73, 42, .92);
+  }
+  #bd-concept-map-badge {
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    z-index: 80;
+    transform: translateX(-50%);
+    display: none;
+    pointer-events: none;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 225, 135, .72);
+    border-radius: 999px;
+    color: #fff5cf;
+    background: rgba(15, 20, 31, .82);
+    text-shadow: 0 1px 2px #000;
+    font: 800 12px/1.2 'Noto Sans KR', sans-serif;
+  }
+  #bd-concept-map-badge.show { display: block; }
+  #bd-concept-editor-stagebar {
+    margin: 7px 0 10px;
+    padding: 8px;
+    border: 1px solid rgba(255, 218, 116, .48);
+    border-radius: 7px;
+    color: #f3f5fb;
+    background: rgba(35, 42, 59, .82);
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  #bd-concept-editor-stagebar .bd-concept-editor-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 6px;
+    color: #ffe59a;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  #bd-concept-editor-stagebar .bd-concept-editor-status {
+    color: #aebbd4;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  #bd-concept-editor-stagebar .bd-concept-editor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+  #bd-concept-editor-stagebar .bd-concept-editor-button {
+    min-width: 0;
+    border: 1px solid rgba(150, 167, 204, .48);
+    border-radius: 5px;
+    padding: 5px 3px;
+    color: #e9eef9;
+    background: rgba(59, 70, 94, .88);
+    font: 800 10px/1.25 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  #bd-concept-editor-stagebar .bd-concept-editor-button:hover,
+  #bd-concept-editor-stagebar .bd-concept-editor-button.active {
+    border-color: #ffdf75;
+    color: #fff3bd;
+    background: rgba(103, 82, 40, .94);
+  }
+  /* 기존 퀘스트 HUD와 미니맵이 동일한 길안내 상태를 사용한다. */
+  #bd-quest-hud .bd-nav-guide {
+    width: min(370px, calc(100vw - 40px));
+    margin: 7px 0 0 24px;
+    padding: 7px 9px 8px;
+    border-left: 3px solid #ffd95a;
+    border-radius: 0 7px 7px 0;
+    color: #fff5c9;
+    background: rgba(12, 22, 35, .78);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .24);
+    font: 750 13px/1.35 'Noto Sans KR', sans-serif;
+    text-shadow: 0 1px 3px #000;
+  }
+  #bd-quest-hud .bd-nav-guide[data-state="unreachable"] {
+    border-left-color: #6dd7ff;
+    color: #d9f5ff;
+  }
+  #bd-quest-hud .bd-nav-guide[data-state="done"] {
+    border-left-color: #65e89a;
+    color: #c9ffdc;
+  }
+  #bd-quest-hud .bd-nav-guide-main {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+  #bd-quest-hud .bd-nav-guide-direction {
+    flex: 0 0 auto;
+    min-width: 40px;
+    padding: 2px 5px;
+    border: 1px solid rgba(255, 222, 103, .58);
+    border-radius: 999px;
+    color: #fff2a9;
+    background: rgba(83, 61, 15, .72);
+    text-align: center;
+    font-size: 11px;
+    font-weight: 900;
+  }
+  #bd-quest-hud .bd-nav-guide-text {
+    overflow: hidden;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  #bd-quest-hud .bd-nav-guide-distance {
+    flex: 0 0 auto;
+    color: #9ee8ff;
+    font-size: 11px;
+  }
+  #bd-quest-hud .bd-nav-guide-progress {
+    height: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .15);
+  }
+  #bd-quest-hud .bd-nav-guide-progress > i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f2bd35, #fff08a);
+    transition: width .2s ease;
+  }
+  #bd-quest-hud.done .bd-nav-guide-progress > i {
+    background: linear-gradient(90deg, #36c978, #a6ffc8);
+  }
+  body.bd-concept-screenshot #bd-concept-map-button,
+  body.bd-concept-screenshot #bd-concept-map-panel,
+  body.bd-concept-screenshot #save-btn {
+    display: none !important;
+  }
+  body.bd-concept-screenshot #bd-title-screen,
+  body.bd-concept-screenshot #bd-boot,
+  body.bd-concept-screenshot #bd-controls-ov,
+  body.bd-concept-screenshot #bge-toggle,
+  body.bd-concept-screenshot #bge-hierarchy,
+  body.bd-concept-screenshot #bge-panel,
+  body.bd-concept-screenshot #bge-v3-panel,
+  body.bd-concept-screenshot #bge-minimap,
+  body.bd-concept-screenshot #bge-v49-dock,
+  body.bd-concept-screenshot #bge-toolbar,
+  body.bd-concept-screenshot #bge-v45-badge,
+  body.bd-concept-screenshot #bge-v45-history-status,
+  body.bd-concept-screenshot #bd-toast {
+    display: none !important;
+  }
+  body.bd-concept-screenshot #game-screen {
+    display: block !important;
+  }
+  /* CSS 크기와 DPR 백버퍼가 달라도 브라우저가 캔버스를 선형 보간하지 않게 한다. */
+  #game-canvas,
+  #game-screen canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  @media (max-width: 720px) {
+    #bd-concept-map-button { top: 54px; right: 10px; padding: 7px 9px; font-size: 11px; }
+    #bd-concept-map-panel { top: 92px; right: 10px; width: calc(100% - 20px); }
+    #bd-quest-hud .bd-nav-guide { margin-left: 18px; padding: 6px 7px; font-size: 11px; }
+  }

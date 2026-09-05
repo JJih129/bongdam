@@ -1,0 +1,162 @@
+
+/* ═══════════════════════════════════════════════════════════════
+   (v292) 출시 품질 UI 리스킨 — 단일 디자인 시스템
+   · 팔레트: 딥네이비(#101828) + 골드(#ffd86b) + 아이보리 대사창
+   · 타이포: 본문 14px+ / 보조 13px / 제목 18~19px / 대사 17px
+   · 인라인 스타일을 덮기 위해 !important 사용 (로직 무변경)
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --uiBg: rgba(15,21,38,.96);
+  --uiBg2: rgba(26,36,64,.96);
+  --uiLine: rgba(255,216,107,.42);
+  --uiGold: #ffd86b;
+  --uiGoldDeep: #d9a84e;
+  --uiText: #f4f7ff;
+  --uiDim: #c7d2ea;
+  --uiInk: #2b2416;
+  --uiDanger: #ff6a5a;
+  --uiGood: #8fe6a8;
+  --uiBlue: #8cd2ff;
+  --uiShadow: 0 12px 34px rgba(0,0,0,.55);
+}
+
+/* ── 공통 버튼 인터랙션 ── */
+.bd-modal-box button, #bd-bus-modal button, #bd-safety-choice button, #bd-place-card button,
+#bd-district-facility-modal button, #bd-map-v283 button, .inv-tab, .hsr-act{
+  transition: filter .12s ease, transform .08s ease !important;
+}
+.bd-modal-box button:hover, #bd-bus-modal button:hover, #bd-safety-choice button:hover,
+#bd-place-card button:hover, #bd-district-facility-modal button:hover, #bd-map-v283 button:hover{
+  filter: brightness(1.12);
+}
+.bd-modal-box button:active, #bd-district-facility-modal button:active{ transform: scale(.97); }
+
+/* ── 토스트 ── */
+#bd-toast{
+  font-size: 14px !important; font-weight: 700 !important; line-height: 1.5 !important;
+  background: var(--uiBg) !important; color: var(--uiText) !important;
+  border: 1px solid var(--uiLine) !important; border-radius: 12px !important;
+  padding: 11px 18px !important; box-shadow: var(--uiShadow) !important;
+  letter-spacing: .1px !important;
+}
+
+/* ── 임무 HUD (좌상단) ── */
+#bd-quest-hud{
+  background: var(--uiBg) !important; border: 1px solid var(--uiLine) !important;
+  border-radius: 12px !important; padding: 10px 14px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45) !important;
+}
+#bd-quest-hud .bd-hud-head{ font-size: 11px !important; letter-spacing: 2px !important; color: var(--uiGold) !important; font-weight: 800 !important; }
+#bd-quest-hud .bd-ch{ font-size: 15px !important; font-weight: 800 !important; color: var(--uiText) !important; margin-top: 2px !important; }
+#bd-quest-hud div, #bd-quest-hud span{ text-shadow: none !important; }
+
+/* ── VN 대사창 (아이보리 유지 + 대비·크기 강화) ── */
+#dialogue-box{
+  background: rgba(253,249,238,.98) !important; border: 1.5px solid #d8c9a5 !important;
+  border-radius: 16px 16px 0 0 !important; box-shadow: 0 -8px 30px rgba(0,0,0,.35) !important;
+}
+#dialogue-name{ font-size: 15px !important; font-weight: 800 !important; color: #8a5a1e !important; letter-spacing: .5px !important; }
+#dialogue-text{ font-size: 17px !important; line-height: 1.7 !important; color: var(--uiInk) !important; }
+#dialogue-next{ color: #a5875a !important; font-size: 12px !important; }
+
+/* ── 담이 말풍선 ── */
+#bd-dami-hud{ filter: drop-shadow(0 6px 14px rgba(0,0,0,.4)); }
+#bd-dami-text{ font-size: 14px !important; line-height: 1.6 !important; }
+
+/* ── 공통 모달 (bd-modal 계열: 캐릭터 선택·상점·설정·슬롯·엔딩 등) ── */
+.bd-modal-box{
+  background: var(--uiBg) !important; border: 1.5px solid var(--uiLine) !important;
+  border-radius: 16px !important; padding: 20px 24px !important;
+  box-shadow: var(--uiShadow) !important; color: var(--uiText) !important;
+}
+.bd-modal-title{ font-size: 19px !important; font-weight: 800 !important; color: var(--uiGold) !important; letter-spacing: .5px !important; margin-bottom: 10px !important; }
+.bd-modal-box .modal-btn{
+  background: var(--uiGold) !important; color: #17203a !important; border: 0 !important;
+  border-radius: 11px !important; padding: 11px 24px !important;
+  font-size: 15px !important; font-weight: 800 !important; cursor: pointer !important;
+}
+.bd-modal-close{
+  background: transparent !important; color: var(--uiDim) !important;
+  border: 1px solid rgba(199,210,234,.35) !important; border-radius: 10px !important;
+  padding: 8px 18px !important; font-size: 13px !important; cursor: pointer !important;
+}
+.bd-equip-row{ border-radius: 10px !important; }
+.bd-equip-nm{ font-size: 14px !important; }
+.bd-equip-nm small{ font-size: 12px !important; color: var(--uiDim) !important; }
+.bd-equip-up{ font-size: 13px !important; font-weight: 800 !important; border-radius: 9px !important; }
+
+/* ── 인라인 스타일 모달 (버스·안전퀴즈·장소카드·지도) 팔레트 통일 ── */
+#bd-bus-modal > div, #bd-safety-choice > div, #bd-place-card > div{
+  background: var(--uiBg) !important; border: 1.5px solid var(--uiLine) !important;
+  border-radius: 16px !important; color: var(--uiText) !important; box-shadow: var(--uiShadow) !important;
+}
+#bd-bus-modal button, #bd-safety-choice button{
+  font-size: 14px !important; line-height: 1.55 !important; border-radius: 10px !important;
+}
+#bd-safety-choice button{ background: var(--uiBg2) !important; border: 1px solid rgba(199,210,234,.35) !important; color: var(--uiText) !important; }
+#bd-place-card button{ font-size: 14px !important; border-radius: 10px !important; }
+
+/* ── 시설 모달 (v24) ── */
+#bd-district-facility-modal .bd-district-card{
+  background: var(--uiBg) !important; border: 1.5px solid var(--uiLine) !important;
+  border-radius: 16px !important; color: var(--uiText) !important; box-shadow: var(--uiShadow) !important;
+}
+#bd-district-facility-modal .bd-district-kicker{
+  font-size: 11px !important; letter-spacing: 2px !important; color: var(--uiGold) !important; font-weight: 800 !important;
+}
+#bd-district-facility-modal h2{ font-size: 18px !important; font-weight: 800 !important; color: var(--uiText) !important; }
+#bd-district-facility-modal p{ font-size: 14px !important; line-height: 1.65 !important; color: var(--uiDim) !important; }
+#bd-district-facility-modal button{
+  font-size: 14px !important; font-weight: 700 !important; border-radius: 10px !important;
+  background: var(--uiBg2) !important; color: var(--uiText) !important;
+  border: 1px solid var(--uiLine) !important; padding: 11px 14px !important;
+  text-align: left !important;
+}
+
+/* ── 가방/인벤토리 ── */
+.inv-tab{ font-size: 14px !important; font-weight: 700 !important; }
+#inv-detail-name{ font-size: 16px !important; font-weight: 800 !important; }
+#inv-detail-desc{ font-size: 14px !important; line-height: 1.6 !important; }
+#inv-use-btn{ font-size: 14px !important; font-weight: 800 !important; border-radius: 10px !important; }
+.inv-empty{ font-size: 14px !important; color: var(--uiDim) !important; }
+
+/* ── 전투 UI ── */
+.hsr-act{ border-radius: 12px !important; }
+.hsr-act .t, .hsr-act b{ font-size: 14px !important; font-weight: 800 !important; }
+.hsr-act small{ font-size: 11px !important; }
+#hsr-turnhint{ font-size: 14px !important; font-weight: 700 !important; text-shadow: 0 2px 4px rgba(0,0,0,.6) !important; }
+
+/* ── 상단 메뉴 바 버튼 ── */
+#bd-mb-map, #bd-settings-btn, [data-bdmb="1"]{
+  font-size: 13px !important; font-weight: 800 !important; border-radius: 11px !important;
+}
+
+/* ── 키 힌트 바 ── */
+#bd-keybar{
+  font-size: 13px !important; background: rgba(15,21,38,.88) !important;
+  border: 1px solid rgba(255,216,107,.3) !important; border-radius: 12px !important;
+  color: var(--uiDim) !important; letter-spacing: .3px !important;
+}
+
+/* ── 안전지도 (v283) ── */
+#bd-map-v283 > div{ box-shadow: var(--uiShadow) !important; }
+#bd-map-v283 button[data-bd-fac]{ font-size: 13px !important; }
+
+/* ── 스크롤바 (모달 내부) ── */
+.bd-modal-box::-webkit-scrollbar, #bd-map-v283 ::-webkit-scrollbar,
+#bd-district-facility-modal ::-webkit-scrollbar{ width: 8px; }
+.bd-modal-box::-webkit-scrollbar-thumb, #bd-map-v283 ::-webkit-scrollbar-thumb,
+#bd-district-facility-modal ::-webkit-scrollbar-thumb{
+  background: rgba(255,216,107,.35); border-radius: 4px;
+}
+
+/* ── 유령 모달 차단 — .show가 아닌 모달은 어떤 잔상도 남지 않게 ── */
+.bd-modal:not(.show){
+  opacity: 0 !important; visibility: hidden !important; pointer-events: none !important;
+}
+.bd-modal.show{ visibility: visible !important; }
+
+/* ── 포커스 접근성 ── */
+.bd-modal-box button:focus-visible, #bd-district-facility-modal button:focus-visible{
+  outline: 2px solid var(--uiGold) !important; outline-offset: 2px !important;
+}

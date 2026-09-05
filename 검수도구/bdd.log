@@ -1,0 +1,495 @@
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+listen error: EADDRINUSE — 다른 데몬이 이미 떠 있음. 종료
+open failed: page.goto: net::ERR_ABORTED at file:///D:/%EB%B4%89%EB%8B%B4/%EB%B4%89%EB%8B%B4%EC%A7%80%ED%82%B4%EC%9D%B4_%EA%B2%8C%EC%8B%9C%EC%9A%A9_v338_final.html
+Call log:
+[2m  - navigating to "file:///D:/%EB%B4%89%EB%8B%B4/%EB%B4%89%EB%8B%B4%EC%A7%80%ED%82%B4%EC%9D%B4_%EA%B2%8C%EC%8B%9C%EC%9A%A9_v338_final.html", waiting until "load"[22m
+
+{"loadedIn":"3.5s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+listen error: EADDRINUSE — 다른 데몬이 이미 떠 있음. 종료
+open failed: page.goto: net::ERR_ABORTED at file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_srctest.html
+Call log:
+[2m  - navigating to "file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_srctest.html", waiting until "load"[22m
+
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_srctest.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_srctest.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47811 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_srctest.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.3s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.3s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47815 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_old.html
+{"loadedIn":"5.8s","det":false,"seed":null}
+bdd listening on 47815 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47815 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_old.html
+{"loadedIn":"3.4s","det":false,"seed":null}
+bdd listening on 47815 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.4s","det":false,"seed":null}
+bdd listening on 47815 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_old.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47815 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47815 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_old.html
+{"loadedIn":"3.4s","det":false,"seed":null}
+bdd listening on 47815 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.4s","det":false,"seed":null}
+bdd listening on 47815 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.4s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.6s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.2s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47817 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47817 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47817 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"7.7s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47818 → file:///C:/Users/ADMINI~1/AppData/Local/Temp/bd_v368e.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.8s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.5s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"10.4s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"7.8s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+listen error: EADDRINUSE — 다른 데몬이 이미 떠 있음. 종료
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+open failed: page.goto: net::ERR_ABORTED at file:///D:/%EB%B4%89%EB%8B%B4/%EB%B4%89%EB%8B%B4%EC%A7%80%ED%82%B4%EC%9D%B4_%EA%B2%8C%EC%8B%9C%EC%9A%A9_v338_final.html
+Call log:
+[2m  - navigating to "file:///D:/%EB%B4%89%EB%8B%B4/%EB%B4%89%EB%8B%B4%EC%A7%80%ED%82%B4%EC%9D%B4_%EA%B2%8C%EC%8B%9C%EC%9A%A9_v338_final.html", waiting until "load"[22m
+
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"7.6s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.1s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.5s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.5s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.7s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.4s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"7.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.2s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.2s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.8s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"5.8s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47816 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.0s","det":false,"seed":null}
+bdd listening on 47813 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+node:internal/modules/cjs/loader:1386
+  throw err;
+  ^
+
+Error: Cannot find module 'playwright'
+Require stack:
+- D:\봉담\.claude\worktrees\bongdam-directory-375-tracking-85e8ef\검수도구\bdd.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.require (node:internal/modules/cjs/loader:1463:12)
+    at require (node:internal/modules/helpers:147:16)
+    at Object.<anonymous> (D:\봉담\.claude\worktrees\bongdam-directory-375-tracking-85e8ef\검수도구\bdd.js:4:22)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\봉담\\.claude\\worktrees\\bongdam-directory-375-tracking-85e8ef\\검수도구\\bdd.js'
+  ]
+}
+
+Node.js v22.19.0
+node:internal/modules/cjs/loader:1386
+  throw err;
+  ^
+
+Error: Cannot find module 'playwright'
+Require stack:
+- D:\봉담\.claude\worktrees\bongdam-directory-375-tracking-85e8ef\검수도구\bdd.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.require (node:internal/modules/cjs/loader:1463:12)
+    at require (node:internal/modules/helpers:147:16)
+    at Object.<anonymous> (D:\봉담\.claude\worktrees\bongdam-directory-375-tracking-85e8ef\검수도구\bdd.js:4:22)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\봉담\\.claude\\worktrees\\bongdam-directory-375-tracking-85e8ef\\검수도구\\bdd.js'
+  ]
+}
+
+Node.js v22.19.0
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.8s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"7.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.7s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.1s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.5s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.3s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.6s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.7s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47818 → file:///D:/봉담/웹게시/index.html
+{"loadedIn":"5.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"8.6s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47819 → file:///D:/봉담/배포/봉담지킴이_게시용_v393.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.4s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.1s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.1s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"2.9s","det":false,"seed":null}
+bdd listening on 47811 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"6.2s","det":false,"seed":null}
+bdd listening on 47814 → file:///D:/봉담/봉담지킴이_게시용_v338_final.html
+{"loadedIn":"3.0s","det":false,"seed":null}

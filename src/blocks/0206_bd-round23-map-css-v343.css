@@ -1,0 +1,68 @@
+
+#bd-map-v342{ position:fixed; inset:0; z-index:99000; display:none; align-items:center; justify-content:center;
+  background:rgba(4,7,15,.84); -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px) }
+#bd-map-v342.show{ display:flex; }
+#bd-map-v342 .m42-panel{ width:min(96vw,1000px); max-height:96vh; overflow-y:auto; border-radius:18px;
+  background:linear-gradient(180deg,#101a2e,#0b1120); border:1px solid rgba(125,211,252,.35);
+  box-shadow:0 24px 70px rgba(0,0,0,.6); padding:14px 16px 12px; }
+#bd-map-v342 .m42-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+#bd-map-v342 .m42-title{ font-size:20px; font-weight:900; color:#ffd86b; white-space:nowrap; }
+#bd-map-v342 .m42-tip{ flex:1; font-size:12.5px; color:#cfe6ff; background:rgba(125,211,252,.10);
+  border:1px solid rgba(125,211,252,.25); border-radius:10px; padding:6px 11px; }
+#bd-map-v342 .m42-x{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); color:#fff;
+  border-radius:10px; padding:6px 13px; font-size:13px; font-weight:800; cursor:pointer; white-space:nowrap; }
+#bd-map-v342 .m42-board{ position:relative; width:min(100%, 76vh); margin:0 auto; aspect-ratio:1166/1168;
+  border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.25);
+  background-size:100% 100%; background-repeat:no-repeat; image-rendering:pixelated; }
+#bd-map-v342 .m42-base{ position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--m42-board); background-size:100% 100%; background-repeat:no-repeat;
+  filter:grayscale(1) saturate(0) brightness(.73) contrast(.92); image-rendering:pixelated; }
+#bd-map-v342 .m42-lockov{ position:absolute; z-index:4; -webkit-backdrop-filter:grayscale(1) brightness(.62);backdrop-filter:grayscale(1) brightness(.62)
+  background:rgba(10,14,26,.38); display:flex; align-items:center; justify-content:center; font-size:42px; }
+#bd-map-v342 .m42-dimp{ position:absolute; z-index:2; background:rgba(6,10,18,.08); border-radius:6px; cursor:pointer; }
+#bd-map-v342 .m42-dimp:hover{ outline:2px solid rgba(255,216,107,.85); outline-offset:1px; }
+#bd-map-v342 .m42-donebg{ position:absolute; z-index:1; pointer-events:none; }
+#bd-map-v342 .m42-float{ animation:m42bob 1.6s ease-in-out infinite; }
+@keyframes m42bob{ 0%,100%{ margin-top:0; } 50%{ margin-top:-7px; } }
+#bd-map-v342 .m42-vchk{ position:absolute; z-index:3; font-size:15px; text-shadow:0 1px 3px rgba(0,0,0,.6);
+  transform:translate(-50%,-50%); }
+#bd-map-v342 .m42-rname{ position:absolute; z-index:5; pointer-events:none; font-size:13px; font-weight:900; color:#fff;
+  background:rgba(10,16,30,.82); border-radius:8px; padding:3px 9px; border:1px solid rgba(255,255,255,.28); }
+#bd-map-v342 .m42-pct{ position:absolute; z-index:5; pointer-events:none; font-size:12px; font-weight:900; color:#ffd86b;
+  background:rgba(10,16,30,.82); border-radius:8px; padding:3px 8px; border:1px solid rgba(255,216,107,.4); }
+#bd-map-v342 .m42-done{ position:absolute; z-index:5; pointer-events:none; font-size:11px; font-weight:800; color:#c9f7c9;
+  background:rgba(10,26,14,.85); border:1px solid rgba(142,255,160,.45); border-radius:8px; padding:2px 8px; }
+/* (v368) 마커를 «핀»처럼 지점 위에 띄우고(하단 앵커) 크기를 줄여 건물을 덜 가리게 (QA ISSUE-05) */
+#bd-map-v342 .m42-mk{ position:absolute; z-index:3; transform:translate(-50%,-88%); transform-origin:50% 100%; }
+#bd-map-v342 .m42-mk img{ display:block; width:100%; image-rendering:pixelated; }
+#bd-map-v342 .m42-hz{ width:4.3%; animation:m42pulse 1.1s ease-in-out infinite; }
+#bd-map-v342 .m42-hz img{ filter:grayscale(1) saturate(0) brightness(.72); opacity:.78; }
+#bd-map-v342 .m42-pure{ width:4.5%; filter:drop-shadow(0 2px 6px rgba(120,200,255,.6)); }
+#bd-map-v342 .m42-pure img{ filter:none; opacity:1; }
+@keyframes m42pulse{ 0%,100%{ transform:translate(-50%,-88%) scale(1);} 50%{ transform:translate(-50%,-88%) scale(1.13);} }
+/* (v368) 칸 상단 근접 마커: 아래로 매달기 (잘림 방지) */
+#bd-map-v342 .m42-mk.m42-drop{ transform:translate(-50%,-8%); transform-origin:50% 0; }
+#bd-map-v342 .m42-hz.m42-drop{ animation-name:m42pulseDrop; }
+@keyframes m42pulseDrop{ 0%,100%{ transform:translate(-50%,-8%) scale(1);} 50%{ transform:translate(-50%,-8%) scale(1.13);} }
+/* (v369) 내 위치 마커 — 맥동 링 + 점 + «나» 라벨, 항상 최상단 */
+#bd-map-v342 .m42-hero{ position:absolute; z-index:6; transform:translate(-50%,-50%); pointer-events:none; width:0; height:0; }
+#bd-map-v342 .m42-hero-ring{ position:absolute; left:-13px; top:-13px; width:26px; height:26px; border-radius:50%;
+  border:2px solid rgba(80,190,255,.95); box-shadow:0 0 10px 3px rgba(80,190,255,.55); animation:m42heroPulse 1.3s ease-out infinite; }
+#bd-map-v342 .m42-hero-dot{ position:absolute; left:-6px; top:-6px; width:12px; height:12px; border-radius:50%;
+  background:#2ea7ff; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.7); }
+#bd-map-v342 .m42-hero-lb{ position:absolute; left:10px; top:-9px; font-size:11px; font-weight:900; color:#fff; background:rgba(20,110,200,.92);
+  border-radius:6px; padding:1px 6px; white-space:nowrap; box-shadow:0 1px 3px rgba(0,0,0,.6); }
+@keyframes m42heroPulse{ 0%{ transform:scale(.7); opacity:1; } 100%{ transform:scale(1.9); opacity:0; } }
+/* (v368) 방문 시설: 외곽 글로우 + 모서리 ✓ 배지 (이모지 ✅ 대체) */
+#bd-map-v342 .m42-colorpatch{ position:absolute; z-index:2; pointer-events:none; background-image:var(--m42-board);
+  background-repeat:no-repeat; image-rendering:pixelated; }
+#bd-map-v342 .m42-vok{ position:absolute; z-index:2; pointer-events:none; border-radius:6px;
+  box-shadow:0 0 0 2px rgba(120,225,255,.95), 0 0 10px 3px rgba(120,225,255,.5); }
+#bd-map-v342 .m42-vbadge{ position:absolute; right:-7px; top:-7px; width:14px; height:14px; border-radius:50%;
+  background:#2fb872; color:#fff; font-size:10px; font-weight:900; line-height:14px; text-align:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.6); }
+#bd-map-v342 .m42-foot{ display:flex; align-items:center; gap:14px; margin-top:9px; flex-wrap:wrap;
+  font-size:12.5px; color:#9fb3d1; }
+#bd-map-v342 .m42-foot b{ color:#ffd86b; }
+#bd-map-v342 .m42-leg{ display:flex; align-items:center; gap:5px; }
+#bd-map-v342 .m42-leg img{ width:18px; vertical-align:middle; image-rendering:pixelated; }

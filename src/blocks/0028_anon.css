@@ -1,0 +1,13 @@
+
+  #bge-v32-asset-panel{margin:10px 0 12px;padding:10px;border:2px solid rgba(119,217,255,.65);border-radius:12px;background:rgba(10,25,42,.92);box-shadow:0 0 18px rgba(0,180,255,.16) inset;color:#eaf6ff;font-family:'Noto Serif KR',serif}
+  #bge-v32-asset-panel h4{margin:0 0 8px!important;padding:0!important;border:0!important;color:#78d9ff!important;font-size:14px!important}
+  #bge-v32-asset-panel label{display:block;margin:7px 0 3px;color:#bfefff;font-size:11px}
+  #bge-v32-asset-panel select,#bge-v32-asset-panel input{width:100%;box-sizing:border-box;border:1px solid rgba(168,221,255,.42);border-radius:8px;padding:7px 8px;background:#07131f;color:#eaf6ff;font-family:inherit;font-size:12px}
+  #bge-v32-asset-panel .row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  #bge-v32-asset-panel .btnrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  #bge-v32-asset-panel button{flex:1;min-width:96px;border:0;border-radius:9px;padding:8px;background:#21709d;color:white;font-family:inherit;font-weight:800;font-size:12px;cursor:pointer}
+  #bge-v32-asset-panel button:hover{filter:brightness(1.12)}
+  #bge-v32-asset-panel button.warn{background:#996618}#bge-v32-asset-panel button.danger{background:#983232}
+  #bge-v32-current{min-height:46px;display:flex;gap:8px;align-items:center;margin-top:8px;padding:7px;border-radius:9px;background:rgba(0,0,0,.32);font-size:11px;line-height:1.35;color:#d8f1ff}
+  #bge-v32-current img{width:44px;height:44px;object-fit:cover;border-radius:7px;border:1px solid rgba(168,221,255,.45);background:#111}
+  #bge-v32-help{font-size:11px;color:#b7d6e8;line-height:1.45;margin-top:8px;padding:7px;border-radius:8px;background:rgba(255,255,255,.06)}

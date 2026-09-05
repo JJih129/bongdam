@@ -1,0 +1,7 @@
+
+#bd-settings-modal .bd-uiscale-row{ display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  padding:10px 0; border-top:1px solid rgba(255,255,255,.12); margin-top:6px; }
+#bd-settings-modal .bd-uiscale-row > span{ margin-right:6px; }
+#bd-settings-modal .bd-uiscale-row button{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25);
+  color:#dfe7f5; border-radius:8px; padding:5px 10px; font-size:12.5px; font-weight:700; cursor:pointer; }
+#bd-settings-modal .bd-uiscale-row button.on{ background:rgba(255,216,107,.22); border-color:rgba(255,216,107,.75); color:#ffd86b; }

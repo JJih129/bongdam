@@ -1,0 +1,11 @@
+
+/* (v68) 배지 수여·컷신 오버레이 중에는 우측 길안내·에디터 버튼 등 HUD를 감춘다
+   — 연출 딤 위로 UI가 떠 있어 몰입이 깨지던 문제 */
+body.bd-cinematic #bd-district-hud,
+body.bd-cinematic .bd-nav-guide,
+body.bd-cinematic .bd-ch,
+body.bd-cinematic .bd-obj,
+body.bd-cinematic .bd-district-mini-grid,
+body.bd-cinematic .bd-district-mini,
+body.bd-cinematic [id^="bge-"],
+body.bd-cinematic [class*="bge-open"] { opacity: 0 !important; pointer-events: none !important; transition: opacity .25s ease; }

@@ -1,0 +1,27 @@
+
+/* (v332) ⑦ LD(VN) 대화 중 고정 HUD 정리 — LD·대화창이 항상 최상위로 */
+body.bd-vn-on #bd-quest-hud, body.bd-vn-on #bd-menu-btns, body.bd-vn-on #bd-keybar,
+body.bd-vn-on #bd-goal-down, body.bd-vn-on #bd-worry, body.bd-vn-on #bd-locked-hint,
+body.bd-vn-on #bd-hp-dom{ opacity:0 !important; pointer-events:none !important; transition:opacity .18s; }
+body.bd-vn-on #bd-toast{ opacity:.15 !important; }
+/* (v332) ① 긴 제목 줄바꿈 — HUD 영역 이탈 방지 */
+#bd-quest-hud .bd-ch{ max-width:340px; overflow-wrap:break-word; line-height:1.35; }
+/* (v332) ⑧ HP 다크 패널 (퀘스트 HUD와 같은 톤) */
+#bd-hp-dom{ position:fixed; top:14px; left:14px; z-index:900; min-width:230px;
+  background:var(--uiBg, rgba(13,19,36,.92)); border:1px solid var(--uiLine, rgba(120,140,190,.35));
+  border-radius:12px; box-shadow:var(--uiShadow, 0 4px 14px rgba(0,0,0,.45));
+  padding:9px 12px 8px; color:#e8ecf7; font-size:13px; pointer-events:none; }
+#bd-hp-dom .hp-row{ display:flex; align-items:center; gap:8px; }
+#bd-hp-dom .hp-heart{ font-size:14px; }
+#bd-hp-dom .hp-track{ flex:1; height:12px; border-radius:6px; background:rgba(8,12,26,.9);
+  border:1px solid rgba(120,140,190,.25); overflow:hidden; }
+#bd-hp-dom .hp-fill{ height:100%; border-radius:6px; background:linear-gradient(180deg,#67e08a,#1f9d4e); transition:width .18s; }
+#bd-hp-dom.hp-mid .hp-fill{ background:linear-gradient(180deg,#ffd54a,#c07c14); }
+#bd-hp-dom.hp-low .hp-fill{ background:linear-gradient(180deg,#ff6a58,#ad1a1a); }
+#bd-hp-dom.hp-flash{ border-color:rgba(255,90,90,.85); box-shadow:0 0 14px rgba(255,60,60,.5); }
+#bd-hp-dom .hp-num{ font-weight:700; font-size:12.5px; color:#cfd8ee; min-width:64px; text-align:right; }
+#bd-hp-dom .xp-row{ display:flex; align-items:center; gap:8px; margin-top:6px; }
+#bd-hp-dom .xp-lv{ font-size:11.5px; font-weight:700; color:#8fb4ff; }
+#bd-hp-dom .xp-track{ flex:1; height:6px; border-radius:3px; background:rgba(8,12,26,.9); overflow:hidden; }
+#bd-hp-dom .xp-fill{ height:100%; border-radius:3px; background:linear-gradient(180deg,#79b9ff,#2a63d8); transition:width .18s; }
+#bd-hp-dom .xp-num{ font-size:10.5px; color:#93a2c8; min-width:46px; text-align:right; }

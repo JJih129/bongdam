@@ -1,0 +1,8 @@
+
+/* (v268) 사용하지 않는 도구 제거 — 게임저장 버튼·위험요소 배치(개발)·복사/붙여넣기·기본 배치·창 정리·대화 편집·쉬운 모드·프리팹·구세대 자료함 */
+#save-btn, [data-bdmb="dev"],
+#bge-copy, #bge-paste, #bge-tool-place, #bge-place-on,
+#bge-tab-resetpos, #bge-tab-dialog, #bge-tab-simple,
+.bge-prefab-list, #bge-prefab-add, #bge-prefab-save,
+#bge-v37-asset-panel, #bge-v3-panel, #bge-kid-panel, #bge-v43-panel
+{ display: none !important; }

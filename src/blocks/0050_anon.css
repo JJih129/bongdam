@@ -1,0 +1,330 @@
+
+#hsr-battle{
+  position:fixed; inset:0; z-index:99999; display:none;
+  font-family:'Pretendard','Malgun Gothic',sans-serif;
+  color:#fff; overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 20%, #1a2340 0%, #0a0e1c 60%, #05070f 100%);
+  user-select:none;
+}
+#hsr-battle.hsr-show{ display:block; animation:hsrFadeIn .5s ease; }
+@keyframes hsrFadeIn{ from{opacity:0} to{opacity:1} }
+
+/* 상단 배경 장식 별 */
+#hsr-stars{ position:absolute; inset:0; pointer-events:none; opacity:.5; z-index:1; }
+
+/* 전장 */
+#hsr-arena{ position:absolute; inset:0; }
+
+/* ── 지면/원경으로 화면 채우기 (훈련장 들판 느낌) ── */
+#hsr-arena::before{
+  /* 원경 언덕 실루엣 */
+  content:''; position:absolute; left:0; right:0; bottom:34%;
+  height:120px; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(60% 100% at 20% 100%, rgba(30,58,45,.9), transparent 70%),
+    radial-gradient(70% 100% at 75% 100%, rgba(26,50,40,.9), transparent 70%);
+}
+#hsr-arena::after{
+  /* 앞쪽 지면 (아래 40%) */
+  content:''; position:absolute; left:0; right:0; bottom:0;
+  height:40%; pointer-events:none; z-index:0;
+  background:
+    linear-gradient(180deg, #24402c 0%, #1a3222 40%, #12251a 100%);
+  box-shadow:inset 0 20px 40px rgba(0,0,0,.35);
+}
+/* 지면 위 은은한 격자(훈련장 바닥) */
+#hsr-ground-grid{
+  position:absolute; left:0; right:0; bottom:0; height:40%;
+  pointer-events:none; z-index:0; opacity:.14;
+  background-image:
+    linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px);
+  background-size:60px 34px;
+  transform:perspective(320px) rotateX(58deg);
+  transform-origin:bottom center;
+  mask-image:linear-gradient(180deg, transparent, #000 40%);
+  -webkit-mask-image:linear-gradient(180deg, transparent, #000 40%);
+}
+
+/* 캐릭터 공통 — 포켓몬식 원근 구도 */
+.hsr-unit{
+  position:absolute; z-index:2;
+  width:220px; text-align:center;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1.3);
+}
+.hsr-unit .hsr-sprite{
+  line-height:1;
+  display:flex; align-items:flex-end; justify-content:center;
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.6));
+  transition:transform .18s, filter .18s;
+}
+.hsr-hero .hsr-sprite svg{ display:block; }
+
+/* 주인공: 화면 왼쪽 아래 · 가까워서 크게 · 뒤통수(등)가 보임 */
+.hsr-hero{ left:7%; bottom:6%; width:360px; }
+.hsr-hero .hsr-sprite{ font-size:340px; transform:scaleX(1); }
+.hsr-hero .hsr-sprite svg{ width:340px; height:340px; }
+/* (v194) 주인공 LD 전투 이미지: 세로형 원본이라 높이 기준, 좌측 정렬(공격 시 팔이 적 방향으로 뻗음) */
+.hsr-hero .hsr-sprite img{ display:block; height:min(430px, 58vh); width:auto; margin:0; image-rendering:auto; user-select:none; -webkit-user-drag:none; }
+
+/* 적: 화면 오른쪽 · 정면이 보임 · 크게 */
+.hsr-enemy{ right:8%; bottom:33%; width:420px; }
+.hsr-enemy .hsr-sprite{ font-size:220px; transform:scaleX(1); }
+.hsr-enemy .hsr-sprite img{ display:block; width:400px; height:400px; object-fit:contain; }
+
+/* 좁은 화면에서는 스프라이트를 살짝 줄여 넘침 방지 */
+@media (max-width:520px){
+  .hsr-hero{ width:230px; }
+  .hsr-hero .hsr-sprite svg{ width:230px; height:230px; }
+  .hsr-hero .hsr-sprite img{ height:min(290px, 58vh); }
+  .hsr-hero .hsr-sprite{ font-size:230px; }
+  .hsr-enemy{ width:250px; }
+  .hsr-enemy .hsr-sprite img{ width:250px; height:250px; }
+  .hsr-hero::after{ width:220px; }
+  .hsr-enemy::after{ width:180px; }
+}
+
+/* 발밑 원형 진 (주인공은 크게, 적은 작게) */
+.hsr-unit::after{
+  content:''; position:absolute; left:50%; bottom:-18px;
+  transform:translateX(-50%);
+  border-radius:50%;
+}
+.hsr-hero::after{
+  width:320px; height:72px;
+  background:radial-gradient(ellipse at center, rgba(120,170,255,.5), transparent 70%);
+}
+.hsr-enemy::after{
+  width:280px; height:60px;
+  background:radial-gradient(ellipse at center, rgba(255,120,120,.45), transparent 70%);
+}
+
+/* 활성 턴 강조 (각자 기본 크기 기준으로 확대) */
+.hsr-hero.hsr-turn .hsr-sprite{ transform:scaleX(1) scale(1.1) translateY(-6px); filter:drop-shadow(0 0 20px #ffd86b) drop-shadow(0 12px 18px rgba(0,0,0,.6)); }
+.hsr-enemy.hsr-turn .hsr-sprite{ transform:scaleX(1) scale(1.12) translateY(-6px); filter:drop-shadow(0 0 20px #ffd86b) drop-shadow(0 12px 18px rgba(0,0,0,.6)); }
+
+/* 피격 흔들림 */
+@keyframes hsrHit{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(9px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(4px)} }
+.hsr-shake{ animation:hsrHit .4s; }
+/* 공격 전진 */
+.hsr-lunge-r{ /* (v120) 박치기형 돌진 제거 — 이미지 컷 전환으로 대체 */ }
+.hsr-lunge-l{ /* (v120) 돌진 제거 */ }
+/* ── (v193) 보스전 연출 ── */
+@keyframes bdArenaShake{ 0%,100%{transform:translate(0,0)} 15%{transform:translate(-10px,5px)} 30%{transform:translate(9px,-6px)} 45%{transform:translate(-7px,-4px)} 60%{transform:translate(6px,4px)} 75%{transform:translate(-4px,2px)} 90%{transform:translate(2px,-1px)} }
+.bd-arena-shake{ animation:bdArenaShake .5s ease; }
+@keyframes bdArenaShakeBig{ 0%,100%{transform:translate(0,0)} 12%{transform:translate(-20px,10px)} 26%{transform:translate(18px,-12px)} 40%{transform:translate(-15px,-9px)} 54%{transform:translate(13px,8px)} 68%{transform:translate(-9px,5px)} 82%{transform:translate(6px,-3px)} }
+.bd-arena-shake-big{ animation:bdArenaShakeBig .7s ease; }
+#bd-boss-banner{ position:fixed; left:50%; top:34%; transform:translate(-50%,-50%); z-index:1500;
+  pointer-events:none; text-align:center; animation:bdBossBannerFade 3.2s ease forwards; }
+@keyframes bdBossBannerFade{ 0%{opacity:0} 10%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
+.bd-boss-banner-sub{ color:#c9a8ff; font-size:14px; letter-spacing:10px; text-shadow:0 2px 8px #000;
+  animation:bdBannerSub .9s ease; }
+@keyframes bdBannerSub{ 0%{opacity:0; transform:translateY(-14px)} 100%{opacity:1; transform:translateY(0)} }
+.bd-boss-banner-name{ color:#f3e8ff; font-size:clamp(28px,6vw,46px); font-weight:900; margin-top:6px;
+  text-shadow:0 0 18px rgba(150,80,255,.9), 0 3px 10px #000;
+  animation:bdBannerName .9s cubic-bezier(.2,1.4,.4,1); }
+@keyframes bdBannerName{ 0%{opacity:0; transform:scale(2.2); letter-spacing:22px; filter:blur(6px)} 100%{opacity:1; transform:scale(1); letter-spacing:4px; filter:blur(0)} }
+.bd-boss-banner-tip{ color:#ffd9a8; font-size:13px; margin-top:10px; text-shadow:0 2px 6px #000;
+  animation:bdBannerTip 1.4s ease; }
+@keyframes bdBannerTip{ 0%,45%{opacity:0} 100%{opacity:1} }
+.bd-part-boom{ position:absolute; left:50%; top:42%; width:40px; height:40px; transform:translate(-50%,-50%);
+  border:6px solid rgba(200,140,255,.95); border-radius:50%; pointer-events:none; z-index:1300;
+  box-shadow:0 0 30px rgba(160,90,255,.8), inset 0 0 20px rgba(200,150,255,.6);
+  animation:bdPartBoom .8s ease-out forwards; }
+@keyframes bdPartBoom{ 0%{opacity:1; transform:translate(-50%,-50%) scale(.35)} 65%{opacity:.85} 100%{opacity:0; transform:translate(-50%,-50%) scale(3)} }
+.bd-boss-groggy .hsr-sprite img{ filter:grayscale(.65) brightness(1.18) !important; }
+.bd-boss-groggy .hsr-sprite{ animation:bdGroggySway 1.6s ease-in-out infinite; }
+@keyframes bdGroggySway{ 0%,100%{transform:rotate(-2.5deg)} 50%{transform:rotate(2.5deg)} }
+@keyframes hsrLungeR{ 0%{transform:translateX(0)} 45%{transform:translateX(60px)} 100%{transform:translateX(0)} }
+@keyframes hsrLungeL{ 0%{transform:translateX(0)} 45%{transform:translateX(-60px)} 100%{transform:translateX(0)} }
+
+/* 유닛 정보 (이름 + HP + 약점) — 포켓몬식 배치 */
+.hsr-info{
+  position:absolute; width:210px; z-index:6;
+  background:rgba(10,16,32,.72); border:1px solid rgba(255,255,255,.18);
+  border-radius:12px; padding:9px 12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)
+}
+/* 포켓몬식: 정보창을 화면(아레나) 코너에 고정 → 어떤 크기에서도 안 잘림 */
+/* 적 정보창: 화면 왼쪽 위 */
+.hsr-enemy .hsr-info{ position:fixed; left:5%; top:96px; }
+/* 주인공 정보창: 화면 오른쪽, 커맨드 위쪽 */
+.hsr-hero .hsr-info{ position:fixed; right:5%; bottom:210px; }
+@media (max-width:760px){
+  .hsr-enemy .hsr-info{ left:4%; top:88px; width:180px; }
+  .hsr-hero .hsr-info{ right:4%; bottom:232px; width:180px; }
+}
+.hsr-info .hsr-name{ font-size:15px; font-weight:700; margin-bottom:4px; text-shadow:0 2px 4px #000; }
+.hsr-info .hsr-lv{ font-size:11px; opacity:.75; font-weight:400; }
+.hsr-hpbar{
+  height:12px; border-radius:6px; background:rgba(255,255,255,.15);
+  overflow:hidden; box-shadow:inset 0 1px 3px rgba(0,0,0,.5); position:relative;
+}
+.hsr-hpbar > i{
+  display:block; height:100%; width:100%;
+  background:linear-gradient(90deg,#4ade80,#22c55e);
+  transition:width .45s cubic-bezier(.2,.8,.2,1);
+}
+.hsr-enemy .hsr-hpbar > i{ background:linear-gradient(90deg,#f87171,#dc2626); }
+.hsr-hptext{ font-size:11px; margin-top:3px; text-align:center; opacity:.9; letter-spacing:.5px; }
+
+/* 인성(toughness) 바 — 약점 게이지 */
+.hsr-tough{ display:none !important;   /* (v239) 인성 시스템 폐지 — 약점은 피해 배율로만 표현 */
+  height:7px; border-radius:4px; margin-top:5px; overflow:hidden;
+  background:rgba(255,255,255,.12); position:relative;
+}
+.hsr-tough > i{ display:block; height:100%; background:linear-gradient(90deg,#fde68a,#f59e0b); transition:width .4s; }
+.hsr-tough.hsr-broken > i{ background:#555; }
+
+/* 약점 속성 아이콘 */
+.hsr-weak{ margin-top:6px; display:flex; gap:5px; justify-content:center; }
+.hsr-weak span{
+  width:24px; height:24px; border-radius:50%; font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+  transition:transform .2s, box-shadow .2s;
+}
+.hsr-weak span.hsr-hitweak{ transform:scale(1.3); box-shadow:0 0 12px #ffd86b; }
+
+/* ── 액션 게이지 (속도바) — (v239) 1대1 전투라 정보값이 없어 제거 ── */
+#hsr-speedbar{ display:none !important; }
+#bd-mpbar-inject{ display:none !important; }   /* (v239) 동료 SP 폐지 */
+
+#hsr-speedbar{
+  position:absolute; left:0; right:0; top:0; height:60px;
+  padding:12px 18px 0;
+}
+#hsr-speed-label{ font-size:11px; opacity:.6; letter-spacing:2px; margin-bottom:5px; }
+#hsr-speed-track{
+  position:relative; height:26px; border-radius:13px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+}
+.hsr-pip{
+  position:absolute; top:50%; transform:translate(-50%,-50%);
+  width:30px; height:30px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:16px;
+  border:2px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.5);
+  transition:left .35s linear;
+}
+.hsr-pip.hsr-pip-hero{ background:#2563eb; }
+.hsr-pip.hsr-pip-enemy{ background:#b91c1c; }
+#hsr-speed-track::after{
+  content:'다음 행동'; position:absolute; right:8px; top:-16px;
+  font-size:9px; opacity:.5;
+}
+
+/* ── 하단 커맨드 UI ── */
+#hsr-cmd{
+  position:absolute; left:0; right:0; bottom:0; z-index:10;
+  padding:16px 18px calc(18px + env(safe-area-inset-bottom,0));
+  background:linear-gradient(180deg, transparent, rgba(5,7,15,.92) 45%);
+}
+#hsr-turnmsg{
+  text-align:center; font-size:14px; min-height:22px; margin-bottom:12px;
+  opacity:.9; text-shadow:0 2px 4px #000;
+}
+/* 궁극기 게이지 */
+#hsr-ult-wrap{
+  max-width:520px; margin:0 auto 12px; display:flex; align-items:center; gap:10px;
+}
+#hsr-ult-label{ font-size:11px; letter-spacing:1px; opacity:.75; white-space:nowrap; }
+#hsr-ult-track{ flex:1; height:10px; border-radius:5px; background:rgba(255,255,255,.12); overflow:hidden; }
+#hsr-ult-track > i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,#a855f7,#facc15); transition:width .4s; }
+#hsr-ult-pct{ font-size:11px; opacity:.75; width:38px; text-align:right; }
+
+#hsr-actions{
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+  max-width:640px; margin:0 auto;
+}
+.hsr-act{
+  flex:1 1 130px; max-width:180px;
+  padding:14px 10px; border-radius:14px; cursor:pointer;
+  background:linear-gradient(180deg,#1e293b,#0f172a);
+  border:1px solid rgba(255,255,255,.15);
+  text-align:center; transition:transform .12s, box-shadow .12s, opacity .2s;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.hsr-act:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.5); }
+.hsr-act:active{ transform:translateY(0); }
+.hsr-act .hsr-ai{ font-size:26px; margin-bottom:4px; }
+.hsr-act .hsr-at{ font-size:14px; font-weight:700; }
+.hsr-act .hsr-ad{ font-size:10px; opacity:.65; margin-top:3px; line-height:1.3; }
+.hsr-act.hsr-basic{ border-color:rgba(96,165,250,.5); }
+.hsr-act.hsr-skill{ border-color:rgba(52,211,153,.5); }
+.hsr-act.hsr-ult{ border-color:rgba(250,204,21,.7); background:linear-gradient(180deg,#3b2f0a,#1a1405); }
+.hsr-act.hsr-ult.hsr-ready{ animation:hsrUltGlow 1.3s ease-in-out infinite; }
+@keyframes hsrUltGlow{ 0%,100%{box-shadow:0 0 8px rgba(250,204,21,.4)} 50%{box-shadow:0 0 22px rgba(250,204,21,.8)} }
+.hsr-act.hsr-disabled{ opacity:.55; pointer-events:none; filter:grayscale(.3); }
+.hsr-act.hsr-flee{ flex:0 0 auto; max-width:120px; border-color:rgba(148,163,184,.4); }
+
+/* 데미지 팝업 */
+.hsr-dmg{
+  position:absolute; font-weight:800; pointer-events:none;
+  text-shadow:0 2px 6px #000; z-index:5;
+  animation:hsrDmgFloat 1s ease-out forwards;
+}
+@keyframes hsrDmgFloat{
+  0%{ transform:translateY(0) scale(.6); opacity:0; }
+  15%{ transform:translateY(-10px) scale(1.25); opacity:1; }
+  60%{ transform:translateY(-40px) scale(1); opacity:1; }
+  100%{ transform:translateY(-70px) scale(.9); opacity:0; }
+}
+.hsr-dmg.hsr-crit{ color:#ffd86b; font-size:44px; }
+.hsr-dmg.hsr-normal{ color:#fff; font-size:34px; }
+.hsr-dmg.hsr-weakhit{ color:#7dd3fc; font-size:40px; }
+.hsr-dmg.hsr-heal{ color:#4ade80; font-size:34px; }
+.hsr-dmg.hsr-enemyhit{ color:#fca5a5; font-size:32px; }
+
+/* BREAK 표시 */
+#hsr-break{
+  position:absolute; left:50%; top:40%; transform:translate(-50%,-50%) scale(0);
+  font-size:52px; font-weight:900; letter-spacing:4px;
+  color:#ffd86b; text-shadow:0 0 24px #f59e0b, 0 4px 8px #000;
+  pointer-events:none; opacity:0;
+}
+#hsr-break.hsr-play{ animation:hsrBreak 1s ease; }
+@keyframes hsrBreak{
+  0%{ transform:translate(-50%,-50%) scale(2); opacity:0; }
+  25%{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+  75%{ opacity:1; }
+  100%{ transform:translate(-50%,-50%) scale(1.1); opacity:0; }
+}
+
+/* 결과 오버레이 */
+#hsr-result{
+  position:absolute; inset:0; display:none; z-index:20;
+  background:rgba(5,7,15,.82); -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)
+  align-items:center; justify-content:center; flex-direction:column;
+}
+#hsr-result.hsr-show2{ display:flex; animation:hsrFadeIn .4s; }
+#hsr-result h2{
+  font-size:46px; margin:0 0 8px; letter-spacing:6px;
+  text-shadow:0 0 20px currentColor;
+}
+#hsr-result.win h2{ color:#ffd86b; }
+#hsr-result.lose h2{ color:#f87171; }
+#hsr-result p{ font-size:14px; opacity:.85; margin:4px 0; }
+#hsr-result button{
+  margin-top:22px; padding:12px 34px; font-size:15px; font-weight:700;
+  border:none; border-radius:30px; cursor:pointer; color:#0a0e1c;
+  background:linear-gradient(90deg,#fde68a,#f59e0b);
+  box-shadow:0 6px 18px rgba(245,158,11,.5);
+}
+#hsr-result button:active{ transform:scale(.97); }
+
+/* 속성 선택 팝업 (마법사가 아닌 직업도 약점 타격 가능하게) */
+#hsr-elem-pick{
+  position:absolute; left:50%; bottom:130px; transform:translateX(-50%);
+  display:none; gap:10px; padding:12px 14px; border-radius:16px;
+  background:rgba(15,23,42,.95); border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 8px 24px rgba(0,0,0,.6); z-index:15;
+}
+#hsr-elem-pick.hsr-show3{ display:flex; }
+.hsr-elem-btn{
+  width:52px; height:52px; border-radius:12px; font-size:26px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+  transition:transform .12s;
+}
+.hsr-elem-btn:hover{ transform:scale(1.1); }
+.hsr-elem-btn.hsr-isweak{ box-shadow:0 0 10px #ffd86b; border-color:#ffd86b; }

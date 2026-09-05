@@ -1,0 +1,17 @@
+
+#bd-ending-fx{ position: fixed; inset: 0; z-index: 100200; pointer-events: none;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  background: radial-gradient(ellipse at center, rgba(20,28,55,.55), rgba(5,8,18,.88));
+  opacity: 0; transition: opacity .5s; }
+#bd-ending-fx.on{ opacity: 1; }
+#bd-ending-fx .efx-title{ font-size: 46px; font-weight: 900; color: #ffd86b;
+  text-shadow: 0 4px 22px rgba(255,190,60,.55), 0 2px 0 rgba(0,0,0,.5);
+  transform: scale(.6); opacity: 0; transition: all .6s cubic-bezier(.2,1.4,.4,1); }
+#bd-ending-fx.on .efx-title{ transform: scale(1); opacity: 1; }
+#bd-ending-fx .efx-sub{ margin-top: 14px; font-size: 19px; color: #e8ecf7; opacity: 0; transition: opacity .8s .5s; }
+#bd-ending-fx.on .efx-sub{ opacity: 1; }
+#bd-ending-fx .efx-stats{ margin-top: 18px; display: flex; gap: 14px; opacity: 0; transition: opacity .8s 1s; }
+#bd-ending-fx.on .efx-stats{ opacity: 1; }
+#bd-ending-fx .efx-stats div{ background: rgba(13,19,36,.9); border: 1px solid rgba(255,216,107,.4);
+  border-radius: 12px; padding: 10px 18px; color: #ffd86b; font-weight: 700; font-size: 15px; }
+#bd-ending-fx canvas{ position: absolute; inset: 0; width: 100%; height: 100%; }

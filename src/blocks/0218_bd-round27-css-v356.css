@@ -1,0 +1,15 @@
+
+/* 알 페이즈 — 미완성 형체: 블러·저채도·타원 실루엣·맥동 */
+.hsr-enemy.bd-egg-phase .hsr-sprite img{
+  filter: blur(6px) brightness(.62) saturate(.55) !important;
+  clip-path: ellipse(37% 46% at 50% 56%);
+  transform: scale(.84);
+  animation: bdEggPulse 1.8s ease-in-out infinite;
+}
+@keyframes bdEggPulse{ 0%,100%{ transform:scale(.84); } 50%{ transform:scale(.88); } }
+/* 부화 연출 — 흰 섬광 */
+#bd-egg-flash{ position:fixed; inset:0; z-index:100050; background:#fff; opacity:0; pointer-events:none; }
+#bd-egg-flash.on{ animation: bdEggFlash .9s ease-out forwards; }
+@keyframes bdEggFlash{ 0%{opacity:0} 18%{opacity:.95} 100%{opacity:0} }
+/* 증강 선택 중 담이 말풍선 숨김 */
+body.bd-aug-on #bd-dami-bubble{ opacity:0 !important; visibility:hidden !important; }

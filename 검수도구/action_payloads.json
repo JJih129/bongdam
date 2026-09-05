@@ -1,0 +1,19 @@
+{
+  "_note": "봉담지킴이 조작 규격 — 이동 WASD / 조사·대화 F / 가방 E / 대사 넘기기 Space / 임무 J / 닫기 Escape",
+  "steps": [
+    { "buttons": ["space"], "frames": 6, "capture": true },
+    { "buttons": ["space"], "frames": 6 },
+    { "buttons": ["left"], "frames": 20, "capture": true },
+    { "buttons": ["down"], "frames": 20 },
+    { "buttons": [], "frames": 6, "capture": true },
+    { "buttons": ["f"], "frames": 8, "capture": true },
+    { "buttons": ["space"], "frames": 8 },
+    { "buttons": ["space"], "frames": 8, "capture": true },
+    { "buttons": ["e"], "frames": 10, "capture": true },
+    { "buttons": ["escape"], "frames": 8 },
+    { "buttons": ["j"], "frames": 10, "capture": true },
+    { "buttons": ["escape"], "frames": 8 },
+    { "buttons": ["right"], "frames": 24, "capture": true },
+    { "buttons": ["up"], "frames": 24, "capture": true }
+  ]
+}

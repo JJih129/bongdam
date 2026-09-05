@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bongdam-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "48173"],
+      "port": 48173
+    }
+  ]
+}

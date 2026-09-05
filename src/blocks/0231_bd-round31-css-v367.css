@@ -1,0 +1,13 @@
+
+/* (v367) 튜토 스포트라이트를 HUD 아래로 — 강조 박스가 퀘스트 HUD·미니맵을 가리던 문제 */
+#bd-spot{ z-index:660 !important; }
+#bd-spot-block{ z-index:659 !important; }
+#bd-spot2{ z-index:660 !important; }
+/* (v369) 전투 중(#hsr-battle z 99999)에는 스포트라이트를 전투 화면 위로 — v367의 660 강등이 전투 튜토 강조(노란 테두리·반투명 배경)를 통째로 가렸다 */
+body.bd-battle-on #bd-spot{ z-index:100000 !important; }
+body.bd-battle-on #bd-spot-block{ z-index:99990 !important; }
+body.bd-battle-on #bd-spot2{ z-index:100000 !important; }
+/* (v370) 가게 튜토(0109) 중에는 시설 모달(9950)·상점 모달(1200) 위로 — 버튼 강조가 모달에 가려지지 않게 */
+body.bd-shop-tuto-on #bd-spot{ z-index:100000 !important; }
+body.bd-shop-tuto-on #bd-spot-block{ z-index:99990 !important; }
+body.bd-shop-tuto-on #bd-spot2{ z-index:100000 !important; }

@@ -1,0 +1,11 @@
+
+/* (v147) 화면 정리 — 대사창 외 상단·하단 상시 알림 UI 중 불필요한 것 제거
+   · 상단 중앙 「◯◯리 · 도로 끝에서 인접 리로 자연 이동 · 주요시설 0/16」 배너:
+     같은 정보가 우측 길안내 패널·리 이동 패널에 이미 있다 → 숨김
+   · 좌하단 「🎛 UI 조정」: 개발용 도구 → 에디터가 열려 있을 때만 표시
+   · 우하단 BUILD 태그: 개발용 → 숨김 (에디터 열림 시에만 표시) */
+#bd-district-hud{ display:none !important; }
+#bd-uitune-toggle{ display:none !important; }
+#bd-build-tag, [id^="bd-build-tag"]{ display:none !important; }
+body.bd-editor-open #bd-uitune-toggle{ display:block !important; }
+body.bd-editor-open #bd-build-tag, body.bd-editor-open [id^="bd-build-tag"]{ display:block !important; }

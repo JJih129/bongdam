@@ -1,0 +1,13 @@
+
+/* 플레이어 HP 패널 — 히어로 스프라이트 머리 위 */
+.hsr-hero .hsr-info{
+  position:absolute !important;
+  bottom:calc(100% + 10px) !important;
+  left:50% !important; top:auto !important; right:auto !important;
+  transform:translateX(-50%);
+  width:max-content; min-width:230px; max-width:300px;
+  z-index:5;
+}
+@media (max-width:900px){
+  .hsr-hero .hsr-info{ min-width:190px; max-width:240px; }
+}

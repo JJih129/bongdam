@@ -1,0 +1,43 @@
+
+  #bd-pc-game-prompt{
+    display:none;position:fixed;left:50%;bottom:76px;z-index:2147482900;
+    transform:translateX(-50%);align-items:center;gap:10px;padding:10px 16px;
+    border:1px solid rgba(109,213,255,.7);border-radius:12px;
+    background:rgba(5,14,24,.92);color:#e9fbff;
+    box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 18px rgba(79,200,255,.22);
+    font:700 14px/1.2 Arial,"Noto Sans KR",sans-serif;pointer-events:none;
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)
+  }
+  #bd-pc-game-prompt.show{display:flex}
+  #bd-pc-game-prompt kbd{
+    min-width:30px;padding:5px 8px;border:1px solid #8ce9ff;border-radius:7px;
+    background:#123447;color:#fff;text-align:center;font:900 14px monospace;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,.35);
+  }
+  #bd-pc-game-overlay{
+    display:none;position:fixed;inset:0;z-index:2147483000;
+    flex-direction:column;background:#050705;color:#f2eee4;
+  }
+  #bd-pc-game-overlay.show{display:flex}
+  #bd-pc-game-toolbar{
+    flex:0 0 54px;display:flex;align-items:center;justify-content:space-between;
+    gap:16px;padding:8px 14px;border-bottom:1px solid rgba(215,51,42,.5);
+    background:linear-gradient(90deg,#0c0d0b,#1a0d0a);
+    box-shadow:0 4px 18px rgba(0,0,0,.55);font-family:Arial,"Noto Sans KR",sans-serif;
+  }
+  #bd-pc-game-toolbar strong{display:block;color:#ef4d43;font-size:15px;letter-spacing:.08em}
+  #bd-pc-game-toolbar span{display:block;margin-top:2px;color:#9c9e96;font-size:11px}
+  #bd-pc-game-close{
+    flex:0 0 auto;border:1px solid rgba(255,255,255,.25);border-radius:8px;
+    background:#d7332a;color:#fff;padding:9px 13px;font-weight:900;cursor:pointer;
+  }
+  #bd-pc-game-close:hover{background:#ee4b40}
+  #bd-pc-game-close kbd{margin-left:7px;color:#fff;font:700 11px monospace}
+  #bd-pc-game-frame{display:block;flex:1;width:100%;min-height:0;border:0;background:#090a08}
+  #tc-btn-f.bd-pc-ready{opacity:1!important;filter:brightness(1.15)!important;pointer-events:auto!important}
+  @media(max-width:700px){
+    #bd-pc-game-toolbar{flex-basis:48px;padding:6px 9px}
+    #bd-pc-game-toolbar span{display:none}
+    #bd-pc-game-close{padding:8px 10px}
+    #bd-pc-game-prompt{bottom:138px;font-size:12px}
+  }

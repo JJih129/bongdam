@@ -1,0 +1,90 @@
+
+/* ═══ (v240k) 에디터 유니티식 도킹 ═══
+   좌: 배치 목록(하이어라키) · 우: 속성(인스펙터) · 하단 좌: 파일(저장·내보내기) 고정 바.
+   '전체 오브젝트 목록 v5.2' 강제 패널은 가독성을 해쳐 제거. */
+#bge-v49-dock { display: none !important; }
+
+#bge-hierarchy.bge-open {
+  position: fixed !important;
+  left: 0 !important; top: 52px !important; bottom: 0 !important;
+  right: auto !important;
+  width: 330px !important; max-width: 92vw !important;
+  height: auto !important; max-height: none !important;
+  overflow-y: auto !important;
+  border-radius: 0 14px 0 0 !important;
+  padding-bottom: 8px !important;
+  z-index: 10005 !important;
+}
+#bge-panel.bge-open {
+  position: fixed !important;
+  right: 0 !important; left: auto !important; top: 52px !important; bottom: 0 !important;
+  width: 360px !important; max-width: 92vw !important;
+  height: auto !important; max-height: none !important;
+  overflow-y: auto !important;
+  border-radius: 14px 0 0 0 !important;
+  z-index: 10005 !important;
+}
+/* 파일 고정 바 — 쉬운 모드에서도 절대 숨지 않는다 */
+#bge-file-dock {
+  position: sticky; bottom: -1px;
+  display: flex !important; flex-wrap: wrap; gap: 6px;
+  margin: 10px -12px -8px; padding: 10px 12px;
+  background: rgba(8, 14, 28, .97);
+  border-top: 1px solid rgba(255, 210, 90, .4);
+  z-index: 5;
+}
+body.bge-simple #bge-file-dock { display: flex !important; }
+#bge-file-dock button {
+  flex: 1 1 44%;
+  padding: 8px 6px; border-radius: 9px; cursor: pointer;
+  border: 1px solid rgba(255, 220, 120, .45);
+  background: rgba(255, 255, 255, .08); color: #ffeec7;
+  font-family: inherit; font-size: 12px; font-weight: 700;
+}
+#bge-file-dock button:hover { background: rgba(255, 255, 255, .16); }
+#bge-file-dock .bge-fd-pub { background: #2e7d46 !important; color: #fff !important; border-color: #3fa35d !important; }
+
+/* ═══ (v240k-2) 에디터 모드 = 유니티식 씬 뷰 ═══ */
+body.bge-editor-on #game-screen { background: #0e1116 !important; }
+/* 게임 HUD·버튼은 편집 중 숨김 — 씬에 집중 */
+body.bge-editor-on #bd-menu-btns,
+body.bge-editor-on #bd-quest-hud,
+body.bge-editor-on #save-btn,
+body.bge-editor-on #touch-controls { display: none !important; }
+
+/* 에디터 툴바·탭: 좌우 독 사이 상단 2단 스트립 (납작한 유니티 톤) */
+body.bge-editor-on #bge-toolbar.bge-open {
+  position: fixed !important; left: 332px !important; right: 362px !important; top: 0 !important;
+  transform: none !important; margin: 0 !important;
+  display: flex !important; flex-wrap: nowrap !important; align-items: center !important;
+  gap: 4px !important; height: 46px !important; padding: 4px 8px !important;
+  overflow-x: auto !important; overflow-y: hidden !important;
+  background: #171b24 !important; border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 0 !important; box-shadow: none !important; z-index: 10006 !important;
+}
+body.bge-editor-on #bge-toolbar.bge-open button {
+  flex: 0 0 auto; padding: 5px 9px !important; font-size: 12px !important;
+  border-radius: 7px !important; white-space: nowrap;
+}
+body.bge-editor-on #bge-tabbar {
+  position: fixed !important; left: 332px !important; right: 362px !important; top: 46px !important;
+  transform: none !important; margin: 0 !important;
+  display: flex !important; align-items: center !important; gap: 4px !important;
+  height: 38px !important; padding: 4px 8px !important;
+  background: #12161e !important; border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+  border-radius: 0 !important; box-shadow: none !important; z-index: 10006 !important;
+}
+body.bge-editor-on #bge-tabbar .bge-tab { padding: 5px 12px !important; font-size: 12px !important; border-radius: 7px !important; white-space: nowrap; }
+
+/* 인스펙터 안 히스토리 카드 컴팩트화 */
+body.bge-editor-on #bge-v45-history-panel { font-size: 11px !important; line-height: 1.5 !important; padding: 8px !important; }
+body.bge-editor-on #bge-v45-history-panel button { padding: 4px 8px !important; font-size: 11px !important; }
+
+/* 미니맵: 씬 우하단 구석으로 */
+body.bge-editor-on #bge-minimap {
+  position: fixed !important; right: 372px !important; bottom: 10px !important;
+  left: auto !important; top: auto !important; transform: scale(.92); transform-origin: bottom right;
+  z-index: 10004 !important;
+}

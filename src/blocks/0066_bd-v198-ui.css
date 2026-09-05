@@ -1,0 +1,140 @@
+
+/* ═══════════ 봉담지킴이 v198 UI 리스킨 — 네이비+골드 RPG 패널 테마 ═══════════ */
+:root{
+  --bdg-gold:#e8c973; --bdg-gold-dim:rgba(200,144,42,.55); --bdg-gold-soft:rgba(232,201,115,.28);
+  --bdg-panel-0:rgba(16,22,44,.96); --bdg-panel-1:rgba(9,13,28,.97);
+  --bdg-ink:#f0e6cd; --bdg-ink-dim:#c9bfa4;
+}
+/* ── 상단 메뉴 버튼: 골드 트림 통일 ── */
+#bd-menu-btns button{
+  background:linear-gradient(180deg,rgba(28,36,64,.96),rgba(13,18,38,.97)) !important;
+  border:1px solid var(--bdg-gold-dim) !important;
+  color:var(--bdg-ink) !important;
+  border-radius:10px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.09), inset 0 -6px 10px rgba(0,0,0,.28);
+  font-family:'Noto Serif KR',serif !important;
+  letter-spacing:.2px;
+  transition:transform .12s, box-shadow .12s, border-color .12s;
+}
+#bd-menu-btns button:hover{
+  transform:translateY(-1px);
+  border-color:var(--bdg-gold) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.5), 0 0 10px var(--bdg-gold-soft), inset 0 1px 0 rgba(255,255,255,.12);
+}
+#bd-menu-btns button:active{ transform:translateY(0); }
+#bd-menu-btns #bd-hazard-place-btn.on, #bd-menu-btns button.bd-on{
+  border-color:#ff9c7a !important; color:#ffd0be !important;
+  box-shadow:0 0 12px rgba(255,120,90,.4), inset 0 1px 0 rgba(255,255,255,.1);
+}
+/* ── NPC 대사창: RPG 메시지 윈도우 ── */
+#bd-dialog{
+  background:linear-gradient(180deg,var(--bdg-panel-0),var(--bdg-panel-1));
+  border:1px solid var(--bdg-gold-dim);
+  border-radius:14px;
+  box-shadow:0 14px 44px rgba(0,0,0,.6), 0 0 0 3px rgba(9,13,28,.9), 0 0 0 4px rgba(232,201,115,.22), inset 0 1px 0 rgba(255,255,255,.07);
+  padding:18px 22px 14px;
+}
+.bd-dlg-name{
+  display:inline-block; color:#1a1206;
+  background:linear-gradient(180deg,#f2d98a,#cf9e3c);
+  border:1px solid rgba(120,80,10,.6); border-radius:8px;
+  padding:2px 12px; margin:-30px 0 8px -6px;
+  font-family:'Noto Serif KR',serif; font-weight:800; font-size:13px;
+  box-shadow:0 3px 8px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.45);
+  text-shadow:0 1px 0 rgba(255,255,255,.25);
+}
+.bd-dlg-text{ color:var(--bdg-ink); font-family:'Noto Serif KR',serif; font-size:15.5px; line-height:1.62; }
+.bd-dlg-hint{ color:rgba(232,201,115,.55); }
+/* ── 상호작용 선택 버튼 ── */
+.bd-choice-btn{
+  background:linear-gradient(180deg,rgba(30,38,66,.95),rgba(15,20,40,.96)) !important;
+  border:1px solid rgba(232,201,115,.35) !important;
+  color:var(--bdg-ink) !important;
+  border-radius:10px !important;
+  font-family:'Noto Serif KR',serif;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.35);
+  transition:border-color .12s, background .12s, transform .1s;
+}
+.bd-choice-btn:hover{
+  background:linear-gradient(180deg,rgba(44,52,84,.95),rgba(22,28,52,.96)) !important;
+  border-color:var(--bdg-gold) !important; transform:translateY(-1px);
+}
+.bd-choice-battle{
+  background:linear-gradient(180deg,#f2d98a,#c8902a) !important;
+  border:1px solid rgba(120,80,10,.7) !important;
+  color:#241703 !important; font-weight:800 !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.3);
+  box-shadow:0 3px 10px rgba(200,144,42,.35), inset 0 1px 0 rgba(255,255,255,.5) !important;
+}
+.bd-choice-battle:hover{ filter:brightness(1.07); }
+/* ── 공통 모달: 골드 프레임 + 코너 장식 ── */
+.bd-modal-box{
+  position:relative;
+  background:linear-gradient(180deg,var(--bdg-panel-0),var(--bdg-panel-1));
+  border:1px solid var(--bdg-gold-dim);
+  border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.65), 0 0 0 3px rgba(9,13,28,.9), 0 0 0 4px rgba(232,201,115,.2);
+}
+.bd-modal-box::before, .bd-modal-box::after{
+  content:''; position:absolute; width:14px; height:14px; pointer-events:none;
+  border-color:var(--bdg-gold); border-style:solid; opacity:.8;
+}
+.bd-modal-box::before{ top:6px; left:6px; border-width:2px 0 0 2px; border-radius:4px 0 0 0; }
+.bd-modal-box::after{ bottom:6px; right:6px; border-width:0 2px 2px 0; border-radius:0 0 4px 0; }
+.bd-modal-title{
+  color:var(--bdg-gold); font-family:'Noto Serif KR',serif; letter-spacing:.5px;
+  padding-bottom:10px; margin-bottom:14px;
+  border-bottom:1px solid rgba(232,201,115,.25);
+  text-shadow:0 0 12px rgba(232,201,115,.25);
+}
+.bd-modal-close{
+  background:linear-gradient(180deg,#f2d98a,#c8902a) !important;
+  color:#241703 !important; font-weight:800;
+  border:1px solid rgba(120,80,10,.65) !important; border-radius:10px !important;
+  box-shadow:0 3px 10px rgba(200,144,42,.3), inset 0 1px 0 rgba(255,255,255,.5);
+  font-family:'Noto Serif KR',serif;
+}
+.bd-modal-close:hover{ filter:brightness(1.07); }
+/* 모달 내부 카드/장비 행 */
+.bd-card{ background:rgba(255,255,255,.045); border:1px solid rgba(232,201,115,.22); border-radius:10px; }
+.bd-card-name{ color:var(--bdg-gold); font-family:'Noto Serif KR',serif; }
+.bd-equip-row{ background:rgba(255,255,255,.04); border:1px solid rgba(232,201,115,.18); border-radius:10px; }
+.bd-equip-nm b{ color:var(--bdg-gold); }
+/* ── 토스트 ── */
+#bd-toast{
+  background:linear-gradient(180deg,rgba(28,36,64,.97),rgba(13,18,38,.97));
+  border:1px solid var(--bdg-gold-dim); border-radius:10px;
+  color:var(--bdg-ink); font-family:'Noto Serif KR',serif;
+  box-shadow:0 10px 30px rgba(0,0,0,.55), 0 0 0 3px rgba(9,13,28,.85), 0 0 0 4px rgba(232,201,115,.16);
+}
+/* ── 배지 스킬 서브메뉴 ── */
+#bd-skill-menu{
+  background:linear-gradient(180deg,var(--bdg-panel-0),var(--bdg-panel-1));
+  border:1px solid var(--bdg-gold-dim); border-radius:12px;
+  box-shadow:0 12px 34px rgba(0,0,0,.55), 0 0 0 3px rgba(9,13,28,.85), 0 0 0 4px rgba(232,201,115,.18);
+}
+.bd-skill{ border:1px solid rgba(232,201,115,.16); border-radius:9px; }
+.bd-skill:hover{ background:rgba(232,201,115,.10); border-color:rgba(232,201,115,.5); }
+.bd-skill .bd-nm b{ color:var(--bdg-ink); }
+/* ── 퀘스트 추적 HUD: 골드 세리프 유지 + 은은한 판 ── */
+#bd-quest-hud .bd-ch{ font-family:'Noto Serif KR',serif; }
+#bd-quest-hud .bd-obj{ font-family:'Noto Serif KR',serif; }
+/* ── 위험요소 배치 힌트 ── */
+#bd-hazard-place-hint{
+  background:linear-gradient(180deg,rgba(210,66,48,.96),rgba(160,36,24,.96)) !important;
+  border:1px solid rgba(255,190,160,.55);
+  box-shadow:0 8px 24px rgba(0,0,0,.5), 0 0 0 3px rgba(60,10,6,.7), inset 0 1px 0 rgba(255,255,255,.25) !important;
+  font-family:'Noto Serif KR',serif;
+}
+/* ── VN 대화창 골드 라인 통일 ── */
+#dialogue-box{
+  border-top:1px solid rgba(232,201,115,.45) !important;
+  box-shadow:0 -1px 0 rgba(9,13,28,.9), 0 -2px 0 rgba(232,201,115,.18), 0 -18px 40px rgba(0,0,0,.35);
+}
+#dialogue-name{ color:var(--bdg-gold) !important; font-family:'Noto Serif KR',serif; text-shadow:0 0 10px rgba(232,201,115,.3); }
+/* ── 모달 스크롤바 ── */
+.bd-modal-box::-webkit-scrollbar, #bd-achieve-modal-body::-webkit-scrollbar{ width:9px; }
+.bd-modal-box::-webkit-scrollbar-thumb, #bd-achieve-modal-body::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#c8902a,#8a6218); border-radius:6px; border:2px solid rgba(9,13,28,.9);
+}
+.bd-modal-box::-webkit-scrollbar-track, #bd-achieve-modal-body::-webkit-scrollbar-track{ background:rgba(255,255,255,.04); border-radius:6px; }

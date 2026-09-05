@@ -1,0 +1,9 @@
+/* (v369-ux) 대화창 화자 이름 가독성 — 어두운 배경 위에서 안 보이던 이름표를 양피지 배지로. 본문 18px·줄간격 1.7 */
+#dialogue-name{ background:rgba(255,248,230,.97) !important; border:1px solid #b89968 !important; border-radius:10px !important;
+  padding:5px 16px !important; font-size:15px !important; color:#5b4127 !important; box-shadow:0 2px 8px rgba(0,0,0,.35) !important; }
+#dialogue-text{ font-size:18px !important; line-height:1.7 !important; }
+/* (v369-ux) U-07 키 안내바 가독성 — 13px→14.5px, 터치 모드 15px */
+#bd-keybar{ font-size:14.5px !important; }
+html.bd-touch-mode #bd-keybar{ font-size:15px !important; }
+/* (v369-ux) U-08 안전지도 열림 중 담이 말풍선이 지도 하단 범례·통계를 가림 → 지도 열림 중엔 말풍선 숨김(배지는 유지) */
+body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:hidden !important; }

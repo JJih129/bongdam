@@ -1,0 +1,5 @@
+
+/* (v199) Noto Serif KR 서브셋(KS X 1001 2350자+ASCII) 임베드 — 오프라인 환경 대응 */
+@font-face{font-family:'Noto Serif KR';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,@@B64:4bd3ac43_url.woff2@@) format('woff2');}
+@font-face{font-family:'Noto Serif KR';font-style:normal;font-weight:700;font-display:swap;src:url(data:font/woff2;base64,@@B64:c6e1a804_url.woff2@@) format('woff2');}
+@font-face{font-family:'Noto Serif KR';font-style:normal;font-weight:900;font-display:swap;src:url(data:font/woff2;base64,@@B64:fc0d77a6_url.woff2@@) format('woff2');}

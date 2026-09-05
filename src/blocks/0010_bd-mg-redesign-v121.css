@@ -1,0 +1,83 @@
+
+/* (v121) 미니게임 리디자인 — DDR 화살표 · 마우스 라이트 */
+
+/* ── 공통 ── */
+#bd-mg-ddr, #bd-mg-light{
+  width:min(560px, 92vw); padding:18px 20px 16px; border-radius:20px;
+  background:linear-gradient(160deg, rgba(22,26,44,.97), rgba(14,17,30,.98));
+  border:1px solid rgba(140,180,255,.28);
+  box-shadow:0 22px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+  color:#eaf1ff; font-weight:800; user-select:none;
+}
+.ddr-title, .lt-title{
+  font-size:15px; text-align:center; letter-spacing:.3px; margin-bottom:14px;
+  color:#ffe9a8; text-shadow:0 2px 10px rgba(255,200,90,.35);
+}
+
+/* ── 판정칸 + 대기열 슬라이드 ── */
+.ddr-row{ display:flex; align-items:center; gap:14px; height:132px; }
+.ddr-slot{ position:relative; width:118px; height:118px; flex:0 0 118px; border-radius:22px;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+  background:linear-gradient(180deg, rgba(30,36,60,.95), rgba(16,20,36,.95));
+  border:3px solid rgba(255,216,107,.55);
+  box-shadow:0 0 24px rgba(255,200,90,.22), inset 0 2px 0 rgba(255,255,255,.06);
+  transition:all .12s ease; }
+.ddr-slot.ok{ border-color:#8ef0a8; background:linear-gradient(180deg,#1d3a28,#14261c);
+  box-shadow:0 0 32px 8px rgba(140,240,170,.5); transform:scale(1.06); }
+.ddr-slot.ng{ border-color:#ff8a8a; box-shadow:0 0 26px 6px rgba(255,120,120,.45);
+  animation:ddrNg .22s ease; }
+@keyframes ddrNg{ 0%,100%{margin-left:0;} 30%{margin-left:-9px;} 70%{margin-left:9px;} }
+.ddr-slot-in{ font-size:58px; line-height:1; color:#ffe9a8;
+  text-shadow:0 4px 16px rgba(255,200,90,.5); }
+.ddr-slot-in.slide{ animation:ddrSlide .22s cubic-bezier(.2,.9,.3,1); }
+@keyframes ddrSlide{ 0%{ transform:translateX(120px); opacity:0; } 100%{ transform:translateX(0); opacity:1; } }
+
+.ddr-queue{ flex:1; display:flex; align-items:center; gap:10px; height:100%;
+  padding:0 12px; border-radius:18px; overflow:hidden;
+  background:linear-gradient(90deg, rgba(255,216,107,.10), rgba(255,255,255,.03));
+  border:1px solid rgba(150,180,255,.18); }
+.ddr-q{ width:56px; height:56px; flex:0 0 56px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:28px;
+  color:#cfe0ff; background:rgba(255,255,255,.05);
+  border:1px solid rgba(150,180,255,.22);
+  transition:opacity .18s ease, transform .18s ease; }
+
+.ddr-judge{ height:26px; margin-top:12px; text-align:center; font-size:17px; opacity:0;
+  transition:opacity .1s ease; }
+.ddr-judge.show{ opacity:1; }
+.ddr-judge.good{ color:#8ef0a8; text-shadow:0 0 12px rgba(140,240,170,.6); }
+.ddr-judge.miss{ color:#ff8a8a; }
+.ddr-progress{ height:8px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden; }
+.ddr-progress span{ display:block; height:100%; width:100%;
+  background:linear-gradient(90deg,#ffd86b,#ff9f43); transition:width .08s linear; }
+.ddr-count{ margin-top:8px; text-align:center; font-size:13px; color:#c8d4ee; }
+.ddr-count b{ color:#ffe9a8; font-size:16px; }
+
+/* ── 마우스 라이트 ── */
+.lt-stage{ position:relative; height:250px; border-radius:14px; overflow:hidden; cursor:none;
+  background:radial-gradient(circle at 50% 40%, #2a3050, #10131f 70%);
+  border:1px solid rgba(120,150,220,.22); }
+.lt-dark{ position:absolute; inset:0; background:rgba(6,8,16,.82); }
+.lt-spot{ position:absolute; width:120px; height:120px; border-radius:50%;
+  transform:translate(-50%,-50%); pointer-events:none;
+  background:radial-gradient(circle, rgba(255,246,214,.34), rgba(255,240,190,.10) 55%, transparent 72%);
+  box-shadow:0 0 30px 14px rgba(255,240,190,.3); transition:box-shadow .1s ease; }
+.lt-spot.shake{ animation:ltShake .24s ease; }
+@keyframes ltShake{ 0%,100%{margin-left:0;} 30%{margin-left:-8px;} 70%{margin-left:8px;} }
+.lt-beam{ position:absolute; width:8px; height:8px; border-radius:50%;
+  transform:translate(-50%,-50%); background:#fff8dc; pointer-events:none;
+  box-shadow:0 0 14px 6px rgba(255,245,200,.9); }
+.lt-target{ position:absolute; transform:translate(-50%,-50%) scale(.7); opacity:0;
+  width:54px; height:54px; border-radius:50%; pointer-events:none;
+  display:flex; align-items:center; justify-content:center; font-size:26px; color:#1a1206;
+  background:radial-gradient(circle,#ffe9a8,#f0a93c);
+  box-shadow:0 0 26px 10px rgba(255,200,90,.55); transition:opacity .12s ease, transform .12s ease; }
+.lt-target.found{ animation:ltFound .5s ease; }
+@keyframes ltFound{ 0%{transform:translate(-50%,-50%) scale(1);} 
+  45%{transform:translate(-50%,-50%) scale(1.6);} 100%{transform:translate(-50%,-50%) scale(1.2);} }
+.lt-hint{ position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+  font-size:12px; color:#ffe9a8; opacity:0; transition:opacity .18s ease; pointer-events:none;
+  background:rgba(0,0,0,.45); padding:5px 12px; border-radius:99px; }
+.lt-bar{ height:6px; margin-top:12px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden; }
+.lt-bar span{ display:block; height:100%; width:100%;
+  background:linear-gradient(90deg,#8fd0ff,#5aa6ff); transition:width .1s linear; }

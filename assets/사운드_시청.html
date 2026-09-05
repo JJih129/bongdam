@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>봉담지킴이 사운드 시청</title>
+<style>
+  body{font-family:'Malgun Gothic',sans-serif;background:#1a1d29;color:#e8eaf2;margin:0;padding:24px;max-width:960px;margin:0 auto}
+  h1{font-size:22px} h2{font-size:17px;margin:28px 0 10px;border-bottom:1px solid #3a3f55;padding-bottom:6px}
+  .note{color:#9aa3c0;font-size:13px;margin:4px 0 16px}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  td,th{padding:6px 8px;border-bottom:1px solid #2a2e42;text-align:left;vertical-align:middle}
+  audio{height:32px;width:260px;vertical-align:middle}
+  button{background:#3b4571;color:#fff;border:0;border-radius:6px;padding:6px 12px;margin:2px;cursor:pointer;font-size:13px}
+  button:hover{background:#5060a8}
+  button.cur{background:#2e8b57}
+  .grid{display:flex;flex-wrap:wrap;gap:2px}
+  .tag{font-size:11px;color:#ffd166}
+</style>
+</head>
+<body>
+<h1>🔊 봉담지킴이 사운드 시청 (적용 전 확인용)</h1>
+<p class="note">전부 CC0(상업 사용 가능·크레딧 불필요). 초록색 버튼 = 현재 채택안. 다른 후보가 더 마음에 들면 그 파일명을 알려주시면 교체합니다.</p>
+
+<h2>🎵 BGM 7곡 — assets/bgm/ (v3: 전곡 칩튠 통일, 6/7곡 동일 작곡가)</h2>
+<table>
+  <tr><th>슬롯</th><th>곡 / 작곡가 / 분위기</th><th>재생</th></tr>
+  <tr><td>title (타이틀)</td><td>Title Screen — Juhani Junkala (타이틀용 경쾌한 8비트)</td><td><audio controls preload="none" src="bgm/title.mp3"></audio></td></tr>
+  <tr><td>house (실내)</td><td>Happy Adventure — TinyWorlds (아기자기한 칩튠 루프)</td><td><audio controls preload="none" src="bgm/house.mp3"></audio></td></tr>
+  <tr><td>field (필드)</td><td>Stage 1 — Juhani Junkala (밝고 모험적, 심리스 루프)</td><td><audio controls preload="none" src="bgm/field.ogg"></audio></td></tr>
+  <tr><td>tension (긴장/조사)</td><td>Stage Select — Juhani Junkala (장난기 8비트)</td><td><audio controls preload="none" src="bgm/tension.ogg"></audio></td></tr>
+  <tr><td>battle (전투)</td><td>Stage 2 — Juhani Junkala (신나는 8비트 루프)</td><td><audio controls preload="none" src="bgm/battle.ogg"></audio></td></tr>
+  <tr><td>boss (보스)</td><td>Boss Fight — Juhani Junkala (박진감 있는 8비트 루프)</td><td><audio controls preload="none" src="bgm/boss.ogg"></audio></td></tr>
+  <tr><td>ending (엔딩)</td><td>Ending — Juhani Junkala (엔딩용 마무리 테마)</td><td><audio controls preload="none" src="bgm/ending.mp3"></audio></td></tr>
+</table>
+
+<h2>⚔️ 채택된 효과음 6개 — assets/sfx/</h2>
+<div class="grid" id="picked"></div>
+
+<h2>🏆 승리/패배 징글 후보 (Kenney Music Jingles, 85개)</h2>
+<p class="note">win.ogg / lose.ogg는 가안입니다. 들어보고 마음에 드는 번호를 알려주세요.</p>
+<div id="jingles"></div>
+
+<h2>🕹️ 레트로 디지털음 후보 (Digital Audio — 현재 채택 팩)</h2>
+<p class="note">hit=spaceTrash1, weakhit=zapThreeToneUp, heal=powerUp1, select=pepSound1 채택 중. 대안 후보들:</p>
+<div class="grid" id="digital"></div>
+
+<h2>👊 타격음 후보 (Impact Sounds — 현실 폴리음, 미채택)</h2>
+<div class="grid" id="impacts"></div>
+
+<h2>🖱️ UI/회복 후보 (Interface Sounds 일부)</h2>
+<div class="grid" id="ui"></div>
+
+<script>
+let cur = null;
+function play(src){
+  if(cur){ cur.pause(); }
+  cur = new Audio(src);
+  cur.play();
+}
+function btn(label, src, isCur){
+  const b = document.createElement('button');
+  b.textContent = label; if(isCur) b.className = 'cur';
+  b.onclick = () => play(src);
+  return b;
+}
+// 채택안
+const picked = [
+  ['hit (타격)','sfx/hit.ogg'], ['weakhit (약점 강타)','sfx/weakhit.ogg'],
+  ['heal (회복)','sfx/heal.ogg'], ['win (승리) ⚠️가안','sfx/win.ogg'],
+  ['lose (패배) ⚠️가안','sfx/lose.ogg'], ['select (UI 선택)','sfx/select.ogg'],
+];
+picked.forEach(([l,s]) => document.getElementById('picked').appendChild(btn('▶ '+l, s, true)));
+
+// 징글 85개
+const styles = [
+  ['NES','8-Bit jingles','jingles_NES'], ['HIT','Hit jingles','jingles_HIT'],
+  ['PIZZI','Pizzicato jingles','jingles_PIZZI'], ['SAX','Sax jingles','jingles_SAX'],
+  ['STEEL','Steel jingles','jingles_STEEL'],
+];
+const jbox = document.getElementById('jingles');
+styles.forEach(([name, dir, prefix]) => {
+  const h = document.createElement('p'); h.textContent = name + ' 스타일:'; h.style.margin = '10px 0 2px';
+  jbox.appendChild(h);
+  const g = document.createElement('div'); g.className = 'grid';
+  for(let i = 0; i <= 16; i++){
+    const n = String(i).padStart(2,'0');
+    const isCur = (prefix + n) === 'jingles_NES09' || (prefix + n) === 'jingles_NES04';
+    g.appendChild(btn(n + (isCur ? (n==='09'?' (win)':' (lose)') : ''), encodeURI('_원본팩/jingles/Audio/' + dir + '/' + prefix + n + '.ogg'), isCur));
+  }
+  jbox.appendChild(g);
+});
+
+// 레트로 디지털음 후보
+const digitals = ['spaceTrash1','spaceTrash2','spaceTrash3','spaceTrash5','zap1','zap2','zapThreeToneUp','zapThreeToneDown','zapTwoTone',
+  'powerUp1','powerUp2','powerUp5','powerUp11','pepSound1','pepSound2','pepSound4','tone1','twoTone1','threeTone1','phaserUp1','phaseJump1','highUp','lowThreeTone'];
+digitals.forEach(f => document.getElementById('digital').appendChild(
+  btn(f, '_원본팩/digital/Audio/' + f + '.ogg', ['spaceTrash1','zapThreeToneUp','powerUp1','pepSound1'].includes(f))));
+
+// 타격 후보
+const impacts = ['impactPunch_medium_000','impactPunch_medium_002','impactPunch_heavy_001','impactPunch_heavy_003',
+  'impactMetal_medium_000','impactWood_medium_000','impactSoft_heavy_000','impactGeneric_light_000','impactMining_000','impactBell_heavy_000'];
+impacts.forEach(f => document.getElementById('impacts').appendChild(
+  btn(f.replace('impact',''), '_원본팩/impact/Audio/' + f + '.ogg', false)));
+
+// UI/회복 후보
+const uis = ['select_001','select_002','select_005','click_001','click_003','tick_001','toggle_001',
+  'confirmation_001','confirmation_002','confirmation_004','maximize_001','open_001','question_001','error_001','back_001'];
+uis.forEach(f => document.getElementById('ui').appendChild(
+  btn(f, '_원본팩/interface/Audio/' + f + '.ogg', false)));
+</script>
+</body>
+</html>

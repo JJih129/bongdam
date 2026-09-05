@@ -1,0 +1,86 @@
+
+/* ── 비주얼 노벨 대화창 ── */
+#dialogue-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5400;   /* (v69) 상단 지역 바(z 5200)까지 포함해 대화창·LD가 항상 최상위 */
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+#dialogue-portrait {
+  position: absolute;
+  left: max(-2%, -40px);
+  bottom: 0;
+  height: 86%;
+  width: auto;
+  max-width: 58%;
+  object-fit: contain;
+  filter: drop-shadow(6px 0 14px rgba(0,0,0,0.45));
+  pointer-events: none;
+  user-select: none;
+  animation: dlg-portrait-in 0.28s ease-out;
+}
+@keyframes dlg-portrait-in {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+#dialogue-box {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  min-height: 26%;
+  padding: 30px 5% 22px 40%;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(8,10,18,0) 0%, rgba(8,10,18,0.78) 22%, rgba(8,10,18,0.92) 100%);
+  border-top: 2px solid rgba(120,150,220,0.35);
+  animation: dlg-box-in 0.25s ease-out;
+}
+@keyframes dlg-box-in {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+#dialogue-name {
+  position: absolute;
+  top: -2px;
+  left: 40%;
+  transform: translateY(-100%);
+  padding: 6px 22px;
+  background: linear-gradient(180deg, #4a5a8f, #2c3557);
+  color: #ffe6f0;
+  font-family: 'Noto Serif KR', sans-serif;
+  font-weight: 800;
+  font-size: clamp(15px, 2.6vw, 22px);
+  letter-spacing: 1px;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid rgba(150,175,235,0.5);
+  border-bottom: none;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.35);
+  white-space: nowrap;
+}
+#dialogue-text {
+  color: #f4f6ff;
+  font-family: 'Noto Serif KR', sans-serif;
+  font-size: clamp(14px, 2.5vw, 21px);
+  line-height: 1.6;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  min-height: 2.6em;
+  word-break: keep-all;
+}
+#dialogue-next {
+  position: absolute;
+  right: 5%;
+  bottom: 12px;
+  color: #ffd7e6;
+  font-size: clamp(14px, 2.2vw, 20px);
+  opacity: 0;
+  transition: opacity 0.2s;
+  animation: dlg-blink 1s infinite;
+}
+@keyframes dlg-blink { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+/* 세로 화면(모바일)에서는 초상화를 작게, 텍스트 여백 축소 */
+@media (max-aspect-ratio: 1/1) {
+  #dialogue-portrait { height: 62%; max-width: 46%; }
+  #dialogue-box { padding: 26px 5% 20px 34%; }
+  #dialogue-name { left: 34%; }
+}

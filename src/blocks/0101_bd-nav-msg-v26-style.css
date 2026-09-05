@@ -1,0 +1,30 @@
+
+/* (v26) 좌측 퀘스트 HUD — 추적 상태 헤더 가시화 */
+#bd-quest-hud .bd-hud-head{
+  display:block !important; font-size:12px; letter-spacing:.4px;
+  color:#e8c973; opacity:.92; margin-bottom:3px; font-weight:800;
+}
+#bd-quest-hud.bd-hud-flash{ animation: bdHudFlash26 .9s ease; }
+@keyframes bdHudFlash26{
+  0%{ filter:brightness(1); transform:translateX(0); }
+  18%{ filter:brightness(1.9) drop-shadow(0 0 10px rgba(255,216,77,.9)); transform:translateX(3px); }
+  40%{ transform:translateX(-2px); }
+  100%{ filter:brightness(1); transform:translateX(0); }
+}
+/* (v26) 문자 메시지 카드 */
+#bd-msg{
+  position:fixed; right:16px; top:46%; transform:translateY(-50%) translateX(420px);
+  z-index:1150; width:330px; max-width:82vw;
+  background:linear-gradient(180deg,rgba(20,28,50,.97),rgba(12,17,33,.97));
+  border:1px solid rgba(255,255,255,.16); border-left:4px solid #fb923c;
+  border-radius:14px; padding:12px 14px; color:#eef2ff;
+  box-shadow:0 12px 34px rgba(0,0,0,.55); cursor:pointer;
+  transition:transform .35s cubic-bezier(.2,.9,.25,1.15), opacity .3s; opacity:0;
+  font-size:14px; line-height:1.55;
+}
+#bd-msg.show{ transform:translateY(-50%) translateX(0); opacity:1; }
+#bd-msg .bd-msg-head{ display:flex; align-items:center; gap:7px; font-weight:800; font-size:13px; margin-bottom:5px; }
+#bd-msg .bd-msg-ic{ font-size:15px; }
+#bd-msg .bd-msg-from{ color:#ffd86b; }
+#bd-msg .bd-msg-hint{ margin-left:auto; font-size:10px; color:#94a3b8; font-weight:600; }
+#bd-msg .bd-msg-text{ color:#e3e9f8; min-height:20px; word-break:keep-all; }

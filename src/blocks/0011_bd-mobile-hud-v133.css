@@ -1,0 +1,36 @@
+
+/* (v133) 모바일 상단 HUD 정리
+   좁은 화면에서 임무창·길안내 패널·지역 패널이 한꺼번에 떠 글자가 서로 겹쳐 읽기 힘들었다.
+   폭이 좁을 때만 크기를 줄이고 투명도를 낮춰, 게임 화면이 먼저 보이게 한다. */
+@media (max-width: 560px){
+  /* (v134) 실측 결과 길안내 배너(bd-district-hud)와 임무 제목(bd-ch)이
+     같은 높이에서 겹쳐 글자가 서로 침범했다 → 배너를 아래로 내리고 폭을 줄인다. */
+  #bd-district-hud{
+    top: 122px !important;
+    left: 50% !important; right: auto !important;
+    transform: translateX(-50%) scale(.82) !important;
+    transform-origin: top center !important;
+    max-width: 92vw !important;
+    opacity: .88;
+  }
+  /* 임무 제목·목표 — 상단 고정, 배너와 분리 */
+  #bd-ch{ font-size: 13px !important; }
+  #bd-obj{ font-size: 11.5px !important; }
+  #bd-district-hud:hover, #bd-district-hud:active{ opacity: 1; }
+  /* 미니맵 — 더 작게 */
+  #bd-district-minimap{ transform: scale(.8); transform-origin: top right; }
+  /* 임무 추적창 — 한 줄로 압축 */
+  #bd-quest-hud, .bd-quest-track{
+    transform: scale(.86); transform-origin: top left; opacity: .9;
+  }
+  /* 지역 이동 패널 — 조사 버튼과 겹치지 않게 위로 */
+  #bd-region-panel, .bd-region-panel{ bottom: 168px !important; transform: scale(.85);
+    transform-origin: bottom right; }
+  /* 키 안내 바 — 터치에서는 조이스틱이 있으므로 더 작게 */
+  #bd-keybar{ transform: scale(.8); transform-origin: bottom center; opacity: .78; }
+}
+/* 가로 모드(낮은 높이) — 세로 공간 확보 */
+@media (max-height: 460px){
+  #bd-district-hud, #bd-district-minimap{ transform: scale(.7); transform-origin: top right; }
+  #bd-keybar{ display: none; }
+}

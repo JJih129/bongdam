@@ -1,0 +1,8 @@
+
+/* (v68) 전투 배경을 화면 전체로 — 아레나 기본 지면/언덕 장식 비활성 */
+body.bd-battle-photo-bg #hsr-arena::before,
+body.bd-battle-photo-bg #hsr-arena::after { display: none !important; }
+body.bd-battle-photo-bg #hsr-ground,
+body.bd-battle-photo-bg .hsr-ground,
+body.bd-battle-photo-bg #hsr-field { display: none !important; }
+body.bd-battle-photo-bg #hsr-arena { inset: 0 !important; background-repeat: no-repeat; }

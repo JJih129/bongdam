@@ -1,0 +1,16 @@
+{
+  "_note": "게임 시작 후 필드에서의 조작 검증 — 이동/조사/가방/임무/대사",
+  "steps": [
+    { "buttons": ["left"], "frames": 30, "capture": true },
+    { "buttons": ["down"], "frames": 30, "capture": true },
+    { "buttons": ["f"], "frames": 10, "capture": true },
+    { "buttons": ["space"], "frames": 10 },
+    { "buttons": ["space"], "frames": 10, "capture": true },
+    { "buttons": ["e"], "frames": 12, "capture": true },
+    { "buttons": ["escape"], "frames": 10 },
+    { "buttons": ["j"], "frames": 12, "capture": true },
+    { "buttons": ["escape"], "frames": 10 },
+    { "buttons": ["right"], "frames": 30 },
+    { "buttons": ["up"], "frames": 30, "capture": true }
+  ]
+}

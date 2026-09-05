@@ -1,0 +1,20 @@
+
+  #bge-object-list .bge-eye, #bge-object-list .bge-lock {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:20px; height:20px; margin-right:4px; border-radius:6px;
+    cursor:pointer; user-select:none; opacity:.9;
+  }
+  #bge-object-list .bge-eye:hover, #bge-object-list .bge-lock:hover { background:rgba(255,255,255,.12); filter:brightness(1.25); }
+  #bge-object-list .bge-object-item.bge-hidden-object { opacity:.42; text-decoration:line-through; }
+  #bge-object-list .bge-object-item.bge-locked-object { color:#cdefff; }
+  #bge-v33-selected-tools {
+    margin:8px 0 10px; padding:8px; border-radius:10px;
+    border:1px solid rgba(168,221,255,.36); background:rgba(10,25,42,.36);
+    color:#eaf6ff; font-size:12px; line-height:1.45;
+  }
+  #bge-v33-selected-tools button {
+    border:1px solid rgba(168,221,255,.52); border-radius:8px; padding:6px 8px;
+    background:rgba(18,44,70,.86); color:#d9f1ff; font-family:inherit; font-weight:800;
+    cursor:pointer; margin:3px 4px 3px 0; font-size:11px;
+  }
+  #bge-v33-selected-tools button.active { background:rgba(153,102,24,.92); color:#fff0ba; }

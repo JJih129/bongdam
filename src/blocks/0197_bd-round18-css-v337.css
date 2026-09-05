@@ -1,0 +1,15 @@
+
+/* (v337) ② 전투 플레이어 배율 0.8 — 애니메이션 transform과 충돌하지 않게 내부 이미지에 적용 */
+#hsr-hero-sprite img, #hsr-hero-sprite > div{ transform: scale(0.8); transform-origin: bottom center; }
+/* (v337) ③ 상점 다크 리스킨 — 구버전 아이보리 톤 제거, 퀘스트 HUD 톤앤매너 */
+#shop-panel{ background: #0e1526 !important; border: 1px solid rgba(122,150,210,.35) !important;
+  border-radius: 16px !important; color: #e8ecf7 !important; box-shadow: 0 10px 34px rgba(0,0,0,.55) !important; }
+#shop-panel #shop-title, #shop-panel #shop-header{ color: #f2f5ff !important; }
+#shop-panel .shop-tab{ background: #131c31 !important; border: 1px solid rgba(122,150,210,.28) !important;
+  color: #b9c4de !important; border-radius: 10px !important; }
+#shop-panel .shop-tab.active, #shop-panel .shop-tab[aria-selected="true"]{
+  background: #22304f !important; color: #ffd86b !important; border-color: rgba(255,216,107,.5) !important; }
+#shop-panel .shop-item, #shop-panel [class*="shop-item"]{ background: #121a2e !important;
+  border: 1px solid rgba(122,150,210,.25) !important; border-radius: 12px !important; color: #e8ecf7 !important; }
+#shop-panel .shop-buy-btn{ background: #2a63d8 !important; color: #fff !important; border: none !important; border-radius: 10px !important; }
+#shop-panel #shop-footer{ color: #93a2c8 !important; }

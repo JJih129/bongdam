@@ -1,0 +1,9 @@
+
+/* (v339) 담이 UI 2배 — 배지·말풍선 가독성 (HUD에서 잘 보이게) */
+#bd-dami-hud{ transform: scale(2); transform-origin: left bottom; }
+#bd-dami-hud #bd-dami-text{ max-width: 300px; }
+/* 스케일로 키바와 겹칠 때 말풍선이 위로 올라가도록 여유 */
+#bd-dami-hud.bd-dami-up{ transform: scale(2); }
+/* (v339) 장난감 버스트 */
+.bd-toy-burst{ position: fixed; left: 0; top: 0; pointer-events: none; z-index: 100050; }
+.bd-toy-burst span{ position: absolute; font-size: 26px; transition: transform 1s cubic-bezier(.17,.67,.3,1.2), opacity 1s; opacity: 1; }

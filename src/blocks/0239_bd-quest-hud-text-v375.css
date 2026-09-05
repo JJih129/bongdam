@@ -1,0 +1,52 @@
+
+/* (v375) 임무 HUD — 배경 패널 제거(건물을 가리던 문제), 텍스트만 + 진한 외곽 그림자로 가독성 확보 */
+#bd-quest-hud{
+  background: none !important; border: 0 !important; box-shadow: none !important;
+  padding: 2px 0 0 0 !important; border-radius: 0 !important; max-width: 440px !important;
+  -webkit-backdrop-filter: none !important;backdrop-filter: none !important
+}
+#bd-quest-hud *{
+  text-shadow: 0 0 3px rgba(0,0,0,.95), 0 1px 2px rgba(0,0,0,.95), 0 0 8px rgba(0,0,0,.8), 1px 0 2px rgba(0,0,0,.9), -1px 0 2px rgba(0,0,0,.9), 0 -1px 2px rgba(0,0,0,.9) !important;
+}
+#bd-quest-hud .bd-hud-head{ font-size: 11.5px !important; letter-spacing: 2px !important; color: #ffd86b !important; font-weight: 800 !important; opacity: .95; }
+#bd-quest-hud .bd-ch{ font-size: 17px !important; font-weight: 800 !important; color: #ffffff !important; margin-top: 3px !important; }
+#bd-quest-hud .bd-obj{ font-size: 15px !important; color: #f3ecd8 !important; margin-top: 4px !important; padding-left: 22px !important; }
+#bd-quest-hud .bd-obj b{ color: #ffd86b !important; }
+#bd-quest-hud .bd-done-label{ color: #8df0a0 !important; }
+/* 길안내 줄 — 칩 배경도 제거, 방향/거리만 색으로 구분 */
+#bd-quest-hud .bd-nav-guide{
+  background: none !important; border: 0 !important; box-shadow: none !important;
+  padding: 4px 0 0 22px !important; margin: 2px 0 0 0 !important;
+}
+#bd-quest-hud .bd-nav-guide-main{ gap: 8px !important; }
+#bd-quest-hud .bd-nav-guide-direction{
+  background: none !important; border: 0 !important; padding: 0 !important;
+  color: #8fd6ff !important; font-weight: 900 !important; font-size: 13.5px !important;
+}
+#bd-quest-hud .bd-nav-guide-direction::before{ content: '➤ '; }
+#bd-quest-hud .bd-nav-guide-text{ color: #e9e4d6 !important; font-size: 13.5px !important; }
+#bd-quest-hud .bd-nav-guide-distance{ color: #ffd86b !important; font-weight: 800 !important; font-size: 13px !important; background: none !important; border: 0 !important; padding: 0 !important; }
+/* 진행 막대는 얇은 선으로만 (배경 없이) */
+#bd-quest-hud .bd-nav-guide-progress{ background: rgba(255,255,255,.18) !important; height: 3px !important; border-radius: 2px !important; margin-top: 5px !important; box-shadow: 0 0 2px rgba(0,0,0,.9) !important; }
+#bd-quest-hud .bd-nav-guide-progress > i{ background: #ffd86b !important; }
+#bd-quest-hud .bd-nav-guide[data-state="done"] .bd-nav-guide-direction{ color: #8df0a0 !important; }
+#bd-quest-hud .bd-nav-guide-main{ flex-wrap: wrap !important; }
+#bd-quest-hud .bd-nav-guide-text{ white-space: normal !important; overflow: visible !important; text-overflow: clip !important; max-width: none !important; flex: 1 1 auto !important; }
+
+/* (v375) 전투 약점 칩 — 「약점 💨 바람」 */
+.hsr-weak{ align-items:center; gap:6px !important; }
+.hsr-weak .hsr-weak-lb{ font-style:normal; font-size:12px; font-weight:900; color:#b8862f; letter-spacing:1px; }
+.hsr-weak span.hsr-weak-chip{
+  width:auto !important; height:28px !important; border-radius:14px !important; padding:0 11px 0 7px;
+  display:inline-flex; align-items:center; gap:6px; font-size:14px !important;
+  background:rgba(0,0,0,.06); border:1.5px solid rgba(0,0,0,.25); color:#1d2333;
+}
+.hsr-weak span.hsr-weak-chip b{ font-size:16px; line-height:1; }
+.hsr-weak span.hsr-weak-chip i{ font-style:normal; font-weight:900; color:#1d2333; }
+.hsr-weak span.hsr-el-W{ background:rgba(56,189,248,.30); border-color:#0ea5e9; }
+.hsr-weak span.hsr-el-G{ background:rgba(52,211,153,.32); border-color:#10b981; }
+.hsr-weak span.hsr-el-M{ background:rgba(251,146,60,.34); border-color:#f97316; }
+.hsr-weak span.hsr-weak-chip.hsr-hitweak{ transform:scale(1.15); box-shadow:0 0 12px #ffd86b; }
+/* 스킬 카드 속성 태그도 그림 포함 크게 */
+.bd-elem-tag{ font-size:12px !important; padding:2px 9px !important; }
+.bd-el-C{ background:rgba(251,146,60,.22) !important; color:#fdba74 !important; }

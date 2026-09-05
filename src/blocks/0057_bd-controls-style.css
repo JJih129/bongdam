@@ -1,0 +1,14 @@
+
+#bd-controls-ov{ display:none; position:fixed; inset:0; z-index:920; background:rgba(5,9,18,.78);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px) font-family:'Noto Serif KR',serif; }
+#bd-controls-ov .bd-ct-box{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  background:linear-gradient(160deg,#101a30,#0b1220); border:1px solid rgba(232,201,115,.55);
+  border-radius:14px; padding:26px 34px; color:#dbe4f5; box-shadow:0 12px 40px rgba(0,0,0,.6);
+  text-align:center; min-width:340px; }
+#bd-controls-ov h2{ margin:0 0 16px; color:#e8c973; font-size:20px; letter-spacing:1px; }
+#bd-controls-ov table{ margin:0 auto; border-collapse:collapse; font-size:14px; }
+#bd-controls-ov td{ padding:5px 12px; text-align:left; }
+#bd-controls-ov kbd{ display:inline-block; min-width:26px; text-align:center; padding:2px 8px;
+  background:#1b2740; border:1px solid rgba(232,201,115,.4); border-bottom-width:3px;
+  border-radius:6px; color:#e8c973; font-family:inherit; font-weight:700; font-size:13px; }
+#bd-controls-ov .bd-ct-close{ margin-top:16px; font-size:12px; color:#8fa0bd; }

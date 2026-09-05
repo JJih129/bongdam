@@ -1,0 +1,258 @@
+
+/* 퀘스트 목표 HUD */
+#bd-quest-hud{
+  position:fixed; top:150px; left:16px;
+  z-index:900; color:#fff; font-size:18px; text-align:left;
+  pointer-events:none; max-width:420px; display:none;
+  text-shadow:0 1px 4px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.7);
+}
+#bd-quest-hud .bd-hud-head{ display:none; }
+#bd-quest-hud .bd-ch{
+  font-weight:800; color:#f5ecd8; font-size:19px; letter-spacing:.3px;
+  display:flex; align-items:center; gap:8px;
+}
+#bd-quest-hud .bd-ch::before{
+  content:'◈'; color:#e8c973; font-size:16px;
+}
+#bd-quest-hud.done .bd-ch::before{
+  content:'✔'; color:#7be08a;
+}
+#bd-quest-hud .bd-obj{ margin-top:6px; font-size:16px; color:#e6e0d0; padding-left:24px; }
+#bd-quest-hud .bd-obj b{ color:#e8c973; }
+#bd-quest-hud.done .bd-obj{ color:#7be08a; }
+#bd-quest-hud.done .bd-obj b{ color:#7be08a; }
+/* 완료 라벨 */
+#bd-quest-hud .bd-done-label{
+  display:none; margin-top:5px; padding-left:24px;
+  color:#7be08a; font-size:16px; font-weight:800;
+}
+#bd-quest-hud.done .bd-done-label{ display:block; }
+
+/* 토스트 */
+#bd-toast{
+  position:fixed; top:80px; left:50%; transform:translateX(-50%) translateY(-14px);
+  z-index:960; background:linear-gradient(180deg,rgba(30,41,74,.97),rgba(17,24,44,.97));
+  border:1px solid rgba(250,204,21,.55); border-radius:12px;
+  padding:12px 24px; color:#fff8e7; font-size:15px; font-weight:700;
+  box-shadow:0 8px 28px rgba(0,0,0,.5); opacity:0; pointer-events:none;
+  transition:opacity .25s, transform .25s; text-align:center;
+}
+#bd-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+/* MP 바 (전투 정보창에 주입) */
+.bd-mpbar-wrap{ margin-top:5px; }
+.bd-mpbar-lbl{ font-size:10px; color:#93c5fd; margin-bottom:2px; letter-spacing:.5px; }
+.bd-mpbar{ height:9px; border-radius:6px; background:rgba(255,255,255,.12); overflow:hidden; }
+.bd-mpbar > i{ display:block; height:100%; width:100%;
+  background:linear-gradient(90deg,#3b82f6,#60a5fa,#93c5fd); transition:width .35s; }
+/* 배지 스킬 서브메뉴 */
+#bd-skill-menu{
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:calc(100% + 10px); z-index:30;
+  background:linear-gradient(180deg,rgba(18,26,46,.98),rgba(11,17,33,.98));
+  border:1px solid rgba(125,211,252,.4); border-radius:14px; padding:10px;
+  display:none; flex-direction:column; gap:8px; min-width:270px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+#bd-skill-menu.show{ display:flex; }
+.bd-skill{
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  border-radius:10px; background:rgba(255,255,255,.05); cursor:pointer;
+  border:1px solid rgba(255,255,255,.08); transition:.15s;
+}
+.bd-skill:hover{ background:rgba(125,211,252,.14); border-color:rgba(125,211,252,.5); }
+.bd-skill.bd-locked, .bd-skill.bd-nomp{ opacity:.4; pointer-events:none; filter:grayscale(.5); }
+.bd-skill .bd-ic{ font-size:22px; width:28px; text-align:center; }
+.bd-skill .bd-nm{ flex:1; }
+.bd-skill .bd-nm b{ display:block; font-size:14px; color:#e6eefc; }
+.bd-skill .bd-nm small{ font-size:11px; color:#9fb3d1; }
+.bd-skill .bd-mp{ font-size:12px; color:#93c5fd; font-weight:700; }
+.bd-elem-tag{ font-size:10px; padding:1px 7px; border-radius:8px; font-weight:800; }
+.bd-el-A{ background:rgba(56,189,248,.2); color:#7dd3fc; }
+.bd-el-B{ background:rgba(52,211,153,.2); color:#6ee7b7; }
+.bd-el-C{ background:rgba(167,139,250,.22); color:#c4b5fd; }
+.bd-el-N{ background:rgba(255,255,255,.14); color:#e2e8f0; }
+/* 상성 결과 표시 */
+.bd-eff-pop{
+  position:absolute; font-weight:900; font-size:15px; pointer-events:none;
+  z-index:40; text-shadow:0 2px 6px #000; animation:bdEffUp 1s ease-out forwards;
+}
+.bd-eff-weak{ color:#fca5a5; }
+.bd-eff-resist{ color:#93c5fd; }
+@keyframes bdEffUp{ 0%{opacity:0;transform:translateY(6px) scale(.8)}
+  20%{opacity:1;transform:translateY(-4px) scale(1.1)}
+  100%{opacity:0;transform:translateY(-30px) scale(1)} }
+/* 적 약점 힌트 아이콘 */
+#bd-weak-hint{
+  position:absolute; z-index:20; font-size:13px; color:#fca5a5;
+  background:rgba(20,10,10,.7); border:1px solid rgba(252,165,165,.5);
+  border-radius:10px; padding:3px 9px; opacity:.9; display:none;
+}
+/* 공통 모달 (장비/카드) */
+.bd-modal{
+  position:fixed; inset:0; z-index:1200; display:none;
+  align-items:center; justify-content:center;
+  background:rgba(6,10,20,.72); -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)
+}
+.bd-modal.show{ display:flex; }
+/* 타이틀 위에서 열리는 모달(설정/종료/세이브)은 타이틀(3000)보다 위에 */
+.bd-modal.bd-modal-top{ z-index:3200; }
+.bd-modal-box{
+  background:linear-gradient(180deg,rgba(22,30,52,.98),rgba(13,19,36,.98));
+  border:1px solid rgba(125,211,252,.4); border-radius:18px;
+  padding:20px; max-width:92vw; max-height:86vh; overflow:auto;
+  box-shadow:0 16px 48px rgba(0,0,0,.55); color:#e6eefc; min-width:280px;
+}
+.bd-modal-title{ font-size:17px; font-weight:800; color:#7dd3fc; margin-bottom:14px; text-align:center; }
+.bd-modal-close{
+  margin-top:16px; width:100%; padding:11px; border:none; border-radius:12px;
+  background:linear-gradient(90deg,#3b82f6,#60a5fa); color:#fff; font-weight:700; font-size:15px; cursor:pointer;
+}
+/* 카드 그리드 */
+.bd-card-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.bd-card{
+  background:rgba(255,255,255,.06); border:1px solid rgba(125,211,252,.35);
+  border-radius:12px; padding:12px; min-height:90px;
+}
+.bd-card-locked{ opacity:.45; filter:grayscale(.7); }
+.bd-card-name{ font-weight:800; font-size:14px; color:#fcd34d; }
+.bd-card-region{ font-size:11px; color:#93c5fd; margin:2px 0 6px; }
+.bd-card-desc{ font-size:12px; color:#cbd5e1; line-height:1.4; }
+/* 장비 강화 */
+.bd-equip-row{
+  display:flex; align-items:center; gap:10px; padding:12px;
+  background:rgba(255,255,255,.05); border-radius:12px; margin-bottom:10px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.bd-equip-ic{ font-size:24px; }
+.bd-equip-nm{ flex:1; font-size:14px; color:#e6eefc; }
+.bd-equip-nm b{ color:#fcd34d; }
+.bd-equip-up{
+  padding:8px 12px; border:none; border-radius:10px; font-size:12px; font-weight:700;
+  background:linear-gradient(90deg,#10b981,#34d399); color:#04231a; cursor:pointer;
+}
+.bd-equip-up:disabled{ opacity:.4; cursor:default; filter:grayscale(.6); }
+/* NPC 대사창 */
+#bd-dialog{
+  position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(10px);
+  z-index:1250; width:min(560px,92vw); display:none; opacity:0;
+  background:linear-gradient(180deg,rgba(18,26,46,.98),rgba(11,17,33,.98));
+  border:1px solid rgba(125,211,252,.5); border-radius:16px; padding:16px 20px;
+  box-shadow:0 12px 40px rgba(0,0,0,.55); cursor:pointer; transition:opacity .2s, transform .2s;
+}
+#bd-dialog.show{ display:block; opacity:1; transform:translateX(-50%) translateY(0); }
+.bd-dlg-name{ font-weight:800; color:#7dd3fc; font-size:14px; margin-bottom:6px; }
+.bd-dlg-text{ color:#e6eefc; font-size:15px; line-height:1.55; min-height:44px; }
+.bd-dlg-hint{ margin-top:8px; text-align:right; font-size:11px; color:#64748b; }
+/* 상호작용 선택 버튼 */
+.bd-choice-btn{
+  display:block; width:100%; margin-top:10px; padding:13px; border:none; border-radius:12px;
+  background:rgba(255,255,255,.08); color:#e6eefc; font-size:15px; font-weight:700; cursor:pointer;
+  border:1px solid rgba(125,211,252,.35); transition:.15s;
+}
+.bd-choice-btn:hover{ background:rgba(125,211,252,.16); }
+.bd-choice-battle{ background:linear-gradient(90deg,#3b82f6,#60a5fa); border:none; color:#fff; }
+/* 안전지도 노드 */
+.bd-map-node{
+  background:rgba(255,255,255,.06); border:1px solid rgba(52,211,153,.45);
+  border-radius:12px; padding:10px 8px; min-width:64px; text-align:center; color:#e6eefc;
+}
+.bd-map-locked{ opacity:.4; filter:grayscale(.7); border-color:rgba(255,255,255,.15); }
+/* 전투 결과 화면 */
+.bd-result-rewards{ display:flex; flex-direction:column; gap:8px; margin:8px 0 14px; }
+.bd-result-row{ display:flex; justify-content:space-between; align-items:center; padding:9px 12px; border-radius:10px; background:rgba(255,255,255,.06); border:1px solid rgba(125,211,252,.25); color:#e6eefc; font-size:14px; }
+.bd-result-row b{ color:#8effa0; font-size:15px; }
+/* 정화 후 안전 교육 메시지 */
+.bd-edu-box{ background:rgba(255,216,77,.1); border:1px solid rgba(255,216,77,.4); border-radius:10px; padding:11px 13px; margin:6px 0 14px; color:#ffe9b0; font-size:13px; line-height:1.6; text-align:left; }
+.bd-edu-title{ font-weight:800; color:#ffd84d; margin-bottom:5px; font-size:13px; }
+.bd-safety-total{ background:rgba(125,211,252,.1); border:1px solid rgba(125,211,252,.3); border-radius:12px; padding:13px 15px; margin-bottom:14px; text-align:center; }
+.bd-safety-total-label{ font-size:12px; color:#a8c6e8; margin-bottom:7px; }
+.bd-safety-total-bar-wrap{ height:14px; background:rgba(0,0,0,.3); border-radius:8px; overflow:hidden; }
+.bd-safety-total-bar{ height:100%; background:linear-gradient(90deg,#3b82f6,#8effa0); border-radius:8px; transition:width .6s; }
+.bd-safety-total-num{ font-size:13px; font-weight:800; color:#e6eefc; margin-top:7px; }
+.bd-safety-list{ display:flex; flex-direction:column; gap:10px; }
+.bd-safety-row{ background:rgba(255,255,255,.05); border-radius:10px; padding:10px 12px; }
+.bd-safety-head{ display:flex; justify-content:space-between; align-items:center; color:#e6eefc; font-size:14px; margin-bottom:6px; }
+.bd-safety-pct{ font-size:13px; font-weight:800; color:#ffd84d; }
+.bd-safety-bar-wrap{ height:8px; background:rgba(0,0,0,.3); border-radius:5px; overflow:hidden; }
+.bd-safety-bar{ height:100%; border-radius:5px; transition:width .5s; }
+.bd-safety-desc{ font-size:11px; color:#94a3b8; margin-top:5px; line-height:1.4; }
+.bd-safety-complete{ text-align:center; color:#8effa0; font-weight:800; font-size:15px; margin:12px 0 4px; }
+/* 설정 모달 */
+.bd-set-row{ display:flex; justify-content:space-between; align-items:center; padding:13px 4px; border-bottom:1px solid rgba(255,255,255,.08); color:#e6eefc; font-size:15px; font-weight:600; }
+.bd-set-row:last-of-type{ border-bottom:none; }
+.bd-set-toggle{ padding:7px 18px; border-radius:20px; border:1px solid rgba(148,163,184,.4); background:rgba(148,163,184,.15); color:#94a3b8; font-size:13px; font-weight:700; cursor:pointer; transition:.15s; min-width:64px; }
+.bd-set-toggle.on{ background:linear-gradient(90deg,#3b82f6,#60a5fa); border-color:transparent; color:#fff; }
+.bd-set-danger{ padding:7px 18px; border-radius:10px; border:1px solid rgba(255,120,100,.5); background:rgba(255,120,100,.12); color:#ffb6aa; font-size:13px; font-weight:700; cursor:pointer; transition:.15s; }
+.bd-set-danger:hover{ background:rgba(255,120,100,.25); }
+/* 세이브 슬롯 UI */
+.bd-slot-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.bd-slot{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); }
+.bd-slot-click{ cursor:pointer; transition:.15s; }
+.bd-slot-click:hover{ background:rgba(125,211,252,.15); border-color:rgba(125,211,252,.4); }
+.bd-slot-empty{ opacity:.75; }
+.bd-slot-num{ font-size:13px; font-weight:800; color:#7dd3fc; min-width:52px; }
+.bd-slot-info{ flex:1; min-width:0; }
+.bd-slot-line1{ color:#e6eefc; font-size:14px; font-weight:700; }
+.bd-slot-line2{ color:#94a3b8; font-size:11px; margin-top:3px; }
+.bd-slot-save{ padding:7px 14px; border-radius:9px; border:1px solid rgba(52,211,153,.5); background:rgba(52,211,153,.15); color:#6ee7b7; font-size:12px; font-weight:700; cursor:pointer; transition:.15s; }
+.bd-slot-save:hover{ background:rgba(52,211,153,.28); }
+.bd-slot-del{ padding:6px 10px; border-radius:8px; border:1px solid rgba(255,120,100,.4); background:transparent; color:#ffb6aa; font-size:14px; cursor:pointer; }
+.bd-slot-del:hover{ background:rgba(255,120,100,.2); }
+/* 일시정지 메뉴 */
+.bd-pause-menu{ display:flex; flex-direction:column; gap:10px; margin:6px 0; }
+.bd-pause-btn{ padding:13px; border-radius:11px; border:1px solid rgba(125,211,252,.35); background:rgba(255,255,255,.06); color:#e6eefc; font-size:15px; font-weight:700; cursor:pointer; transition:.15s; }
+.bd-pause-btn:hover{ background:rgba(125,211,252,.18); transform:translateY(-1px); }
+.bd-pause-btn.primary{ background:linear-gradient(90deg,#3b82f6,#60a5fa); border:none; color:#fff; }
+.bd-pause-btn.danger{ border-color:rgba(255,120,100,.45); color:#ffb6aa; }
+.bd-pause-btn.danger:hover{ background:rgba(255,120,100,.2); }
+/* 튜토리얼 안내 배너 */
+#bd-tutorial{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+  z-index:2500; opacity:0; pointer-events:none; transition:.3s; width:min(92vw,540px); }
+#bd-tutorial.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.bd-tut-inner{ display:flex; align-items:center; gap:14px; padding:14px 18px;
+  background:linear-gradient(180deg,rgba(24,32,54,.97),rgba(14,20,38,.97));
+  border:1px solid rgba(125,211,252,.5); border-radius:16px;
+  box-shadow:0 10px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(125,211,252,.15) inset; }
+.bd-tut-icon{ font-size:30px; flex-shrink:0; filter:drop-shadow(0 2px 8px rgba(125,211,252,.4)); animation:bdTutPulse 1.6s ease-in-out infinite; }
+@keyframes bdTutPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.12); } }
+.bd-tut-body{ flex:1; min-width:0; }
+.bd-tut-title{ font-size:13px; font-weight:800; color:#7dd3fc; letter-spacing:.3px; margin-bottom:3px; }
+.bd-tut-text{ font-size:14px; color:#e6eefc; line-height:1.45; }
+.bd-tut-skip{ flex-shrink:0; padding:6px 12px; border-radius:9px; border:1px solid rgba(148,163,184,.4);
+  background:transparent; color:#94a3b8; font-size:12px; font-weight:700; cursor:pointer; transition:.15s; }
+.bd-tut-skip:hover{ background:rgba(148,163,184,.15); color:#c9d6ea; }
+/* 타이틀 화면 */
+#bd-title-screen{ position:fixed; inset:0; z-index:3000; display:none;
+  background:#020203; overflow:hidden; }
+#bd-title-screen.show{ display:block; }
+/* (v384) 원화를 자르지 않고 전부 보여 준다. 남는 영역은 검정 여백으로 정리해
+   16:9 PC와 4:3·세로 태블릿에서 제목·메뉴가 동일하게 보이도록 한다. */
+.bd-title-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; z-index:0; }
+/* 버튼 오버레이: 배경 이미지 위 버튼 그림 위치에 투명 클릭 영역 배치.
+   이미지 원본 1672x941 기준 비율로 버튼을 얹는다. 실제 contain 표시 영역에 좌표를 맞춘다. */
+.bd-title-frame{ position:absolute; inset:0; z-index:1; }
+.bd-title-area{ position:absolute; z-index:2; display:flex; align-items:center; justify-content:center; }
+.bd-title-hit{ position:absolute; cursor:pointer; background:transparent; border:none; border-radius:12px;
+  transition:.12s; z-index:2; }
+/* (v125) 커서를 올리면 반투명 박스가 버튼 그림 위에 덮여 지저분했다 —
+   배경/테두리 대신 살짝 밝아지는 느낌만 준다(그림 자체를 가리지 않는다). */
+.bd-title-hit:hover:not(:disabled){ background:transparent; box-shadow:none;
+  filter:brightness(1.10) drop-shadow(0 0 10px rgba(255,220,140,.45)); }
+.bd-title-hit:active:not(:disabled){ background:transparent; box-shadow:none;
+  filter:brightness(1.04); transform:translateY(1px); }
+.bd-title-hit:disabled{ cursor:default; }
+/* (v193) 세로 화면용 타이틀 세로 메뉴 */
+.bd-title-hit.bd-title-hit-fallback{
+  background:linear-gradient(180deg,rgba(24,34,60,.92),rgba(13,19,36,.94));
+  border:1.5px solid rgba(125,211,252,.55); border-radius:12px;
+  color:#e6eefc; font-size:16px; font-weight:800; letter-spacing:1px;
+  box-shadow:0 6px 18px rgba(0,0,0,.5); text-shadow:0 1px 3px #000;
+}
+.bd-title-hit.bd-title-hit-fallback:hover:not(:disabled){ background:linear-gradient(180deg,rgba(34,48,82,.95),rgba(20,28,50,.96)); }
+.bd-title-hit.bd-title-hit-fallback.locked{ opacity:.55; }
+.bd-title-hit.bd-title-hit-fallback.locked::after{ background:transparent; font-size:11px; align-items:flex-end; padding-bottom:3px; }
+.bd-title-hit.locked::after{ content:'저장 없음'; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:flex-end; padding-right:14px; color:#fff; font-size:12px; font-weight:700; opacity:.85;
+  text-shadow:0 1px 3px rgba(0,0,0,.8); }
+.bd-title-foot{ position:absolute; left:22px; bottom:16px; z-index:2; font-size:13px; color:#e8eef7;
+  font-weight:700; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,.7); }

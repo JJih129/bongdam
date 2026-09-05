@@ -1,0 +1,35 @@
+
+/* (v375) 가방 카드형 리디자인 + 상점 모달 섹션 */
+#inv-grid{ grid-template-columns: repeat(4, minmax(0,1fr)) !important; gap: 10px !important; align-content: start; }
+.inv-slot.inv-card375{
+  aspect-ratio: auto !important; min-height: 96px;
+  background-image: none !important; background: #ffffff !important;
+  border: 2px solid #e2d7c0 !important; border-radius: 14px !important;
+  padding: 10px 6px 8px !important; gap: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.inv-slot.inv-card375:hover{ background: #fff8e6 !important; border-color: #e0b75a !important; transform: translateY(-2px) !important; }
+.inv-slot.inv-card375.selected{ background: #fff3cf !important; border-color: #d9a62c !important; box-shadow: 0 0 0 3px rgba(217,166,44,.25), 0 4px 12px rgba(0,0,0,.12) !important; }
+.inv-slot.inv-card375 .inv-slot-icon{ font-size: 34px !important; margin-bottom: 2px !important; }
+.inv-slot.inv-card375 .inv-slot-name{ font-family: 'Noto Serif KR', serif; font-size: 12.5px; font-weight: 800; color: #3d2c18; text-align: center; line-height: 1.25; word-break: keep-all; }
+.inv-slot.inv-card375 .inv-slot-count{ position: absolute; top: 6px; right: 8px; bottom: auto !important; font-size: 12px !important; background: #3d2c18; color: #ffe9a8 !important; border-radius: 9px; padding: 1px 6px; text-shadow: none !important; }
+.inv-slot.inv-card375 .inv-slot-on{ position: absolute; top: 6px; left: 8px; font-size: 10.5px; font-weight: 900; background: #2fb872; color: #fff; border-radius: 8px; padding: 1px 6px; }
+.inv-slot.inv-card375.inv-eq-on{ border-color: #2fb872 !important; }
+.inv-slot.inv-cell-featured{ border-color: #d9a62c !important; }
+#inv-detail-desc .inv-eff{ color: #8a5a1e; font-weight: 800; margin-bottom: 6px; font-size: 13.5px; }
+#inv-detail-desc{ text-align: left !important; }
+#inv-use-btn{
+  background-image: none !important; background: linear-gradient(180deg,#ffd86b,#e0a82a) !important;
+  color: #1d1408 !important; font-size: 15px !important; font-weight: 900 !important; letter-spacing: .3px;
+  height: 52px !important; border-radius: 14px !important; box-shadow: 0 4px 12px rgba(0,0,0,.2) !important;
+}
+#inv-use-btn:hover{ filter: brightness(1.05); }
+.inv-empty{ font-size: 14px !important; padding: 30px 10px !important; line-height: 1.6; }
+/* 상점 모달 */
+.bd-shop375 .bd-shop-sec{ margin: 12px 0 6px; font-size: 12px; letter-spacing: 1.5px; color: #ffd86b; font-weight: 800; opacity: .9; }
+.bd-shop375 .bd-equip-row{ align-items: center; }
+.bd-shop375 .bd-equip-nm small{ color: #9fb3d1; }
+.bd-shop375 .bd-shop-have{ color: #8df0a0 !important; font-weight: 800; margin-left: 6px; }
+.bd-shop375 .bd-shop-owned{ opacity: .75; }
+.bd-shop375 .bd-equip-up:disabled{ opacity: .5; cursor: default; }
+.bd-shop375{ max-height: 84vh; overflow-y: auto; }
