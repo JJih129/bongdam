@@ -4496,7 +4496,24 @@ function gameLoop(_fromRAF) {
 
   // 캔버스 해상도 동기화 — (v163+) devicePixelRatio 반영으로 고해상도 화면에서 선명하게
   {
-    const dpr = Math.min((navigator.maxTouchPoints > 0 ? 1.5 : 2), Math.max(1, window.devicePixelRatio || 1));   // 상한 2, 터치 기기 1.5 (v377 — 태블릿 메모리·GPU 보호)
+    let dpr = Math.min((navigator.maxTouchPoints > 0 ? 1.5 : 2), Math.max(1, window.devicePixelRatio || 1));   // 상한 2, 터치 기기 1.5 (v377 — 태블릿 메모리·GPU 보호)
+    /* (v398) 픽셀 예산 — 터치 기기에서 채우기 비용이 프레임 예산(16.7ms)을 아슬아슬하게
+       넘겨 60fps 와 30fps 를 오간다(체감상 «툭툭»).
+       852x340·DPR3 이동 중 실측(헤드리스 데스크탑, 예산만 바꾼 스윕):
+         1.60Mpx → 42.9fps  p95 33ms  jank 77
+         1.30Mpx → 51.2fps  p95 33ms  jank 39
+         1.05Mpx → 58.4fps  p95 17ms  jank  7
+         0.85Mpx → 60.0fps  p95 17ms  jank  0   ← 무릎. 아래로는 이득 없이 선명도만 손해
+         0.70Mpx → 59.9fps  p95 17ms  jank  0
+       선명도보다 부드러움을 우선한다. 화면 크기가 아니라 «면적»으로 상한을 두므로
+       작은 폰부터 큰 태블릿까지 같은 규칙이 적용된다.
+       주의: 위 수치는 데스크탑 기준이다. 중급 폰은 여유가 더 필요할 수 있으므로
+       실기기 ?perf=1 결과를 보고 window.BD_PX_BUDGET 으로 조정한다. */
+    if (navigator.maxTouchPoints > 0) {
+      const budget = Number(window.BD_PX_BUDGET) || 0.85e6;
+      const area = canvas.offsetWidth * canvas.offsetHeight * dpr * dpr;
+      if (area > budget) dpr *= Math.sqrt(budget / area);
+    }
     // (봉담 신규 맵) 짝수 백버퍼로 중앙 원점의 0.5px 어긋남을 방지한다.
     const wantW = Math.max(2, Math.round((canvas.offsetWidth  * dpr) / 2) * 2);
     const wantH = Math.max(2, Math.round((canvas.offsetHeight * dpr) / 2) * 2);
