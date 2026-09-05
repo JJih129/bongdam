@@ -150,7 +150,15 @@
     } catch (e) {}
   }
 
+  /* 조종 타이머는 «이동 중에만» 돈다.
+     상시 33ms 로 돌리면 아무것도 안 할 때도 초당 30회를 깨우게 된다 —
+     이 게임은 이미 폴링 루프가 159개(초당 약 560회)라 한 개라도 줄이는 편이 낫다. */
+  var ticker = null;
+  function startTicker() { if (!ticker) ticker = setInterval(step, 33); }
+  function stopTicker() { if (ticker) { clearInterval(ticker); ticker = null; } }
+
   function stop(sendF, why) {
+    stopTicker();
     setMove(false, false, false, false);
     var t = travel; travel = null;
     window.__bdTravelLastStop = why || (sendF ? '도착' : '중단');
@@ -230,18 +238,19 @@
     if (!path || path.length < 2) return;
     travel = { path: path, i: 0, tx: w.x, ty: w.y, t0: Date.now(),
                lastX: heroX, lastY: heroY, lastMoveAt: Date.now() };
+    startTicker();
     showMark(true);
   }, true);
 
   addEventListener('pointercancel', function () { armed = false; if (travel) stop(false); }, true);
 
-  setInterval(step, 33);   /* 이동 조종 — rAF 대신 고정 주기(백그라운드에서도 안전하게 멈춘다) */
 
   window.BD_TRAVEL = {
     active: function () { return !!travel; },
     stop: function () { stop(false); },
     to: function (x, y) { var p = findPath(x, y); if (!p) return false;
       travel = { path: p, i: 0, tx: x, ty: y, t0: Date.now(), lastX: heroX, lastY: heroY, lastMoveAt: Date.now() };
+      startTicker();
       return true; },
     toScreen: screenToWorld, path: findPath
   };
