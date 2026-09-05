@@ -84,7 +84,10 @@
   var MAX_BOOST = 1.55;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
   var UI_SEL = ['.bd-modal-box', '#dialogue-overlay', '#bd-hp-dom', '#bd-keybar',
                 '#bd-district-hud', '#bd-district-minimap', '#bd-startsetup-modal',
-                '#bd-fullscreen-return'];
+                '#bd-fullscreen-return',
+                /* (v398b) 실제 대사 표시 검증에서 추가로 발견 — 담이 말풍선과 토스트가
+                   화면상 9.1px 로 나오고 있었다. 안내의 핵심 통로라 반드시 포함한다. */
+                '#bd-dami-hud', '#bd-toast'];
 
   function boost() {
     try {

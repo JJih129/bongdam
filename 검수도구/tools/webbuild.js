@@ -26,9 +26,20 @@ for (const f of files) { const m = f.match(/^(\d{4})_/); if (m) byIdx.set(m[1], 
 const STRIP = new Set(['0023','0036','0037','0038','0040','0041','0042','0043','0044','0045',
   '0047','0048','0049','0064','0065','0102','0143','0161','0177','0194','0249']);
 html = html.replace(/@@BLOCK:(\d{4})@@/g, (_, idx) => {
-  if (STRIP.has(idx)) return '/* 웹판 — 에디터/개발 블록 ' + idx + ' 제외 */';
+  /* (v398) 한글을 넣을 때는 반드시 utf8AsLatin1 을 거친다 — 본문 전체가 latin1 표현이라
+     그냥 넣으면 마지막 쓰기에서 깨진다(실제로 이 주석 때문에 산출물에 U+FFFD 42개가 있었다) */
+  if (STRIP.has(idx)) return utf8AsLatin1('/* 웹판 — 에디터/개발 블록 ' + idx + ' 제외 */');
   return externalize(rd('blocks/' + byIdx.get(idx)));
 });
+/* (v398) 제작 이력에 남은 로컬 절대경로를 공개 산출물에서 지운다.
+   __BD_DISTRICT_WORLD_V24_CONFIG.source 에 «C:\Users\...» 4건이 그대로 실려 나가고 있었다.
+   네 키 모두 데이터에만 존재하고 읽는 코드가 없어(소스 전체에서 1회씩만 등장) 비워도 안전하다.
+   src 에는 제작 이력으로 남겨 두고 웹 산출물에서만 지운다. */
+{
+  const before = html.length;
+  html = html.replace(/"(userJson|previousManifest|decorationImagegenSource|imagegenSource)":"[^"]*"/g, '"$1":""');
+  if (before !== html.length) console.log('  · 로컬 경로 메타데이터 제거 (' + (before - html.length) + 'B)');
+}
 // 남은 토큰 검사 (data: 프리픽스 없는 예외 발견용)
 const leftover = html.match(/@@B64:[^@]+@@/g);
 if (leftover) { console.error('✖ 외부화 안 된 토큰: ' + leftover.slice(0, 5).join(', ')); process.exit(2); }
