@@ -260,7 +260,12 @@
                     '#bd-title-screen', '#modal-new', '#char-select-row',
                     /* 0261 의 스크롤 힌트도 자기 계산(body zoom)으로는 어긋났다 —
                        크기는 한 곳(여기)에서만 정한다는 원칙을 여기에도 적용한다. */
-                    '#bd-scroll-hint-v398'];
+                    '#bd-scroll-hint-v398',
+                    /* (v398s) 전투·미니게임 — 진입 조건이 있어 자동 스윕에 안 잡혔다.
+                       직접 열어 재 보니 전투 액션 설명이 6.5px 였다(전체 최소). */
+                    '#hsr-actions', '#hsr-turnmsg', '#hsr-stage', '.hsr-unit',
+                    '#bd-rhythm', '#bd-snake', '#bd-arcade', '#bd-arcade-hint', '#bd-doom',
+                    '#bd-guide-tip'];
 
   function floor(minPx) {
     var LIM = (typeof minPx === 'number' && minPx > 0) ? minPx : SMALL;

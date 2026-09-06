@@ -38,6 +38,19 @@
     /* «그만두기 (ESC)» — 미니게임 선택. 개별 ESC 규칙만 걸리면 «그만두기 (닫기)» 가 된다. */
     [/그만두기\s*\(\s*ESC\s*\)/g, '그만두기'],
     [/\(\s*ESC\s*\)/g, ''],
+
+    /* (v398s) 전투·미니게임 — 진입 조건이 있어 자동 스윕에 안 잡히던 화면들.
+       _deep.cjs 로 직접 열어 보고서야 키보드 표기가 그대로인 것을 발견했다.
+       미니게임 안내는 원래 «키보드 · (모바일: …)» 로 둘 다 적혀 있다.
+       모바일에서는 뒤쪽 절반만 남기면 문장이 짧아지고 뜻도 정확해진다. */
+    [/←\s*→\s*이동\s*·\s*Space\s*발사\s*·\s*\(\s*모바일:\s*([^)]*)\)/g, '$1'],
+    [/방향키\s*\/\s*WASD\s*이동\s*·\s*\(\s*모바일:\s*([^)]*)\)/g, '$1'],
+    [/D\s*F\s*J\s*K\s*\([^)]*\)\s*·\s*긴\s*노트는[^·]*·\s*모바일:\s*(.*)$/g, '$1 · 긴 노트는 끝까지'],
+    /* 전투 액션 버튼의 «정화 스티커 [Q]» · «물러나기 [ESC]» 같은 단축키 표기.
+       ESC 처럼 여러 글자인 것도 있으므로 [A-Z]+ 로 받는다. */
+    [/\s*\[\s*[A-Z]{1,5}\s*\]/g, ''],
+    /* 안내 툴팁은 «[정화 스티커 Q]» 처럼 라벨과 키가 한 대괄호 안에 들어 있다 */
+    [/\[\s*([^\[\]]{2,20}?)\s+[A-Z]{1,5}\s*\]/g, '$1'],
     [/E\s*또는\s*닫기\s*키로\s*닫기/g, '✕ 를 눌러 닫기'],
     [/W\/S\s*이동\s*·\s*A\/D\s*회전\s*·\s*Q\/E\s*좌우\s*이동\s*·\s*Space\s*발사/g,
       '화면 드래그로 이동 · 좌우 버튼으로 회전 · 화면 탭으로 발사'],
@@ -208,11 +221,32 @@
 
   /* 대사·안내는 게임 진행 중 계속 새로 그려진다 — 변경을 감시해 다시 훑는다 */
   if (window.MutationObserver) {
-    var t = null;
-    new MutationObserver(function () {
-      if (busy) return;
-      clearTimeout(t); t = setTimeout(run, 120);
-    }).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+    var t = null, lastRun = 0;
+    var MAX_WAIT = 600;      /* 이만큼 지나면 변경이 계속 와도 일단 한 번 훑는다 */
+
+    function schedule() {
+      var now = Date.now();
+      /* (v398s) 예전에는 «변경이 올 때마다 120ms 뒤로 미루기»만 했다.
+         정적인 화면에서는 잘 돌지만, 전투처럼 파티클·HP바가 계속 움직이는 화면에서는
+         120ms 안에 다음 변경이 계속 들어와 타이머가 영원히 리셋된다 — 한 번도 실행되지
+         않는다(debounce starvation). 실제로 전투의 「정화 스티커 [Q]」 「물러나기 [ESC]」가
+         3초가 지나도 그대로였고, BD_GUIDE.run() 을 손으로 부르면 즉시 바뀌었다.
+         규칙이 아니라 «실행 기회»가 없었던 것이다.
+         그래서 마지막 실행에서 600ms 이상 지났으면 미루지 않고 바로 훑는다.
+         (busy 로 무시하던 예전 방식도 함께 걷어냈다 — 화면이 통째로 만들어지는 순간의
+          변경이 전부 그때 도착하면 다시 예약되지 않아 같은 결과가 됐다.) */
+      if (now - lastRun > MAX_WAIT) {
+        clearTimeout(t); t = null;
+        lastRun = now;
+        run();
+        return;
+      }
+      clearTimeout(t);
+      t = setTimeout(function () { lastRun = Date.now(); run(); }, 120);
+    }
+
+    new MutationObserver(schedule)
+      .observe(document.documentElement, { childList: true, subtree: true, characterData: true });
   }
 
   window.BD_GUIDE = { run: run, ios: IOS, fsSupported: fsSupported() };
