@@ -25,8 +25,15 @@
   var ID = 'bd-mobile-map-v398-style';
   var NARROW_H = 520;
 
+  /* 판정은 0269 한 곳에서 — 여기서는 결과(<html> 클래스)만 본다.
+     지도의 2열 재배치는 «가로로 누운 폰» 전용이다. 태블릿은 실측에서 잘림도
+     쪼개짐도 없었으므로 원래 배치를 그대로 둔다. */
   function narrow() {
     try {
+      var de = document.documentElement;
+      if (de.classList.contains('bd-ui-phone')) return true;
+      if (de.classList.contains('bd-ui-tablet')) return false;
+      if (window.BD_UI_TIER) return window.BD_UI_TIER === 'phone';
       if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches)) return false;
       return window.innerHeight <= NARROW_H;
     } catch (e) { return false; }

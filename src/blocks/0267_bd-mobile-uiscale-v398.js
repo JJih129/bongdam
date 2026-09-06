@@ -32,10 +32,25 @@
   var ID = 'bd-mobile-uiscale-v398-style';
   var NARROW_H = 520;
 
-  /* 화면 기준 목표 크기 — 이 셋이 전부다 */
+  /* 화면 기준 목표 크기 — 이 셋이 전부다 (폰 기준) */
   var TITLE = 14.5;
   var BODY  = 12.5;
   var SMALL = 11.5;
+
+  /* 태블릿은 폰보다 «멀리 두고» 본다. 화면도 넓어 여유가 있으므로 하한을 조금 올린다.
+     실측(1280x800 터치)에서 글자가 10.0~10.9px 로, 잘림·쪼개짐은 없고 크기만 작았다.
+     그래서 태블릿에는 레이아웃 규칙을 걸지 않고 «바닥»만 올린다. */
+  var TABLET_FLOOR = 12;
+
+  function tier() {
+    try {
+      if (window.BD_UI_TIER) return window.BD_UI_TIER;
+      var de = document.documentElement;
+      if (de.classList.contains('bd-ui-phone')) return 'phone';
+      if (de.classList.contains('bd-ui-tablet')) return 'tablet';
+      return 'pc';
+    } catch (e) { return 'pc'; }
+  }
 
   /* 각 단계에 어떤 요소가 들어가는지. 실측으로 뽑은 목록이다. */
   var TITLE_SEL = ['#inv-title', '.bd-modal-title', '#bd-map-v342 .m42-title'];
@@ -73,12 +88,10 @@
   var NOWRAP_SEL = ['.inv-tab', '#bd-menu-btns button', '#bd-mb-map', '#bd-bag-top',
                     '#bd-map-v342 .m42-x', '.bd-modal-close', '#inv-use-btn'];
 
-  function narrow() {
-    try {
-      if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches)) return false;
-      return window.innerHeight <= NARROW_H;
-    } catch (e) { return false; }
-  }
+  /* 판정은 0269 한 곳에서. 이 블록은 폰과 태블릿 «둘 다» 담당한다 —
+     다만 폰은 3단계 크기까지 맞추고, 태블릿은 «바닥»만 올린다. */
+  function narrow() { return tier() === 'phone'; }
+  function touchTier() { return tier() !== 'pc'; }
 
   /* 이 요소에 걸린 «선언 px → 화면 px» 배율. 조상들의 zoom 을 모두 곱한 값이다.
      하나의 전역 배율로는 안 된다 — 실측에서 #inv-panel 은 0.65, #bd-menu-btns 는 0.78 이라
@@ -130,7 +143,12 @@
 
   function apply() {
     var st = document.getElementById(ID);
-    if (!narrow()) { if (st) st.remove(); return; }
+    if (!touchTier()) { if (st) st.remove(); return; }      /* PC 는 통째로 제외 */
+
+    /* 태블릿 — 레이아웃과 3단계 크기는 건드리지 않고 바닥만 올린다.
+       실측에서 태블릿은 잘림 0 · 쪼개짐 0 이고 글자만 10.0~10.9px 로 작았다.
+       멀쩡한 배치를 폰 기준으로 뒤엎을 이유가 없다. */
+    if (!narrow()) { floor(TABLET_FLOOR); return; }
 
     each(TITLE_SEL, function (el) { setPx(el, TITLE); });
     each(BODY_SEL, function (el) { setPx(el, BODY); });
@@ -158,7 +176,7 @@
       el.style.setProperty('padding', Math.round(6 / z) + 'px ' + Math.round(10 / z) + 'px', 'important');
     });
 
-    floor();
+    floor(SMALL);
     sheet();
   }
 
@@ -177,7 +195,8 @@
                        화면마다 열어 보고서야 어디 것인지 알았다. */
                     '#bd-guide-ov', '#bd-gamesel', '#bd-place-book', '#bd-shop-modal'];
 
-  function floor() {
+  function floor(minPx) {
+    var LIM = (typeof minPx === 'number' && minPx > 0) ? minPx : SMALL;
     try {
       for (var i = 0; i < FLOOR_ROOT.length; i++) {
         var roots;
@@ -195,8 +214,8 @@
             if (cs.display === 'none' || cs.visibility === 'hidden') continue;
             var z = scaleOf(el);
             var px = parseFloat(cs.fontSize) * z;
-            if (!(px > 0) || px >= SMALL - 0.05) continue;     /* 이미 충분하면 그대로 */
-            var want = Math.round(SMALL / z * 10) / 10;
+            if (!(px > 0) || px >= LIM - 0.05) continue;      /* 이미 충분하면 그대로 */
+            var want = Math.round(LIM / z * 10) / 10;
             if (el.style.getPropertyValue('font-size') !== want + 'px') {
               el.style.setProperty('font-size', want + 'px', 'important');
             }

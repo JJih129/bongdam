@@ -95,13 +95,17 @@ const MEASURE = `(() => {
 
 (async () => {
   const b = await chromium.launch({ headless: true, channel: 'chrome' });
-  /* BD_MODE=pc 로 데스크톱 환경에서도 같은 검사를 돌린다 —
-     «모바일만 바꾸고 PC 는 그대로»를 주장하려면 PC 도 재 봐야 한다. */
-  const PC = process.env.BD_MODE === 'pc';
-  const ctx = PC
-    ? await b.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
-    : await b.newContext({ viewport: { width: 874, height: 300 }, deviceScaleFactor: 3, hasTouch: true, isMobile: true });
-  console.log(PC ? '▶ PC 1440x900 (마우스)' : '▶ 폰 874x300 (터치)');
+  /* BD_MODE=phone|tablet|pc — 세 환경에서 같은 검사를 돌린다.
+     한쪽만 재고 «다른 쪽은 그대로»라고 말할 수는 없다. */
+  const MODES = {
+    phone:  { 이름: '폰   874x300 (터치)',    w: 874,  h: 300, dpr: 3, touch: true },
+    tablet: { 이름: '태블릿 1280x800 (터치)', w: 1280, h: 800, dpr: 2, touch: true },
+    pc:     { 이름: 'PC  1440x900 (마우스)',  w: 1440, h: 900, dpr: 1, touch: false }
+  };
+  const M = MODES[process.env.BD_MODE || 'phone'] || MODES.phone;
+  const ctx = await b.newContext({ viewport: { width: M.w, height: M.h }, deviceScaleFactor: M.dpr,
+    hasTouch: M.touch, isMobile: M.touch });
+  console.log('▶ ' + M.이름);
   const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.goto(process.argv[2], { waitUntil: 'load', timeout: 180000 });

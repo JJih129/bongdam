@@ -27,8 +27,16 @@
   /* 이 아래로는 «좁다»고 본다 — 아이폰/안드로이드 가로가 대부분 300~420 CSS px */
   var NARROW_H = 520;
 
+  /* 판정은 0269 가 한 곳에서 한다 — 여기서는 결과(<html> 클래스)만 본다.
+     각 블록이 따로 판단하던 때는 기준이 흩어져 어떤 화면만 규칙을 받는 일이 생겼다.
+     0269 는 파싱 시점에 클래스를 붙이므로 DOMContentLoaded 에는 이미 정해져 있다.
+     (혹시 0269 가 빠진 빌드여도 동작하도록 같은 계산을 예비로 남긴다.) */
   function narrow() {
     try {
+      var de = document.documentElement;
+      if (de.classList.contains('bd-ui-phone')) return true;
+      if (de.classList.contains('bd-ui-tablet')) return false;
+      if (window.BD_UI_TIER) return window.BD_UI_TIER === 'phone';
       if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches)) return false;
       return window.innerHeight <= NARROW_H;
     } catch (e) { return false; }
