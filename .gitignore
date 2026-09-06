@@ -10,6 +10,9 @@ _새배치/
 검수도구/shots*/
 검수도구/node_modules/
 검수도구/*.png
+# 보고서용 스크린샷은 재생성 가능(_shots.cjs)하고 35MB 라 추적하지 않는다.
+# 문서(README.md·PPTX_프롬프트.md)는 추적한다.
+검수도구/보고서/*.png
 검수도구/*.txt
 검수도구/_out*/
 검수도구/out*/
