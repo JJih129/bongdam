@@ -1,0 +1,75 @@
+# 소스를 밀면 GitHub Pages 로 자동 배포한다.
+#
+# 왜 이걸 추가하나:
+#   Netlify 팀 크레딧이 소진되어 «Production deploys are paused» 상태가 됐다.
+#   사이트는 살아 있지만 새 푸시가 반영되지 않는다(main@908913b 에 멈춤).
+#   GitHub Pages 는 공개 저장소에서 무료이고 크레딧 개념이 없다.
+#
+# 한 번만 해 줄 설정:
+#   저장소 Settings → Pages → Build and deployment → Source 를 «GitHub Actions» 로.
+#   그다음부터는 source 브랜치에 푸시할 때마다 이 워크플로가 빌드해서 올린다.
+#
+# 배포 주소: https://jjih129.github.io/bongdam/
+#
+# main 브랜치(산출물 전용)는 Netlify 가 되살아날 때를 위해 그대로 둔다 —
+# publish.js 로 계속 올릴 수 있고, 이 워크플로와 서로 방해하지 않는다.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [source]
+  workflow_dispatch:        # 필요할 때 손으로도 돌릴 수 있게
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true   # 연속 푸시 때 마지막 것만 배포
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 빌드 자체는 Node 내장 모듈만 쓴다. terser 는 «있으면 최소화, 없으면 건너뜀» 이라
+      # 설치에 실패해도 빌드는 성공한다 — 다만 있으면 index.html 이 3573→2685KB 로 준다.
+      - name: terser 설치 (최소화용, 실패해도 계속)
+        run: npm install --no-save --no-audit --no-fund terser || true
+
+      - name: 빌드
+        run: node build.js
+
+      # 빌드가 조용히 실패하면 «성공했지만 빈 사이트»가 올라간다. 여기서 끊는다.
+      - name: 산출물 확인
+        run: |
+          test -f dist/index.html || { echo "index.html 이 없습니다"; exit 1; }
+          SIZE=$(stat -c%s dist/index.html)
+          echo "index.html ${SIZE} bytes"
+          test "$SIZE" -gt 200000 || { echo "index.html 이 너무 작습니다"; exit 1; }
+          test -d dist/assets || { echo "assets 폴더가 없습니다"; exit 1; }
+          echo "assets $(ls dist/assets | wc -l) 개"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

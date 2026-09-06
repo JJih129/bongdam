@@ -3600,6 +3600,12 @@ function showTitle(opts){
   m.innerHTML =
     '<img class="bd-title-bg" src="data:image/webp;base64,@@B64:31d9bbe8_src.webp@@" alt="봉담문화의집 지킴이">'
     + '<div class="bd-title-frame" id="bd-title-frame">'
+    /* (v398) 아트에는 버튼 그림이 «그려져» 있다. 가로 폰에서 버튼을 화면 아래 한 줄로
+       펴면 그림이 그대로 남아 «두 벌»로 보인다(실기기 스크린샷에서 확인).
+       그 영역을 덮을 판을 미리 넣어 두고 positionTitleButtons 가 켜고 끈다.
+       (처음에는 필요할 때 만들려 했으나 생성 시점이 얽혀 안 생기는 경우가 있었다 —
+        마크업에 두면 «있는가»를 따질 필요가 없다.) */
+    + '<div class="bd-title-artcover" aria-hidden="true" style="display:none"></div>'
     // 버튼 히트 영역: 이미지 원본(1672x941) 기준 % 좌표로 배치. JS가 실제 픽셀로 보정.
     + '<button class="bd-title-hit" id="bd-title-start" data-x="0.120" data-y="0.478" data-w="0.200" data-h="0.080" onclick="window.BD_startNewGame&&window.BD_startNewGame()" aria-label="시작하기"></button>'
     + '<button class="bd-title-hit' + (canContinue?'':' locked') + '" id="bd-title-continue" data-x="0.098" data-y="0.574" data-w="0.240" data-h="0.080"' + (canContinue?' onclick="window.BD_continueGame&&window.BD_continueGame()"':' disabled') + ' aria-label="이어하기"></button>'
@@ -3664,6 +3670,26 @@ function positionTitleButtons(){
     const wideShort = (scrW / scrH) > 1.6 && scrH < 520;
     let bw, bh, gap;
     if(wideShort){
+      /* (v398) 아트에는 버튼 그림이 «그려져» 있다. 원래 폴백은 «아트가 잘려 버튼이
+         화면 밖일 때» 쓰던 것이라 그림이 안 보였는데, 가로 폰에서는 아트가 다 보이는 채로
+         폴백이 켜져 버튼이 두 벌로 겹쳐 보였다(실기기 스크린샷에서 확인).
+         그림이 그려진 메뉴 영역만 덮는다. 로고는 그 위(y<0.40)라 건드리지 않는다. */
+      /* 아트 버튼 영역만 정확히 덮으려 했더니 좌표를 맞추기 까다롭고(아래쪽 버튼이 새 나갔다)
+         화면에 어두운 얼룩처럼 보였다. 화면 전체 폭으로 아래쪽에 그라디언트를 깔면
+         버튼 그림이 모두 가려지고, 그 위에 새 버튼 줄이 놓여 «의도된 화면»으로 읽힌다.
+         로고는 위쪽(0.36 위)이라 그대로 남는다. */
+      const cover = m.querySelector('.bd-title-artcover');
+      if(cover){
+        const top = Math.round(offY + 0.32*dispH);
+        cover.style.cssText =
+          'position:absolute;pointer-events:none;z-index:2;display:block;'
+          + 'left:0;right:0;width:100%;bottom:0;'
+          + 'top:' + top + 'px;height:auto;'
+          /* 그림이 «비쳐 보이면» 진짜 버튼과 헷갈린다. 위쪽만 부드럽게 풀고
+             버튼이 그려진 아래쪽은 사실상 불투명하게 덮는다. */
+          + 'background:linear-gradient(180deg,rgba(6,10,22,0) 0%,rgba(6,10,22,.97) 11%,'
+          + 'rgba(6,10,22,1) 22%,rgba(6,10,22,1) 100%);';
+      }
       gap = px(Math.max(10, Math.round(scrW*0.014)));
       bh = px(Math.max(46, Math.min(58, Math.round(scrH*0.17))));
       bw = Math.floor((vw*0.94 - gap*(btns.length-1)) / btns.length);
@@ -3697,6 +3723,8 @@ function positionTitleButtons(){
     });
     return;
   }
+  /* 원래 배치로 돌아왔으면 아트 가리개를 감춘다 (창 크기를 바꿔 폴백이 꺼지는 경우) */
+  { const c = m.querySelector('.bd-title-artcover'); if(c) c.style.display = 'none'; }
   btns.forEach(function(btn){
     btn.classList.remove('bd-title-hit-fallback');
     btn.textContent = '';

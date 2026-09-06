@@ -50,7 +50,14 @@ html = html.replace(/@@BLOCK:(\d{4})@@/g, (_, idx) => {
   /* (v398) 한글을 넣을 때는 반드시 utf8AsLatin1 을 거친다 — 본문 전체가 latin1 표현이라
      그냥 넣으면 마지막 쓰기에서 깨진다(실제로 이 주석 때문에 산출물에 U+FFFD 42개가 있었다) */
   if (STRIP.has(idx)) return utf8AsLatin1('/* 웹판 — 에디터/개발 블록 ' + idx + ' 제외 */');
-  return externalize(rd('blocks/' + byIdx.get(idx)));
+  const code = externalize(rd('blocks/' + byIdx.get(idx)));
+  /* BD_TIME=1 로 빌드하면 블록마다 실행 시간을 잰다 — «어디가 느린가»를 추측하지 않기 위한
+     진단용. 배포본에는 들어가지 않는다(환경변수로만 켜진다). */
+  if (process.env.BD_TIME === '1') {
+    return 'window.__BT=window.__BT||[];window.__BT.push(["' + idx + '",performance.now()]);\n'
+      + code + '\nwindow.__BT.push(["' + idx + '/",performance.now()]);';
+  }
+  return code;
 });
 /* (v398) 제작 이력에 남은 로컬 절대경로를 공개 산출물에서 지운다.
    __BD_DISTRICT_WORLD_V24_CONFIG.source 에 «C:\Users\...» 4건이 그대로 실려 나가고 있었다.

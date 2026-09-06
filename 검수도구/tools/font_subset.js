@@ -26,11 +26,15 @@ const fs = require('fs'), path = require('path'), cp = require('child_process'),
 const SRC = process.argv[2] || 'src';
 const ASSETS = path.join(SRC, 'assets');
 
-/* 폰트 원본과 굵기 — 0005_bd-embedded-font.css 의 선언과 일치해야 한다 */
+/* 폰트 원본과 굵기 — 0005_bd-embedded-font.css 의 선언과 일치해야 한다.
+   (v398) 900 을 뺐다. 세 벌이 504KB 로 첫 로딩 전송량의 절반 가까이였고,
+   셋 다 unicode-range 가 같아 «하나라도 쓰이면 전부» 내려받는다.
+   900 은 136KB 인데 쓰이는 곳이 46군데뿐이고, 빼면 CSS 폰트 매칭 규칙에 따라
+   700 로 대체된다 — 이미 굵은 벌이라 합성 볼드도 필요 없다.
+   표시용 명조라 굵기 한 단계 차이는 화면에서 거의 구분되지 않는다. */
 const FONTS = [
   { file: '4bd3ac43_url.woff2', weight: 400 },
   { file: 'c6e1a804_url.woff2', weight: 700 },
-  { file: 'fc0d77a6_url.woff2', weight: 900 },
 ];
 
 /* ── 1. 소스 전체에서 실제 사용 문자 수집 ── */
