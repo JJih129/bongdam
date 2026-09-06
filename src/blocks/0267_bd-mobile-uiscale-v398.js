@@ -64,7 +64,11 @@
   var SHEET_SEL = ['#bd-map-v342 #bd-map-v342-board .m42-rname',
                    '#bd-map-v342 #bd-map-v342-board .m42-pct',
                    '#bd-map-v342 #bd-map-v342-board .m42-hz',
-                   '#bd-map-v342 #bd-map-v342-board .m42-mk'];
+                   '#bd-map-v342 #bd-map-v342-board .m42-mk',
+                   /* 튜토리얼 카드도 0060 이 매 프레임 innerHTML 을 다시 쓴다.
+                      안쪽 보조 줄이 인라인 font-size:13px(화면 8.5px)라 인라인으로는
+                      붙였다 지워졌다 한다 — 규칙으로 건다. */
+                   'html #bd-tut-card div'];
   /* 글자가 세로로 쪼개지면 안 되는 것들 */
   var NOWRAP_SEL = ['.inv-tab', '#bd-menu-btns button', '#bd-mb-map', '#bd-bag-top',
                     '#bd-map-v342 .m42-x', '.bd-modal-close', '#inv-use-btn'];
@@ -154,7 +158,52 @@
       el.style.setProperty('padding', Math.round(6 / z) + 'px ' + Math.round(10 / z) + 'px', 'important');
     });
 
+    floor();
     sheet();
+  }
+
+  /* ── 최소 크기 바닥 ──
+     위의 목록은 «내가 아는 요소»만 덮는다. 전수 조사에서 퀘스트·장비·업적·도장수첩·상점·
+     설정 화면에 7.1~10.4px 짜리가 수십 개 더 있는 것이 나왔다. 화면을 하나씩 열거하는 건
+     끝이 없고, 새 화면이 생기면 또 빠진다.
+     그래서 «UI 영역 안에서 화면 기준 SMALL 보다 작게 그려지는 글자»를 찾아 바닥만 올린다.
+     크기를 통일하는 게 아니라 하한만 두는 것이라 원래의 위계(제목이 크고 설명이 작은 것)는
+     그대로 남는다. 장식용으로 일부러 큰 아이콘도 건드리지 않는다. */
+  var FLOOR_ROOT = ['.bd-modal-box', '#inv-panel', '#bd-map-v342', '#quest-panel',
+                    '.bd-qlog2-box', '#bd-hp-dom', '#bd-keybar', '#bd-dami-hud',
+                    '#bd-toast', '#bd-generic-toast', '#dialogue-box',
+                    '#bd-district-hud', '#bd-quest-hud', '#bd-tut-card',
+                    /* 전수 조사에서 «모든 화면에 공통으로» 작게 나오던 것들의 소속.
+                       화면마다 열어 보고서야 어디 것인지 알았다. */
+                    '#bd-guide-ov', '#bd-gamesel', '#bd-place-book', '#bd-shop-modal'];
+
+  function floor() {
+    try {
+      for (var i = 0; i < FLOOR_ROOT.length; i++) {
+        var roots;
+        try { roots = document.querySelectorAll(FLOOR_ROOT[i]); } catch (e) { continue; }
+        for (var r = 0; r < roots.length; r++) {
+          var root = roots[r];
+          try { if (getComputedStyle(root).display === 'none') continue; } catch (e2) { continue; }
+          var list = root.querySelectorAll('*');
+          for (var j = 0; j < list.length; j++) {
+            var el = list[j];
+            if (el.children.length) continue;                 /* 잎 노드만 */
+            if (!(el.textContent || '').trim()) continue;
+            var cs;
+            try { cs = getComputedStyle(el); } catch (e3) { continue; }
+            if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+            var z = scaleOf(el);
+            var px = parseFloat(cs.fontSize) * z;
+            if (!(px > 0) || px >= SMALL - 0.05) continue;     /* 이미 충분하면 그대로 */
+            var want = Math.round(SMALL / z * 10) / 10;
+            if (el.style.getPropertyValue('font-size') !== want + 'px') {
+              el.style.setProperty('font-size', want + 'px', 'important');
+            }
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   /* 다시 그려지는 요소용 — 규칙으로 건다 */
