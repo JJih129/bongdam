@@ -6802,8 +6802,13 @@ let VIEWPORT_H = VIEWPORT_BASE_H;
 window.BD_VIEW_SCALE = { 1: 1.89, 2: 1.00, 3: 1.11, 4: 1.11, 5: 1.00 };
 function BD_applyViewScale(){
   const s = (window.BD_VIEW_SCALE && window.BD_VIEW_SCALE[currentStage]) || 1;
-  VIEWPORT_W = VIEWPORT_BASE_W * s;
-  VIEWPORT_H = VIEWPORT_BASE_H * s;
+  // (v398) 모바일 카메라 줌 — 0264 가 화면을 재서 정한다. PC·태블릿은 1 로 남아 영향 없음.
+  //  currentScale = min(cw/BASE_W, ch/BASE_H) 이라 가로로 긴 폰에서는 «세로»가 기준이 되고,
+  //  가로는 남는 만큼 그대로 늘어난다. 실측(874x300): 세로 0.614 / 가로 1.341 —
+  //  월드 폭이 1.0 이므로 맵«밖»까지 보고 있었다. 그 낭비를 줌으로 되돌린다.
+  const mz = (typeof window.BD_MOBILE_ZOOM === 'number' && window.BD_MOBILE_ZOOM > 0) ? window.BD_MOBILE_ZOOM : 1;
+  VIEWPORT_W = VIEWPORT_BASE_W * s / mz;
+  VIEWPORT_H = VIEWPORT_BASE_H * s / mz;
   // (v206) 전 맵 캐릭터를 '광장 룩'으로 통일 — 카메라가 멀리 있는 느낌.
   //  BD_CHAR_ZOOM: 화면상 캐릭터 크기 공통 배율 (광장 기준 1/1.89 ≈ 0.53)
   //  BD_SPR: 고정 픽셀 스프라이트(히어로·임현지·정도현·몹·허수아비)용 — 모든 맵 동일
@@ -6811,7 +6816,9 @@ function BD_applyViewScale(){
   // (v216) 실내 맵은 아트의 미터당 픽셀이 커서(문 폭 ≈ 이미지 75px) 캐릭터가 왜소해 보인다.
   //  실내 스테이지에만 캐릭터 확대 배율을 곱해 가구·문과 비율을 맞춘다.
   const cs = (window.BD_CHAR_STAGE_SCALE && window.BD_CHAR_STAGE_SCALE[currentStage]) || 1;
-  window.BD_SPR = window.BD_CHAR_ZOOM * cs;
+  // 고정픽셀 스프라이트는 VIEWPORT 를 안 보므로 모바일 줌을 «직접» 곱해야 같이 커진다.
+  // (월드 단위 스프라이트는 VIEWPORT 축소만으로 자동으로 커지므로 BD_RES 는 건드리지 않는다.)
+  window.BD_SPR = window.BD_CHAR_ZOOM * cs * mz;
   // 주민(월드 단위)은 뷰포트 축소로 이미 전역 줌이 반영되므로 CHAR_ZOOM에서 전역 줌을 제외
   window.BD_RES = s * (window.BD_CHAR_ZOOM / BD_GLOBAL_ZOOM) * cs;
 }
@@ -48828,27 +48835,82 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
      대상은 «고정 UI 레이어»로 한정한다. 캔버스(월드)는 건드리지 않는다. */
   var MIN_PX = 11.5;      /* 확보하려는 화면상 최소 글자 크기 */
   var BASE_PX = 13;       /* HUD 의 대표 선언 크기 */
-  var MAX_BOOST = 1.55;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
+  /* (v398d) 1.55 로는 #bd-hp-dom 의 «0/100»(맨몸 6.8px)이 상한에 걸려 10.5px 에 멈췄다.
+     최소치에 닿게 1.75 까지 허용한다 — 대신 아래 UI_SEL 은 좁은 화면에서 서로 겹치지
+     않는지 실측(_port.cjs 겹침 0건)으로 확인한 목록만 둔다. */
+  var MAX_BOOST = 1.75;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
   var UI_SEL = ['.bd-modal-box', '#dialogue-overlay', '#bd-hp-dom', '#bd-keybar',
                 '#bd-district-hud', '#bd-district-minimap', '#bd-startsetup-modal',
                 '#bd-fullscreen-return',
                 /* (v398b) 실제 대사 표시 검증에서 추가로 발견 — 담이 말풍선과 토스트가
                    화면상 9.1px 로 나오고 있었다. 안내의 핵심 통로라 반드시 포함한다. */
-                '#bd-dami-hud', '#bd-toast'];
+                '#bd-dami-hud', '#bd-toast',
+                /* (v398d) 전수 조사에서 남은 것들 — 지도 라벨 10.1px, 설정 아이콘 8.4px.
+                   둘 다 커지면 우상단 줄이 넓어지므로 겹침을 따로 확인했다. */
+                '#bd-mb-map', '#bd-settings-btn'];
 
+  /* (v398d) 한 컨테이너 안에서 «실제로 가장 작게 그려지는 글자»를 찾는다.
+     화면에 보이는 크기 = 선언 font-size x (조상들의 zoom 을 모두 곱한 값).
+     getBoundingClientRect / offsetHeight 비로 재려 했으나 인라인 요소에서 어긋나
+     zoom 을 직접 거슬러 올라가며 곱한다. */
+  function screenPx(el) {
+    try {
+      var fs = parseFloat(getComputedStyle(el).fontSize);
+      if (!(fs > 0)) return 0;
+      var k = 1;
+      for (var a = el; a && a.nodeType === 1; a = a.parentElement) {
+        var z = parseFloat(getComputedStyle(a).zoom);
+        if (z > 0 && z !== 1) k *= z;
+      }
+      return fs * k;
+    } catch (e) { return 0; }
+  }
+
+  function smallestText(root) {
+    var min = Infinity;
+    try {
+      var list = root.querySelectorAll('*');
+      for (var i = 0; i < list.length; i++) {
+        var e = list[i];
+        if (e.children.length) continue;                  /* 잎 노드만 */
+        if (!(e.textContent || '').trim()) continue;
+        var s = getComputedStyle(e);
+        if (s.display === 'none' || s.visibility === 'hidden') continue;
+        var px = screenPx(e);
+        if (px > 0 && px < min) min = px;
+      }
+      if (min === Infinity) {                             /* 자식이 없으면 자기 자신 */
+        var own = screenPx(root);
+        if (own > 0 && (root.textContent || '').trim()) min = own;
+      }
+    } catch (e) {}
+    return min;
+  }
+
+  /* 처음에는 «BASE_PX(13) 가 대표 크기» 라고 가정하고 한 배율을 모든 컨테이너에 똑같이
+     먹였다. 그런데 실측해 보니 #bd-hp-dom 안의 «0/100» 은 선언 10.4px 라, 보정을 하고도
+     화면 9.2px 에 머물렀다 — 가정이 틀린 것이다.
+     컨테이너마다 «가장 작은 글자»를 재서 그 글자가 최소치에 닿을 만큼만 키운다.
+     컨테이너 zoom 이므로 안쪽 상대 비율은 그대로 유지된다. */
   function boost() {
     try {
       if (!document.body || window.__bdZoomOK === false) return;
       var z = parseFloat(getComputedStyle(document.body).zoom) || 1;
       if (z >= 0.995) { UI_SEL.forEach(clearBoost); return; }   /* 축소가 없으면 보정 불필요 */
-      var need = MIN_PX / (BASE_PX * z);
-      var b = Math.max(1, Math.min(MAX_BOOST, need));
-      if (b <= 1.01) { UI_SEL.forEach(clearBoost); return; }
-      var v = b.toFixed(3);
       UI_SEL.forEach(function (s) {
         var list = document.querySelectorAll(s);
         for (var i = 0; i < list.length; i++) {
-          if (list[i].style.zoom !== v) list[i].style.zoom = v;
+          var el = list[i];
+          var cs = getComputedStyle(el);
+          if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+          /* 이미 걸어 둔 보정을 뺀 «맨몸» 크기로 환산해야 계산이 누적되지 않는다 */
+          var cur = parseFloat(el.style.zoom) || 1;
+          var min = smallestText(el);
+          if (!isFinite(min) || min <= 0) continue;
+          var bare = min / cur;
+          var b = Math.max(1, Math.min(MAX_BOOST, MIN_PX / bare));
+          var v = (b <= 1.01) ? '' : b.toFixed(3);
+          if ((el.style.zoom || '') !== v) el.style.zoom = v;
         }
       });
     } catch (e) {}
@@ -48966,6 +49028,14 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     [/\bZ\s*키/g, '스킬 버튼'],
     [/\bQ\s*키로/g, '정화 버튼으로'],
     [/\bQ\s*키/g, '정화 버튼'],
+    /* (v398c) 실기기 영상에서 발견 — «M 키(또는 왼쪽 아래 저를 탭)를 눌러» 가 그대로 나왔다.
+       괄호 안에 이미 터치 방법이 적혀 있으므로 그쪽만 남긴다. */
+    [/\bM\s*키\s*\(\s*또는\s*([^)]*)\)\s*를?\s*눌러/g, '$1해'],
+    [/\bM\s*키로/g, '지도 버튼으로'],
+    [/\bM\s*키를/g, '지도 버튼을'],
+    [/\bM\s*키/g, '지도 버튼'],
+    [/\(\s*R\s*키\s*전환\s*\)/g, '(탭해서 전환)'],
+    [/\bR\s*키/g, '전환 버튼'],
     [/W\s*A\s*S\s*D\s*(나|이나)\s*방향키(로)?/g, '화면 드래그로'],
     [/방향키\s*\/\s*WASD\s*이동/g, '화면 드래그로 이동'],
     [/E\s*키로/g, '가방 버튼으로'],
@@ -49316,8 +49386,35 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
     return b;
   }
 
+  /* ── 모달 위에 겹쳐 앉는 고정 버튼 비키기 ──
+     #bd-fullscreen-return 은 position:fixed; top:12px; left:50% (상단 중앙) 이다.
+     원래 우측 상단이었다가 ⚙·☰·🎒 를 가려서 중앙으로 옮긴 것인데, 좁은 가로 화면에서는
+     이번엔 «모달 제목»을 가린다 — 안전지도에서 «봉담 안전지도» 글자를 덮는 것을 확인했다.
+     모달이 열려 있는 동안만 숨긴다. 닫으면 원래대로 돌아온다. */
+  var HIDE_ID = 'bd-modal-hide-fixed-v398';
+  function modalOpen() {
+    try {
+      var list = document.querySelectorAll('.bd-modal.show, .bd-modal.open');
+      for (var i = 0; i < list.length; i++) if (visible(list[i])) return true;
+      return false;
+    } catch (e) { return false; }
+  }
+  function fixedTick() {
+    try {
+      var on = modalOpen();
+      var st = document.getElementById(HIDE_ID);
+      if (!on) { if (st) st.remove(); return; }
+      if (st) return;
+      st = document.createElement('style');
+      st.id = HIDE_ID;
+      st.textContent = '#bd-fullscreen-return{display:none!important;}';
+      (document.head || document.documentElement).appendChild(st);
+    } catch (e) {}
+  }
+
   function tick() {
     try {
+      fixedTick();
       var t = strandedClose();
       var b = document.getElementById(ID);
       if (!t) { if (b) b.style.display = 'none'; return; }
@@ -49389,10 +49486,13 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       try { z = parseFloat(getComputedStyle(document.body).zoom) || 1; if (!(z > 0)) z = 1; } catch (e) {}
       d.style.fontSize = Math.round(12 / z) + 'px';
       var r = el.getBoundingClientRect();
-      /* 컨테이너 하단 안쪽에 붙인다 */
+      /* 가운데에 두면 내용을 가린다 — 실기기 영상에서 안전지도의 «상리» 줄을 덮었다.
+         오른쪽 아래 모서리에 붙여 내용 위를 최소한으로만 지나가게 한다. */
       var w = d.getBoundingClientRect().width || 120;
-      d.style.left = Math.round((r.left + r.width / 2 - w / 2) / z) + 'px';
-      d.style.top = Math.round((Math.min(r.bottom, innerHeight) - 26) / z) + 'px';
+      var right = Math.min(r.right, innerWidth) - 8;
+      d.style.left = Math.round(Math.max(4, right - w) / z) + 'px';
+      d.style.top = Math.round((Math.min(r.bottom, innerHeight) - 24) / z) + 'px';
+      d.style.opacity = '0.92';
       d.style.display = 'block';
     } catch (e) {}
   }
@@ -49720,17 +49820,25 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
 
      그래서 옛 버튼을 숨기고 «메뉴줄의 지도 항목»을 쓴다. 다만 그 항목은 ☰ 를 접으면
      같이 접히므로, 가방(#bd-bag-top)처럼 항시 노출로 승격해 한 번에 누를 수 있게 한다.
-     0190 은 700ms 마다 옛 버튼의 display 를 되돌리므로 이 블록도 계속 눌러 준다. */
+
+     (v398d) 처음에는 500ms 마다 legacy.style.display='none' 으로 «계속 눌러» 봤다.
+     이것이 실기기 영상의 깜박임 원인이었다. 0190 의 ensureMapBtn 은 700ms 마다
+     display='block' 을 되돌리므로 두 타이머가 서로 덮어써, 최대 0.5초 동안 옛 버튼이
+     보였다 사라진다. 실측으로 재현했다 — 2초 관찰에 상태 변화 3회, 그 순간
+     #bd-mb-map(707~785) 과 28x28 겹침.
+     인라인 style 로는 이 싸움을 이길 수 없다. CSS !important 는 인라인보다 우선하므로
+     한 번 선언해 두면 0190 이 몇 번을 되돌려도 화면에는 나오지 않는다. 폴링 승부를
+     그만두고 규칙으로 끝낸다. */
   var MB_MAP = 'bd-mb-map';
   function consolidate() {
     try {
-      var legacy = el(MAP);
       var mbMap = el(MB_MAP);
       var row = el(ROW);
       if (!row) return;
 
-      /* 옛 떠 있는 지도 버튼은 숨긴다 — 메뉴줄 항목이 대신한다 */
-      if (legacy && mbMap && legacy.style.display !== 'none') legacy.style.display = 'none';
+      /* 옛 떠 있는 지도 버튼은 «규칙»으로 지운다 — 메뉴줄 항목이 대신한다.
+         전투 여부와 무관하다. 대체재가 있으면 옛 버튼은 언제나 불필요하다. */
+      document.documentElement.classList.toggle('bd-map-dedupe', !!mbMap);
 
       /* 지도 항목을 «항시 노출»로 승격한다.
          0252 의 접기 로직은 #bd-mb-toggle 과 #bd-bag-top 만 예외로 두고 나머지를 숨기는데,
@@ -49762,7 +49870,10 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
          한 자씩 세로로 쪼개진다(실기기 흐름 검증에서 확인). 너비는 내용에 맡기고
          탭 높이만 확보한다. */
       'html.bd-map-always #bd-mb-map{display:inline-flex!important;align-items:center;' +
-      'justify-content:center;min-height:44px;padding:0 12px;white-space:nowrap;flex:0 0 auto;}';
+      'justify-content:center;min-height:44px;padding:0 12px;white-space:nowrap;flex:0 0 auto;}' +
+      /* 레거시 지도 버튼 제거 — 0190 이 700ms 마다 되살리는 인라인 display 를 이긴다.
+         !important 는 인라인 스타일보다 우선하므로 깜박임 없이 한 번에 끝난다. */
+      'html.bd-map-dedupe #bd-touch-mapbtn{display:none!important;}';
     (document.head || document.documentElement).appendChild(st);
   }
 
@@ -49824,6 +49935,338 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       return o;
     }
   };
+})();
+</script>
+<script id="bd-mobile-camera-v398">/* (v398) 모바일 카메라 줌 — «맵 밖까지 보느라 캐릭터가 작아지는» 것을 되돌린다.
+ *
+ * ── 왜 필요한가 (실측) ────────────────────────────────────────────
+ *   currentScale = min(canvas.w/BASE_W, canvas.h/BASE_H) 라 «짧은 축»이 기준이 된다.
+ *   가로로 긴 폰에서는 세로가 기준이 되고 가로는 남는 만큼 그대로 늘어난다.
+ *
+ *     PC   1440x900  보이는 월드 0.736 x 0.614
+ *     탭   1280x800  보이는 월드 0.737 x 0.614
+ *     폰    874x300  보이는 월드 1.341 x 0.614   ← 월드 폭은 1.0 뿐이다
+ *
+ *   즉 폰은 «맵 폭의 134%»를 보고 있었다. 맵 밖 여백을 34% 나 화면에 채우면서
+ *   그만큼 모든 것이 작게 그려진다. 실측으로 문화의집 선생님 스프라이트가
+ *     PC 139x139 px  →  폰 46x46 px  (정확히 1/3)
+ *   화면 높이 대비 비율은 15.5% 로 «같다». 비율은 맞는데 물리 크기가 1/3 인 것이다.
+ *   6.3인치 가로 화면에서 46px 은 유리 위 약 8mm — 사용자가 «선생님이 안 보인다»고
+ *   한 것은 로딩 실패가 아니라 이것이었다(스프라이트는 complete:true, 보류 0 이었다).
+ *
+ * ── 어떻게 고치나 ────────────────────────────────────────────────
+ *   가로로 버리고 있는 34% 를 줌으로 되돌린다. 맵 밖을 덜 보는 것뿐이라 «잃는 정보가 없다».
+ *   고정 배율을 박지 않고 화면을 재서 정한다 — 기기마다 남는 양이 다르기 때문이다.
+ *     목표 1: 가로로 맵 폭(1.0)보다 더 보지 않는다
+ *     목표 2: 그 대가로 세로 시야가 MIN_VIS_H 아래로 내려가지 않는다 (위험요소를 놓치지 않게)
+ *   두 목표가 충돌하면 세로를 지킨다. 어느 쪽도 필요 없으면 줌 1 — PC·태블릿은 그대로다.
+ *
+ *   VIEWPORT 를 줄이면 월드 단위 스프라이트는 자동으로 커지지만 고정픽셀 스프라이트는
+ *   VIEWPORT 를 보지 않는다. 그래서 0017 의 BD_applyViewScale 에서 BD_SPR 에도 같은 배율을
+ *   곱한다(그쪽에 주석을 달아 뒀다). 여기서는 «얼마나» 만 정한다.
+ */
+(function () {
+  'use strict';
+
+  var TARGET_VIS_W = 1.00;   /* 가로로 이보다 넓게 보지 않는다 (월드 폭 = 1.0) */
+  var MIN_VIS_H    = 0.45;   /* 세로 시야 하한 — 이보다 좁아지면 줌을 포기한다 */
+  var MAX_ZOOM     = 1.60;   /* 안전 상한 */
+  var EPS          = 0.02;
+
+  function touchLike() {
+    try {
+      if (navigator.maxTouchPoints > 0) return true;
+      return matchMedia('(pointer: coarse)').matches;
+    } catch (e) { return false; }
+  }
+
+  function num(name) {
+    try { var v = eval(name); return (typeof v === 'number' && isFinite(v)) ? v : null; } catch (e) { return null; }
+  }
+
+  /* 지금 화면에 실제로 보이는 월드 크기.
+     VIEWPORT_W 에는 이미 적용된 줌이 반영돼 있으므로, 여기서 나오는 값은 «현재» 시야다.
+     그래서 보정은 self-correcting 하다 — 목표를 넘으면 그만큼만 더 줄인다. */
+  function visible() {
+    var cv = document.getElementById('game-canvas');
+    var vw = num('VIEWPORT_W'), vh = num('VIEWPORT_H'), cs = num('currentScale');
+    var bw = num('BASE_W'), bh = num('BASE_H');
+    if (!cv || !vw || !vh || !cs || !bw || !bh) return null;
+    if (!cv.width || !cv.height) return null;
+    return { w: vw * cv.width / (cs * bw), h: vh * cv.height / (cs * bh) };
+  }
+
+  var applied = 1;
+
+  function tune() {
+    try {
+      if (!touchLike()) return;
+      if (typeof window.BD_applyViewScale !== 'function' && typeof BD_applyViewScale !== 'function') return;
+      var v = visible();
+      if (!v) return;
+
+      /* 가로가 목표 안이면 손대지 않는다 (태블릿·PC 는 여기서 끝) */
+      if (v.w <= TARGET_VIS_W * (1 + EPS) && applied <= 1 + EPS) return;
+
+      var want = applied * (v.w / TARGET_VIS_W);       /* 가로를 목표에 맞추는 배율 */
+      var hCap = applied * (v.h / MIN_VIS_H);          /* 세로 하한이 허용하는 최대 배율 */
+      want = Math.min(want, hCap, MAX_ZOOM);
+      if (!(want > 0) || !isFinite(want)) return;
+      if (want < 1) want = 1;
+      if (Math.abs(want - applied) < EPS) return;
+
+      applied = want;
+      window.BD_MOBILE_ZOOM = want;
+      (window.BD_applyViewScale || BD_applyViewScale)();
+    } catch (e) {}
+  }
+
+  function boot() {
+    /* 스테이지 전환·회전 후에도 다시 맞춘다. BD_applyViewScale 이 스테이지마다 다시 불리는데
+       window.BD_MOBILE_ZOOM 을 계속 들고 있으므로 값은 유지되고, 여기서는 목표에서
+       벗어났을 때만 다시 계산한다(같으면 아무 일도 하지 않는다). */
+    setInterval(tune, 700);
+    addEventListener('resize', function () { setTimeout(tune, 120); });
+    addEventListener('orientationchange', function () { setTimeout(tune, 320); });
+    tune();
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  window.BD_MOBILE_CAM = {
+    tune: tune,
+    state: function () { return { 적용줌: applied, 보이는월드: visible() }; },
+    set: function (z) {                          /* 실기기에서 손으로 비교해 볼 때 */
+      applied = z; window.BD_MOBILE_ZOOM = z;
+      try { (window.BD_applyViewScale || BD_applyViewScale)(); } catch (e) {}
+      return this.state();
+    }
+  };
+})();
+</script>
+<script id="bd-mobile-vn-v398">/* (v398) 좁은 가로 화면의 VN 레이아웃 — 대사창과 초상화가 게임 화면을 먹는 것을 줄인다.
+ *
+ * ── 실측 (아이폰 17 프로 가로 874x300, body zoom 0.65) ────────────
+ *   #dialogue-box      874x119  = 화면 높이의 39.8%
+ *       내역: padding 42px(위) + 44px(아래) = 86px  ← 상자 135px 의 64%
+ *             min-height:26%  (오버레이 339px 기준 88px)
+ *             텍스트는 두 줄 41px 뿐인데 상자가 화면의 40% 를 먹는다
+ *   #dialogue-portrait 157x258 = 화면 높이의 86%
+ *
+ *   패딩 42/44 는 대화창 프레임 아트(배경 이미지)의 장식 테두리 안쪽에 글자를 넣으려고
+ *   PC 상자 높이(234px)를 기준으로 정한 «고정 px» 이다. 그런데 배경은
+ *   background-size:100% 100% 로 «늘어나므로» 상자가 작아지면 테두리도 같이 얇아진다.
+ *   즉 패딩도 같이 줄어야 하는데 고정이라 안 줄어든 것 — 그래서 좁은 화면에서
+ *   내용보다 여백이 더 큰 상자가 된다.
+ *
+ * ── 방침 ──────────────────────────────────────────────────────────
+ *   화면 높이에 비례해 패딩·글자·초상화를 줄인다. 넓은 화면(PC·태블릿)은 건드리지 않는다.
+ *   #dialogue-name 은 bottom:calc(100% - 34px) 라 상자 높이를 따라가므로 손대지 않아도 된다.
+ *   상자를 줄이면 게임 화면이 그만큼 살아나고, 0264 의 카메라 줌과 합쳐져
+ *   «캐릭터는 크고 UI 는 작은» 모바일 비율이 된다.
+ */
+(function () {
+  'use strict';
+
+  var ID = 'bd-mobile-vn-v398-style';
+
+  /* 이 아래로는 «좁다»고 본다 — 아이폰/안드로이드 가로가 대부분 300~420 CSS px */
+  var NARROW_H = 520;
+
+  function narrow() {
+    try {
+      if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches)) return false;
+      return window.innerHeight <= NARROW_H;
+    } catch (e) { return false; }
+  }
+
+  /* «선언한 px» 과 «화면에 보이는 px» 의 비율.
+     body 의 zoom 을 읽으면 틀린다 — 처음에 그렇게 했다가 초상화가 86%→84% 로
+     거의 안 줄었다. body zoom 은 0.65 인데 대사 오버레이의 실제 유효 배율은 0.885 였다.
+     중간에 다른 zoom 이 걸려 곱해지기 때문이다(0.65 × 1.36 ≈ 0.885).
+     그래서 대상 요소에서 «직접» 잰다. offsetHeight 는 zoom 을 무시하고
+     getBoundingClientRect().height 는 포함하므로, 둘의 비가 곧 유효 배율이다. */
+  function scaleOf(el) {
+    try {
+      if (!el || !el.offsetHeight) return 0;
+      var r = el.getBoundingClientRect();
+      if (!r.height) return 0;
+      var s = r.height / el.offsetHeight;
+      return (s > 0.05 && s < 20) ? s : 0;
+    } catch (e) { return 0; }
+  }
+
+  function apply() {
+    var st = document.getElementById(ID);
+    if (!narrow()) { if (st) st.remove(); return; }
+
+    /* 오버레이 자신의 배율로 잰다. 아직 없으면(대사 전) 다음 주기에 다시 온다. */
+    var ov = document.getElementById('dialogue-overlay') || document.getElementById('dialogue-box');
+    var z = scaleOf(ov);
+    if (!z) { if (st) st.remove(); return; }
+    var logical = window.innerHeight / z;     /* 선언 px 기준 화면 높이 */
+
+    /* 대사창: 화면의 25% 를 목표로. 텍스트 두 줄 + 최소 여백이 들어갈 만큼은 남긴다. */
+    var boxH = Math.max(58, Math.round(logical * 0.25));
+    /* 패딩은 상자 높이에 비례 — 프레임 아트가 같이 얇아지므로 비율을 맞춘다.
+       PC 기준 86/234 ≈ 37% 였다. 좁은 화면에서는 글자 자리를 우선해 28% 로 낮춘다. */
+    var padV = Math.max(9, Math.round(boxH * 0.14));
+    var padH = Math.max(18, Math.round(boxH * 0.42));
+    var fs = Math.max(13, Math.min(17, Math.round(logical * 0.052)));
+    var lh = Math.round(fs * 1.42);
+
+    /* 초상화: 86% → 62%. bottom:0 에 붙어 있으므로 줄이면 «아래에서 올라온 상반신»이 된다. */
+    var portraitH = Math.round(logical * 0.62);
+
+    var css =
+      '#dialogue-box{min-height:0!important;height:auto!important;' +
+        'padding:' + padV + 'px ' + padH + 'px ' + (padV + 2) + 'px!important;}' +
+      '#dialogue-text{font-size:' + fs + 'px!important;line-height:' + lh + 'px!important;' +
+        'min-height:0!important;}' +
+      '#dialogue-name{font-size:' + Math.max(12, fs - 2) + 'px!important;padding:3px 12px!important;}' +
+      '#dialogue-next{font-size:' + Math.max(11, fs - 4) + 'px!important;}' +
+      '#dialogue-portrait{max-height:' + portraitH + 'px!important;height:auto!important;' +
+        'object-fit:contain!important;object-position:bottom left!important;}';
+
+    if (!st) {
+      st = document.createElement('style');
+      st.id = ID;
+      (document.head || document.documentElement).appendChild(st);
+    }
+    if (st.textContent !== css) st.textContent = css;
+  }
+
+  function boot() {
+    apply();
+    addEventListener('resize', function () { setTimeout(apply, 90); });
+    addEventListener('orientationchange', function () { setTimeout(apply, 300); });
+    /* 0258 이 zoom 을 나중에 조정하므로 값이 바뀌면 다시 계산해야 한다 */
+    setInterval(apply, 900);
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  window.BD_MOBILE_VN = { apply: apply, narrow: narrow };
+})();
+</script>
+<script id="bd-mobile-map-v398">/* (v398) 좁은 가로 화면의 안전지도 — 남는 가로를 지도 크기로 바꾼다.
+ *
+ * ── 실측 (874x300) ───────────────────────────────────────────────
+ *   .m42-panel  선언 804 x client 285   (scrollHeight 325 → 40px 잘림)
+ *   .m42-board  선언 228 x 228, aspect-ratio 1166/1168 (정사각),
+ *               margin: 0 288px  ← 좌우로 288px 씩, 패널 폭의 72% 가 빈 공간
+ *   화면 기준으로는 지도가 148x148 px, 화면 높이의 49% 밖에 안 된다.
+ *
+ *   즉 «가로는 72% 를 버리면서 세로는 잘리고 있다» — 정확히 반대로 하고 있다.
+ *   원인은 세로 한 줄 배치다: 머리(34+10) · 보드 · 발(18+9) 이 위아래로 쌓이니
+ *   보드가 쓸 수 있는 높이가 남지 않는다. 가로로 긴 화면에서는 머리·발을 옆으로
+ *   보내면 그 높이가 전부 지도 몫이 된다.
+ *
+ * ── 방침 ──────────────────────────────────────────────────────────
+ *   좁은 화면에서만 grid 2열로 바꾼다.
+ *     [ 보드(세로 꽉) ][ 머리 ]
+ *     [               ][ 발  ]
+ *   보드는 height:100% + aspect-ratio 로 «높이가 정하고 너비가 따라오게» 한다.
+ *   패널도 화면 높이를 더 쓰게 풀어 준다(원래 max-height 가 낮아 40px 이 잘렸다).
+ *   넓은 화면에서는 규칙 자체를 제거하므로 PC·태블릿은 그대로다.
+ */
+(function () {
+  'use strict';
+
+  var ID = 'bd-mobile-map-v398-style';
+  var NARROW_H = 520;
+
+  function narrow() {
+    try {
+      if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches)) return false;
+      return window.innerHeight <= NARROW_H;
+    } catch (e) { return false; }
+  }
+
+  /* 패널이 zoom 안에 있어 vh 를 쓰면 안 된다.
+     처음에 height:94vh 로 했더니 화면의 61% 밖에 안 됐다 — vh 는 레이아웃 뷰포트
+     기준으로 «선언 px»을 만들고, 그 값이 다시 zoom(0.65)으로 축소되기 때문이다
+     (94vh = 282px 선언 → 화면 183px). 그래서 요소에서 실제 배율을 재서 px 로 준다.
+     offsetHeight 는 zoom 을 무시하고 rect 는 포함하므로 둘의 비가 곧 배율이다. */
+  function scaleOf(el) {
+    try {
+      if (!el || !el.offsetHeight) return 0;
+      var r = el.getBoundingClientRect();
+      if (!r.height) return 0;
+      var s = r.height / el.offsetHeight;
+      return (s > 0.05 && s < 20) ? s : 0;
+    } catch (e) { return 0; }
+  }
+
+  function apply() {
+    var st = document.getElementById(ID);
+    if (!narrow()) { if (st) st.remove(); return; }
+
+    /* 패널은 지도를 처음 열 때 만들어진다. 없으면 vh 로 대충 두고, 생기면 정확히 맞춘다. */
+    var panel = document.querySelector('#bd-map-v342 .m42-panel');
+    var z = scaleOf(panel);
+    var H = z ? Math.round(window.innerHeight * 0.94 / z) + 'px' : '94vh';
+    var W = z ? Math.round(window.innerWidth * 0.97 / z) + 'px' : '97vw';
+
+    var css =
+      /* 패널: 화면 높이를 최대한 쓰고, 세로 스크롤 대신 격자로 담는다 */
+      '#bd-map-v342 .m42-panel{' +
+        'max-height:' + H + '!important;height:' + H + '!important;max-width:' + W + '!important;' +
+        'display:grid!important;overflow:hidden!important;' +
+        'grid-template-columns:auto minmax(0,1fr);' +
+        'grid-template-rows:auto minmax(0,1fr);' +
+        'grid-template-areas:"board head" "board foot";' +
+        'column-gap:12px;row-gap:6px;padding:10px 12px!important;box-sizing:border-box;}' +
+
+      /* 보드: 높이가 주인, 너비는 정사각 비율로 따라온다 */
+      '#bd-map-v342 .m42-board{grid-area:board;align-self:stretch;justify-self:start;' +
+        'height:100%!important;width:auto!important;aspect-ratio:1/1!important;' +
+        'margin:0!important;max-width:none!important;}' +
+
+      /* 머리는 flex 대신 grid 로 짠다.
+         처음에 flex-wrap:wrap + tip{flex:1 1 100%} 로 했더니 안내 문구가 줄바꿈하지 않고
+         버튼 오른쪽 좁은 칸에 눌려 «한 글자씩 세로로» 쪼개졌다. 줄바꿈 여부를 flex 에
+         맡기지 말고 격자 칸을 직접 지정한다 — 문구는 아래 줄 전체를 쓴다. */
+      '#bd-map-v342 .m42-head{grid-area:head;margin:0!important;align-self:start;' +
+        'display:grid!important;grid-template-columns:1fr auto auto;' +
+        'align-items:center;gap:6px 8px;}' +
+      '#bd-map-v342 .m42-title{grid-column:1;grid-row:1;font-size:15px!important;' +
+        'white-space:nowrap;}' +
+      '#bd-map-v342 .m42-tip{grid-column:1/-1;grid-row:2;font-size:11px!important;' +
+        'line-height:1.4;white-space:normal!important;}' +
+      '#bd-map-v342 .m42-head .m42-x{min-height:34px;padding:0 10px!important;' +
+        'font-size:12px!important;white-space:nowrap;grid-row:1;}' +
+      '#bd-map-v342 .m42-head .m42-x:nth-of-type(1){grid-column:2;}' +
+      '#bd-map-v342 .m42-head .m42-x:nth-of-type(2){grid-column:3;}' +
+
+      '#bd-map-v342 .m42-foot{grid-area:foot;margin:0!important;align-self:start;' +
+        'display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px!important;line-height:1.4;}' +
+      '#bd-map-v342 .m42-foot>span[style*="flex:1"]{display:none!important;}' +
+      '#bd-map-v342 .m42-leg{flex:0 0 auto;}' +
+      '#bd-map-v342 .m42-leg img{width:13px;height:13px;}';
+
+    if (!st) {
+      st = document.createElement('style');
+      st.id = ID;
+      (document.head || document.documentElement).appendChild(st);
+    }
+    if (st.textContent !== css) st.textContent = css;
+  }
+
+  function boot() {
+    apply();
+    addEventListener('resize', function () { setTimeout(apply, 90); });
+    addEventListener('orientationchange', function () { setTimeout(apply, 300); });
+    /* 패널은 지도를 처음 열 때 생기므로, 생긴 뒤 실제 배율로 다시 맞춘다. */
+    setInterval(apply, 900);
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  window.BD_MOBILE_MAP = { apply: apply, narrow: narrow };
 })();
 </script>
 <script>(function(){if(!("serviceWorker" in navigator)||location.protocol==="file:")return;addEventListener("load",function(){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="installed"&&navigator.serviceWorker.controller){try{var d=document.createElement("div");d.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;background:#1d2333;color:#ffd86b;padding:10px 18px;border-radius:12px;border:1px solid #ffd86b;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)";d.textContent="🔄 새 버전이 있어요 — 눌러서 새로고침";d.onclick=function(){location.reload();};document.body.appendChild(d);}catch(e){}}});});}).catch(function(){});});})();</script></body>
