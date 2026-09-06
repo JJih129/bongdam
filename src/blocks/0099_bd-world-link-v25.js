@@ -29,23 +29,28 @@
     if (optional) o.bdOptional = true;   // 선택 목표 — 메인 카운트 미포함 규칙 준수
     return o;
   }
+  /* (v398) 좌표를 에디터 저장본에 맞췄다.
+     여기 값은 원래 손으로 적어 넣은 것이라, 에디터에서 위험요소를 옮겨도 게임은
+     그대로였다 — «처음 쓰레기 위치가 다르다»의 원인.
+     출처: bongdam_rpg_editor_data_v5_2_quest (1).json (2026-09-06 저장)
+     각 값은 그 저장본의 오브젝트 «중심»(cx,cy)이다. hz() 가 중심 기준으로 상자를 만든다. */
   var HAZARDS = {
-    '212': [hz(212, 'ow212_kickboard_1', 'kickboard', 'pollute', 0.266, 0.484, '길을 막은 킥보드'),
-            hz(212, 'ow212_bicycle_1', 'bicycle', 'pollute', 0.618, 0.502, '길을 막은 자전거'),   // (v34) 프롤로그가 메인 1개를 소모해 1장이 완료 불가하던 문제 — 메인 1개 증원
+    '212': [hz(212, 'ow212_kickboard_1', 'kickboard', 'pollute', 0.1965, 0.4439, '길을 막은 킥보드'),
+            hz(212, 'ow212_bicycle_1', 'bicycle', 'pollute', 0.5778, 0.0160, '길을 막은 자전거'),   // (v34) 프롤로그가 메인 1개를 소모해 1장이 완료 불가하던 문제 — 메인 1개 증원
 
-            hz(212, 'ow212_trash_1', 'trash', 'pollute', 0.52, 0.44, '방치된 쓰레기 더미'),
-            hz(212, 'ow212_smoke_1', 'cigarette', 'smoke', 0.34, 0.53, '떠도는 담배 연기', true)],
-    '213': [hz(213, 'ow213_bottle_1', 'bottle', 'pollute', 0.232, 0.292, '버려진 술병'),
-            hz(213, 'ow213_glass_1', 'glass', 'pollute', 0.408, 0.338, '깨진 유리 조각'),
-            hz(213, 'ow213_alley_1', 'dark_alley', 'dark', 0.33, 0.45, '어두운 산책로', true)],
-    '211': [hz(211, 'ow211_graffiti_1', 'graffiti', 'pollute', 0.16, 0.192, '지워지지 않은 낙서'),
-            hz(211, 'ow211_noise_1', 'noise_bat', 'smoke', 0.25, 0.28, '골목의 소음'),
-            hz(211, 'ow211_trash_1', 'trash', 'pollute', 0.32, 0.22, '방치된 쓰레기', true)],
-    '210': [hz(210, 'ow210_streetlight_1', 'streetlight', 'dark', 0.62, 0.34, '고장 난 가로등'),
-            hz(210, 'ow210_crack_1', 'road_crack', 'dark', 0.44, 0.56, '갈라진 길'),
-            hz(210, 'ow210_alley_1', 'dark_alley', 'dark', 0.378, 0.288, '어두운 골목', true)]
+            hz(212, 'ow212_trash_1', 'trash', 'pollute', 0.3405, 0.3162, '방치된 쓰레기 더미'),
+            hz(212, 'ow212_smoke_1', 'cigarette', 'smoke', 0.6729, 0.4467, '떠도는 담배 연기', true)],
+    '213': [hz(213, 'ow213_bottle_1', 'bottle', 'pollute', 0.6478, 0.4461, '버려진 술병'),
+            hz(213, 'ow213_glass_1', 'glass', 'pollute', 0.0096, 0.3104, '깨진 유리 조각'),
+            hz(213, 'ow213_alley_1', 'dark_alley', 'dark', 0.2974, 0.4568, '어두운 산책로', true)],
+    '211': [hz(211, 'ow211_graffiti_1', 'graffiti', 'pollute', 0.0925, 0.5253, '지워지지 않은 낙서'),
+            hz(211, 'ow211_noise_1', 'noise_bat', 'smoke', 0.8114, 0.2047, '골목의 소음'),
+            hz(211, 'ow211_trash_1', 'trash', 'pollute', 0.1768, 0.4256, '방치된 쓰레기', true)],
+    '210': [hz(210, 'ow210_streetlight_1', 'streetlight', 'dark', 0.3987, 0.2688, '고장 난 가로등'),
+            hz(210, 'ow210_crack_1', 'road_crack', 'dark', 0.4497, 0.5648, '갈라진 길'),
+            hz(210, 'ow210_alley_1', 'dark_alley', 'dark', 0.7260, 0.6583, '어두운 골목', true)]
   };
-  var BOSS_POS = { x: 0.408, y: 0.312 };   // 212 와우리 복합문화건물 앞 광장
+  var BOSS_POS = { x: 0.1808, y: 0.3317 };   // 212 — 에디터 저장본의 final_boss_1 위치
 
   var NPCS = [
     { sid: 212, id: 'ow_npc_eunji', name: '은지', asset: 'culture_npc_02', x: 0.392, y: 0.48, region: 'wawoo',
