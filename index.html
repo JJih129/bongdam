@@ -22674,8 +22674,23 @@ document.addEventListener('keydown', function(e){
             say('\uB098', ['(\uC88B\uC544, \uC774\uC81C \uC548\uB0B4\uB370\uC2A4\uD06C \uC120\uC0DD\uB2D8\uAED8 \uAC00 \uBCF4\uC790.)']);
           }, 1100);
         } else {
-          card(key('W')+key('A')+key('S')+key('D')+' \uB610\uB294 \uBC29\uD5A5\uD0A4\uB85C \uC6C0\uC9C1\uC5EC \uBCF4\uC138\uC694'
-            + '<div style="font-size:13px;color:#9fb0d0;margin-top:2px;">\uB300\uD654\uB294 '+key('Space')+' \uB85C \uB118\uACA8\uC694</div>');
+          /* (v398) \uC774 \uCE74\uB4DC\uB294 \uB9E4 \uD504\uB808\uC784 innerHTML \uC744 \uB2E4\uC2DC \uC4F4\uB2E4. \uADF8\uB798\uC11C \uBC16\uC5D0\uC11C(0259) \uBB38\uAD6C\uB97C
+             \uBC14\uAFD4 \uBD10\uC57C \uB2E4\uC74C \uD504\uB808\uC784\uC5D0 \uB418\uB3CC\uC544\uAC04\uB2E4 \u2014 \uC2E4\uC81C\uB85C \uBAA8\uBC14\uC77C\uC5D0\uC11C \u00ABW A S D \u2026 Space\u00BB \uAC00
+             \uADF8\uB300\uB85C \uB098\uC654\uB2E4. \uD0A4 \uCEA1\uC774 <span> \uC774\uB77C 0259 \uC758 <kbd> \uCC98\uB9AC\uC5D0\uB3C4 \uAC78\uB9AC\uC9C0 \uC54A\uC558\uB2E4.
+             \uD328\uCE58\uB85C \uB36E\uB294 \uB300\uC2E0 \uC5EC\uAE30\uC11C \uAC08\uB77C \uC900\uB2E4. */
+          var __touch = false;
+          try {
+            __touch = document.documentElement.classList.contains('bd-touch-mode')
+              || (navigator.maxTouchPoints || 0) > 0
+              || matchMedia('(pointer: coarse)').matches;
+          } catch (eT) {}
+          if (__touch) {
+            card('\uD654\uBA74\uC744 \uB4DC\uB798\uADF8\uD574\uC11C \uC6C0\uC9C1\uC5EC \uBCF4\uC138\uC694'
+              + '<div style="font-size:13px;color:#9fb0d0;margin-top:2px;">\uB300\uD654\uB294 \uD654\uBA74\uC744 \uD0ED\uD574\uC11C \uB118\uACA8\uC694</div>');
+          } else {
+            card(key('W')+key('A')+key('S')+key('D')+' \uB610\uB294 \uBC29\uD5A5\uD0A4\uB85C \uC6C0\uC9C1\uC5EC \uBCF4\uC138\uC694'
+              + '<div style="font-size:13px;color:#9fb0d0;margin-top:2px;">\uB300\uD654\uB294 '+key('Space')+' \uB85C \uB118\uACA8\uC694</div>');
+          }
         }
       }
     }
@@ -49025,6 +49040,9 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
        아래 개별 규칙(ESC→닫기)만 걸리면 «E 또는 닫기 키로 닫기» 라는 이상한 말이 되므로
        그 규칙들보다 «먼저» 통째로 바꾼다. 이미 변환된 형태도 같이 받는다. */
     [/E\s*또는\s*ESC\s*키로\s*닫기/g, '✕ 를 눌러 닫기'],
+    /* «그만두기 (ESC)» — 미니게임 선택. 개별 ESC 규칙만 걸리면 «그만두기 (닫기)» 가 된다. */
+    [/그만두기\s*\(\s*ESC\s*\)/g, '그만두기'],
+    [/\(\s*ESC\s*\)/g, ''],
     [/E\s*또는\s*닫기\s*키로\s*닫기/g, '✕ 를 눌러 닫기'],
     [/W\/S\s*이동\s*·\s*A\/D\s*회전\s*·\s*Q\/E\s*좌우\s*이동\s*·\s*Space\s*발사/g,
       '화면 드래그로 이동 · 좌우 버튼으로 회전 · 화면 탭으로 발사'],
@@ -50368,7 +50386,11 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
   var SHEET_SEL = ['#bd-map-v342 #bd-map-v342-board .m42-rname',
                    '#bd-map-v342 #bd-map-v342-board .m42-pct',
                    '#bd-map-v342 #bd-map-v342-board .m42-hz',
-                   '#bd-map-v342 #bd-map-v342-board .m42-mk'];
+                   '#bd-map-v342 #bd-map-v342-board .m42-mk',
+                   /* 튜토리얼 카드도 0060 이 매 프레임 innerHTML 을 다시 쓴다.
+                      안쪽 보조 줄이 인라인 font-size:13px(화면 8.5px)라 인라인으로는
+                      붙였다 지워졌다 한다 — 규칙으로 건다. */
+                   'html #bd-tut-card div'];
   /* 글자가 세로로 쪼개지면 안 되는 것들 */
   var NOWRAP_SEL = ['.inv-tab', '#bd-menu-btns button', '#bd-mb-map', '#bd-bag-top',
                     '#bd-map-v342 .m42-x', '.bd-modal-close', '#inv-use-btn'];
@@ -50458,7 +50480,52 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
       el.style.setProperty('padding', Math.round(6 / z) + 'px ' + Math.round(10 / z) + 'px', 'important');
     });
 
+    floor();
     sheet();
+  }
+
+  /* ── 최소 크기 바닥 ──
+     위의 목록은 «내가 아는 요소»만 덮는다. 전수 조사에서 퀘스트·장비·업적·도장수첩·상점·
+     설정 화면에 7.1~10.4px 짜리가 수십 개 더 있는 것이 나왔다. 화면을 하나씩 열거하는 건
+     끝이 없고, 새 화면이 생기면 또 빠진다.
+     그래서 «UI 영역 안에서 화면 기준 SMALL 보다 작게 그려지는 글자»를 찾아 바닥만 올린다.
+     크기를 통일하는 게 아니라 하한만 두는 것이라 원래의 위계(제목이 크고 설명이 작은 것)는
+     그대로 남는다. 장식용으로 일부러 큰 아이콘도 건드리지 않는다. */
+  var FLOOR_ROOT = ['.bd-modal-box', '#inv-panel', '#bd-map-v342', '#quest-panel',
+                    '.bd-qlog2-box', '#bd-hp-dom', '#bd-keybar', '#bd-dami-hud',
+                    '#bd-toast', '#bd-generic-toast', '#dialogue-box',
+                    '#bd-district-hud', '#bd-quest-hud', '#bd-tut-card',
+                    /* 전수 조사에서 «모든 화면에 공통으로» 작게 나오던 것들의 소속.
+                       화면마다 열어 보고서야 어디 것인지 알았다. */
+                    '#bd-guide-ov', '#bd-gamesel', '#bd-place-book', '#bd-shop-modal'];
+
+  function floor() {
+    try {
+      for (var i = 0; i < FLOOR_ROOT.length; i++) {
+        var roots;
+        try { roots = document.querySelectorAll(FLOOR_ROOT[i]); } catch (e) { continue; }
+        for (var r = 0; r < roots.length; r++) {
+          var root = roots[r];
+          try { if (getComputedStyle(root).display === 'none') continue; } catch (e2) { continue; }
+          var list = root.querySelectorAll('*');
+          for (var j = 0; j < list.length; j++) {
+            var el = list[j];
+            if (el.children.length) continue;                 /* 잎 노드만 */
+            if (!(el.textContent || '').trim()) continue;
+            var cs;
+            try { cs = getComputedStyle(el); } catch (e3) { continue; }
+            if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+            var z = scaleOf(el);
+            var px = parseFloat(cs.fontSize) * z;
+            if (!(px > 0) || px >= SMALL - 0.05) continue;     /* 이미 충분하면 그대로 */
+            var want = Math.round(SMALL / z * 10) / 10;
+            if (el.style.getPropertyValue('font-size') !== want + 'px') {
+              el.style.setProperty('font-size', want + 'px', 'important');
+            }
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   /* 다시 그려지는 요소용 — 규칙으로 건다 */
@@ -50606,6 +50673,140 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
   else boot();
 
   window.BD_MOBILE_INV = { apply: apply, narrow: narrow };
+})();
+</script>
+<script id="bd-mobile-mode-v398">/* (v398) 모바일 모드 스위치 + 모든 모달 공통 처리.
+ *
+ * ── 왜 필요한가 ───────────────────────────────────────────────────
+ *   지금까지 0264~0268 이 각자 «좁은 화면인가»를 따로 판단했다. 판단 기준이 흩어져 있으면
+ *   어떤 화면은 모바일 규칙을 받고 어떤 화면은 못 받는 상태가 생긴다 — 실제로 가방·지도만
+ *   고쳐졌고 퀘스트·장비·업적·도장수첩·상점·설정은 그대로였다.
+ *   여기서 «모바일이다»를 한 번만 정하고 <html> 에 클래스로 박는다.
+ *   모든 모바일 규칙은 그 클래스 아래에만 쓴다 — PC 는 클래스가 없으니 규칙 자체가
+ *   적용되지 않는다(«PC 는 손대지 않았다»가 증명 가능해진다).
+ *
+ * ── 전수 조사에서 나온 것 (874x300) ───────────────────────────────
+ *   화면마다 열어 재 보니 대부분이 같은 컨테이너(.bd-modal-box)를 쓰는데
+ *   모두 화면의 20~22% 밖에 안 썼다. 그 좁은 데 내용을 밀어 넣느라 글자는 7.1~10.4px 로
+ *   내려가고, 카드 격자는 화면 밖으로 잘려 나갔다.
+ *     퀘스트 로그 35% · 장비 22% · 업적 20% · 도장수첩 22% · 상점 21% · 설정 22%
+ *   개별로 고칠 일이 아니다 — 공통 컨테이너를 한 번 고치면 전부 따라온다.
+ */
+(function () {
+  'use strict';
+
+  var CLS = 'bd-mobile-ui';
+  var ID = 'bd-mobile-mode-v398-style';
+  var NARROW_H = 520;
+
+  /* «모바일이다»의 유일한 판단. 다른 블록은 이 함수(또는 <html> 클래스)를 본다. */
+  function isMobile() {
+    try {
+      var touch = (navigator.maxTouchPoints || 0) > 0 || matchMedia('(pointer: coarse)').matches;
+      if (!touch) return false;
+      /* 터치 노트북·큰 태블릿까지 좁은 화면 규칙을 먹이면 오히려 어색하다.
+         세로가 짧을 때만 «가로로 누운 폰» 취급한다. */
+      return window.innerHeight <= NARROW_H;
+    } catch (e) { return false; }
+  }
+
+  function scaleOf(el) {
+    try {
+      if (!el || !el.offsetHeight) return 0;
+      var r = el.getBoundingClientRect();
+      if (!r.height) return 0;
+      var s = r.height / el.offsetHeight;
+      return (s > 0.05 && s < 20) ? s : 0;
+    } catch (e) { return 0; }
+  }
+
+  /* 배율을 잴 만한 요소를 찾는다 — 모달이 아직 없을 수도 있다 */
+  function scale() {
+    var probes = ['.bd-modal-box', '#inv-panel', '#dialogue-box', '#bd-hp-dom', 'body'];
+    for (var i = 0; i < probes.length; i++) {
+      var e = document.querySelector(probes[i]);
+      var s = scaleOf(e);
+      if (s) return s;
+    }
+    return 0;
+  }
+
+  function apply() {
+    var de = document.documentElement;
+    var on = isMobile();
+    if (de.classList.contains(CLS) !== on) de.classList.toggle(CLS, on);
+
+    var st = document.getElementById(ID);
+    if (!on) { if (st) st.remove(); return; }
+
+    var z = scale();
+    if (!z) return;
+    var H = Math.round(window.innerHeight * 0.90 / z);
+    var W = Math.round(window.innerWidth * 0.94 / z);
+    var pad = Math.round(12 / z);
+
+    var css =
+      /* ── 모든 모달의 공통 상자 ──
+         작은 상자에 내용을 우겨넣는 대신, 화면을 쓰고 넘치면 «세로로 스크롤»하게 한다.
+         잘려서 안 보이는 것보다 밀려서 보이는 편이 낫다(업적·도장수첩의 카드 격자가
+         화면 밖으로 나가 있었다). */
+      /* .bd-modal-box 규약을 안 따르는 패널도 같이 받는다 — 전수 조사에서
+         퀘스트 로그(.bd-qlog2-box)와 도장수첩(#bd-place-book)이 규칙 밖에 있어
+         혼자 화면의 35% 만 쓰면서 내용이 화면 밖으로 잘려 나갔다. */
+      'html.' + CLS + ' .bd-modal-box,' +
+      'html.' + CLS + ' .bd-qlog2-box,' +
+      'html.' + CLS + ' #bd-place-book,' +
+      'html.' + CLS + ' #bd-gamesel{' +
+        'max-height:' + H + 'px!important;max-width:' + W + 'px!important;' +
+        'width:' + W + 'px!important;box-sizing:border-box!important;' +
+        'padding:' + pad + 'px ' + Math.round(16 / z) + 'px!important;' +
+        'overflow-y:auto!important;-webkit-overflow-scrolling:touch;' +
+        'display:flex!important;flex-direction:column!important;' +
+        'gap:' + Math.round(8 / z) + 'px!important;}' +
+
+      /* 안쪽 격자는 좁은 화면에서 칸을 줄이고, 가로로 넘치지 않게 */
+      'html.' + CLS + ' .bd-modal-box .bd-card-grid,' +
+      'html.' + CLS + ' .bd-modal-box .achieve-list,' +
+      'html.' + CLS + ' .bd-modal-box .bd-safety-list{' +
+        'display:grid!important;grid-template-columns:repeat(auto-fill,minmax(' +
+        Math.round(150 / z) + 'px,1fr))!important;gap:' + Math.round(8 / z) + 'px!important;' +
+        'min-height:0!important;}' +
+
+      /* 카드 자체가 넓은 화면 기준 최소 높이를 들고 있어 세로를 잡아먹는다 */
+      'html.' + CLS + ' .bd-modal-box .bd-card,' +
+      'html.' + CLS + ' .bd-modal-box .achieve-card{' +
+        'min-height:0!important;padding:' + Math.round(8 / z) + 'px ' + Math.round(10 / z) + 'px!important;}' +
+
+      /* 버튼 줄은 아래에 붙이고, 글자가 세로로 쪼개지지 않게 */
+      'html.' + CLS + ' .bd-modal-box button,' +
+      'html.' + CLS + ' .bd-modal-box .modal-btn{white-space:nowrap!important;' +
+        'min-height:' + Math.round(34 / z) + 'px!important;flex:0 0 auto!important;}' +
+
+      /* 제목은 한 줄 */
+      'html.' + CLS + ' .bd-modal-title{white-space:nowrap!important;flex:0 0 auto!important;}' +
+
+      /* 모달이 게임 HUD 뒤로 가지 않게 — #inv-overlay 가 z-index 30 이라 파묻혀 있었다 */
+      'html.' + CLS + ' .bd-modal.show,html.' + CLS + ' .bd-modal.open{z-index:5600!important;}';
+
+    if (!st) {
+      st = document.createElement('style');
+      st.id = ID;
+      (document.head || document.documentElement).appendChild(st);
+    }
+    if (st.textContent !== css) st.textContent = css;
+  }
+
+  function boot() {
+    apply();
+    addEventListener('resize', function () { setTimeout(apply, 90); });
+    addEventListener('orientationchange', function () { setTimeout(apply, 300); });
+    setInterval(apply, 900);
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  window.BD_MOBILE_MODE = { isMobile: isMobile, apply: apply, cls: CLS, scale: scale };
 })();
 </script>
 <script>(function(){if(!("serviceWorker" in navigator)||location.protocol==="file:")return;addEventListener("load",function(){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="installed"&&navigator.serviceWorker.controller){try{var d=document.createElement("div");d.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;background:#1d2333;color:#ffd86b;padding:10px 18px;border-radius:12px;border:1px solid #ffd86b;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)";d.textContent="🔄 새 버전이 있어요 — 눌러서 새로고침";d.onclick=function(){location.reload();};document.body.appendChild(d);}catch(e){}}});});}).catch(function(){});});})();</script></body>
