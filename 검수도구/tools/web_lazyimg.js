@@ -61,13 +61,23 @@
   });
 
   /* 보류 중인 이미지는 실제로 '완료되지 않은' 상태다 — complete 를 그렇게 보고해야
-     `if (img.complete && img.naturalWidth)` 형태의 가드가 오작동하지 않는다. */
+     `if (img.complete && img.naturalWidth)` 형태의 가드가 오작동하지 않는다.
+     다만 «읽기만 하고 두면» 교착이 생긴다:
+       그리기 코드가  if (im.complete && im.naturalWidth) ctx.drawImage(im, …)
+       이 지연 로딩은 drawImage 가 불릴 때 로딩을 시작
+     → complete 가 false 라 drawImage 를 안 부르고, 안 불러서 로딩이 시작되지 않는다.
+     실제로 위험요소 스프라이트 12종이 이래서 영영 안 뜨고 ⚠️ 폴백만 나왔다.
+     complete 를 «읽는다»는 것은 그 이미지를 기다리고 있다는 뜻이므로, 그 자리에서
+     로딩을 시작한다. 이번 호출은 false 를 돌려주고 다음 프레임부터 참이 된다. */
   var dCom = Object.getOwnPropertyDescriptor(proto, 'complete')
           || Object.getOwnPropertyDescriptor(window.HTMLImageElement.prototype, 'complete');
   if (dCom && dCom.get) {
     Object.defineProperty(proto, 'complete', {
       configurable: true, enumerable: dCom.enumerable,
-      get: function () { return this.__bdPend != null ? false : dCom.get.call(this); }
+      get: function () {
+        if (this.__bdPend != null) { try { arm(this); } catch (e) {} return false; }
+        return dCom.get.call(this);
+      }
     });
   }
 

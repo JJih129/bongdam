@@ -313,6 +313,15 @@ window.BD_getAssetImage = function(id){
   if(ls[id] && (ls[id].dataUrl || ls[id].src)) url = ls[id].dataUrl || ls[id].src;
   else if(window.__BD_BAKED_ASSETS && __BD_BAKED_ASSETS[id]) url = __BD_BAKED_ASSETS[id].dataUrl || __BD_BAKED_ASSETS[id].src || __BD_BAKED_ASSETS[id];   // (v208) 게시용으로 구운 에셋
   else if(window.BD_BUILTIN_ASSETS && BD_BUILTIN_ASSETS[id]) url = BD_BUILTIN_ASSETS[id].dataUrl;
+  /* (v398) 슬롯 저장소(BD_ASSETS)도 본다.
+     0092 가 위험요소 스프라이트 12종을 BD_ASSETS.setMany 로 등록하는데 이 함수가
+     그 저장소를 보지 않아 늘 null 을 돌려줬다. 그러면 0017 의 그리기 코드가
+     «에셋이 없다»고 판단해 ⚠️ 폴백을 그린다 — 위험요소가 전부 빨간 표시로만
+     보이던 원인이다(파일도 등록도 멀쩡했고, 조회 경로 하나가 빠져 있었다).
+     기존 세 곳을 먼저 보고 못 찾았을 때만 여기로 온다 — 기존 동작은 그대로. */
+  else if(window.BD_ASSETS && typeof BD_ASSETS.get === 'function'){
+    try{ const v = BD_ASSETS.get(id); if(typeof v === 'string' && v) url = v; }catch(e){}
+  }
   if(!url) return null;
   const im = new Image();
   im.src = url;
