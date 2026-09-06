@@ -64,7 +64,10 @@
                    /* (v398e) 모달을 «열고» 재고 나서야 나온 것들. 안 연 화면은 검사한 게 아니다.
                       지도 버튼은 0266 이 선언 px 로 12px 을 줬는데 zoom 을 거쳐 7.8px 이 됐다. */
                    '#bd-map-v342 .m42-x', '#inv-gold-amount', '#inv-grid', '#inv-grid *',
-                   '#bd-generic-toast', '#bd-generic-toast *'];
+                   '#bd-generic-toast', '#bd-generic-toast *',
+                   /* 타이틀 폴백 버튼(가로 한 줄로 편 것)과 캐릭터 선택 문구 */
+                   '.bd-title-hit-fallback', '#char-select-row .bd-char-name',
+                   '#modal-new .modal-btn'];
   var SMALL_SEL = ['#inv-detail-desc', '#inv-footer', '#bd-map-v342 .m42-foot',
                    '#bd-map-v342 .m42-foot *', '#bd-map-v342 .m42-tip',
                    '#bd-district-minimap', '#dialogue-next'];
@@ -176,8 +179,65 @@
       el.style.setProperty('padding', Math.round(6 / z) + 'px ' + Math.round(10 / z) + 'px', 'important');
     });
 
+    tapTargets();
     floor(SMALL);
     sheet();
+  }
+
+  /* ── 탭 타겟 ──
+     실측: ⚙️ 25x25 · ☰ 34x34 · .inv-tab 69x31 — 전부 44px 미만이었다.
+     0256 이 주변까지 눌리게 넓혀 두어 «눌리기는» 하지만, 보이는 크기가 작으면
+     어디를 눌러야 할지 알기 어렵다. 실제 크기를 키운다.
+
+     크기는 반드시 «요소마다» 배율을 재서 정한다. 한 배율로 계산했다가
+     우상단 줄(zoom 0.78)이 44px 대신 52px 이 되어 설정 버튼과 겹쳤다.
+
+     그리고 키운 뒤에는 줄이 설정 버튼을 침범하지 않는지 확인해 줄을 왼쪽으로 민다 —
+     이 두 덩어리는 서로 다른 좌표계(고정 vs 흐름)에 있어 크기만 바꾸면 부딪힌다. */
+  var TAP = 44;
+
+  function tapTargets() {
+    try {
+      each(['#bd-settings-btn', '#bd-mb-toggle', '#bd-bag-top',
+            /* 닫기 ✕ 는 «빠져나가는 유일한 길»인데 27x27 이었다 */
+            '#inv-close-btn', '.bd-modal-close', '#bd-codex-close'], function (el) {
+        var d = Math.round(TAP / scaleOf(el));
+        el.style.setProperty('min-width', d + 'px', 'important');
+        el.style.setProperty('min-height', d + 'px', 'important');
+        el.style.setProperty('display', 'inline-flex', 'important');
+        el.style.setProperty('align-items', 'center', 'important');
+        el.style.setProperty('justify-content', 'center', 'important');
+        el.style.setProperty('box-sizing', 'border-box', 'important');
+      });
+      /* 글자가 있는 버튼은 폭을 내용에 맡긴다 — 정사각형을 강제하면
+         «안 전 지 도» 처럼 한 자씩 세로로 쪼개진다(전에 실제로 그랬다). */
+      each(['#bd-mb-map', '.inv-tab', '#bd-fullscreen-return'], function (el) {
+        var d = Math.round(TAP / scaleOf(el));
+        el.style.setProperty('min-height', d + 'px', 'important');
+        el.style.setProperty('display', 'inline-flex', 'important');
+        el.style.setProperty('align-items', 'center', 'important');
+        el.style.setProperty('justify-content', 'center', 'important');
+        el.style.setProperty('white-space', 'nowrap', 'important');
+      });
+
+      /* 줄이 설정 버튼과 겹치지 않게 밀어 준다 */
+      var row = document.getElementById('bd-menu-btns');
+      var set = document.getElementById('bd-settings-btn');
+      if (row && set) {
+        var rs = getComputedStyle(row), ss = getComputedStyle(set);
+        if (rs.display !== 'none' && ss.display !== 'none') {
+          var sq = set.getBoundingClientRect();
+          if (sq.width > 2) {
+            var rz = scaleOf(row) || 1;
+            var needScreen = (window.innerWidth - sq.left) + 8;   /* 설정 버튼 왼쪽 + 여유 */
+            var want = Math.round(needScreen / rz) + 'px';
+            if (row.style.getPropertyValue('right') !== want) {
+              row.style.setProperty('right', want, 'important');
+            }
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   /* ── 최소 크기 바닥 ──
@@ -193,7 +253,14 @@
                     '#bd-district-hud', '#bd-quest-hud', '#bd-tut-card',
                     /* 전수 조사에서 «모든 화면에 공통으로» 작게 나오던 것들의 소속.
                        화면마다 열어 보고서야 어디 것인지 알았다. */
-                    '#bd-guide-ov', '#bd-gamesel', '#bd-place-book', '#bd-shop-modal'];
+                    '#bd-guide-ov', '#bd-gamesel', '#bd-place-book', '#bd-shop-modal',
+                    /* (v398r) 첫 화면이 통째로 빠져 있었다 — 타이틀 버전 표기 7.0px,
+                       캐릭터 선택 안내 9.6px. 게임 안 화면만 챙기다 보니 «들어오기 전»을
+                       놓쳤다. 사용자가 가장 먼저 보는 화면이다. */
+                    '#bd-title-screen', '#modal-new', '#char-select-row',
+                    /* 0261 의 스크롤 힌트도 자기 계산(body zoom)으로는 어긋났다 —
+                       크기는 한 곳(여기)에서만 정한다는 원칙을 여기에도 적용한다. */
+                    '#bd-scroll-hint-v398'];
 
   function floor(minPx) {
     var LIM = (typeof minPx === 'number' && minPx > 0) ? minPx : SMALL;
@@ -204,7 +271,10 @@
         for (var r = 0; r < roots.length; r++) {
           var root = roots[r];
           try { if (getComputedStyle(root).display === 'none') continue; } catch (e2) { continue; }
-          var list = root.querySelectorAll('*');
+          /* 루트 자신도 후보다. querySelectorAll('*') 는 자식만 주므로,
+             «자식 없는 요소»(예: 스크롤 힌트)는 목록에 넣어도 한 번도 검사되지 않았다. */
+          var list = [].slice.call(root.querySelectorAll('*'));
+          list.push(root);
           for (var j = 0; j < list.length; j++) {
             var el = list[j];
             if (el.children.length) continue;                 /* 잎 노드만 */
@@ -253,6 +323,20 @@
     addEventListener('orientationchange', function () { setTimeout(apply, 300); });
     /* 패널은 열 때 만들어지는 것이 많다 — 생긴 뒤 다시 맞춘다 */
     setInterval(apply, 900);
+
+    /* 폴링만으로는 «열린 직후 최대 0.9초 동안 작게 보이다 커지는» 튐이 남는다.
+       실제로 캐릭터 선택 화면에서 9.6px 로 그려졌다가 11.5px 로 뛰는 것을 측정했다.
+       새 패널이 붙는 순간(childList)에 바로 맞춘다.
+       attributes 는 보지 않는다 — 이 블록이 인라인 style 을 쓰므로 자기 변경에
+       반응해 무한 루프가 된다. 노드 추가만 보면 그럴 일이 없다. */
+    if (window.MutationObserver) {
+      var pending = false;
+      new MutationObserver(function () {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function () { pending = false; apply(); });
+      }).observe(document.documentElement, { childList: true, subtree: true });
+    }
   }
 
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);

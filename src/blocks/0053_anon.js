@@ -3634,12 +3634,55 @@ function positionTitleButtons(){
     const visibleW = Math.max(0, Math.min(vw, R) - Math.max(0, L));
     if(visibleW < (R - L) * 0.78) offscreen = true;
   });
-  if(offscreen){
+  /* (v398) «잘리지는 않지만 너무 작아서 못 누르는» 경우도 폴백으로 보낸다.
+     히트영역은 아트 기준 비율(높이 0.080)이라 화면이 짧아지면 같이 줄어든다.
+     실측(874x300 가로 폰): 89x20px — 탭 최소 44px 의 절반도 안 되고, 버튼 사이 간격은
+     4px 뿐이라 옆 버튼을 잘못 누르기 쉽다. 비율만 키우면 서로 겹치므로(간격 0.096 < 높이+여유)
+     값 조정으로는 못 고친다. 이미 있는 폴백(라벨이 보이는 실제 버튼)으로 전환한다. */
+  const hitH = 0.080 * dispH;
+  const tooSmall = hitH < 44;
+  if(offscreen || tooSmall){
     const FALLBACK_LABELS = {
       'bd-title-start':'▶ 새로 시작', 'bd-title-continue':'💾 이어하기',
       'bd-title-options':'⚙️ 설정', 'bd-title-reset':'🚪 종료하기',
     };
-    const bw = Math.min(300, vw*0.78), bh = 50, gap = 12;
+    /* (v398) 가로로 누운 폰은 세로로 쌓을 자리가 없다.
+       기존 폴백은 300x50 을 세로 4단으로 쌓아 236px 을 쓰는데, 화면 높이가 300px 이면
+       79% 를 메뉴가 먹는다. 반대로 가로는 874px 이 남아돈다.
+       그래서 «넓고 짧은» 화면에서는 한 줄로 편다 — 4개 x 200px + 간격이 836px 로 들어간다. */
+    /* clientWidth/Height 는 zoom 을 무시한 «선언 px» 이고, 화면에 보이는 크기는
+       거기에 zoom 이 곱해진 값이다. 44px 은 «화면에서» 지켜야 하는 값이므로
+       배율로 나눠 선언 px 로 되돌린다. 이걸 빼먹어 처음엔 화면 30px 이 나왔다. */
+    let __z = 1;
+    try {
+      const rr = m.getBoundingClientRect();
+      if (m.offsetHeight && rr.height) { const s = rr.height / m.offsetHeight; if (s > 0.05 && s < 20) __z = s; }
+    } catch(eZ){}
+    const px = function(screenPx){ return Math.round(screenPx / __z); };
+    const scrW = vw * __z, scrH = vh * __z;          /* 화면 기준 크기 */
+
+    const wideShort = (scrW / scrH) > 1.6 && scrH < 520;
+    let bw, bh, gap;
+    if(wideShort){
+      gap = px(Math.max(10, Math.round(scrW*0.014)));
+      bh = px(Math.max(46, Math.min(58, Math.round(scrH*0.17))));
+      bw = Math.floor((vw*0.94 - gap*(btns.length-1)) / btns.length);
+      const rowW = bw*btns.length + gap*(btns.length-1);
+      const left0 = Math.round((vw - rowW)/2);
+      const top0 = Math.round(vh - bh - px(Math.max(14, scrH*0.08)));
+      let i = 0;
+      btns.forEach(function(btn){
+        btn.classList.add('bd-title-hit-fallback');
+        if(FALLBACK_LABELS[btn.id]) btn.textContent = FALLBACK_LABELS[btn.id];
+        btn.style.left = (left0 + i*(bw+gap)) + 'px';
+        btn.style.top = top0 + 'px';
+        btn.style.width = bw + 'px';
+        btn.style.height = bh + 'px';
+        i++;
+      });
+      return;
+    }
+    bw = Math.min(300, vw*0.78); bh = 50; gap = 12;
     const total = btns.length*bh + (btns.length-1)*gap;
     const startY = Math.max(vh*0.42, vh - total - vh*0.12);
     let i = 0;

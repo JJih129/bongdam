@@ -129,10 +129,26 @@
        «전 체 / 소 모 품» 처럼 한 자씩 갈라지는 문제가 지도 버튼·인벤토리 탭에서
        두 번 났다. 좁은 폭 + white-space:normal 이면 어디서든 난다. */
     var cls = (tier === 'phone') ? 'bd-ui-phone' : 'bd-ui-tablet';
+    var T = Math.round(44 / z);                       /* 화면 44px 에 해당하는 선언 px */
     css +=
       'html.' + cls + ' .bd-modal-box button,' +
       'html.' + cls + ' .bd-modal-box .modal-btn{white-space:nowrap!important;' +
-        'min-height:' + Math.round(44 / z) + 'px!important;flex:0 0 auto!important;}' +
+        'min-height:' + T + 'px!important;flex:0 0 auto!important;}' +
+
+      /* 탭 타겟(44px) 은 0267 이 «요소마다 배율을 재서» 건다.
+         여기서 한 배율로 계산했다가 실패했다 — 이 스타일시트의 z 는 모달 기준(0.65)인데
+         우상단 줄의 실제 배율은 0.78 이라 44px 을 노리고 52px 이 나왔고,
+         그 5px 초과분이 설정 버튼과 겹쳤다(qa 의 bd-mb-toggle↔bd-settings-btn 168px²).
+         크기를 정하는 곳은 0267 하나로 모은다. */
+
+      /* ── 대비 ──
+         «보유한 아이템이 없어요» 가 배경 대비 1.3:1 이었다(WCAG AA 는 4.5:1).
+         실기기 화면에서도 거의 안 보인다. 빈 상태 문구는 «없다»는 정보를 전하는
+         유일한 수단이라 흐리면 안 된다. */
+      'html.' + cls + ' #inv-grid,' +
+      'html.' + cls + ' .bd-empty,' +
+      'html.' + cls + ' .inv-empty{color:#6b5233!important;opacity:1!important;}' +
+
       /* 모달이 게임 HUD 뒤로 가지 않게 — #inv-overlay 가 z-index 30 이라 파묻혀 있었다 */
       'html.' + cls + ' .bd-modal.show,html.' + cls + ' .bd-modal.open{z-index:5600!important;}';
 
