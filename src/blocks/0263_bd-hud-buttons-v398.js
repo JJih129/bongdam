@@ -83,9 +83,12 @@
       '50%{box-shadow:0 0 0 8px rgba(255,216,107,0)}}' +
       '.bd-hud-hilite{animation:bdHudPulse 1.1s ease-out infinite;' +
       'border-color:rgba(255,216,107,1)!important;position:relative;z-index:1201;}' +
-      /* 지도 항목 항시 노출 — 0252 의 접기(인라인 display:none)를 이겨야 하므로 !important */
+      /* 지도 항목 항시 노출 — 0252 의 접기(인라인 display:none)를 이겨야 하므로 !important.
+         이 버튼은 «🗺️ 안전지도» 텍스트 버튼이다. 정사각형(44x44)을 강제하면 글자가
+         한 자씩 세로로 쪼개진다(실기기 흐름 검증에서 확인). 너비는 내용에 맡기고
+         탭 높이만 확보한다. */
       'html.bd-map-always #bd-mb-map{display:inline-flex!important;align-items:center;' +
-      'justify-content:center;width:44px;height:44px;padding:0;flex:0 0 auto;}';
+      'justify-content:center;min-height:44px;padding:0 12px;white-space:nowrap;flex:0 0 auto;}';
     (document.head || document.documentElement).appendChild(st);
   }
 

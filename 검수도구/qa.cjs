@@ -44,6 +44,47 @@ if (!SZ) {
 if (opt('dpr')) SZ.dpr = Number(opt('dpr'));
 const URL = opt('url') || 'http://localhost:8788/new/';
 
+/* 체크포인트(검수도구/snaps/*.json)는 localStorage 평면 덤프다.
+   페이지가 뜨기 «전»에 넣어야 게임이 그 상태로 부팅한다. */
+async function seedSnap(p, name, log) {
+  const fs = require('fs'), path = require('path');
+  const f = path.join(__dirname, 'snaps', name + '.json');
+  if (!fs.existsSync(f)) { log('  체크포인트 없음: ' + name); return false; }
+  const data = JSON.parse(fs.readFileSync(f, 'utf8'));
+  await p.addInitScript(d => {
+    try { for (const k of Object.keys(d)) localStorage.setItem(k, d[k]); } catch (e) {}
+  }, data);
+  log('  체크포인트 주입: ' + name + ' (' + Object.keys(data).length + '키)');
+  return true;
+}
+
+/* 체크포인트로 들어갈 때는 «이어하기»를 눌러야 한다.
+   «시작하기»는 0154 가 세이브를 purge 하고 reload 하므로 주입한 상태가 통째로 날아간다 —
+   실제로 이걸 몰라서 여섯 챕터가 전부 스테이지 101 로 나온 적이 있다. */
+async function bootContinue(p, log) {
+  await p.goto(URL, { waitUntil: 'load', timeout: 180000 });
+  await p.waitForTimeout(3000);
+  const clicked = await p.evaluate(() => {
+    const b = document.getElementById('bd-title-continue');
+    if (b && b.offsetHeight > 0) { b.click(); return '#bd-title-continue'; }
+    const hits = [...document.querySelectorAll('.bd-title-hit')]
+      .map(e => ({ e, y: e.getBoundingClientRect().y })).sort((a, b2) => a.y - b2.y);
+    if (hits[1]) { hits[1].e.click(); return '.bd-title-hit[1]'; }   /* 두 번째 = 이어하기 */
+    return null;
+  });
+  log('  이어하기 클릭: ' + clicked);
+  for (let i = 0; i < 30; i++) {
+    await p.waitForTimeout(800);
+    const st = await p.evaluate(() => { try { return typeof currentStage !== 'undefined' ? currentStage : null; } catch (e) { return null; } });
+    const onTitle = await p.evaluate(() => { const b = document.getElementById('bd-title-start'); return !!(b && b.offsetHeight > 0); });
+    if (st && st !== 1 && !onTitle) break;
+  }
+  await p.waitForTimeout(2000);
+  const st = await p.evaluate(() => { try { return currentStage; } catch (e) { return '?'; } });
+  log('  부팅 완료(이어하기) — 스테이지 ' + st);
+  return st;
+}
+
 /* ── 공용 부팅 — 여기 한 곳만 고치면 모든 검사가 따라온다 ── */
 async function boot(p, log) {
   await p.goto(URL, { waitUntil: 'load', timeout: 180000 });
@@ -233,12 +274,123 @@ const CHECKS = {
   }
 };
 
+/* 화면 상태를 수치로 요약 — 흐름 검증에서 챕터마다 같은 잣대로 잰다 */
+const SNAPSHOT = `(() => {
+  const zoomOf = el => { let k = 1;
+    for (let p = el; p; p = p.parentElement) { const s = getComputedStyle(p);
+      const z = parseFloat(s.zoom); if (z && z !== 1) k *= z;
+      const m = (s.transform || '').match(/^matrix\\(([-\\d.]+)/);
+      if (m && parseFloat(m[1]) && parseFloat(m[1]) !== 1) k *= parseFloat(m[1]); }
+    return k; };
+  const seen = el => { const s = getComputedStyle(el), r = el.getBoundingClientRect();
+    if (s.display==='none'||s.visibility==='hidden'||parseFloat(s.opacity)<0.15) return false;
+    if (r.width < 4 || r.height < 4) return false;
+    return r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0; };
+  let cut = 0, tap = 0, tiny = 0, worst = null;
+  document.querySelectorAll('*').forEach(el => {
+    if (!seen(el)) return;
+    const r = el.getBoundingClientRect();
+    if (Math.max(0,-r.left) > 2 || Math.max(0, r.right-innerWidth) > 2
+        || Math.max(0, r.bottom-innerHeight) > 2 || Math.max(0,-r.top) > 2) cut++;
+  });
+  document.querySelectorAll('button,[onclick],[role=button],[class*=btn]').forEach(el => {
+    if (!seen(el)) return;
+    const r = el.getBoundingClientRect();
+    if (r.width < 44 || r.height < 44) tap++;
+  });
+  document.querySelectorAll('div,span,p,button,b,td').forEach(el => {
+    if (!seen(el) || el.children.length > 2) return;
+    const t = (el.textContent||'').trim(); if (!t || t.length > 50) return;
+    const px = parseFloat(getComputedStyle(el).fontSize) * zoomOf(el);
+    if (px && px < 12) { tiny++; if (!worst || px < worst.px) worst = { px: +px.toFixed(1), t: t.slice(0,18) }; }
+  });
+  return { stage: (typeof currentStage!=='undefined') ? currentStage : '?',
+           hero: (typeof heroX==='number') ? [+heroX.toFixed(2), +heroY.toFixed(2)] : null,
+           zoom: (()=>{try{return parseFloat(getComputedStyle(document.body).zoom)||1;}catch(e){return 1;}})(),
+           잘림: cut, 탭44미만: tap, '12px미만': tiny, 가장작음: worst };
+})()`;
+
 /* all 실행 순서 — «상태를 바꾸는» 검사를 뒤로 보낸다.
    travel 은 캐릭터와 카메라를 움직여서, 먼저 돌면 guide 의 강조 링 정렬이 30px 어긋난 것처럼
    보인다(단독 실행은 0px). 순서가 결과를 바꾸면 그 검사는 신뢰할 수 없다. */
 const ORDER = ['env', 'hud', 'joystick', 'guide', 'travel'];
 
+/* ── 전체 흐름 검증 ──
+   프롤로그만 보고 «괜찮다»고 하면 안 된다. 체크포인트로 각 챕터에 들어가
+   같은 잣대(잘림·탭 타겟·글자 크기·콘솔 에러)로 재고 스크린샷을 남긴다. */
+const CHAPTERS = [
+  { snap: null, 이름: '01_프롤로그(문화의집)' },
+  { snap: 'ch1_start', 이름: '02_1장' },
+  { snap: 'ch2_start', 이름: '03_2장' },
+  { snap: 'ch3_start', 이름: '04_3장' },
+  { snap: 'ch4_start', 이름: '05_4장' },
+  { snap: 'sangri_after_bottle', 이름: '06_상리(전투후)' }
+];
+
+async function runFlow(browser, ctxOpts, log) {
+  const fs = require('fs'), path = require('path');
+  const shots = path.join(__dirname, '_flow');
+  fs.mkdirSync(shots, { recursive: true });
+  const rows = [];
+  for (const ch of CHAPTERS) {
+    const ctx = await browser.newContext(ctxOpts);
+    const p = await ctx.newPage();
+    const errs = [];
+    p.on('pageerror', e => errs.push(e.message));
+    p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+    log('▶ ' + ch.이름);
+    try {
+      if (ch.snap) {
+        if (!await seedSnap(p, ch.snap, log)) { await ctx.close(); continue; }
+        await bootContinue(p, log);      /* 시작하기를 누르면 세이브가 purge 된다 */
+      } else {
+        await boot(p, log);
+      }
+      await clearDialogueOn(p);
+      await p.waitForTimeout(2500);
+      const s = await p.evaluate(SNAPSHOT);
+      s.에러 = errs.length;
+      s.챕터 = ch.이름;
+      rows.push(s);
+      log('   스테이지 ' + s.stage + ' zoom ' + s.zoom + ' · 잘림 ' + s.잘림
+        + ' · 탭44미만 ' + s.탭44미만 + ' · 12px미만 ' + s['12px미만']
+        + (s.가장작음 ? '(최소 ' + s.가장작음.px + 'px)' : '') + ' · 에러 ' + errs.length);
+      if (errs.length) log('   ⚠ ' + errs.slice(0, 2).join(' | '));
+      await p.screenshot({ path: path.join(shots, ch.이름 + '.png') });
+    } catch (e) {
+      log('   실패: ' + e.message);
+      rows.push({ 챕터: ch.이름, 실패: e.message });
+    }
+    await ctx.close();
+  }
+  log('');
+  log('════ 흐름 요약 ════');
+  log('챕터                     스테이지  잘림  탭44미만  12px미만  에러');
+  rows.forEach(r => log(String(r.챕터).padEnd(24)
+    + String(r.stage ?? '-').padStart(7) + String(r.잘림 ?? '-').padStart(6)
+    + String(r.탭44미만 ?? '-').padStart(10) + String(r['12px미만'] ?? '-').padStart(10)
+    + String(r.에러 ?? '-').padStart(6)));
+  log('스크린샷: 검수도구/_flow/');
+  return rows.some(r => r.실패 || r.에러) ? 1 : 0;
+}
+
+/* clearDialogue 는 SZ 를 참조하므로 페이지 인자를 받는 형태로 한 번 더 감싼다 */
+async function clearDialogueOn(p) { return clearDialogue(p); }
+
 (async () => {
+  if (check === 'flow') {
+    const browser0 = await chromium.launch({ headless: !args.includes('--headed') });
+    const ctxOpts = {
+      viewport: { width: SZ.w, height: SZ.h }, deviceScaleFactor: SZ.dpr,
+      hasTouch: true, isMobile: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
+    };
+    console.log('▶ 전체 흐름 — ' + URL + '  ' + SZ.w + 'x' + SZ.h + ' DPR' + SZ.dpr);
+    const bad = await runFlow(browser0, ctxOpts, console.log);
+    await browser0.close();
+    console.log(bad ? '❌ 확인 필요' : '✅ 이상 없음');
+    process.exit(bad);
+  }
   const list = check === 'all' ? ORDER.filter(c => CHECKS[c]) : [check];
   for (const c of list) if (!CHECKS[c]) { console.error('알 수 없는 검사: ' + c + '\n가능: ' + Object.keys(CHECKS).join(', ') + ', all'); process.exit(1); }
 
