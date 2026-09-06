@@ -106,7 +106,9 @@
   var HIDE_ID = 'bd-modal-hide-fixed-v398';
   function modalOpen() {
     try {
-      var list = document.querySelectorAll('.bd-modal.show, .bd-modal.open');
+      /* .bd-modal 규약을 따르지 않는 패널도 있다 — 인벤토리(#inv-overlay.open)가 그렇다.
+         클래스만 보고 판단했더니 가방을 열어도 전체화면 버튼이 그대로 제목 위에 남았다. */
+      var list = document.querySelectorAll('.bd-modal.show, .bd-modal.open, #inv-overlay.open, #bd-map-v342.show');
       for (var i = 0; i < list.length; i++) if (visible(list[i])) return true;
       return false;
     } catch (e) { return false; }
@@ -119,7 +121,14 @@
       if (st) return;
       st = document.createElement('style');
       st.id = HIDE_ID;
-      st.textContent = '#bd-fullscreen-return{display:none!important;}';
+      /* 토스트도 같이 비킨다.
+         #inv-overlay 를 z-index 5600 으로 올려 대사창·전체화면 버튼은 뒤로 보냈는데
+         토스트(z 960)만 여전히 제목 위에 그려졌다. 부모가 별도 쌓임 맥락을 만들어
+         숫자 비교가 그대로 적용되지 않기 때문이다. 좁은 화면에는 토스트를 피해 둘 자리도
+         없다 — 모달이 열린 동안만 감추고 닫으면 되돌린다.
+         (elementFromPoint 로는 inv-header 가 잡혔다. 토스트가 pointer-events:none 이라
+          «눌리지는 않는데 보이기만» 하는 상태였다. 히트테스트만 믿으면 놓친다.) */
+      st.textContent = '#bd-fullscreen-return,#bd-toast{display:none!important;}';
       (document.head || document.documentElement).appendChild(st);
     } catch (e) {}
   }

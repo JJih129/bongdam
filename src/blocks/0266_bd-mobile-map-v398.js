@@ -79,17 +79,20 @@
       '#bd-map-v342 .m42-head{grid-area:head;margin:0!important;align-self:start;' +
         'display:grid!important;grid-template-columns:1fr auto auto;' +
         'align-items:center;gap:6px 8px;}' +
-      '#bd-map-v342 .m42-title{grid-column:1;grid-row:1;font-size:15px!important;' +
-        'white-space:nowrap;}' +
-      '#bd-map-v342 .m42-tip{grid-column:1/-1;grid-row:2;font-size:11px!important;' +
+      /* (v398e) 글자 크기는 여기서 정하지 않는다 — 0267 이 전담한다.
+         여기서 font-size:12px 처럼 «선언 px»을 주면 zoom(0.65)을 거쳐 화면에서는 7.8px 이
+         된다. 실제로 도장수첩·닫기 버튼이 그렇게 나왔다. 0267 은 요소마다 배율을 재서
+         «화면 기준»으로 맞추므로 그쪽에 맡긴다. 여기는 배치만 담당한다. */
+      '#bd-map-v342 .m42-title{grid-column:1;grid-row:1;white-space:nowrap;}' +
+      '#bd-map-v342 .m42-tip{grid-column:1/-1;grid-row:2;' +
         'line-height:1.4;white-space:normal!important;}' +
       '#bd-map-v342 .m42-head .m42-x{min-height:34px;padding:0 10px!important;' +
-        'font-size:12px!important;white-space:nowrap;grid-row:1;}' +
+        'white-space:nowrap;grid-row:1;}' +
       '#bd-map-v342 .m42-head .m42-x:nth-of-type(1){grid-column:2;}' +
       '#bd-map-v342 .m42-head .m42-x:nth-of-type(2){grid-column:3;}' +
 
       '#bd-map-v342 .m42-foot{grid-area:foot;margin:0!important;align-self:start;' +
-        'display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px!important;line-height:1.4;}' +
+        'display:flex;flex-wrap:wrap;gap:4px 10px;line-height:1.4;}' +
       '#bd-map-v342 .m42-foot>span[style*="flex:1"]{display:none!important;}' +
       '#bd-map-v342 .m42-leg{flex:0 0 auto;}' +
       '#bd-map-v342 .m42-leg img{width:13px;height:13px;}';

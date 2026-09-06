@@ -72,13 +72,15 @@
     /* 초상화: 86% → 62%. bottom:0 에 붙어 있으므로 줄이면 «아래에서 올라온 상반신»이 된다. */
     var portraitH = Math.round(logical * 0.62);
 
+    /* (v398e) 글자 크기는 여기서 정하지 않는다 — 0267 이 전담한다.
+       한동안 두 블록이 같은 글자를 서로 다른 기준으로 만지고 있었다. 0258 의 zoom 보정을
+       끄자 이 블록이 계산한 크기가 화면에서 7.8~9.6px 로 주저앉았다(배율 전제가 달라졌다).
+       레이아웃(패딩·상자 높이·초상화)만 여기서, 글자는 0267 에서 — 로 나눈다. */
     var css =
       '#dialogue-box{min-height:0!important;height:auto!important;' +
         'padding:' + padV + 'px ' + padH + 'px ' + (padV + 2) + 'px!important;}' +
-      '#dialogue-text{font-size:' + fs + 'px!important;line-height:' + lh + 'px!important;' +
-        'min-height:0!important;}' +
-      '#dialogue-name{font-size:' + Math.max(12, fs - 2) + 'px!important;padding:3px 12px!important;}' +
-      '#dialogue-next{font-size:' + Math.max(11, fs - 4) + 'px!important;}' +
+      '#dialogue-text{min-height:0!important;}' +
+      '#dialogue-name{padding:3px 12px!important;}' +
       '#dialogue-portrait{max-height:' + portraitH + 'px!important;height:auto!important;' +
         'object-fit:contain!important;object-position:bottom left!important;}';
 

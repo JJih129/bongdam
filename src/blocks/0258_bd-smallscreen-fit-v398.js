@@ -195,7 +195,20 @@
     } catch (e) {}
   }
 
-  function run() { css(); clamp(); boost(); joystick(); }
+  /* (v398e) boost() 는 더 이상 부르지 않는다 — 0267 이 대신한다.
+     컨테이너에 zoom 을 거는 방식이라 «글자만»이 아니라 패널 전체가 커졌다.
+     실기기에서 체력바가 1.24배로 부풀어 인벤토리 제목을 덮었고, 더 나쁘게는
+     패널마다 배율이 달라져(0.65 / 0.78 / 0.822 / 0.885 / 1.095) 원래 맞아 있던
+     크기감이 흩어졌다. 작은 글씨를 고치려다 «크기감이 제각각»을 만든 셈이다.
+     0267 은 zoom 대신 화면 기준 font-size 를 직접 지정한다 — 레이아웃은 그대로 두고
+     글자만 맞춘다. 아래 boost/clearBoost/smallestText/screenPx 는 남은 zoom 을 걷어내기
+     위해 clearBoost 만 한 번 쓰고 나머지는 참고용으로 둔다. */
+  var boostCleared = false;
+  function run() {
+    css(); clamp();
+    if (!boostCleared) { try { UI_SEL.forEach(clearBoost); boostCleared = true; } catch (e) {} }
+    joystick();
+  }
 
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', run);
   else run();

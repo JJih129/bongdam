@@ -23,6 +23,14 @@ const { chromium } = require('playwright');
   await p.waitForTimeout(4000);
   console.log('현재 스테이지: ' + await p.evaluate(() => { try { return currentStage; } catch (e) { return '?'; } }));
 
+  /* 모달 안의 글씨도 검사해야 한다 — 처음엔 열지 않고 재서 «0개»가 나왔는데,
+     인벤토리를 열자 8.5px 짜리가 남아 있었다. 안 연 화면은 검사한 게 아니다. */
+  const open = process.env.BD_UI_OPEN || 'bag';
+  if (open === 'bag') await p.evaluate(() => { try { openInventory(); } catch (e) {} });
+  if (open === 'map') await p.evaluate(() => { try { BD_openSafetyMap(); } catch (e) {} });
+  await p.waitForTimeout(1800);
+  console.log('연 화면: ' + open);
+
   const r = await p.evaluate(() => {
     const MIN = 11;                       /* 화면 기준 이 아래면 읽기 어렵다 */
     const out = [];
