@@ -46,17 +46,25 @@
 
      그래서 옛 버튼을 숨기고 «메뉴줄의 지도 항목»을 쓴다. 다만 그 항목은 ☰ 를 접으면
      같이 접히므로, 가방(#bd-bag-top)처럼 항시 노출로 승격해 한 번에 누를 수 있게 한다.
-     0190 은 700ms 마다 옛 버튼의 display 를 되돌리므로 이 블록도 계속 눌러 준다. */
+
+     (v398d) 처음에는 500ms 마다 legacy.style.display='none' 으로 «계속 눌러» 봤다.
+     이것이 실기기 영상의 깜박임 원인이었다. 0190 의 ensureMapBtn 은 700ms 마다
+     display='block' 을 되돌리므로 두 타이머가 서로 덮어써, 최대 0.5초 동안 옛 버튼이
+     보였다 사라진다. 실측으로 재현했다 — 2초 관찰에 상태 변화 3회, 그 순간
+     #bd-mb-map(707~785) 과 28x28 겹침.
+     인라인 style 로는 이 싸움을 이길 수 없다. CSS !important 는 인라인보다 우선하므로
+     한 번 선언해 두면 0190 이 몇 번을 되돌려도 화면에는 나오지 않는다. 폴링 승부를
+     그만두고 규칙으로 끝낸다. */
   var MB_MAP = 'bd-mb-map';
   function consolidate() {
     try {
-      var legacy = el(MAP);
       var mbMap = el(MB_MAP);
       var row = el(ROW);
       if (!row) return;
 
-      /* 옛 떠 있는 지도 버튼은 숨긴다 — 메뉴줄 항목이 대신한다 */
-      if (legacy && mbMap && legacy.style.display !== 'none') legacy.style.display = 'none';
+      /* 옛 떠 있는 지도 버튼은 «규칙»으로 지운다 — 메뉴줄 항목이 대신한다.
+         전투 여부와 무관하다. 대체재가 있으면 옛 버튼은 언제나 불필요하다. */
+      document.documentElement.classList.toggle('bd-map-dedupe', !!mbMap);
 
       /* 지도 항목을 «항시 노출»로 승격한다.
          0252 의 접기 로직은 #bd-mb-toggle 과 #bd-bag-top 만 예외로 두고 나머지를 숨기는데,
@@ -88,7 +96,10 @@
          한 자씩 세로로 쪼개진다(실기기 흐름 검증에서 확인). 너비는 내용에 맡기고
          탭 높이만 확보한다. */
       'html.bd-map-always #bd-mb-map{display:inline-flex!important;align-items:center;' +
-      'justify-content:center;min-height:44px;padding:0 12px;white-space:nowrap;flex:0 0 auto;}';
+      'justify-content:center;min-height:44px;padding:0 12px;white-space:nowrap;flex:0 0 auto;}' +
+      /* 레거시 지도 버튼 제거 — 0190 이 700ms 마다 되살리는 인라인 display 를 이긴다.
+         !important 는 인라인 스타일보다 우선하므로 깜박임 없이 한 번에 끝난다. */
+      'html.bd-map-dedupe #bd-touch-mapbtn{display:none!important;}';
     (document.head || document.documentElement).appendChild(st);
   }
 

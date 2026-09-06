@@ -171,10 +171,13 @@
       try { z = parseFloat(getComputedStyle(document.body).zoom) || 1; if (!(z > 0)) z = 1; } catch (e) {}
       d.style.fontSize = Math.round(12 / z) + 'px';
       var r = el.getBoundingClientRect();
-      /* 컨테이너 하단 안쪽에 붙인다 */
+      /* 가운데에 두면 내용을 가린다 — 실기기 영상에서 안전지도의 «상리» 줄을 덮었다.
+         오른쪽 아래 모서리에 붙여 내용 위를 최소한으로만 지나가게 한다. */
       var w = d.getBoundingClientRect().width || 120;
-      d.style.left = Math.round((r.left + r.width / 2 - w / 2) / z) + 'px';
-      d.style.top = Math.round((Math.min(r.bottom, innerHeight) - 26) / z) + 'px';
+      var right = Math.min(r.right, innerWidth) - 8;
+      d.style.left = Math.round(Math.max(4, right - w) / z) + 'px';
+      d.style.top = Math.round((Math.min(r.bottom, innerHeight) - 24) / z) + 'px';
+      d.style.opacity = '0.92';
       d.style.display = 'block';
     } catch (e) {}
   }
