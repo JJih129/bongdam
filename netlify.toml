@@ -1,0 +1,38 @@
+# Netlify 배포 설정.
+#
+# 이게 없어서 «깃은 연동됐는데 배포가 안 되는» 상태였다.
+# 리포에는 소스만 들어 있고 완성된 index.html 이 없다(산출물은 .gitignore).
+# 그래서 Netlify 가 받아 갈 것이 없었다 — 빌드 방법을 알려 줘야 한다.
+
+[build]
+  command = "node build.js"
+  publish = "dist"
+
+[build.environment]
+  # 빌드는 Node 내장 모듈만 쓴다(npm 설치 없음). 버전은 재현성을 위해 고정한다.
+  NODE_VERSION = "20"
+
+# ── 캐시 ───────────────────────────────────────────────────────────
+# 에셋 파일명에는 내용 해시가 붙는다(예: 62ec_npc_front_band_guitar.png).
+# 내용이 바뀌면 이름이 바뀌므로 오래 캐시해도 안전하다 — 재방문 로딩이 빨라진다.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# 반대로 index.html 과 서비스워커는 절대 캐시하면 안 된다.
+# 캐시되면 배포해도 옛 화면이 계속 나온다(이전에 겪은 문제다).
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
