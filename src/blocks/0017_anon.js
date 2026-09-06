@@ -2289,8 +2289,13 @@ let VIEWPORT_H = VIEWPORT_BASE_H;
 window.BD_VIEW_SCALE = { 1: 1.89, 2: 1.00, 3: 1.11, 4: 1.11, 5: 1.00 };
 function BD_applyViewScale(){
   const s = (window.BD_VIEW_SCALE && window.BD_VIEW_SCALE[currentStage]) || 1;
-  VIEWPORT_W = VIEWPORT_BASE_W * s;
-  VIEWPORT_H = VIEWPORT_BASE_H * s;
+  // (v398) 모바일 카메라 줌 — 0264 가 화면을 재서 정한다. PC·태블릿은 1 로 남아 영향 없음.
+  //  currentScale = min(cw/BASE_W, ch/BASE_H) 이라 가로로 긴 폰에서는 «세로»가 기준이 되고,
+  //  가로는 남는 만큼 그대로 늘어난다. 실측(874x300): 세로 0.614 / 가로 1.341 —
+  //  월드 폭이 1.0 이므로 맵«밖»까지 보고 있었다. 그 낭비를 줌으로 되돌린다.
+  const mz = (typeof window.BD_MOBILE_ZOOM === 'number' && window.BD_MOBILE_ZOOM > 0) ? window.BD_MOBILE_ZOOM : 1;
+  VIEWPORT_W = VIEWPORT_BASE_W * s / mz;
+  VIEWPORT_H = VIEWPORT_BASE_H * s / mz;
   // (v206) 전 맵 캐릭터를 '광장 룩'으로 통일 — 카메라가 멀리 있는 느낌.
   //  BD_CHAR_ZOOM: 화면상 캐릭터 크기 공통 배율 (광장 기준 1/1.89 ≈ 0.53)
   //  BD_SPR: 고정 픽셀 스프라이트(히어로·임현지·정도현·몹·허수아비)용 — 모든 맵 동일
@@ -2298,7 +2303,9 @@ function BD_applyViewScale(){
   // (v216) 실내 맵은 아트의 미터당 픽셀이 커서(문 폭 ≈ 이미지 75px) 캐릭터가 왜소해 보인다.
   //  실내 스테이지에만 캐릭터 확대 배율을 곱해 가구·문과 비율을 맞춘다.
   const cs = (window.BD_CHAR_STAGE_SCALE && window.BD_CHAR_STAGE_SCALE[currentStage]) || 1;
-  window.BD_SPR = window.BD_CHAR_ZOOM * cs;
+  // 고정픽셀 스프라이트는 VIEWPORT 를 안 보므로 모바일 줌을 «직접» 곱해야 같이 커진다.
+  // (월드 단위 스프라이트는 VIEWPORT 축소만으로 자동으로 커지므로 BD_RES 는 건드리지 않는다.)
+  window.BD_SPR = window.BD_CHAR_ZOOM * cs * mz;
   // 주민(월드 단위)은 뷰포트 축소로 이미 전역 줌이 반영되므로 CHAR_ZOOM에서 전역 줌을 제외
   window.BD_RES = s * (window.BD_CHAR_ZOOM / BD_GLOBAL_ZOOM) * cs;
 }

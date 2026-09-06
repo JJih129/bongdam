@@ -81,27 +81,82 @@
      대상은 «고정 UI 레이어»로 한정한다. 캔버스(월드)는 건드리지 않는다. */
   var MIN_PX = 11.5;      /* 확보하려는 화면상 최소 글자 크기 */
   var BASE_PX = 13;       /* HUD 의 대표 선언 크기 */
-  var MAX_BOOST = 1.55;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
+  /* (v398d) 1.55 로는 #bd-hp-dom 의 «0/100»(맨몸 6.8px)이 상한에 걸려 10.5px 에 멈췄다.
+     최소치에 닿게 1.75 까지 허용한다 — 대신 아래 UI_SEL 은 좁은 화면에서 서로 겹치지
+     않는지 실측(_port.cjs 겹침 0건)으로 확인한 목록만 둔다. */
+  var MAX_BOOST = 1.75;   /* 너무 키우면 좁은 화면을 잡아먹는다 */
   var UI_SEL = ['.bd-modal-box', '#dialogue-overlay', '#bd-hp-dom', '#bd-keybar',
                 '#bd-district-hud', '#bd-district-minimap', '#bd-startsetup-modal',
                 '#bd-fullscreen-return',
                 /* (v398b) 실제 대사 표시 검증에서 추가로 발견 — 담이 말풍선과 토스트가
                    화면상 9.1px 로 나오고 있었다. 안내의 핵심 통로라 반드시 포함한다. */
-                '#bd-dami-hud', '#bd-toast'];
+                '#bd-dami-hud', '#bd-toast',
+                /* (v398d) 전수 조사에서 남은 것들 — 지도 라벨 10.1px, 설정 아이콘 8.4px.
+                   둘 다 커지면 우상단 줄이 넓어지므로 겹침을 따로 확인했다. */
+                '#bd-mb-map', '#bd-settings-btn'];
 
+  /* (v398d) 한 컨테이너 안에서 «실제로 가장 작게 그려지는 글자»를 찾는다.
+     화면에 보이는 크기 = 선언 font-size x (조상들의 zoom 을 모두 곱한 값).
+     getBoundingClientRect / offsetHeight 비로 재려 했으나 인라인 요소에서 어긋나
+     zoom 을 직접 거슬러 올라가며 곱한다. */
+  function screenPx(el) {
+    try {
+      var fs = parseFloat(getComputedStyle(el).fontSize);
+      if (!(fs > 0)) return 0;
+      var k = 1;
+      for (var a = el; a && a.nodeType === 1; a = a.parentElement) {
+        var z = parseFloat(getComputedStyle(a).zoom);
+        if (z > 0 && z !== 1) k *= z;
+      }
+      return fs * k;
+    } catch (e) { return 0; }
+  }
+
+  function smallestText(root) {
+    var min = Infinity;
+    try {
+      var list = root.querySelectorAll('*');
+      for (var i = 0; i < list.length; i++) {
+        var e = list[i];
+        if (e.children.length) continue;                  /* 잎 노드만 */
+        if (!(e.textContent || '').trim()) continue;
+        var s = getComputedStyle(e);
+        if (s.display === 'none' || s.visibility === 'hidden') continue;
+        var px = screenPx(e);
+        if (px > 0 && px < min) min = px;
+      }
+      if (min === Infinity) {                             /* 자식이 없으면 자기 자신 */
+        var own = screenPx(root);
+        if (own > 0 && (root.textContent || '').trim()) min = own;
+      }
+    } catch (e) {}
+    return min;
+  }
+
+  /* 처음에는 «BASE_PX(13) 가 대표 크기» 라고 가정하고 한 배율을 모든 컨테이너에 똑같이
+     먹였다. 그런데 실측해 보니 #bd-hp-dom 안의 «0/100» 은 선언 10.4px 라, 보정을 하고도
+     화면 9.2px 에 머물렀다 — 가정이 틀린 것이다.
+     컨테이너마다 «가장 작은 글자»를 재서 그 글자가 최소치에 닿을 만큼만 키운다.
+     컨테이너 zoom 이므로 안쪽 상대 비율은 그대로 유지된다. */
   function boost() {
     try {
       if (!document.body || window.__bdZoomOK === false) return;
       var z = parseFloat(getComputedStyle(document.body).zoom) || 1;
       if (z >= 0.995) { UI_SEL.forEach(clearBoost); return; }   /* 축소가 없으면 보정 불필요 */
-      var need = MIN_PX / (BASE_PX * z);
-      var b = Math.max(1, Math.min(MAX_BOOST, need));
-      if (b <= 1.01) { UI_SEL.forEach(clearBoost); return; }
-      var v = b.toFixed(3);
       UI_SEL.forEach(function (s) {
         var list = document.querySelectorAll(s);
         for (var i = 0; i < list.length; i++) {
-          if (list[i].style.zoom !== v) list[i].style.zoom = v;
+          var el = list[i];
+          var cs = getComputedStyle(el);
+          if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+          /* 이미 걸어 둔 보정을 뺀 «맨몸» 크기로 환산해야 계산이 누적되지 않는다 */
+          var cur = parseFloat(el.style.zoom) || 1;
+          var min = smallestText(el);
+          if (!isFinite(min) || min <= 0) continue;
+          var bare = min / cur;
+          var b = Math.max(1, Math.min(MAX_BOOST, MIN_PX / bare));
+          var v = (b <= 1.01) ? '' : b.toFixed(3);
+          if ((el.style.zoom || '') !== v) el.style.zoom = v;
         }
       });
     } catch (e) {}

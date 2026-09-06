@@ -98,8 +98,35 @@
     return b;
   }
 
+  /* ── 모달 위에 겹쳐 앉는 고정 버튼 비키기 ──
+     #bd-fullscreen-return 은 position:fixed; top:12px; left:50% (상단 중앙) 이다.
+     원래 우측 상단이었다가 ⚙·☰·🎒 를 가려서 중앙으로 옮긴 것인데, 좁은 가로 화면에서는
+     이번엔 «모달 제목»을 가린다 — 안전지도에서 «봉담 안전지도» 글자를 덮는 것을 확인했다.
+     모달이 열려 있는 동안만 숨긴다. 닫으면 원래대로 돌아온다. */
+  var HIDE_ID = 'bd-modal-hide-fixed-v398';
+  function modalOpen() {
+    try {
+      var list = document.querySelectorAll('.bd-modal.show, .bd-modal.open');
+      for (var i = 0; i < list.length; i++) if (visible(list[i])) return true;
+      return false;
+    } catch (e) { return false; }
+  }
+  function fixedTick() {
+    try {
+      var on = modalOpen();
+      var st = document.getElementById(HIDE_ID);
+      if (!on) { if (st) st.remove(); return; }
+      if (st) return;
+      st = document.createElement('style');
+      st.id = HIDE_ID;
+      st.textContent = '#bd-fullscreen-return{display:none!important;}';
+      (document.head || document.documentElement).appendChild(st);
+    } catch (e) {}
+  }
+
   function tick() {
     try {
+      fixedTick();
       var t = strandedClose();
       var b = document.getElementById(ID);
       if (!t) { if (b) b.style.display = 'none'; return; }
