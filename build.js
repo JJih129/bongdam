@@ -14,6 +14,7 @@
  */
 'use strict';
 const path = require('path');
+const fs = require('fs');
 const { execFileSync } = require('child_process');
 
 const root = __dirname;
@@ -25,6 +26,9 @@ console.log('빌드 시작');
 console.log('  소스 : ' + srcDir);
 console.log('  출력 : ' + outDir);
 
+/* (v399) 산출 assets/ 를 먼저 비운다 — webbuild 는 «쓰는 것만 복사»하고 지우지는 않아, 이름이 바뀐(재압축된)
+   에셋의 옛 파일이 dist 에 남고 publish.js 가 그대로 main 에 올렸다(sub900.woff2 136KB 가 실제로 그랬다). */
+fs.rmSync(path.join(outDir, 'assets'), { recursive: true, force: true });
 execFileSync(process.execPath, [builder, srcDir, outDir], { stdio: 'inherit', cwd: root });
 
 /* 인라인 JS 최소화 — 주석·들여쓰기 제거. terser 가 없으면 조용히 넘어간다.
@@ -36,7 +40,13 @@ try {
   console.error('최소화 단계에서 오류 — 최소화 없이 진행합니다: ' + e.message);
 }
 
-/* (v398) JS 외부 분리(splitjs)는 «기본 꺼짐».
+/* (v399) JS 외부 분리(splitjs) «기본 켜짐». 끄려면 BD_SPLIT=0.
+   v398 에서 두 번 난 회귀는 «마크업이 부르는 함수가 번들 실행 전에 호출되는 창»이었고,
+   splitjs 가 빌드 때 그 함수 이름들에 호출 큐 스텁을 깔고 번들 끝에서 재생하는 것으로 닫았다.
+   이득: index.html 2.7MB → 0.27MB (no-cache 문서가 가벼워져 재방문·«시작하기» 리로드가 싸다),
+   HTML 파서가 스크립트에 막히지 않는다. 첫 방문 전송량은 같다(brotli 기준 ±1KB).
+   ── 아래는 v398 당시 기록 ──
+   (v398) JS 외부 분리(splitjs)는 «기본 꺼짐».
    내려받는 양과 재방문 캐시에는 분명히 이득이지만(index.html 3579→275KB), 실행 순서가
    바뀌면서 회귀가 두 번 났다.
      · defer 없이 첫 자리에서 막으면 → 뒤쪽 블록이 자기 앞 마크업보다 먼저 돌아
@@ -46,7 +56,7 @@ try {
    부팅 잠금(pointer-events)으로 실사용자는 막았지만 검증이 계속 걸려, 지금은 끈다.
    최소화(-886KB)만으로도 brotli 600→427KB 를 얻는다 — 위험 없는 이득만 취한다.
    BD_SPLIT=1 로 켜서 다시 다듬을 수 있다. */
-if (process.env.BD_SPLIT === '1') {
+if (process.env.BD_SPLIT !== '0') {
   try {
     execFileSync(process.execPath, [path.join(root, '검수도구', 'tools', 'splitjs.js'), outDir],
       { stdio: 'inherit', cwd: root });
@@ -57,7 +67,6 @@ if (process.env.BD_SPLIT === '1') {
 
 /* 산출물이 실제로 생겼는지 확인한다 — 빌드가 조용히 실패하면 publish.js 가
    «성공했지만 빈 사이트»를 배포해 버린다. 여기서 끊는 편이 낫다. */
-const fs = require('fs');
 const index = path.join(outDir, 'index.html');
 if (!fs.existsSync(index)) {
   console.error('빌드 실패: ' + index + ' 가 만들어지지 않았습니다');

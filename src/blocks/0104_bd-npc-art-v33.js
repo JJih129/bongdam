@@ -16,9 +16,9 @@
     "npc_front_eunji_mother": "data:image/webp;base64,@@B64:f0efbb4a_npc_front_eunji_mother.webp@@",
     "npc_front_pharm_doyun": "data:image/webp;base64,@@B64:86884c7a_npc_front_pharm_doyun.webp@@",
     "npc_front_culture_teacher": "data:image/webp;base64,@@B64:a9830851_npc_front_culture_teacher.webp@@",
-    "npc_front_band_guitar": "data:image/png;base64,@@B64:026162ec_npc_front_band_guitar.png@@",
-    "npc_front_band_bass": "data:image/png;base64,@@B64:80a0573a_npc_front_band_bass.png@@",
-    "npc_front_band_keys": "data:image/png;base64,@@B64:3d3cf1ae_npc_front_band_keys.png@@",
+    "npc_front_band_guitar": "data:image/webp;base64,@@B64:df1411d2_npc_front_band_guitar.webp@@",
+    "npc_front_band_bass": "data:image/webp;base64,@@B64:5948101f_npc_front_band_bass.webp@@",
+    "npc_front_band_keys": "data:image/webp;base64,@@B64:0955f69b_npc_front_band_keys.webp@@",
     "npc_front_band_drum": "data:image/png;base64,@@B64:7443baf1_npc_front_band_drum.png@@"
   };
   var DIM = {

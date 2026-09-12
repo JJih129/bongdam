@@ -67,7 +67,41 @@ if (!bodies.length) { console.log('  · 뺄 인라인 스크립트가 없음'); 
 /* 부팅이 끝나면 입력 잠금을 푼다 — 번들의 맨 끝에 붙인다.
    (한 블록이 던져도 여기까지 오도록 try 로 감싸지 않는다 — 감싸면 스코프가 달라진다.
     대신 브라우저가 스크립트 실행을 멈추는 경우를 대비해 아래 head 쪽에 안전장치를 둔다.) */
-const UNLOCK = '\n;document.documentElement.classList.remove("bd-booting");';
+/* (v399) 인라인 핸들러 스텁 + 재생 — defer 가 만드는 «마크업은 있는데 함수는 아직» 창을 없앤다.
+   shell.html 의 onclick="closeModal('x')" 같은 핸들러는 번들이 실행되기 전에 눌리면 ReferenceError 다.
+   (v398 에서 이것 때문에 검증이 3/3 실패해 분리를 꺼 두었다 — 하네스는 pointer-events 잠금을 우회해
+    element.click() 으로 누르므로 BOOT_GUARD 만으로는 막히지 않는다.)
+   해법: 마크업이 부르는 함수 이름을 빌드 때 뽑아, 번들보다 먼저 «호출을 큐에 넣는 스텁»을 깔아 둔다.
+   번들 끝에서 진짜 함수로 큐를 재생한다. 번들의 최상위 function 선언은 같은 이름의 window 속성을
+   덮어쓰므로(전역 함수 바인딩) 스텁은 자연히 사라진다. let/const 로 정의된 경우를 위해 재생 때는
+   전역 스코프에서 이름을 직접 평가한다.
+   `window.X&&window.X()` 처럼 이미 보호된 호출은 뽑지 않는다 — 준비 전엔 조용히 무시되는 것이 의도다. */
+const handlerNames = (() => {
+  const names = new Set();
+  const attr = /\son[a-z]+\s*=\s*"([^"]*)"/gi;
+  let a;
+  const markup = parts.join('');   /* 스크립트 본문은 뺀 마크업만 — 블록 코드 안의 HTML 문자열은 대상이 아니다 */
+  while ((a = attr.exec(markup))) {
+    const body = a[1];
+    const call = /(?:^|[^\w$.])([A-Za-z_$][\w$]*)\s*\(/g;
+    let c;
+    while ((c = call.exec(body))) {
+      const n = c[1];
+      if (/^(event|window|document|this|preventDefault|stopPropagation|function|if|else|return|try|catch|typeof|new|void|switch|while|for)$/.test(n)) continue;
+      if (new RegExp('window\\.' + n + '\\s*&&').test(body)) continue;   /* 이미 보호된 호출 */
+      names.add(n);
+    }
+  }
+  return [...names].sort();
+})();
+const STUB = '<script id="bd-handler-stubs">(function(){var q=window.__bdPendCalls=[];'
+  + JSON.stringify(handlerNames) + '.forEach(function(n){if(typeof window[n]==="function")return;'
+  + 'var f=function(){q.push([n,this,Array.prototype.slice.call(arguments)]);};f.__bdStub=1;window[n]=f;});})();</script>';
+const REPLAY = '\n;(function(){var q=window.__bdPendCalls||[];window.__bdPendCalls=null;'
+  + 'q.forEach(function(c){try{var f=(new Function("return typeof "+c[0]+"===\\"function\\"?"+c[0]+":null"))();'
+  + 'if(f&&!f.__bdStub)f.apply(c[1],c[2]);}catch(e){}});})();';
+
+const UNLOCK = REPLAY + '\n;document.documentElement.classList.remove("bd-booting");';
 const js = bodies.join('\n;\n') + UNLOCK;
 const buf = Buffer.from(js, 'latin1');
 const hash = crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8);
@@ -98,7 +132,7 @@ const guard = '<script>document.documentElement.classList.add("bd-booting");'
 const headAt = html.indexOf('<head>');
 if (headAt >= 0) {
   /* parts 는 이미 잘려 있으므로 첫 조각에 끼워 넣는다 */
-  parts[0] = parts[0].replace('<head>', '<head>' + guard);
+  parts[0] = parts[0].replace('<head>', '<head>' + guard + STUB);
 }
 
 const result = parts.join('');
@@ -118,5 +152,5 @@ try {
 
 const kb = x => Math.round(x / 1024);
 console.log('  · JS 외부 분리: ' + bodies.length + '개 블록 → assets/' + name + ' (' + kb(buf.length) + 'KB)'
-  + (kept ? ' · 그대로 둔 스크립트 ' + kept : ''));
+  + (kept ? ' · 그대로 둔 스크립트 ' + kept : '') + ' · 핸들러 스텁 ' + handlerNames.length + '개');
 console.log('  · index.html ' + kb(html.length) + 'KB → ' + kb(result.length) + 'KB');

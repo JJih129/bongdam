@@ -648,11 +648,8 @@
     background: #000;
     overflow: hidden;
   }
-  #game-bg {
-    position: absolute;
-    inset: 0;
-    background: url('data:image/webp;base64,@@B64:aebe5c06_url.webp@@') center center / cover no-repeat;
-  }
+  /* (v399) #game-bg 규칙 제거 — 이 id 의 요소는 어디에도 만들어지지 않는데 487KB 배경 WebP 가
+     산출물(assets)과 작업용 번들(base64 650KB)에만 실려 나가고 있었다. */
   #game-ui {
     position: absolute;
     top: 62px;          /* (v239) 상단 메뉴 바와 겹치지 않게 한 줄 아래로 */
