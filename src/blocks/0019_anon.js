@@ -138,40 +138,9 @@
 
   function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
 
+  /* (v399) 대시 쿨타임(Q)·서문 허수아비 공격·마법사 속성 버튼 구간을 지웠다 — 셋 다 v379/v381 에서
+     기능 자체가 제거돼 존재하지 않는 상태를 120ms 마다 확인하고 있었다. E·F 갱신만 남긴다. */
   setInterval(function () {
-    // Q: 대시 쿨타임
-    try {
-      var maxCd = (typeof getDashCooldown === 'function') ? getDashCooldown() : 0;
-      var cur   = (typeof dashCooldownTimer !== 'undefined') ? dashCooldownTimer : 0;
-      if (qCd) qCd.style.height = (maxCd > 0 ? clamp01(cur / maxCd) * 100 : 0) + '%';
-      btnQ.classList.toggle('tc-disabled', (typeof isDashing !== 'undefined' && isDashing) || cur > 0);
-    } catch (e) {}
-
-    // 공격 버튼: 서문(stage 4)에서만 활성, 쿨다운 표시
-    try {
-      var inStage4 = (typeof currentStage !== 'undefined')
-                  && (typeof SCARECROW_SPAWN_STAGE !== 'undefined')
-                  && currentStage === SCARECROW_SPAWN_STAGE;   // (v236) 허수아비 제거 반영
-      var scAlive = (typeof _scarecrow !== 'undefined') && _scarecrow.alive;
-      var atkAvail = inStage4 && scAlive;
-      if (btnAtk) btnAtk.classList.toggle('tc-disabled', !atkAvail);
-      if (btnAtk) btnAtk.classList.toggle('tc-active-glow', atkAvail);
-    } catch (e) {}
-
-    // 속성 버튼: '마법사' 스탯 해금된 마법사일 때만 표시 + 현재 속성 아이콘 갱신
-    try {
-      if (btnElem) {
-        var elemOn = (typeof mageElementUnlocked === 'function') && mageElementUnlocked();
-        btnElem.style.display = elemOn ? 'flex' : 'none';
-        if (elemOn && typeof currentMageElement === 'function' &&
-            typeof MAGE_ELEMENT_INFO !== 'undefined') {
-          var info = MAGE_ELEMENT_INFO[currentMageElement()];
-          var ic = btnElem.querySelector('.tc-btn-icon');
-          if (info && ic) ic.textContent = info.icon;
-        }
-      }
-    } catch (e) {}
-
     // E: 인벤토리 열려 있으면 강조
     try {
       var iOpen = (typeof invOpen !== 'undefined') && invOpen;

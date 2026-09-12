@@ -48,13 +48,11 @@
 
   function pauseMainGameAudio(){
     try { if(window.BD_Bgm && typeof window.BD_Bgm.stop === 'function') window.BD_Bgm.stop(); } catch(e){}
-    try { if(window.BD_ChipBgm && typeof window.BD_ChipBgm.stop === 'function') window.BD_ChipBgm.stop(); } catch(e){}
   }
 
   function restoreMainGameAudio(){
     try {
       if(window.BD_Bgm && typeof window.BD_Bgm.play === 'function') window.BD_Bgm.play('house');
-      else if(window.BD_ChipBgm && typeof window.BD_ChipBgm.play === 'function') window.BD_ChipBgm.play('house');
     } catch(e){}
   }
 

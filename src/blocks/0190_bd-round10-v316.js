@@ -28,32 +28,8 @@
     }catch(e){}
   };
 
-  /* ── 터치 모드 안전지도 버튼 ── */
-  function ensureMapBtn(){
-    try{
-      if (!document.documentElement.classList.contains('bd-touch-mode')) return;
-      var gs = document.getElementById('game-screen');
-      if (!gs || gs.style.display !== 'block') return;
-      var b = document.getElementById('bd-touch-mapbtn');
-      if (!b){
-        b = document.createElement('button');
-        b.id = 'bd-touch-mapbtn';
-        b.type = 'button';
-        b.textContent = '\uD83D\uDDFA';
-        b.style.cssText = 'position:fixed;top:14px;right:134px;z-index:1200;width:46px;height:46px;'
-          + 'border-radius:12px;font-size:22px;background:rgba(16,24,44,.88);'
-          + 'border:2px solid rgba(255,216,107,.6);color:#ffd86b;touch-action:manipulation;';
-        b.addEventListener('pointerdown', function(ev){
-          ev.preventDefault();
-          try{ if (window.BD_openSafetyMap) BD_openSafetyMap(); }catch(e1){}
-        });
-        document.body.appendChild(b);
-      }
-      var inBattle = !!(window.HSR && HSR.active);
-      b.style.display = inBattle ? 'none' : 'block';
-    }catch(e){}
-  }
-  setInterval(ensureMapBtn, 700);
+  /* (v399) 터치 모드 떠 있는 지도 버튼(#bd-touch-mapbtn) 생성 루프 삭제 — v390 메뉴바가 지도를 줄 항목으로
+     통합한 뒤로는 중복이었고, 0263 이 CSS 로 숨기며 700ms 마다 되살아나는 것과 싸우고 있었다. 원천에서 지운다. */
 
   /* ── PC 호버 시설명 툴팁 ── */
   var tipEl = null, lastMove = 0;

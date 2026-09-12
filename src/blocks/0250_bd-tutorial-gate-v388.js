@@ -150,23 +150,7 @@
   /* ── 적용 ①: 위험요소 조사 ──
      BD_hazardInteract 는 F 키·화면 탭·길안내 자동조사가 모두 지나는 단일 통로다.
      보스는 자체 개방 조건(BD_hazardLocked)이 따로 있으므로 건드리지 않는다. */
-  function wrapHazard() {
-    var f = window.BD_hazardInteract;
-    if (typeof f !== 'function' || f.__tutgate388) return false;
-    window.BD_hazardInteract = function (obj) {
-      try {
-        /* 전투 중 호출은 이중 진입 차단(v375) 등 기존 레이어의 소관 — 게이트가 끼어들지 않는다 */
-        if (window.HSR && HSR.active) return f.apply(this, arguments);
-        if (obj && !obj.isBoss && !window.BD_TUTGATE.allowAction('hazard')) {
-          window.BD_TUTGATE.nudgeAction('hazard');
-          return true;                                        /* 입력을 소비 — 조사창을 열지 않는다 */
-        }
-      } catch (e) { }
-      return f.apply(this, arguments);
-    };
-    window.BD_hazardInteract.__tutgate388 = true;
-    return true;
-  }
+  /* (v399) 위험요소 조사 게이트 래퍼는 0271 체인으로 이관 — BD_TUTGATE.allowAction('hazard') 는 그대로 쓴다 */
 
   /* ── 적용 ②: 주민 대화 ──
      0055 의 F 핸들러는 `const r = nearResident(); if(!r) return;` 로 시작한다.
@@ -199,10 +183,9 @@
   /* 두 대상은 정의 시점이 다르다 — 각각 독립적으로 감싸고, 둘 다 걸린 뒤에 폴링을 멈춘다
      (&& 로 묶으면 먼저 성공한 쪽 때문에 나머지가 영영 설치되지 않는다) */
   function installed() {
-    return !!(window.BD_hazardInteract && window.BD_hazardInteract.__tutgate388)
-        && !!(window.BD_nearResident && window.BD_nearResident.__tutgate388);
+    return !!(window.BD_nearResident && window.BD_nearResident.__tutgate388);
   }
-  function install() { wrapHazard(); wrapResident(); return installed(); }
+  function install() { wrapResident(); return installed(); }
   install();
   var iv = setInterval(function () { if (install()) clearInterval(iv); }, 300);
 })();

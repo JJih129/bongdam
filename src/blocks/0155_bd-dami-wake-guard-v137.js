@@ -21,6 +21,8 @@
     }catch(e){}
   }
 
+  window.__bdDamiWake = wake;   /* (v399) show() 거절 시 깨우고 재시도하는 래퍼는 0272 체인에 있다 */
+
   /* 튜토리얼이 돌기 시작하면 담이를 깨운다 */
   var n = 0;
   var iv = setInterval(function(){
@@ -37,21 +39,5 @@
     if (n > 4000) clearInterval(iv);
   }, 500);
 
-  /* show() 가 잠듦 때문에 무시되면 깨우고 한 번 더 시도 */
-  var w = setInterval(function(){
-    if (!(window.BD_DAMI && BD_DAMI.show)) return;
-    clearInterval(w);
-    var orig = BD_DAMI.show.bind(BD_DAMI);
-    BD_DAMI.show = function(text, opts){
-      var r = orig(text, opts);
-      try{
-        var inGame = !(BD_DAMI.isGameplayVisible && !BD_DAMI.isGameplayVisible());
-        if (r === false && inGame && !(opts && opts.once)){
-          wake();
-          return orig(text, opts);
-        }
-      }catch(e){}
-      return r;
-    };
-  }, 200);
+  /* show() 가 잠듦 때문에 무시되면 깨우고 한 번 더 시도 — (v399) 0272 체인으로 이관 */
 })();

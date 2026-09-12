@@ -19,7 +19,7 @@
     }catch(e){}
   }
   tombstone();
-  setInterval(tombstone, 2000);
+  setInterval(tombstone, 10000);   /* (v399) 2s → 10s: 툼스톤은 한 번 등록되면 유지된다 */
 
   function purge(){
     try{
@@ -55,12 +55,12 @@
   }
   purgeStore();
   setTimeout(purgeStore, 2500);
-  setInterval(purgeStore, 5000);
+  setInterval(purgeStore, 15000);  /* (v399) 5s → 15s */
 
   purge();
   setTimeout(purge, 800);
   setTimeout(purge, 2000);
   setTimeout(purge, 5000);
   setTimeout(purge, 9000);
-  setInterval(purge, 700);    // 저장 데이터가 주기적으로 재적용돼 되살아나므로 짧은 주기로 유지
+  setInterval(purge, 5000);   /* (v399) 700ms → 5s: 초기 9초는 위 setTimeout 4회가 촘촘히 덮고, 이후는 툼스톤이 재삽입을 막는다 */
 })();

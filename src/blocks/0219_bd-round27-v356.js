@@ -54,39 +54,7 @@
     }catch(e){}
   }, 400);
 
-  /* ── ② 위험요소 조사 무반응 자가치유 ── */
-  var wireHz = setInterval(function(){
-    if (typeof window.BD_hazardInteract !== 'function' || window.BD_hazardInteract.__v356) return;
-    clearInterval(wireHz);
-    var o = window.BD_hazardInteract;
-    window.BD_hazardInteract = function(obj){
-      var r = o.apply(this, arguments);
-      try{
-        var oid = obj && obj.hazardId;
-        if (oid && !window.__bd356Retry){
-          setTimeout(function(){
-            try{
-              if (window.HSR && HSR.active) return;
-              var d = document.getElementById('dialogue-box');
-              if (d && d.getBoundingClientRect().height > 0) return;
-              if (window.__bdChoiceState && __bdChoiceState.open) return;
-              var m = document.querySelector('.bd-modal.show');
-              if (m) return;
-              if (window.BD && BD.purified && BD.purified[oid]) return;
-              /* 아무 반응 없음 — 잔여 잠금 해제 후 1회 재시도 */
-              window.__bdDamiOpeningBusy = false;
-              window.__bd356Retry = true;
-              try{ console.info('[v356] 조사 무반응 감지 — 잠금 해제 후 재시도(' + oid + ')'); }catch(eL){}
-              try{ o.call(null, obj); }catch(eR){}
-              setTimeout(function(){ window.__bd356Retry = false; }, 1500);
-            }catch(eT){}
-          }, 900);
-        }
-      }catch(eW){}
-      return r;
-    };
-    window.BD_hazardInteract.__v356 = true;
-  }, 300);
+  /* ── ② 위험요소 조사 무반응 자가치유 ── (v399) 0271 체인으로 이관 */
 
   /* ── ③ 증강 선택 중 담이 말풍선 숨김 ── */
   setInterval(function(){

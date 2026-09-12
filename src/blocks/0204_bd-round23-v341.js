@@ -78,29 +78,6 @@
       requestAnimationFrame(frame);
     })();
   }
-  setInterval(function(){
-    try{
-      return; /* (v345) 신형 엔딩 전용신으로 대체 */
-      var m = document.getElementById('bd-ending-modal');
-      if (!m || !m.classList.contains('show')) return;
-      fxDone = true;
-      var s = stats();
-      var fx = document.createElement('div');
-      fx.id = 'bd-ending-fx';
-      fx.innerHTML = '<canvas></canvas>'
-        + '<div class="efx-title">🎉 봉담 안전지도 완성!</div>'
-        + '<div class="efx-sub">지킴이의 손으로 봉담이 한층 안전해졌어요</div>'
-        + '<div class="efx-stats">'
-        +   '<div>🧹 정화 ' + s.pur + '곳</div>'
-        +   '<div>🏅 시설 스탬프 ' + s.fac + '개</div>'
-        +   (s.min ? '<div>⏱ ' + s.min + '분의 모험</div>' : '')
-        + '</div>';
-      document.body.appendChild(fx);
-      requestAnimationFrame(function(){ fx.classList.add('on'); });
-      confetti(fx.querySelector('canvas'), 5200);
-      try{ if (window.BDSound && BDSound.select) BDSound.select(); }catch(eS){}
-      /* 5.5초 뒤 서서히 걷혀 기존 엔딩 모달(아래)이 온전히 보인다 */
-      setTimeout(function(){ fx.classList.remove('on'); setTimeout(function(){ fx.remove(); }, 600); }, 5500);
-    }catch(e){}
-  }, 600);
+  /* (v399) 구 엔딩 연출 루프 삭제 — v345 부터 첫 줄이 return 이라 600ms 마다 아무것도 안 하고 돌았다.
+     신형 엔딩 전용신(0211)이 담당한다. */
 })();

@@ -2,17 +2,7 @@
 /* (v340) 치명 방어 — 본문 주석은 패치 설명 참조 */
 (function(){
   'use strict';
-  /* ── ① 조사한다 감시견 ── */
-  var wireHz = setInterval(function(){
-    if (typeof window.BD_hazardInteract !== 'function' || window.BD_hazardInteract.__v340) return;
-    clearInterval(wireHz);
-    var o = window.BD_hazardInteract;
-    window.BD_hazardInteract = function(obj){
-      try{ if (obj && obj.hazardId) window.__bdLastHz = obj; }catch(e){}
-      return o.apply(this, arguments);
-    };
-    window.BD_hazardInteract.__v340 = true;
-  }, 300);
+  /* ── ① 조사한다 감시견 ── (v399) 마지막 위험요소 기록(__bdLastHz) 래퍼는 0271 체인으로 이관 */
   setInterval(function(){
     try{
       var at = window.__bdInvestAt;

@@ -6,27 +6,7 @@
         ② 전투가 시작되면 열려 있는 선택창을 즉시 닫는다 (200ms 감시) */
 (function(){
   'use strict';
-  function wrap(){
-    var f = window.BD_hazardInteract;
-    if (typeof f !== 'function' || f.__v375) return false;
-    var orig = f;
-    window.BD_hazardInteract = function(obj){
-      try{
-        if (window.HSR && HSR.active) return true;                                        /* 전투 중 — 무시 */
-        var t = Number(window.__bdInvestAt || 0);
-        if (t && Date.now() - t < 6000 && !(window.HSR && HSR.active)){
-          /* 조사 확정 뒤 전투 대기 중 — 독백(VN)이 떠 있으면 키는 대사 넘김으로 쓰이므로 여기까지 오지 않고,
-             독백이 끝난 직후의 틈에서만 도달한다 → 무시 */
-          return true;
-        }
-      }catch(e){}
-      return orig.apply(this, arguments);
-    };
-    window.BD_hazardInteract.__v375 = true;
-    return true;
-  }
-  wrap();
-  var iv = setInterval(function(){ if (wrap()) clearInterval(iv); }, 300);
+  /* (v399) 「조사한다」 확정 뒤 전투 대기 중·전투 중 BD_hazardInteract 무시 — 0271 체인으로 이관 */
 
   /* 전투 시작 시 선택창 정리 + 전투가 실제로 시작되면 투자 타임스탬프 해제 */
   var wasBattle = false;

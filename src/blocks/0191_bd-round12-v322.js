@@ -59,27 +59,5 @@
     }catch(err){}
   }, true);
 
-  /* ── 담이 중복 대사 억제 ── */
-  function wrapDami(){
-    try{
-      /* (v326) 함수 마커 → 전역 플래그: 다른 래퍼가 위에 덮여도 재설치하지 않는다.
-         재진입 가드: 만약 이미 2겹으로 설치된 상태라도 안쪽 사본은 dedupe를 건너뛰어
-         «자기 자신이 방금 기록한 lastText에 막히는» 전면 침묵을 원천 차단. */
-      if (!window.BD_DAMI || !BD_DAMI.show || window.__bdDamiDedupeOn) return;
-      window.__bdDamiDedupeOn = true;
-      var orig = BD_DAMI.show;
-      BD_DAMI.show = function(text, opts){
-        try{
-          if (!window.__bdDamiDedupeBusy){
-            var t = String(text||'');
-            if (t && window.__bdDamiLastText === t && Date.now() - (window.__bdDamiLastAt||0) < 8000) return false;
-            window.__bdDamiLastText = t; window.__bdDamiLastAt = Date.now();
-          }
-        }catch(e2){}
-        window.__bdDamiDedupeBusy = true;
-        try { return orig.apply(this, arguments); } finally { window.__bdDamiDedupeBusy = false; }
-      };
-    }catch(e){}
-  }
-  setInterval(wrapDami, 800);
+  /* ── 담이 중복 대사 억제 ── (v399) 0272 체인으로 이관 */
 })();

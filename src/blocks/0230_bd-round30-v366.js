@@ -19,15 +19,5 @@
       }
     }catch(e){}
   }, 300);
-  /* 위험요소 상호작용은 즉시 폐기 (인터벌 지연 없이) */
-  var wire = setInterval(function(){
-    if (typeof window.BD_hazardInteract !== 'function' || window.BD_hazardInteract.__v366) return;
-    clearInterval(wire);
-    var o = window.BD_hazardInteract;
-    window.BD_hazardInteract = function(){
-      try{ if (window.__bdDamiOpeningBusy) window.__bdDamiCancelLines = true; }catch(e){}
-      return o.apply(this, arguments);
-    };
-    window.BD_hazardInteract.__v366 = true;
-  }, 300);
+  /* 위험요소 상호작용은 즉시 폐기 — (v399) 0271 체인으로 이관 */
 })();

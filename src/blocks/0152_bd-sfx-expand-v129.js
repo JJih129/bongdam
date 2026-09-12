@@ -111,24 +111,11 @@
     }catch(e){}
   })();
 
+  window.__bdSFX = SFX;   /* (v399) 담이 발화 효과음은 0272 체인에서 부른다 */
+
   /* ── 자동 연결 ── */
 
-  /* 담이가 말을 시작하는 순간 */
-  try{
-    var wait = setInterval(function(){
-      if (!(window.BD_DAMI && BD_DAMI.show)) return;
-      clearInterval(wait);
-      var orig = BD_DAMI.show.bind(BD_DAMI);
-      var lastAt = 0;
-      BD_DAMI.show = function(text, opt){
-        try{
-          var now = Date.now();
-          if (now - lastAt > 900){ SFX.damiTalk(); lastAt = now; }   // 연속 호출 시 한 번만
-        }catch(e){}
-        return orig(text, opt);
-      };
-    }, 200);
-  }catch(e){}
+  /* 담이가 말을 시작하는 순간 — (v399) 0272 체인으로 이관 */
 
   /* 대사 진행 — 대사창이 열려 있을 때 Space/F/클릭 */
   document.addEventListener('keydown', function(e){

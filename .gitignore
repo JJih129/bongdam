@@ -26,3 +26,6 @@ dist/
 
 # 작업용 단일 HTML(bundle.js 산출물, 약 45MB) — 훅이 매 편집마다 재생성한다
 /봉담지킴이_게시용_*.html
+
+# 비교 측정용 «이전 배포본» 사본 (git archive origin/main) — serve.cjs 의 /base/
+_base/

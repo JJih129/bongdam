@@ -959,13 +959,10 @@ const LC_CHART_DATA2 = "0.221,1,0;0.639,1,0;0.975,2,0;1.347,1,0;1.741,1,0;2.171,
       if (on){
         if (bgmVolSaved === null) bgmVolSaved = readBgmVol();
         if (window.BD_Bgm && BD_Bgm.setVol) BD_Bgm.setVol(0);
-        else if (window.BD_ChipBgm) BD_ChipBgm.setVol(0);
-        if (window.BD_ChipBgm) BD_ChipBgm.stop();
       } else {
         var v = (bgmVolSaved === null) ? 0.6 : bgmVolSaved;
         bgmVolSaved = null;
         if (window.BD_Bgm && BD_Bgm.setVol) BD_Bgm.setVol(v);
-        else if (window.BD_ChipBgm) BD_ChipBgm.setVol(v);
       }
     }catch(e){}
   }
