@@ -1,4 +1,4 @@
-/* 실서버(Netlify)와 같은 조건으로 재기 위한 정적 서버 — brotli 로 내보낸다.
+/* 실서버(GitHub Pages)와 같은 조건으로 재기 위한 정적 서버 — brotli 로 내보낸다.
    로컬 http-server 는 압축을 안 해 «압축 없이 3.5MB» 라는 과장된 수치가 나왔다. */
 const http=require('http'), fs=require('fs'), path=require('path'), zlib=require('zlib');
 const ROOT=process.argv[2]||'웹게시', PORT=Number(process.argv[3]||8911);

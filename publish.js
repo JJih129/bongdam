@@ -4,18 +4,22 @@
  *   source : 소스. src/ · assets/ · 검수도구/ 가 있고 산출물은 .gitignore 라 없다.
  *   main   : 배포 전용. 완성된 index.html · assets/ · sw.js 만 있고 src 가 없다.
  *
- *   Netlify 는 main 을 «빌드 없이 그대로» 올린다(배포 7~12초).
+ *   GitHub Pages(https://jjih129.github.io/bongdam/) 가 main 을 «빌드 없이 그대로» 서빙한다.
  *   그래서 source 에 아무리 푸시해도 사이트는 바뀌지 않는다 —
  *   실제로 그렇게 여러 커밋을 올려 놓고 «배포가 안 된다»고 헤맨 적이 있다.
- *   반대로 main 에 netlify.toml 을 두면 Netlify 가 빌드를 시도하다 실패한다(main 엔 src 가 없다).
- *   캐시 규칙은 그래서 main 의 _headers 에 있다.
+ *   (Netlify 도 같은 main 을 읽었지만 2026-09 크레딧 소진으로 멈췄고 더 쓰지 않는다.
+ *    main 의 _headers 는 그 시절 캐시 규칙 — Pages 는 무시하지만 해가 없어 둔다.
+ *    Pages 의 캐시 무효화는 sw.js 의 «문서 네트워크 우선» 규칙과 에셋 파일명 해시가 맡는다.)
+ *
+ *   배포는 사용자가 요청할 때만 한다. 검증을 통과했다고 자동으로 올리지 않는다.
  *
  * ── 하는 일 ───────────────────────────────────────────────────────
  *   1. build.js 로 dist/ 를 새로 만든다
  *   2. main 을 임시 워크트리로 꺼낸다
  *   3. index.html · sw.js · manifest.webmanifest · assets/ 만 교체한다
- *      (icon-192.png · icon-512.png · .nojekyll · _headers · README.md 는 main 에만 있고
+ *      (icon-192.png · icon-512.png · .nojekyll · _headers 는 main 에만 있고
  *       빌드가 만들지 않는다. manifest 가 아이콘을 참조하므로 지우면 안 된다.)
+ *      README.md 는 source 의 main_README.md 를 복사한다 — main 의 안내문도 소스에서 관리한다.
  *   4. 커밋 후 push
  *
  * 사용: node publish.js "v398n — 무엇을 고쳤는지"
@@ -63,6 +67,10 @@ try {
   fs.rmSync(path.join(wt, BUILT_DIR), { recursive: true, force: true });
   fs.cpSync(path.join(dist, BUILT_DIR), path.join(wt, BUILT_DIR), { recursive: true });
   for (const f of BUILT) fs.copyFileSync(path.join(dist, f), path.join(wt, f));
+
+  /* main 의 README 는 소스(main_README.md)에서 관리한다 — 없으면 main 의 것을 그대로 둔다 */
+  const mainReadme = path.join(ROOT, 'main_README.md');
+  if (fs.existsSync(mainReadme)) fs.copyFileSync(mainReadme, path.join(wt, 'README.md'));
 
   /* 아이콘이 사라지지 않았는지 확인한다 — manifest 가 참조한다 */
   for (const keep of ['icon-192.png', 'icon-512.png']) {

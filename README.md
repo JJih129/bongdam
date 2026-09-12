@@ -2,11 +2,11 @@
 
 봉담읍 청소년 안전교육용 웹 RPG. **단일 HTML 파일**로 빌드되는 브라우저 게임입니다.
 
-- 🎮 **플레이(웹)**: https://bongdam-safety.netlify.app
-- 📦 **웹 게시본 소스**: 이 저장소의 `main` 브랜치 (빌드 산출물)
+- 🎮 **플레이(웹)**: https://jjih129.github.io/bongdam/
+- 📦 **웹 게시본 소스**: 이 저장소의 `main` 브랜치 (빌드 산출물 — GitHub Pages 가 그대로 서빙)
 - 🛠 **개발 소스**: 이 저장소의 `source` 브랜치 ← **지금 보고 있는 곳**
 
-현재 버전: **v397** (Ver. 1.0.0 · Build 397)
+현재 버전: **v398** (Ver. 1.0.0 · Build 398)
 
 ---
 
@@ -83,16 +83,22 @@ node drive.js s_fullrun.js --url=...        # 전체 완주(약 30분)
 
 ## 4. 배포
 
-### 웹 게시 (Netlify — 현재 주 채널)
-```bash
-node 검수도구/tools/webbuild.js src 웹게시
-# 웹게시/ 에서 index.html·sw.js 가 참조하는 파일만 추려 폴더/zip 으로 만든 뒤
-npx netlify-cli deploy --prod --dir <폴더> --site 635ca57c-abca-4f28-9ab5-0f2230057aa9
-```
-웹판은 **인게임 에디터가 제외**되어 가볍습니다(index 약 3.3MB). 작업용 빌드에는 에디터가 그대로 남습니다.
+### GitHub Pages — 유일한 채널 (2026-09-12 정리)
+공개 주소 **https://jjih129.github.io/bongdam/** 는 이 저장소의 **`main` 브랜치를 빌드 없이 그대로** 서빙합니다.
+`source` 에 아무리 푸시해도 사이트는 바뀌지 않습니다 — `main` 에 산출물을 올려야 반영됩니다.
 
-### GitHub Pages (병행 채널)
-이 저장소 `main` 브랜치 = https://jjih129.github.io/bongdam/
+```bash
+node publish.js "v398x — 무엇을 고쳤는지"          # build.js → dist/ → main 에 커밋·푸시 (반영 1~2분)
+node publish.js "..." --dry                        # 푸시 없이 바뀌는 파일만 확인
+```
+- `build.js` 가 `검수도구/tools/webbuild.js` 로 **경량 웹판**(인게임 에디터 제외, index 약 2.7MB + 외부 `assets/`)을 만듭니다.
+- `main` 에만 있는 파일(아이콘·`.nojekyll`·`_headers`)은 publish.js 가 보존합니다. `main` 의 README 는 `main_README.md` 를 복사합니다.
+- **배포는 요청이 있을 때만** 합니다. 검증(qa.cjs·완주 런)을 통과한 소스라도 자동으로 올리지 않습니다.
+- 작업용 단일 HTML(오프라인·USB용)은 `bundle.js` 로 따로 만듭니다(투트랙).
+
+> Netlify(bongdam-safety.netlify.app)는 팀 크레딧 소진으로 **v398o 에 멈춰 있고 더 쓰지 않습니다.**
+> 사이트는 살아 있지만 새 푸시가 반영되지 않으니 안내·QR 은 GitHub Pages 주소로 통일하세요.
+> 태그(`deploy-*`)로 돌던 Actions 워크플로도 같은 이유로 제거했습니다 — Pages 가 `main` 을 직접 읽으므로 필요 없습니다.
 
 ---
 
