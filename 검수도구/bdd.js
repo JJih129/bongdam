@@ -10,7 +10,10 @@ const args = process.argv.slice(2);
 const headed = args.includes('--headed');
 const urlArg = args.find(a => a.startsWith('--url='));
 const portArg = args.find(a => a.startsWith('--port='));
-const GAME = urlArg ? urlArg.slice(6) : 'file:///D:/봉담/봉담지킴이_게시용_v338_final.html';
+const REPO = path.resolve(__dirname, '..');
+const DEFAULT_HTML = path.join(REPO, '봉담지킴이_게시용_v338_final.html');
+// 기본 빌드 = 저장소 루트의 작업용 단일 HTML (경로는 이 파일 위치에서 계산 — 드라이브 고정 금지)
+const GAME = urlArg ? urlArg.slice(6) : 'file:///' + DEFAULT_HTML.replace(/\\/g, '/');
 const PORT = portArg ? Number(portArg.slice(7)) : Number(process.env.BDD_PORT || 47811);
 const SHOTS = path.join(__dirname, process.env.SHOTS_DIR || 'shots_bd');
 const SNAPS = path.join(__dirname, 'snaps');
@@ -62,7 +65,7 @@ fs.mkdirSync(SNAPS, { recursive: true });
   // src/ 가 빌드 HTML 보다 새로우면 자동 bundle (훅 누락 방어) — 기본 빌드를 열 때만
   const autoBundle = () => {
     try {
-      const HTML = 'D:/봉담/봉담지킴이_게시용_v338_final.html', SRCD = 'D:/봉담/src';
+      const HTML = DEFAULT_HTML, SRCD = path.join(REPO, 'src');
       if (!(GAME.endsWith('/봉담지킴이_게시용_v338_final.html') || GAME.endsWith('/%EB%B4%89%EB%8B%B4%EC%A7%80%ED%82%B4%EC%9D%B4_%EA%B2%8C%EC%8B%9C%EC%9A%A9_v338_final.html'))) return null;
       const hm = fs.statSync(HTML).mtimeMs;
       let newest = 0, nf = null;

@@ -1,4 +1,6 @@
-// Claude Code PostToolUse 훅: D:\봉담\src\** 편집 시 자동으로 bundle → 빌드 HTML 동기화
+// Claude Code PostToolUse 훅: <저장소>/src/** 편집 시 자동으로 bundle → 빌드 HTML 동기화
+// 경로는 이 파일 위치(검수도구/tools)에서 계산한다 — 저장소를 다른 드라이브·PC 로 옮겨도 그대로 돈다.
+// (2026-09-12: D:\봉담 고정 경로 때문에 C: 로 옮긴 뒤 훅이 조용히 실패하고 있었다)
 // stdin: {tool_name, tool_input:{file_path}} ; stdout: JSON systemMessage
 'use strict';
 const path = require('path'), { execFileSync } = require('child_process');
@@ -13,10 +15,11 @@ process.stdin.on('end', () => {
   // 경로 인코딩(한글)에 무관하게 판정: <…>/src/(blocks|assets|shell.html|manifest.json)
   if (!/[\\/]src[\\/](blocks[\\/]|assets[\\/]|shell\.html$|manifest\.json$)/i.test(fp || '')) { dlog('skip ' + (fp || '(no path)')); return; }   // src 밖이면 무시
   dlog('run  ' + fp);
-  const OUT = 'D:/봉담/봉담지킴이_게시용_v338_final.html';
+  const REPO = path.resolve(__dirname, '..', '..');
+  const OUT = path.join(REPO, '봉담지킴이_게시용_v338_final.html');
   try {
     const t0 = Date.now();
-    const r = execFileSync(process.execPath, [path.join(__dirname, 'bundle.js'), 'D:/봉담/src', OUT], { encoding: 'utf8', timeout: 60000 });
+    const r = execFileSync(process.execPath, [path.join(__dirname, 'bundle.js'), path.join(REPO, 'src'), OUT], { encoding: 'utf8', timeout: 60000 });
     const sha = (r.match(/sha1 ([0-9a-f]{8})/) || [])[1] || '';
     console.log(JSON.stringify({ systemMessage: `🔧 src 변경 → bundle 완료 (${Date.now() - t0}ms, sha1 ${sha}…). 배치 데이터를 바꿨다면 restamp, 데몬은 bd.js reload.` }));
   } catch (e) {

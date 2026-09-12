@@ -11,7 +11,8 @@ const args = process.argv.slice(2);
 const scenarioFile = args.find(a => !a.startsWith('--'));
 const headed = args.includes('--headed');
 const urlArg = args.find(a => a.startsWith('--url='));
-const GAME = urlArg ? urlArg.slice(6) : 'file:///D:/봉담/봉담지킴이_v147.html';
+// 기본 빌드 = 저장소 루트의 작업용 단일 HTML (경로는 이 파일 위치에서 계산)
+const GAME = urlArg ? urlArg.slice(6) : 'file:///' + path.resolve(__dirname, '..', '봉담지킴이_게시용_v338_final.html').replace(/\\/g, '/');
 const SHOTS = path.join(__dirname, process.env.SHOTS_DIR || 'shots');
 fs.mkdirSync(SHOTS, { recursive: true });
 
