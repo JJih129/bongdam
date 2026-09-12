@@ -6,7 +6,7 @@
 - 📦 **웹 게시본 소스**: 이 저장소의 `main` 브랜치 (빌드 산출물 — GitHub Pages 가 그대로 서빙)
 - 🛠 **개발 소스**: 이 저장소의 `source` 브랜치 ← **지금 보고 있는 곳**
 
-현재 버전: **v398** (Ver. 1.0.0 · Build 398)
+현재 버전: **v399** (Ver. 1.0.0 · Build 399 — 소스 기준, 웹 게시는 요청 시)
 
 ---
 
@@ -39,9 +39,13 @@ node 검수도구/tools/bundle.js src 봉담지킴이_게시용_v338_final.html
 | `검수도구/tools/unbundle.js` | 단일 HTML → src 역분해 (왕복 무손실) |
 | `검수도구/tools/webbuild.js` | 웹 게시판 빌드(경량 HTML + 외부 assets, 에디터 제외) |
 | `검수도구/tools/release.js` | 원커맨드 릴리스(일치검사→스탬프→스모크→배포→커밋) |
+| `검수도구/qa.cjs` · `s_polish_v399.cjs` · `s_split_v399.cjs` · `s_bootbytes_v399.cjs` | 모바일·분리 빌드·전송량 검증 (로컬 서버 `tools/serve.cjs` 8788 필요) |
+| `검수도구/tools/recompress_webp.cjs` | 이미지 재인코딩(Chromium 인코더) + 참조·mime 갱신 |
 | `봉담지킴이_인수인계.md` | 상세 인수인계 문서 (구버전 기준, 구조 설명은 유효) |
 | `progress.md` / `출시노트.md` | 작업 이력 |
 | `.claude/skills/bongdam-qa-loop/` | QA 루프 작업 절차서 |
+| `성능최적화_v398.md` / `성능최적화_v399.md` | 로딩·에셋·JS 분리 결정 기록 (측정 도구 목록 포함) |
+| `구조정리_v399.md` | 레이어 정리 현황 — 한 것·안 한 것·규약 |
 
 ### 엔진 본체
 `src/blocks/0002_anon.js` (약 0.9MB) — 배치 데이터(베이크)와 엔진.
@@ -56,7 +60,7 @@ node 검수도구/tools/bundle.js src 봉담지킴이_게시용_v338_final.html
 2. `node 검수도구/tools/bundle.js src 봉담지킴이_게시용_v338_final.html`
 3. 브라우저로 열어 확인
 
-새 기능은 **새 레이어 블록**으로 추가하는 것이 관례입니다:
+새 기능은 **새 레이어 블록**으로 추가하는 것이 관례입니다. 다만 같은 함수를 감쌀 때는 `0271`(위험요소 조사)·`0272`(담이 발화)처럼 **순서가 적힌 체인 블록에 추가**하고, 각자 프로브로 감싸지 않습니다(`구조정리_v399.md` 4절):
 ```bash
 node 검수도구/tools/newlayer.js src bd-기능이름-v398 js patch.js
 ```
@@ -74,8 +78,8 @@ node 검수도구/restamp.js 봉담지킴이_게시용_v338_final.html
 cd 검수도구
 node bd.js boot skip=1 to=212 x=0.4 y=0.5   # 상주 데몬으로 즉시 부팅
 node bd.js hazard q=쓰레기 fight=1           # 위험요소 조사→전투
-node drive.js s_edge.js --url=file:///D:/봉담/봉담지킴이_게시용_v338_final.html
-node drive.js s_fullrun.js --url=...        # 전체 완주(약 30분)
+node drive.js s_edge.js                     # 기본 URL = 저장소 루트의 작업용 번들(file://)
+node drive.js s_fullrun.js --url=http://localhost:8788/new/   # 웹 빌드 완주(약 30분, tools/serve.cjs 필요)
 ```
 자세한 절차는 `.claude/skills/bongdam-qa-loop/SKILL.md` 참고.
 
@@ -91,7 +95,7 @@ node drive.js s_fullrun.js --url=...        # 전체 완주(약 30분)
 node publish.js "v398x — 무엇을 고쳤는지"          # build.js → dist/ → main 에 커밋·푸시 (반영 1~2분)
 node publish.js "..." --dry                        # 푸시 없이 바뀌는 파일만 확인
 ```
-- `build.js` 가 `검수도구/tools/webbuild.js` 로 **경량 웹판**(인게임 에디터 제외, index 약 2.7MB + 외부 `assets/`)을 만듭니다.
+- `build.js` 가 `검수도구/tools/webbuild.js` 로 **경량 웹판**(인게임 에디터 제외, index 약 276KB + `assets/<hash>_game.js` 2.4MB + 외부 `assets/`)을 만듭니다.
 - `main` 에만 있는 파일(아이콘·`.nojekyll`·`_headers`)은 publish.js 가 보존합니다. `main` 의 README 는 `main_README.md` 를 복사합니다.
 - **배포는 요청이 있을 때만** 합니다. 검증(qa.cjs·완주 런)을 통과한 소스라도 자동으로 올리지 않습니다.
 - 작업용 단일 HTML(오프라인·USB용)은 `bundle.js` 로 따로 만듭니다(투트랙).
