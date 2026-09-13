@@ -9,6 +9,18 @@
       if (d && d.getBoundingClientRect().height > 0) return true;
       if (window.__bdChoiceState && __bdChoiceState.open) return true;
       if (document.querySelector('.bd-modal.show')) return true;
+      /* (v399) 시설 모달(class=open)·장소 카드·입력 차단 중도 «반응 있음» — 이걸 무반응으로 보고 0.75초 뒤
+         위험요소 조사를 강제 실행해, 상점 위에 「조사한다」 선택창이 뜨는 문제(PC 감사 S-2)의 원인이었다 */
+      var fm = document.getElementById('bd-district-facility-modal');
+      if (fm && fm.classList.contains('open')) return true;
+      if (document.getElementById('bd-place-card')) return true;
+      if (window.BD_isInputBlocked && BD_isInputBlocked()) return true;
+      /* (v399) 시설 모달(class=open)·장소 카드·입력 차단 중도 «반응 있음» — 이걸 무반응으로 보고 0.75초 뒤
+         위험요소 조사를 강제 실행해, 상점 위에 「조사한다」 선택창이 뜨는 문제(PC 감사 S-2)의 원인이었다 */
+      var fm = document.getElementById('bd-district-facility-modal');
+      if (fm && fm.classList.contains('open')) return true;
+      if (document.getElementById('bd-place-card')) return true;
+      if (window.BD_isInputBlocked && BD_isInputBlocked()) return true;
       var so = document.getElementById('shop-overlay');
       if (so && getComputedStyle(so).display !== 'none') return true;
       if (window.__bdArcadeOpen || window.__bdGalagaOpen) return true;

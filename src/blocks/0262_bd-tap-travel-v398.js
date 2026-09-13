@@ -25,7 +25,8 @@
 (function () {
   'use strict';
 
-  if (!(window.matchMedia && matchMedia('(pointer: coarse)').matches)) return;
+  /* (v399) 마우스에도 켠다 — PC 에서 «클릭한 곳으로 걸어간다». 사거리 안 대상의 클릭→F 는 0273 이 맡는다 */
+  if (!(window.matchMedia && (matchMedia('(pointer: coarse)').matches || matchMedia('(pointer: fine)').matches))) return;
 
   var N = 128;            /* 격자 해상도 — path.js 의 160 보다 낮춰 폰에서 더 가볍게 */
   var ARRIVE = 0.055;     /* 이 거리 안에 들면 도착으로 보고 F 를 보낸다 */

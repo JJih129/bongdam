@@ -143,95 +143,8 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     모달: 옵션 (탭: 사운드 / 화면 / 키 배치)
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-options">
-  <div class="modal" style="max-width:520px; padding:28px 32px;">
-    <button class="close-btn" onclick="closeModal('options')">✕</button>
-    <div class="modal-title">⚙️ 게임 옵션</div>
-
-    <!-- 탭 바 -->
-    <div style="display:flex; gap:0; margin-bottom:20px; border-bottom:2px solid rgba(200,144,42,0.3);">
-      <button class="opt-tab active" onclick="switchTab('sound',this)">🔊 사운드</button>
-      <button class="opt-tab"        onclick="switchTab('display',this)">🖥️ 화면</button>
-      <button class="opt-tab"        onclick="switchTab('keys',this)">⌨️ 키 배치</button>
-    </div>
-
-    <!-- 탭: 사운드 -->
-    <div id="tab-sound" class="opt-panel">
-      <div class="option-row">
-        <span class="option-label">🎵 음악</span>
-        <input type="range" min="0" max="100" value="75" oninput="updateVal(this,'vol-music')">
-        <span class="option-val" id="vol-music">75%</span>
-      </div>
-      <div class="option-row">
-        <span class="option-label">🔔 효과음</span>
-        <input type="range" min="0" max="100" value="90" oninput="updateVal(this,'vol-sfx')">
-        <span class="option-val" id="vol-sfx">90%</span>
-      </div>
-
-    </div>
-
-    <!-- 탭: 화면 -->
-    <div id="tab-display" class="opt-panel" style="display:none;">
-      <div class="option-row">
-        <span class="option-label">🖥️ 화면 모드</span>
-        <select class="option-select">
-          <option>전체화면</option>
-          <option selected>창 모드</option>
-          <option>테두리 없는 창</option>
-        </select>
-      </div>
-      <div class="option-row">
-        <span class="option-label">🌐 언어</span>
-        <select class="option-select">
-          <option selected>한국어</option>
-          <option>English</option>
-          <option>日本語</option>
-        </select>
-      </div>
-      <div class="option-row">
-        <span class="option-label">💡 밝기</span>
-        <input type="range" min="0" max="100" value="80" oninput="updateVal(this,'brightness')">
-        <span class="option-val" id="brightness">80%</span>
-      </div>
-
-    </div>
-
-    <!-- 탭: 키 배치 -->
-    <div id="tab-keys" class="opt-panel" style="display:none;">
-
-      <!-- 키보드 시각화 -->
-      <div id="kb-visual" style="display:flex; flex-direction:column; align-items:center; gap:5px; margin-bottom:14px;">
-        <div style="display:flex; gap:5px;">
-          <div class="kb-key" id="kb-up"   data-action="위로 이동"></div>
-        </div>
-        <div style="display:flex; gap:5px;">
-          <div class="kb-key" id="kb-left"  data-action="왼쪽 이동"></div>
-          <div class="kb-key" id="kb-down"  data-action="아래 이동"></div>
-          <div class="kb-key" id="kb-right" data-action="오른쪽 이동"></div>
-        </div>
-      </div>
-
-      <!-- 안내 -->
-      <div id="key-hint" style="font-size:12px; color:var(--parchment-dark); text-align:center; margin-bottom:12px; min-height:18px;"></div>
-
-      <!-- 바인딩 목록 -->
-      <div style="max-height:220px; overflow-y:auto; padding-right:4px;" id="key-list"></div>
-
-      <!-- 기본값 복원 -->
-      <div style="margin-top:12px; display:flex; justify-content:center;">
-        <button class="modal-btn danger" onclick="resetKeys()" style="font-size:12px; padding:7px 18px;">기본값 복원</button>
-      </div>
-    </div>
-
-    <div class="modal-btn-row" style="margin-top:20px;">
-      <button class="modal-btn" onclick="saveOptions()">저장</button>
-      <button class="modal-btn" onclick="closeModal('options')">취소</button>
-    </div>
-  </div>
-</div>
+<!-- (v399) 옵션 모달(#modal-options: 사운드/화면/키 배치)은 제거 — 어떤 블록도 열지 않았고(호출처 0), 언어·화면 모드·밝기·키 재매핑 전부
+     핸들러가 없거나 게임에 반영되지 않는 «작동하는 척» UI 였다(PC 감사 S-5). 실제 설정은 ⚙ openSettings(0054) 하나로 통합(0273). -->
 
 <!-- ══════════════════════════════════════════════
      모달: 새 게임 경고
@@ -1457,5 +1370,6 @@
 <script id="bd-mobile-polish-v399">@@BLOCK:0270@@</script>
 <script id="bd-hazard-chain-v399">@@BLOCK:0271@@</script>
 <script id="bd-dami-chain-v399">@@BLOCK:0272@@</script>
+<script id="bd-pc-polish-v399">@@BLOCK:0273@@</script>
 </body>
 </html>

@@ -17,7 +17,7 @@
     }catch(e){}
     return false;
   };
-  window.BD_GAME_VERSION = 'v270';   // (v270) 기획서 P0 — 파일 버전과 동기
+  window.BD_GAME_VERSION = 'v399';   // (v270) 기획서 P0 — 파일 버전과 동기
   window.BD_SAVE_VERSION = 4;   // (v270) 기획서 §21 — 시설/안전/이동/스토리 진행 필드 추가
 
   // ═══════════════════════════════════════════════════════════════
@@ -133,7 +133,7 @@
       var msg = null, face = 'base';
       if (!st.tutorialFlags.badgeGiven) msg = '안내데스크 선생님께 먼저 인사해 봐요!';
       else if (!st.badgeAwakened) msg = '문화의집을 자유롭게 즐기다가, 엘리베이터를 타고 밖으로 나가 봐요.';
-      else if (st.storyPhase === 'cleared') msg = '봉담 활동지도가 완성됐어요! 이제 어디든 자유롭게 돌아다녀요.';
+      else if (st.storyPhase === 'cleared') msg = '봉담 안전 지도가 완성됐어요! 이제 어디든 자유롭게 돌아다녀요.';
       else {
         var chs = Object.values(BD_REGISTRY_CHAPTERS);
         for (var i = 0; i < chs.length; i++) {

@@ -157,9 +157,9 @@ window.BD_joinedMembers = bdJoinedMembers;
 
 // ---- 메인 퀘스트 정의 (기획서 11번) ----
 const QUESTS = [
-  { id:'prologue', chapter:'프롤로그', title:'지킴이 배지를 받다',
+  { id:'prologue', chapter:'프롤로그', title:'봉담 활동 배지를 받다',
     type:'main',
-    desc:'지킴이 배지를 받았다. 화살표를 따라가 방치된 쓰레기 더미를 정화해 보자. (가까이 가서 F로 조사)',
+    desc:'봉담 활동 배지를 받았다. 화살표를 따라가 방치된 쓰레기 더미를 정화해 보자. (가까이 가서 F로 조사)',
     objectives:[{t:'주변 방치된 쓰레기 정화하기',need:1,cur:0}],
     reward:{ lv:1, skill:null, card:'문화의집', gold:35 } },
   { id:'ch1', chapter:'1장', title:'와우리 - 문화의집으로 가는 길',
@@ -203,9 +203,9 @@ const NPC_QUESTS = [
   { id:'npc_hyunji', type:'npc', giver:'임현지', title:'임현지의 부탁', accepted:false,
     desc:'와우도서관 앞 임현지에게 말을 걸어 주기',
     objectives:[{t:'임현지와 대화',need:1,cur:0}], reward:{ gold:35 } },
-  { id:'npc_dohyun', type:'npc', giver:'사서 도현', title:'정도현의 부탁', accepted:false,
-    desc:'봉담 와우 도서관의 신입 사서 도현이 도서관 주변 정리를 부탁했다.',
-    objectives:[{t:'정도현과 대화',need:1,cur:0}], reward:{ gold:35 } },
+  { id:'npc_dohyun', type:'npc', giver:'사서 도현', title:'사서 도현의 부탁', accepted:false,
+    desc:'봉담와우도서관의 신입 사서 도현이 도서관 주변 정리를 부탁했다.',
+    objectives:[{t:'사서 도현과 대화',need:1,cur:0}], reward:{ gold:35 } },
   // ── (v160) 배지 통신으로 도착하는 주민 부탁 ──
   { id:'npc_seoyeon', type:'npc', giver:'서연', title:'서연의 부탁', accepted:false,
     desc:'[배지 통신] "상리 공원에서 자주 노는 서연이야. 요즘 공원이 무섭다는 애들이 많아… 지킴이가 자주 들러 주면 다들 좋아할 거야!"',
@@ -851,7 +851,7 @@ const TUT_STEPS = [
     text:'봉담 곳곳에 방치된 위험 요소가 있어요. 수상해 보이는 곳에 다가가 보세요.',
     done:'위험 요소를 발견했어요!' },
   { id:'invest',  icon:'🅵', title:'조사하기',
-    text:'위험 요소 가까이에서 F 키를 눌러 조사하세요. 지킴이 배지가 반응합니다.',
+    text:'위험 요소 가까이에서 F 키를 눌러 조사하세요. 봉담 활동 배지가 반응합니다.',
     done:'조사 성공! 전투가 시작돼요.' },
   { id:'battle',  icon:'⚔️', title:'정화 전투',
     text:'「정화 스티커」로 위험 요소를 정화하세요. 약점 속성을 노리면 더 효과적이에요!',
@@ -932,7 +932,12 @@ function finishTutorial(){
 window.BD_startTutorial = startTutorial;
 window.BD_tutorialAdvance = tutorialAdvance;
 window.BD_skipTutorial = function(){ finishTutorial(); bdToast('튜토리얼을 건너뛰었어요'); };
-window.BD_resetTutorial = function(){ try { localStorage.removeItem(TUTORIAL_KEY); } catch(e){} };
+window.BD_resetTutorial = function(){
+  /* (v399) 실제 튜토 게이트는 0089 의 bd_* 키들이다 — TUTORIAL_KEY 하나만 지워 «다시 보기»가 무효였다(PC 감사 S-5) */
+  ['bd_tut2_done','bd_dami_tutorial_done','bd_battle_tutorial_done','bd_battle_tutorial_seen','bd_shop_tutorial_done_v75','bd_map_tuto_done','bd_dami_awake']
+    .forEach(function(k){ try { localStorage.removeItem(k); } catch(e){} });
+  try { localStorage.removeItem(TUTORIAL_KEY); } catch(e){}
+};
 
 // =========================================================================
 // 상황별 1회성 안내 (v126) — 실제 게임처럼, 처음 겪는 순간에만 알려주는 팁
@@ -1151,7 +1156,7 @@ function grantReward(q){
              + '<b>J 키</b>로 언제든 확인하고 추적할 수 있어요.' });
       } catch(e){}
     }, 4300);
-    // (v132) 봉담 이야기 업적: 지킴이 배지
+    // (v132) 봉담 이야기 업적: 봉담 활동 배지
     try { if(typeof achieveTrack==='function') achieveTrack('story_prologue', 1); } catch(e){}
   }
   // 레벨업
@@ -2383,7 +2388,7 @@ const NPC_LINES = {
     done: ['"당신 덕분에 봉담이 안전해졌어요."', '"정말 고마워요, 지킴이님!"'],
   },
   friend: {
-    pre:  ['"오, 지킴이 배지 받았구나!"', '"멋진데? 조심해서 다녀와."'],
+    pre:  ['"오, 봉담 활동 배지 받았구나!"', '"멋진데? 조심해서 다녀와."'],
     mid:  ['"저쪽에서 이상한 기운을 봤어.", "너라면 정화할 수 있을 거야!"'],
     done: ['"네가 봉담을 다 지켰다며?", "역시 대단해!"'],
   },
@@ -2539,7 +2544,7 @@ window.BD_showInteractChoice = showInteractChoice;
 // =========================================================================
 const ITEMS = {
   snack:{ name:'문화의집 간식', icon:'🍪', heal:'hp', amount:40, price:30, desc:'HP 40 회복' },
-  // (v239) 따뜻한 음료(SP 회복)·구급 지킴이 배지(동료 부활) 제거 — SP·동료 시스템 폐지
+  // (v239) 따뜻한 음료(SP 회복)·구급 봉담 활동 배지(동료 부활) 제거 — SP·동료 시스템 폐지
 };
 // (v160) 장비 상점 목록 — 종류별 1회만 구매, 강화·등급·판매 없음
 const EQUIP_SHOP = {
@@ -3077,7 +3082,7 @@ function hazardInteract(obj){
     function(){ // 조사한다 → 설명을 보고 그대로 정화에 들어간다
       showDialog('나', [
         flavor,
-        '지킴이 배지가 희미하게 빛나기 시작한다. 불안의 그림자가 숨어 있어.',
+        '봉담 활동 배지가 희미하게 빛나기 시작한다. 불안의 그림자가 숨어 있어.',
         '배지를 비춰 정화하자!'
       ], function(){
         // (v239) 예전엔 여기서 끝나 「조사했는데 아무 일도 안 난다」로 느껴졌다
@@ -3086,7 +3091,7 @@ function hazardInteract(obj){
         }, 260);
       });
     },
-    function(){ // 지킴이 배지를 비춘다 → 즉시 전투
+    function(){ // 봉담 활동 배지를 비춘다 → 즉시 전투
       startHazardBattle(obj, family, hid);
     }
   );
@@ -3315,7 +3320,7 @@ function onHazardBattleEnd(win){
     try {
       window.BD_tip && window.BD_tip('first_crystal', { icon:'💰', title:'봉담의 재화',
         text:'💰 <b>소지금</b> — 동네 가게(약국·편의점)에서 간식·음료·용품 구매<br>'
-           + '⚡ <b>안전 포인트</b> — E 가방의 안전 스킬 강화 (정화의 보람 등, 정화할 때마다 조금씩 쌓여요)' });
+           + '⚡ <b>안전 포인트</b> — E 가방의 배지 스킬 강화 (정화의 보람 등, 정화할 때마다 조금씩 쌓여요)' });
     } catch(e){}
   }, 3000);
   // (v73) 부탁 대상 위험요소는 '주민에게 보고'할 때 목표가 오른다 (부탁 → 정화 → 보고 흐름 유지).
@@ -3612,7 +3617,7 @@ function showTitle(opts){
     + '<button class="bd-title-hit" id="bd-title-options" data-x="0.120" data-y="0.671" data-w="0.200" data-h="0.080" onclick="window.BD_openTitleOptions&&window.BD_openTitleOptions()" aria-label="설정"></button>'
     + '<button class="bd-title-hit" id="bd-title-reset" data-x="0.120" data-y="0.767" data-w="0.200" data-h="0.080" onclick="window.BD_openQuitConfirm&&window.BD_openQuitConfirm()" aria-label="종료하기"></button>'
     + '</div>'
-    + '<div class="bd-title-foot">Ver. 1.0.0 · Build 397</div>';
+    + '<div class="bd-title-foot">Ver. 1.0.0 · Build ' + String((window.BD_GAME_VERSION || 'v?')).replace(/^v/, '') + '</div>';   /* (v399) 0004 BD_GAME_VERSION 과 동기 */
   m.classList.add('show');
   // 버튼 위치를 배경 이미지의 실제 표시 영역에 맞춰 보정
   positionTitleButtons();

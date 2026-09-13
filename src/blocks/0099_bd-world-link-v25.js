@@ -53,7 +53,7 @@
   var BOSS_POS = { x: 0.1808, y: 0.3317 };   // 212 — 에디터 저장본의 final_boss_1 위치
 
   var NPCS = [
-    { sid: 212, id: 'ow_npc_eunji', name: '은지', asset: 'culture_npc_02', x: 0.392, y: 0.48, region: 'wawoo',
+    { sid: 212, id: 'ow_npc_eunji', name: '은지', asset: 'culture_npc_02', x: 0.43, y: 0.49, region: 'wawoo',   /* (v399) 0.392,0.48 → 약국 문(0.336,0.457) 위에 서 있어 F 가 대화로 새고 완주 런이 멈추던 문제 */
       before: ['안녕하세요, 지킴이! 저는 은지예요. 이 앞 아파트에 살아요.', '이 동네는 사람도 많고 길도 넓어서, 늘 조금씩 신경 쓰이는 게 생겨요.'],
       after: ['길이 훨씬 깨끗해졌어요! 고마워요, 지킴이님!', '이제 도서관 가는 길도 무섭지 않아요.'] },
     { sid: 213, id: 'ow_npc_dohyun', name: '사서 도현', asset: 'culture_npc_05', x: 0.33, y: 0.272, region: 'sang',

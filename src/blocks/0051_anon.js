@@ -2844,7 +2844,8 @@ window.addEventListener('keydown', (e)=>{
   if (window.BD_TUTOR_keyBlocked && window.BD_TUTOR_keyBlocked(e)) {
     e.preventDefault(); e.stopImmediatePropagation(); return;
   }
-  if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); if(!HSR._isBoss && HSR.state==='player') onFlee(); return; }
+  /* (v399) ESC 도주는 외부 진입점(window.BD_onFlee)을 거친다 — 0273 이 «두 번 눌러 확인»을 거기서 건다. 없으면 종전대로 */
+  if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); if(!HSR._isBoss && HSR.state==='player'){ if (typeof window.BD_onFlee === 'function') window.BD_onFlee(); else onFlee(); } return; }
   const k = (e.key||'').toLowerCase();
   // 궁극기(1)는 어느 턴에서든 게이지만 차 있으면 발동 (붕괴 스타레일식 기습)
   if(k==='1'){

@@ -210,7 +210,7 @@
     try {
       var pool = window.ITEM_POOL || (typeof ITEM_POOL !== 'undefined' ? ITEM_POOL : null);
       var bd = pool && pool.find(function(it){ return it.id === 'guardian_badge'; });
-      if (!bd) bd = { id:'guardian_badge', tab:'misc', icon:'🛡️', name:'지킴이 배지',
+      if (!bd) bd = { id:'guardian_badge', tab:'misc', icon:'🛡️', name:'봉담 활동 배지',
                       desc:'문화의집에서 자원봉사를 성실히 한 청소년에게 주어지는 배지.' };
       var addFn = window.addToInventory || (typeof addToInventory==='function'? addToInventory : null);
       if (addFn && !(window.playerInventory && playerInventory.guardian_badge)) addFn(bd, 1);

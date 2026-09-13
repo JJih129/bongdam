@@ -43,7 +43,7 @@ const STAGES = {
         cx:0.385, cy:0.188, cw:0.100, ch:0.115, interactable:"shop" },
       { type:"wall", rx:0.513, ry:0.15, rw:0.01, rh:0.205 },
       // 시청
-      { type:"building", key:"hall",  rx:0.30, ry:0.42, rw:0.32, rh:0.30, label:"봉담 와우 도서관",
+      { type:"building", key:"hall",  rx:0.30, ry:0.42, rw:0.32, rh:0.30, label:"봉담와우도서관",
         cx:0.306, cy:0.438, cw:0.307, ch:0.250, interactable:"quest" },
       { type:"wall", rx:0.306, ry:0.438, rw:0.01, rh:0.250 },
       { type:"wall", rx:0.603, ry:0.438, rw:0.01, rh:0.250 },
@@ -192,7 +192,7 @@ const STAGES = {
     ]
   },
   // (v228) 구버전 도서관 1층(스테이지 100) 삭제 — 건물 입장은 3층 문화의집으로 직행
-  // ── 봉담 와우 도서관 3층 - 문화의 집 ──
+  // ── 봉담와우도서관 3층 - 문화의 집 ──
   101: {
     name: "봉담청소년문화의집 (3층)",
     // (v229) 새 맵 에셋(화이트톤 1448x1086) 기준 콜라이더 재배치.
@@ -365,7 +365,7 @@ function loadAllImages(cb) {
 
 /* ── NPC (임현지) + 비주얼 노벨 대화 시스템 ── */
 const NPC_STAGE  = 1;       // 봉담 광장 - 북쪽 (도서관 앞)
-let NPC_X      = 0.42;    // 봉담 와우 도서관 앞 (에디터에서 이동 가능)
+let NPC_X      = 0.42;    // 봉담와우도서관 앞 (에디터에서 이동 가능)
 let NPC_Y      = 0.78;
 const NPC_NEAR_R = 0.07;    // 상호작용 감지 반경
 
@@ -528,7 +528,7 @@ const QUEST_DEF = {
   title: '도서관 심부름 (연습)',
   reward: { gold: 300, xp: 60 },
   rewardItem: { id:'gold_bookmark', tab:'misc', icon:'🎫', name:'도서관 문화상품권',
-                desc:'정도현이 감사 인사로 챙겨준 문화상품권. 편의점이나 문화의집에서 쓸 수 있다.', price: 200 },
+                desc:'사서 도현이 감사 인사로 챙겨준 문화상품권. 편의점이나 문화의집에서 쓸 수 있다.', price: 200 },
   objectives: [
     { id:'talk_hyunji',     label:'광장의 임현지와 대화하기',        target: 1, cur: 0 },
     { id:'train_scarecrow', label:'위험 요소 정화 전투에서 승리하기', target: 3, cur: 0 },   // (v236) 허수아비 제거 반영
@@ -599,7 +599,7 @@ function getQuestNpcData() {
   let lines;
   if (quest_state === 'offer') {
     lines = [
-      { name, text:'실례합니다… 아, 안녕하세요! 저는 이 봉담 와우 도서관 신입 사서 도현이라고 합니다.' },
+      { name, text:'실례합니다… 아, 안녕하세요! 저는 이 봉담와우도서관 신입 사서 도현이라고 합니다.' },
       { name, text:'부탁이 하나 있는데요, 제가 아직 이 동네 지리랑 사람들을 잘 몰라서요…' },
       { name, text:'광장에 있는 임현지 학생과 인사 좀 나눠 주시고, 동네 위험 요소도 하나 정화해 주시겠어요?' },
       { name, text:'도와주시면 사례는 확실히 하겠습니다. 부탁드려도 될까요? …감사합니다! 잘 부탁드려요.' },
@@ -622,7 +622,7 @@ function getQuestNpcData() {
     ];
   } else { // done — (v240g) 퀘스트 없이 동네 안내만
     lines = [
-      { name, text:'안녕하세요! 봉담 와우 도서관 사서 도현입니다.' },
+      { name, text:'안녕하세요! 봉담와우도서관 사서 도현입니다.' },
       { name, text:'도서관엔 재미있는 책이 정말 많아요. 산책하다 더우면 잠깐 들러서 쉬다 가세요~' },
     ];
   }
@@ -3411,7 +3411,7 @@ function renderMap(canvas) {
           }
         }
 
-        // 퀘스트 건물(봉담 와우 도서관) 앞에 있을 때 [F] 마커 (파란색)
+        // 퀘스트 건물(봉담와우도서관) 앞에 있을 때 [F] 마커 (파란색)
         if (obj.interactable === 'quest' && !questPanelOpen) {
           const _left   = obj.rx - 0.05;
           const _right  = obj.rx + obj.rw + 0.05;
@@ -4516,8 +4516,10 @@ function gameLoop(_fromRAF) {
        작은 폰부터 큰 태블릿까지 같은 규칙이 적용된다.
        주의: 위 수치는 데스크탑 기준이다. 중급 폰은 여유가 더 필요할 수 있으므로
        실기기 ?perf=1 결과를 보고 window.BD_PX_BUDGET 으로 조정한다. */
-    if (navigator.maxTouchPoints > 0) {
-      const budget = Number(window.BD_PX_BUDGET) || 0.85e6;
+    {
+      /* (v399) 데스크톱도 상한을 둔다 — 2.4Mpx: 1920×1080·DPR1 은 무변화, 2560×1440·4K·DPR2 만 캡. PC 감사에서 gameLoop 는
+         프레임당 3.6ms 인데 1080p 캔버스 페인트가 33ms 를 먹었다(헤드리스 소프트웨어 래스터 기준) */
+      const budget = Number(window.BD_PX_BUDGET) || (navigator.maxTouchPoints > 0 ? 0.85e6 : 2.4e6);
       const area = canvas.offsetWidth * canvas.offsetHeight * dpr * dpr;
       if (area > budget) dpr *= Math.sqrt(budget / area);
     }
@@ -5028,10 +5030,10 @@ function tickWalkAnim(isMoving) {
 
 // 전체 아이템 풀 (탭 구분 포함)
 const ITEM_POOL = [
-  { id:'guardian_badge', tab:'misc', icon:'🛡️', name:'지킴이 배지',
+  { id:'guardian_badge', tab:'misc', icon:'🛡️', name:'봉담 활동 배지',
     desc:'문화의집에서 자원봉사를 성실히 한 청소년에게 주어지는 배지. 위험 속에 쌓인 \'불안의 그림자\'를 볼 수 있게 해 준다. 배지는 그림자를 만들지 않는다 — 이미 있던 것을 드러내고, 정화로 되돌릴 뿐이다.',
     price: 0, hidden:true, featured:true },
-  { id:'gold_bookmark', tab:'misc', icon:'🎫', name:'도서관 문화상품권', desc:'정도현이 감사 인사로 챙겨준 문화상품권. 편의점이나 문화의집에서 쓸 수 있다.', price: 200, hidden:true },
+  { id:'gold_bookmark', tab:'misc', icon:'🎫', name:'도서관 문화상품권', desc:'사서 도현이 감사 인사로 챙겨준 문화상품권. 편의점이나 문화의집에서 쓸 수 있다.', price: 200, hidden:true },
   // (v240g) 학생 콘셉트 리뉴얼 — 회복은 실효과, 용품은 정직한 소품 설명 (RPG 잔재 제거)
   { id:'rice_ball',   tab:'consumable', icon:'🍙', name:'삼각김밥',        desc:'HP를 20 회복합니다.',                    price: 15  },
   { id:'hp_potion',   tab:'consumable', icon:'🥪', name:'든든 샌드위치',   desc:'HP를 50 회복합니다.',                    price: 30  },
@@ -5412,7 +5414,7 @@ function renderInventory() {
     if (currentInvTab === 'all') return true;
     return e.item.tab === currentInvTab;
   });
-  // (v219) 지킴이 배지는 항상 맨 앞에 — 획득 직후 바로 보이도록
+  // (v219) 봉담 활동 배지는 항상 맨 앞에 — 획득 직후 바로 보이도록
   entries.sort((a, b) => (b.item.featured ? 1 : 0) - (a.item.featured ? 1 : 0));
 
   if (entries.length === 0) {
@@ -5675,7 +5677,7 @@ const ACHIEVEMENTS = [
   { id:'quest_first', group:'퀘스트', icon:'📋', name:'첫 임무',      desc:'일일 퀘스트 처음으로 완료하기',         type:'quest_done', target:1,  reward:'공무원 단골' },
   { id:'quest_10',    group:'퀘스트', icon:'📜', name:'성실한 시민',   desc:'일일 퀘스트 총 10회 완료하기',          type:'quest_done', target:10, reward:'모범 시민' },
   // ── 봉담 이야기 (v132) ──
-  { id:'story_badge', group:'봉담 이야기', icon:'🛡️', name:'지킴이 배지', desc:'지킴이 배지를 받고 첫 위험 요소를 정화하기', type:'story_prologue', target:1, reward:'초보 지킴이' },
+  { id:'story_badge', group:'봉담 이야기', icon:'🛡️', name:'봉담 활동 배지', desc:'봉담 활동 배지를 받고 첫 위험 요소를 정화하기', type:'story_prologue', target:1, reward:'초보 지킴이' },
   { id:'story_clear', group:'봉담 이야기', icon:'🏅', name:'봉담의 진짜 지킴이', desc:'모든 지역을 정화하고 최종 보스까지 물리치기', type:'story_final', target:1, reward:'봉담 지킴이' },
 ];
 
@@ -6054,7 +6056,7 @@ document.addEventListener('keydown', function(e) {
   // 옵션 키배치 리스닝 중이면 게임 키는 무시 (옵션 리스너가 처리)
   if (listeningId) return;
   if (document.getElementById('game-screen').style.display !== 'block') return;
-  const k = e.key.toLowerCase();
+  const k = __bdKeyOf(e);
 
   // Space 키: 브라우저 기본 스크롤 방지 (게임 화면 활성 시 항상)
   if (k === ' ') e.preventDefault();
@@ -6107,8 +6109,7 @@ document.addEventListener('keydown', function(e) {
   // (v199) 대시 기능 제거 — Shift 바인딩 삭제
   // R키: 마법사 속성 전환
   /* (v381) 직업 제거 — R(마법사 속성 전환) 바인딩 삭제 */
-  // Z키: 고장난 하드웨어 스킬
-  if (k === 'z') { activateHWSkill(); return; }
+  /* (v399) Z키(고장난 하드웨어 스킬) 바인딩 제거 — v199 대시 삭제 후 «대시 쿨타임» 토스트만 내던 죽은 키 */
   // E키: 인벤토리 열기
   if (k === 'e') { openInventory(); return; }
   // ESC: 게임 종료 (상점 닫기와 분리됨)
@@ -6248,8 +6249,12 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+/* (v399) 물리 키(e.code) → 논리 키. AZERTY·Dvorak 등에서 e.key 가 'z'·','·'.' 로 오면 WASD 가 죽는다.
+   Ctrl/Alt/Meta 조합은 브라우저 단축키이므로 건드리지 않는다. */
+const __bdCodeMap = { KeyW:'w', KeyA:'a', KeyS:'s', KeyD:'d', KeyE:'e', KeyF:'f' };
+function __bdKeyOf(e){ try{ if (!e.ctrlKey && !e.altKey && !e.metaKey && __bdCodeMap[e.code]) return __bdCodeMap[e.code]; }catch(x){} return (e.key || '').toLowerCase(); }
 document.addEventListener('keyup', function(e) {
-  const k = e.key.toLowerCase();
+  const k = __bdKeyOf(e);
   if (k === 'w' || k === 'arrowup')    moveKeys.w = false;
   if (k === 's' || k === 'arrowdown')  moveKeys.s = false;
   if (k === 'a' || k === 'arrowleft')  moveKeys.a = false;

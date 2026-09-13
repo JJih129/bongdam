@@ -2008,6 +2008,7 @@
   function createMapPicker() {
     const host = document.getElementById('game-screen');
     if (!host || document.getElementById('bd-concept-map-button')) return;
+    if (!/[?&]dev=1/.test(location.search)) return;   /* (v399) 게시본은 DOM 에도 만들지 않는다(종전엔 0184 가 CSS 로만 숨김) */
 
     const button = document.createElement('button');
     button.id = 'bd-concept-map-button';

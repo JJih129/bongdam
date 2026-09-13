@@ -60,7 +60,7 @@ window.BD_ensureV198Level = function BD_V198_LEVEL(){
     if (_hasV198(st)) return;
     st.bgKey = 'MAP_CULTURE';
     noWalls(st);
-    drop(st, ['봉담 카페','봉담 서점','봉담 와우 도서관','봉담 상점','봉담 소상점','작은 도서관']);
+    drop(st, ['봉담 카페','봉담 서점','봉담와우도서관','봉담 상점','봉담 소상점','작은 도서관']);
     st.objects.forEach(o => {          // 작은 공원 → 분수 광장 이미지로
       if (o.label === '작은 공원') {
         o.type = 'prop';   // park 분기를 건너뛰고 asset 렌더로 (충돌 없음 유지)
@@ -72,8 +72,8 @@ window.BD_ensureV198Level = function BD_V198_LEVEL(){
       // (v236) 입구 교정 — 3층 청소년문화의집으로 이어지는 건물은 '봉담문화의집'이다.
       //  기존에는 'quest'(=입장 가능)가 도서관에 붙어 있어 도서관 문으로 들어가면 문화의집 3층이 나왔다.
       B('bld_culture', 0.50, 0.03, 0.34, '봉담문화의집', 'quest'),
-      B('bld_library', 0.008, 0.10, 0.24, '봉담 와우 도서관', 'info',
-        { info:['여기는 봉담 와우 도서관이야.','조용히 책을 읽거나 공부하기 좋은 곳이지.','일일 퀘스트는 문 앞의 사서 도현에게 물어보면 돼!'] }),
+      B('bld_library', 0.008, 0.10, 0.24, '봉담와우도서관', 'info',
+        { info:['여기는 봉담와우도서관이야.','조용히 책을 읽거나 공부하기 좋은 곳이지.','일일 퀘스트는 문 앞의 사서 도현에게 물어보면 돼!'] }),
       B('bld_shop4', 0.47, 0.64, 0.22, '봉담 카페', 'shop'),
       B('bld_conv1', 0.02, 0.63, 0.17, '봉담 편의점', 'shop'),
       B('bld_busstop', 0.31, 0.635, 0.10, '버스정류장', 'info',
@@ -241,7 +241,7 @@ window.BD_ensureV198Level();
     ]  };
   // (v215) 도서관 1층 스펙 스냅샷 — 옛 localStorage가 100을 덮어써도 복원
   window.__BD_V215_LIB = {
-    name: "봉담 와우 도서관 1층",
+    name: "봉담와우도서관 1층",
     spawnX: 0.50, spawnY: 0.86,
     exits: {
       bottom: { active: true, nextStage: 1, entryX: 0.46, entryY: 0.755 },
