@@ -223,6 +223,22 @@ module.exports = (h, L) => {
   A.run = async (steps = 200, opts = {}) => {
     let lastStage = null, lastKey = '', same = 0, panelStreak = 0;
     for (let s = 0; s < steps; s++) {
+      // (v399e) 안전지도 튜토(0244) — «M 키를 눌러 지도를 열어봐요» / «문화의집을 눌러 봐요» 를 실제로 수행한다.
+      //  advance() 가 지도 모달을 닫기 전에 처리해야 하므로 스텝 맨 앞에서 본다 (안 하면 45초×2 대기 뒤 루프 판정).
+      const tutStep = await h.page.evaluate(() => String(window.__bdTutStepId || '')).catch(() => '');
+      if (tutStep === 'map_open' || tutStep === 'map_click') {
+        const open0 = await h.page.evaluate(() => { const m = document.getElementById('bd-map-v342'); return !!(m && m.classList.contains('show')); }).catch(() => false);
+        if (!open0) { await h.page.keyboard.press('m'); await h.wait(700); }
+        const r0 = await h.page.evaluate(() => {
+          const m = document.getElementById('bd-map-v342'); const open = !!(m && m.classList.contains('show'));
+          const b = document.getElementById('bd-map-v342-board');
+          const el = b && [...b.querySelectorAll('.m42-dimp,.m42-vok')].find(x => /문화의집|도서관/.test(x.title || ''));
+          if (open && el) { el.click(); return 'tile'; }
+          return open ? 'open-no-tile' : 'closed';
+        }).catch(e => 'err ' + e.message);
+        say('  ↻ 지도 튜토 실습(' + tutStep + '): ' + (open0 ? '' : 'M → ') + r0);
+        await h.wait(900); same = 0; continue;
+      }
       const r = await A.advance();
       if (r === 'battle') { await A.doBattle(); await h.wait(1500); continue; }
       const justClosedPanel = (r === 'panel');
