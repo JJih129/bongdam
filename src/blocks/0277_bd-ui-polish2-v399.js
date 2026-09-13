@@ -16,6 +16,10 @@
     + '#inv-safety-panel .safety-skill-name{color:#8a7a5e}#inv-safety-panel .safety-skill.unlocked .safety-skill-name,#inv-safety-panel .safety-skill.max-level .safety-skill-name{color:#3a2c18}'
     + '#inv-safety-panel .safety-skill-desc{color:#6b5233}#inv-safety-panel .safety-skill-stat{color:#7a5c38}#inv-safety-panel .safety-skill-level{color:#5b4127}#inv-safety-panel .safety-group-title{color:#7a5c38}'
     /* 전투 — 카드 텍스트·튜토 겹침 */
+    /* 정화 스티커 카드에 ✨ 아이콘 — 배지 스킬 카드와 같은 메달 아트라 구분이 안 됐다 */
+    + '.hsr-act.hsr-basic{position:relative}.hsr-act.hsr-basic .hsr-ai{display:block!important;position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:24px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
+    /* 리포트 통계 타일 6개 — 4열이면 2행이 절반 비어 보인다 → 3열 */
+    + '#bd-report .grid{grid-template-columns:repeat(3,1fr)!important}'
     + '.hsr-act{word-break:keep-all}body:has(#hsr-skill-menu) #bd-spot,body:has(#hsr-skill-menu) #bd-guide-tip,body:has(#hsr-skill-menu) #bd-spot-block{display:none!important}'
     /* 모달 열림 중 담이 말풍선 흐림 */
     + 'html.bd-modal-open #bd-dami-hud{opacity:.22;pointer-events:none;transition:opacity .2s}'

@@ -287,7 +287,7 @@
         try{
           if (typeof safetyXP !== 'undefined' && typeof safetyXP_MAX !== 'undefined' && safetyXP_MAX > 0){
             xr = Math.min(1, safetyXP / safetyXP_MAX);
-            xTxt = safetyXP + '/' + safetyXP_MAX;
+            xTxt = safetyXP + ' / ' + safetyXP_MAX;   /* (v400 검수) HP «100 / 100» 과 표기 통일 */
           }
         }catch(eX){}
         p.querySelector('.xp-fill').style.width = Math.round(xr * 100) + '%';

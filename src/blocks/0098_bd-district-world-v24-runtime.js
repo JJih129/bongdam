@@ -1939,7 +1939,7 @@
         cell.classList.toggle('active', Number(cell.dataset.stage) === Number(currentStage));
       });
       const progress = minimap.querySelector('.bd-district-mini-progress');
-      if (progress) progress.textContent = visitedCount + '/' + facilityIds.length;
+      if (progress) progress.textContent = '시설 ' + visitedCount + '/' + facilityIds.length;   /* (v400 검수) «0/39» 에 라벨 */
       const hint = minimap.querySelector('.bd-district-mini-hint');
       if (hint) hint.textContent = gateSummary(stage);
     }
