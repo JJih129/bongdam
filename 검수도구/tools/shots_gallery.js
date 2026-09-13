@@ -28,12 +28,12 @@ const cards = g => g.items.map(s => {
 }).join('\n');
 
 const notes = (review.confirmed || []).length ? `<section id="notes" class="notes">
-  <h2>검수 메모 <small>독립 반박 검증을 통과한 항목만 · 즉시 ${sevN.high} · 눈에 띔 ${sevN.medium} · 미세 ${sevN.low}</small></h2>
+  <h2>검수 메모 <small>독립 반박 검증을 통과한 항목만 · 즉시 ${sevN.high} · 눈에 띔 ${sevN.medium} · 미세 ${sevN.low} · <b>반영 ${(review.confirmed||[]).filter(f=>f.fixed).length}</b></small></h2>
   <ol class="note-list">
-  ${(review.confirmed || []).sort((a, b) => ({ high: 0, medium: 1, low: 2 }[a.severity] - { high: 0, medium: 1, low: 2 }[b.severity]) || a.file.localeCompare(b.file)).map(f => `<li class="note ${esc(f.severity)}">
+  ${(review.confirmed || []).sort((a, b) => ((a.fixed?1:0)-(b.fixed?1:0)) || ({ high: 0, medium: 1, low: 2 }[a.severity] - { high: 0, medium: 1, low: 2 }[b.severity]) || a.file.localeCompare(b.file)).map(f => `<li class="note ${esc(f.severity)}${f.fixed ? ' fixed' : ''}">
     <span class="sev">${SEV[f.severity] || f.severity}</span>
     <a class="ref" href="#f-${esc(f.file.replace(/\W/g, ''))}" data-open="${esc(f.file)}">${esc(f.file.slice(0, 2))} · ${esc(f.group)}</a>
-    <strong>${esc(f.title)}</strong>
+    <strong>${f.fixed ? '<em class="done">반영</em> ' : ''}${esc(f.title)}</strong>
     <p>${esc(f.detail)}</p>
   </li>`).join('\n')}
   </ol>
@@ -89,6 +89,7 @@ figcaption{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:
 .note.high{border-left-color:var(--red)} .note.medium{border-left-color:var(--amber)} .note.low{border-left-color:var(--muted)}
 .note .sev{grid-area:sev;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em}
 .note.high .sev{color:var(--red)} .note.medium .sev{color:var(--amber)}
+.note.fixed{opacity:.72} .note .done{font-style:normal;font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 6px;margin-right:6px}
 .note .ref{grid-area:ref;font-size:13px;text-decoration:none;font-weight:600}
 .note strong{grid-area:title;font-weight:600}
 .note p{grid-area:detail;margin:0;color:var(--muted);font-size:13.5px;max-width:70ch}
