@@ -33,8 +33,8 @@
     o.editableFacilityObject = true;
     o.facilityCategory = '공공 복합문화시설';
     o.facilityDistrict = '와우리';
-    o.facilitySummary = '도서관과 청소년문화의집이 같은 외관을 공유하는 복합건물입니다.';
-    o.facilityActivity = '공용 현관에서 1·2층 도서관 또는 3층 청소년문화의집을 선택합니다.';
+    o.facilitySummary = '도서관과 청소년문화의집이 같은 외관을 함께 쓰는 복합건물이에요.';
+    o.facilityActivity = '공용 현관에서 1·2층 도서관 또는 3층 청소년문화의집을 골라요.';
     o.infoLines = [o.facilitySummary, o.facilityActivity];
     o.interactionAnchorX = 0.5; o.interactionAnchorY = 1.05;
     o.labelAnchorX = 0.5; o.labelAnchorY = -0.05;

@@ -60,12 +60,16 @@
       facility_national_sports: { id:'facility_national_sports', officialName:'화성국민체육센터', displayName:'화성국민체육센터', regionId:'donghwa', category:'public_sports', tier:'A',
         address:'화성시 봉담읍 동화길 18', summary:'수영장과 다양한 체육시설을 이용할 수 있는 국민체육센터',
         activities:['운동 페이스 체험'], repeatService:'max_hp_boost', stampId:'stamp_national_sports', verificationStatus:'VERIFIED_PUBLIC', verifiedAt:'2026-07-31' },
-      facility_citizen_campus: { id:'facility_citizen_campus', officialName:'화성시민캠퍼스·화성시 생활문화창작소', displayName:'화성시민캠퍼스·생활문화창작소', regionId:'suyeong', category:'public_culture', tier:'A',
+      facility_citizen_campus: { id:'facility_citizen_campus', officialName:'화성시민캠퍼스·화성시 생활문화창작소', displayName:'화성시민캠퍼스·생활문화창작소', regionId:'donghwa',   /* (v399e·B9) 실제 배치 = 동화리(211) — 0109 TARGETS 와 일치 */ category:'public_culture', tier:'A',
         address:'화성시 봉담읍 효행로 212', summary:'만들기·전시·생활문화를 체험할 수 있는 복합 평생학습 공간',
         activities:['만들기·전시·생활문화 체험'], repeatService:'craft_boost', stampId:'stamp_citizen_campus', verificationStatus:'VERIFIED_PUBLIC', verifiedAt:'2026-07-31' },
-      facility_green_center: { id:'facility_green_center', officialName:'화성그린환경센터 주민편익시설', displayName:'화성그린환경센터 주민편익시설', regionId:'suyeong', category:'public_sports', tier:'A',
+      facility_green_center: { id:'facility_green_center', officialName:'화성그린환경센터 주민편익시설', displayName:'화성그린환경센터 주민편익시설', regionId:'sang',   /* (v399e·B9) 실제 배치 = 상리(213) */ category:'public_sports', tier:'A',
         address:'화성시 봉담읍 하가등안길 100', summary:'암벽·수영·헬스 등 운동시설을 갖춘 주민편익시설',
-        activities:['암벽·균형·운동 체험'], repeatService:'defense_boost', stampId:'stamp_green_center', verificationStatus:'VERIFIED_PUBLIC', verifiedAt:'2026-07-31' }
+        activities:['암벽·균형·운동 체험'], repeatService:'defense_boost', stampId:'stamp_green_center', verificationStatus:'VERIFIED_PUBLIC', verifiedAt:'2026-07-31' },
+      /* (v399e·B9) 수영리 장 조건 시설 — 종전엔 0099 가 런타임에 끼워 넣었다(수영리 맵에는 공공시설이 없어 시민캠퍼스·그린환경센터를 빌려 쓰던 것을 정리) */
+      facility_suyeong_pharmacy: { id:'facility_suyeong_pharmacy', officialName:'수영약국', displayName:'수영약국', regionId:'suyeong', category:'safety_hub', tier:'A',
+        address:'화성시 봉담읍 수영리', summary:'수영리 생활권의 약국. 안전 상비약과 응급 안내를 받을 수 있는 4장 거점 시설',
+        activities:['안전 상비약 안내', '다친 곳 응급 처치 상담', '안전지킴이집 역할 안내'], repeatService:'full_heal_save', stampId:'stamp_suyeong_pharmacy', verificationStatus:'PENDING_LOCAL', verifiedAt:'2026-08-05' }
     },
     HAZARD_DEFINITIONS: {
       hazard_trash:      { id:'hazard_trash',      name:'쓰레기·오염',        safeAction:'위험물을 구분하고 담당자에게 알린다',                    shadow:'쓰레기 그림자',   reward:'기초 정화 기능' },
@@ -165,9 +169,9 @@
   // (v273) 기획서 §11 — 지역 장 완료 조건·안전 조각·노선 해금 체인
   window.BD_REGISTRY_CHAPTERS = {
     wawoo:   { regionId:'wawoo',   stampAnyOf:['facility_youth_house','facility_wawoo_library'],           hazardStages:[1,2,212], fragmentId:'fragment_wawoo',   unlocksRegion:'sang',    doneName:'와우리' },
-    sang:    { regionId:'sang',    stampAnyOf:['facility_bongdam_library','facility_youth_playground_bongdam'], hazardStages:[3,213], fragmentId:'fragment_sang',    unlocksRegion:'donghwa', doneName:'상리·봉담2지구' },
-    donghwa: { regionId:'donghwa', stampAnyOf:['facility_children_culture','facility_national_sports'],    hazardStages:[4,211],   fragmentId:'fragment_donghwa', unlocksRegion:'suyeong', doneName:'동화리' },
-    suyeong: { regionId:'suyeong', stampAnyOf:['facility_citizen_campus','facility_green_center'],         hazardStages:[5,210],   fragmentId:'fragment_suyeong', unlocksRegion:null,      doneName:'수영리·외곽' }
+    sang:    { regionId:'sang',    stampAnyOf:['facility_bongdam_library','facility_youth_playground_bongdam','facility_green_center'], hazardStages:[3,213], fragmentId:'fragment_sang',    unlocksRegion:'donghwa', doneName:'상리·봉담2지구' },
+    donghwa: { regionId:'donghwa', stampAnyOf:['facility_children_culture','facility_national_sports','facility_citizen_campus'], hazardStages:[4,211],   fragmentId:'fragment_donghwa', unlocksRegion:'suyeong', doneName:'동화리' },
+    suyeong: { regionId:'suyeong', stampAnyOf:['facility_suyeong_pharmacy'],                                  hazardStages:[5,210],   /* (v399e·B9) 시민캠퍼스·그린환경센터는 동화리·상리 시설 */   fragmentId:'fragment_suyeong', unlocksRegion:null,      doneName:'수영리·외곽' }
   };
   window.BD_Chapter = {
     _purifiedInStages: function (sids) {

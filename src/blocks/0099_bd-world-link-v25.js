@@ -195,9 +195,11 @@
     log('hazards');
     return true;
   }
+  /* (v399e) window.STAGES 는 늘 undefined(0017 의 top-level const) 라 이 함수가 한 번도 돌지 않았다 → 구맵 1 의 보스 사본이 남아
+     BD_ensureQuestHazards 의 «어느 스테이지에든 있으면 복구 안 함» 가드에 걸려 웹판 212 에 최종 보스가 영영 생기지 않았다(완주 런 no-guide). */
   function stripLegacyBoss() {
     try {
-      var st = window.STAGES && STAGES[1];
+      var st = typeof STAGES !== 'undefined' && STAGES[1];
       if (st && Array.isArray(st.objects)) {
         var n0 = st.objects.length;
         st.objects = st.objects.filter(function (o) { return !(o && o.hazardId === 'final_boss_1'); });
@@ -221,7 +223,7 @@
         });
         STATE._pharmCfg = true;
       }
-      var st = window.STAGES && STAGES[210];
+      var st = typeof STAGES !== 'undefined' && STAGES[210];
       if (st && Array.isArray(st.objects)) st.objects.forEach(function (o) {
         if (o && o.facilityId === 'suyeong_pharmacy' && o.conceptLandmark) { o.majorFacility = true; o.visualOnly = false; }
       });

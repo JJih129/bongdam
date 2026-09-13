@@ -15,7 +15,7 @@
       window.fadeToStage = function(sid, x, y, ms){
         try{
           // 구맵 1은 신맵 도입 전의 잔재 — 신맵이 있으면 와우리로 돌린다
-          if (Number(sid) === 1 && window.STAGES && STAGES[212]){
+          if (Number(sid) === 1 && typeof STAGES !== 'undefined' && STAGES[212]){
             try{ console.info('[v139] 구맵(1) 진입 차단 → 와우리(212)로 이동'); }catch(e){}
             return orig(212, 0.216, 0.336, ms || 700);
           }

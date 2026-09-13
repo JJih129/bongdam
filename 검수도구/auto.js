@@ -129,6 +129,28 @@ module.exports = (h, L) => {
       }
       if (b.dlg) { await h.page.keyboard.press('Space'); await h.wait(350); continue; }
       if (b.state === 'player') {
+        // (v399e) 새 배지 스킬 실습 튜토 — 담이가 «직접 한 번 써 봐요! 「X」 를 골라 주세요» 라고 하면
+        //  실제 플레이어처럼 [E] 카드 메뉴에서 그 스킬을 고른다 (기본 공격만 반복하면 90초 타임아웃까지 교착)
+        const tut = await h.page.evaluate(() => {
+          if (String(window.__bdTutStepId || '') !== 'newskill_try') return null;
+          const hud = document.getElementById('bd-dami-hud');
+          const m = ((hud && hud.textContent) || '').match(/「([^」]+)」/);
+          return m ? m[1] : '';
+        }).catch(() => null);
+        if (tut !== null) {
+          const picked = await h.page.evaluate((want) => {
+            const on = e => { const cs = getComputedStyle(e); const r = e.getBoundingClientRect(); return cs.display !== 'none' && r.height > 2; };
+            let menu = document.getElementById('hsr-skill-menu');
+            if (!menu || !on(menu)) { const btn = document.querySelector('.hsr-act.hsr-skill'); if (btn && on(btn)) btn.click(); menu = document.getElementById('hsr-skill-menu'); }
+            if (!menu) return 'no-menu';
+            const cards = [...menu.querySelectorAll('button')].filter(x => !x.disabled && !/닫기/.test(x.textContent || ''));
+            if (!cards.length) return 'no-card';
+            const c = cards.find(x => want && (x.textContent || '').includes(want)) || cards[cards.length - 1];
+            c.click(); return (c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 20);
+          }, tut);
+          say('    ⚔ 튜토 실습 → 「' + tut + '」 ' + picked);
+          await h.wait(900); continue;
+        }
         const clicked = await h.page.evaluate(() => {
           const on = e => { const cs = getComputedStyle(e); const r = e.getBoundingClientRect(); return cs.display !== 'none' && r.height > 2; };
           const list = [...document.querySelectorAll('.hsr-act')].filter(e => on(e) && !e.disabled && !e.classList.contains('disabled') && !e.classList.contains('hsr-lock'));

@@ -4,7 +4,7 @@
    구맵용 현지 오브젝트가 남아 있어 흐름과 어긋났다. 신맵에서는 문자·오브젝트 모두 차단한다. */
 (function(){
   'use strict';
-  function newMap(){ try{ return !!(window.STAGES && STAGES[212] && STAGES[213]); }catch(e){ return false; } }
+  function newMap(){ try{ return !!(typeof STAGES !== 'undefined' && STAGES[212] && STAGES[213]); }catch(e){ return false; } }
 
   /* ① 문자·팁 차단 — 제목/본문에 '현지'가 들어간 안내는 띄우지 않는다 */
   var tries = 0;

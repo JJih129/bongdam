@@ -22,15 +22,15 @@
         id: 'wawoo_library',
         label: '화성시립 봉담와우도서관 (1·2층)',
         category: '공공 도서관',
-        summary: '와우리 215 복합건물의 1·2층 도서관입니다.',
-        activity: '열람실과 디지털자료실, 도서관 프로그램을 이용합니다.'
+        summary: '와우리 215 복합건물의 1·2층 도서관이에요.',
+        activity: '열람실과 디지털자료실, 도서관 프로그램을 이용해요.'
       },
       {
         id: 'wawoo_youth_house',
         label: '화성시 봉담청소년문화의집 (3층)',
         category: '청소년 문화시설',
-        summary: '같은 복합건물 3층에 있는 청소년문화의집입니다.',
-        activity: '동아리실·연습실·청소년 휴게공간을 이용합니다.'
+        summary: '같은 복합건물 3층에 있는 청소년문화의집이에요.',
+        activity: '동아리실·연습실·청소년 휴게공간을 이용해요.'
       }
     ],
     citizen_campus: [
@@ -38,22 +38,22 @@
         id: 'citizen_campus_main',
         label: '화성시민캠퍼스',
         category: '공공 교육·문화시설',
-        summary: '동화리 11-13의 시민 학습·전시 거점입니다.',
-        activity: '야외공원·운동장·전시공간을 이용합니다.'
+        summary: '동화리 11-13의 시민 학습·전시 거점이에요.',
+        activity: '야외공원·운동장·전시공간을 이용해요.'
       },
       {
         id: 'living_culture_workshop',
         label: '화성시 생활문화창작소',
         category: '공공 생활문화시설',
-        summary: '시민캠퍼스와 같은 부지에서 운영되는 생활문화창작소입니다.',
-        activity: '생활문화 제작·창작 프로그램을 이용합니다.'
+        summary: '시민캠퍼스와 같은 부지에서 운영되는 생활문화창작소예요.',
+        activity: '생활문화 제작·창작 프로그램을 이용해요.'
       },
       {
         id: 'citizen_campus_book_cafe',
         label: '화성시민캠퍼스 북카페',
         category: '공공 북카페',
-        summary: '화성시민캠퍼스 안의 자유이용 북카페입니다.',
-        activity: '독서와 휴식을 즐깁니다.'
+        summary: '화성시민캠퍼스 안의 자유이용 북카페예요.',
+        activity: '독서와 휴식을 즐겨요.'
       }
     ],
     bongdam_library: [
@@ -61,15 +61,15 @@
         id: 'bongdam_library_main',
         label: '화성시립 봉담도서관',
         category: '공공 도서관',
-        summary: '샘마을1길 8-4의 봉담 메인 도서관입니다.',
-        activity: '어린이자료실·종합자료실·열람실을 이용합니다.'
+        summary: '샘마을1길 8-4의 봉담 메인 도서관이에요.',
+        activity: '어린이자료실·종합자료실·열람실을 이용해요.'
       },
       {
         id: 'hope_cafe',
         label: '희망카페 (봉담도서관점)',
         category: '사회적 카페',
-        summary: '봉담도서관 안에서 시니어클럽이 운영하는 카페입니다.',
-        activity: '도서관 이용 중 음료와 휴식을 즐깁니다.'
+        summary: '봉담도서관 안에서 시니어클럽이 운영하는 카페예요.',
+        activity: '도서관 이용 중 음료와 휴식을 즐겨요.'
       }
     ]
   };
@@ -851,7 +851,7 @@
     const options = buildModalShell(
       landmark,
       landmark.label,
-      '같은 외관과 공용 현관을 사용하는 복합건물입니다. 이용할 시설을 선택하세요.'
+      '같은 외관과 공용 현관을 함께 쓰는 복합건물이에요. 이용할 시설을 골라 주세요.'
     );
     entries.forEach(function (entry) {
       const button = document.createElement('button');
