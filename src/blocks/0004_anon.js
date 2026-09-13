@@ -17,7 +17,7 @@
     }catch(e){}
     return false;
   };
-  window.BD_GAME_VERSION = 'v399';   // (v270) 기획서 P0 — 파일 버전과 동기
+  window.BD_GAME_VERSION = 'v400';   // (v270) 기획서 P0 — 파일 버전과 동기
   window.BD_SAVE_VERSION = 4;   // (v270) 기획서 §21 — 시설/안전/이동/스토리 진행 필드 추가
 
   // ═══════════════════════════════════════════════════════════════

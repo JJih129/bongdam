@@ -46,10 +46,15 @@ function expectHz(sid, hid) { const o = (J.stages[sid].objects || []).find(x => 
   const pairs = await ev(p, `(function(){var o={};[212,213,211,210].forEach(function(s){o[s]=BD_hzQuestMap(s).map(function(m){return m.npc+'→'+m.id});});return JSON.stringify(o);})()`);
   ok(/서연→ow213_bottle_1/.test(pairs) && /재현→ow211_graffiti_1/.test(pairs) && /은지 어머니→ow210_streetlight_1/.test(pairs) && /박 반장→ow212_smoke_1/.test(pairs), '부탁 짝(hzTarget) 유지', pairs.slice(0, 200));
   /* 위험요소 중심 = 저장본 cx,cy */
-  for (const [sid, hid] of [['212', 'ow212_kickboard_1'], ['213', 'ow213_bottle_1'], ['211', 'ow211_noise_1'], ['210', 'ow210_crack_1']]) {
+  for (const [sid, hid] of [['212', 'ow212_kickboard_1'], ['213', 'ow213_bottle_1'], ['213', 'ow213_glass_1'], ['211', 'ow211_noise_1'], ['210', 'ow210_crack_1']]) {
     const e = expectHz(sid, hid), r = R[sid] && R[sid].hz[hid];
     ok(!!(e && r) && near(e.x, r.x, 0.006) && near(e.y, r.y, 0.006), '위험요소 위치 = 에디터 ' + hid, r ? `runtime ${r.x.toFixed(3)},${r.y.toFixed(3)} vs json ${e.x.toFixed(3)},${e.y.toFixed(3)}` : 'missing');
   }
+  /* (v400 1c) 상리 깨진 유리 — 왼쪽 벽에서 0.05 안쪽으로 옮긴 뒤 0174 클램프에 안 걸리고 발밑이 통행 가능한가 */
+  await ev(p, `fadeToStage(213,0.5,0.5,200)`); await p.waitForTimeout(2600);
+  const glass = await ev(p, `(function(){var o=(STAGES[213].objects||[]).find(function(x){return x&&x.hazardId==='ow213_glass_1'});if(!o)return 'none';var cx=o.rx+o.rw/2,fy=o.ry+o.rh;return JSON.stringify({cx:+cx.toFixed(3),rx:+o.rx.toFixed(3),sq:!!o.hzRectV147,foot:!!_collidesAt(cx,fy+0.01),side:!!_collidesAt(cx+0.04,fy+0.01)});})()`);
+  ok(/"sq":true/.test(glass) && /"foot":false/.test(glass) && /"side":false/.test(glass) && Number((glass.match(/"rx":([0-9.]+)/)||[])[1]) > 0.02, '상리 깨진 유리 — 벽에서 떨어져 통행 가능(클램프 없음)', glass);
+  await ev(p, `fadeToStage(212,0.5,0.55,200)`); await p.waitForTimeout(2200);
   /* 보스 위치 (최종장 시뮬레이션) */
   await ev(p, `(function(){var Q=window.QUESTS||window.BD_QUESTS;BD.questIdx=Q.findIndex(function(q){return q.id==='final'});try{BD_ensureQuestHazards();}catch(e){}})()`); await p.waitForTimeout(1500);
   const boss = await ev(p, `(function(){var b=(STAGES[212].objects||[]).find(function(o){return o&&o.isBoss});return b?JSON.stringify({x:b.rx+b.rw/2,y:b.ry+b.rh/2}):'none';})()`);

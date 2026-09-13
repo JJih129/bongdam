@@ -15,6 +15,8 @@ const SUITES = [
   { id: 'wp5',       cmd: ['s_wp5_v399.cjs', '--url=' + URL],       pass: /전부 통과/ },
   { id: 'reviewfix', cmd: ['s_reviewfix_v399.cjs', '--url=' + URL], pass: /전부 통과/ },
   { id: 'batch6',    cmd: ['s_batch6_v399.cjs', '--url=' + URL],    pass: /전부 통과/ },
+  { id: 'polish3',   cmd: ['s_polish3_v400.cjs', '--url=' + URL],   pass: /전부 통과/ },
+  { id: 'batch7',    cmd: ['s_batch7_v400.cjs', '--url=' + URL],    pass: /전부 통과/ },
   { id: 'pcfix',     cmd: ['s_pcfix_v399.cjs'],                     pass: /전부 통과/ },
 ];
 let fails = 0; const rows = []; const t0 = Date.now();

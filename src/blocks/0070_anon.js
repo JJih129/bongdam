@@ -25,7 +25,7 @@
     btn.classList.add('bd-guide-pulse');
     var r = btn.getBoundingClientRect();
     var d = tip();
-    d.textContent = '✨ [정화 스티커 Q] 를 눌러 위험 요소를 정화해요!';   /* (v79) 실제 버튼명·콘셉트에 맞춤 (구: 정화 공격/몬스터) */
+    d.textContent = '✨ [정화 스티커 Q]를 눌러 위험 요소를 정화해요!';   /* (v79) 실제 버튼명·콘셉트에 맞춤 (구: 정화 공격/몬스터) */
     d.style.display = 'block';
     d.style.left = Math.round(r.left + r.width/2) + 'px';
     /* (v147) -46px 은 «당신의 턴! 아래 버튼으로 행동을 선택하세요» 줄과 같은 높이라

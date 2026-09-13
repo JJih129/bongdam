@@ -340,7 +340,7 @@
       '<div class="bd-pc-row"><span>🖥 UI 크기</span><span class="seg">' +
         ['auto', '90', '100', '115', '130'].map(function (v) { return '<button type="button" data-uis="' + v + '"' + (cur === v ? ' class="on"' : '') + '>' + (v === 'auto' ? '자동' : v + '%') + '</button>'; }).join('') + '</span></div>' +
       '<div class="bd-pc-row"><span>🧭 길안내</span><button type="button" id="bd-pc-guide"' + (guideOn ? ' class="on"' : '') + '>' + (guideOn ? '켜짐' : '꺼짐') + '</button></div>' +
-      '<div class="bd-pc-row"><span>📖 튜토리얼 다시 보기</span><button type="button" id="bd-pc-tuto">새 게임에서 다시</button></div>';
+      '<div class="bd-pc-row"><span>📖 튜토리얼 다시 보기</span><button type="button" id="bd-pc-tuto">다시 보기</button></div>';
     if (closeBtn && closeBtn.parentNode === box) box.insertBefore(wrap, closeBtn); else box.appendChild(wrap);
     wrap.querySelectorAll('[data-uis]').forEach(function (b) {
       b.onclick = function () {

@@ -21,6 +21,9 @@
         }catch(e){}
         if (!names.length) return;
         var uniq = names.filter(function(v,i,a){ return a.indexOf(v)===i; });
+        /* (v400) 이름 집합이 원문과 같으면 원문의 서술 순서를 지킨다 — 짝 고정(hzTarget) 순서가 바뀌어도 «서연·순임 할머니·재이» 를 유지 */
+        var cur = (q.desc.match(/주민\(([^)]*)\)/) || [])[1];
+        if (cur && cur.split('·').length === uniq.length && uniq.every(function(n){ return cur.split('·').indexOf(n) >= 0; })) return;
         /* (v399e) 문장 전체를 1장 형식으로 덮지 않고 괄호 안 이름만 바꾼다 — 2~4장의 장별 서술(공원길·아이들이 다니는 거리·어두운 귀갓길)이 지워지던 문제 */
         var want = /주민\([^)]*\)/.test(q.desc)
           ? q.desc.replace(/주민\([^)]*\)/, '주민(' + uniq.join('·') + ')')

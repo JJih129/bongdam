@@ -758,7 +758,7 @@ window.BD_openQuestLog = function(){
   // 우측: 상세 (초기엔 첫 퀘스트)
   const rightHtml = '<div class="bd-qlog2-right" id="bd-qlog2-detail"></div>';
 
-  box.innerHTML = '<div class="bd-qlog2-header"><span class="bd-qlog2-htitle">📖 진행 중</span>'
+  box.innerHTML = '<div class="bd-qlog2-header"><span class="bd-qlog2-htitle">📋 임무</span>'   /* (v400 검수) HUD 버튼명과 같게 — «진행 중»만으론 임무 창인 줄 모른다 */
     + '<button class="bd-qlog2-close" onclick="document.getElementById(\'bd-questlog-modal\').classList.remove(\'show\')">✕</button></div>'
     + '<div class="bd-qlog2-main">' + leftHtml + rightHtml + '</div>';
   modal.innerHTML = '';
@@ -787,7 +787,7 @@ window.BD_selectQuest = function(idx){
   let rewardHtml = '';
   const rewards = [];
   if(rw.lv) rewards.push({ic:'⭐', v:'Lv.'+rw.lv});
-  if(rw.card) rewards.push({ic:'🗂', v:'카드'});
+  if(rw.card) rewards.push({ic:'🎴', v:'카드'});   /* (v400 검수) 🗂 는 윈도우에서 뜯긴 블록처럼 보여 카드로 안 읽힌다 */
   if(rw.skill) rewards.push({ic:'🏅', v:'스킬'});
   if(rewards.length){
     rewardHtml = '<div class="bd-qlog2-reward-label">임무 완료 보상:</div><div class="bd-qlog2-rewards">';
@@ -1900,7 +1900,7 @@ function openEquipModal(){
     }).join(' ');
   };
   modal.innerHTML = '<div class="bd-modal-box">'
-    + '<div class="bd-modal-title">🎒 장비 (주인공 전용)</div>'
+    + '<div class="bd-modal-title">🔧 장비</div>'   /* (v400 검수) 가방(🎒)과 같은 아이콘이라 헷갈림 · «(주인공 전용)» 은 뜻이 모호 */
     + '<div class="bd-equip-row"><span class="bd-equip-ic">🏅</span><span class="bd-equip-nm">배지 — 사용할 스킬 결정<br><b>'+skName+'</b> <small style="color:#9fb3d1">(전투 준비 화면에서 교체)</small></span></div>'
     + '<div class="bd-equip-row"><span class="bd-equip-ic">🛡</span><span class="bd-equip-nm">보호구<br>'+optRow('protector',protOpts)+'</span></div>'
     + '<div class="bd-equip-row"><span class="bd-equip-ic">🎁</span><span class="bd-equip-nm">기념품<br>'+optRow('memento',memoOpts)+'</span></div>'

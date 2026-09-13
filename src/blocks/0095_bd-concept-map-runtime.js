@@ -514,7 +514,7 @@
     let direction = '—';
     let distanceMeters = null;
     let distanceText = '목적지 미지정';
-    let routeText = action;
+    let routeText = '주변을 둘러봐요';   /* (v400 검수) 목적지가 없을 때 긴 action 문장이 나침반 칸에서 말줄임으로 잘리고 아래 칸과 중복됐다 */
     if (target) {
       const dx = target.x - Number(heroX);
       const dy = target.y - Number(heroY);
