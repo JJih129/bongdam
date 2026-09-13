@@ -56,9 +56,9 @@
     { sid: 212, id: 'ow_npc_eunji', name: '은지', asset: 'culture_npc_02', x: 0.43, y: 0.49, region: 'wawoo',   /* (v399) 0.392,0.48 → 약국 문(0.336,0.457) 위에 서 있어 F 가 대화로 새고 완주 런이 멈추던 문제 */
       before: ['안녕하세요, 지킴이! 저는 은지예요. 이 앞 아파트에 살아요.', '이 동네는 사람도 많고 길도 넓어서, 늘 조금씩 신경 쓰이는 게 생겨요.'],
       after: ['길이 훨씬 깨끗해졌어요! 고마워요, 지킴이님!', '이제 도서관 가는 길도 무섭지 않아요.'] },
-    { sid: 213, id: 'ow_npc_dohyun', name: '사서 도현', asset: 'culture_npc_05', x: 0.243, y: 0.166, region: 'sang',   /* (v399e) 에디터 저장본 위치(도서관 앞) — 종전 0.33,0.272 */
-      before: ['봉담도서관 사서 도현이에요. 1·2층이 도서관, 3층이 청소년문화의집이에요.', '조용히 공부하거나 책 읽기 좋은 곳이니 언제든 들러요.'],
-      after: ['공원길이 안전해졌네요. 이용객들도 마음 놓고 다니겠어요. 고마워요!'] },
+    { sid: 213, id: 'ow_npc_dohyun', name: '사서 도현', asset: 'culture_npc_05', x: 0.243, y: 0.166, region: 'sang', mapGuide: true,   /* (v399e) 에디터 저장본 위치(도서관 앞). 부탁 대신 «지도 담당자»(📖) — 시설 방문 트랙을 설명하는 유일한 인물 */
+      before: ['봉담도서관 사서 도현이에요. 지도를 채우러 왔죠? 이 동네 시설 3곳에 들르면 지도가 채워져요.', '도서관부터 들어와 봐요. 문 앞에서 F를 누르면 카드가 생기고, 지도에 색이 켜져요.', '📍 화살표가 아직 안 가 본 시설을 가리켜 줄 거예요.'],
+      after: ['상리 지도를 다 채웠네요! 공원길도 안전해졌고요. 고마워요, 지킴이님.', '다음 동네에서도 시설에 꼭 들러 봐요. 지도는 들를수록 쓸모가 생겨요.'] },
     { sid: 213, id: 'ow_npc_seoyeon', name: '서연', asset: 'culture_npc_03', x: 0.651, y: 0.318, region: 'sang', hzTarget: 'ow213_bottle_1',   /* (v399e) 세아 전화 «서연이 … 술병» 과 짝 고정 + 에디터 저장본 위치(술병 골목). 종전 0.044,0.516 은 거리 짝이 재이·도현에게 밀려 부탁이 없었고 0121 화살표가 영영 서연을 가리켰다 */
       before: ['안녕! 나 서연이야. 방과 후엔 거의 이 공원에서 놀아.', '지킴이가 자주 들러 주면 다들 좋아할 거야!'],
       after: ['공원이 다시 밝아진 것 같아! 고마워, 지킴이!'] },
@@ -163,6 +163,7 @@
       rx: sz.rx, ry: sz.ry, rw: sz.rw, rh: sz.rh, label: '주민 · ' + n.name,
       resident: true, residentId: n.id, npcName: n.name, npcLines: n.before.slice(),
       hzTarget: n.hzTarget || undefined,   /* (v399) 고정 짝 */
+      bdMapGuide: n.mapGuide || undefined,   /* (v399e) 📖 지도 담당자 표시(0114 마커) */
       bdLinkRegion: n.region, hidden: false, locked: false };
   }
 

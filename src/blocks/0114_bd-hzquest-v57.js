@@ -370,10 +370,11 @@
       var sid = Number(currentStage); if (SIDS.indexOf(sid)<0) return;
       try{ if (window.BD_regionLocked && BD_regionLocked(sid)) return; }catch(eR2){}   // (v75)
       var roles = npcRoles(sid);
-      roles.forEach(function(r){
-        var mark = null, color = null;
-        if (r.thanks){ mark = '?'; color = 'rgba(140,255,180,.95)'; }
-        else if (r.offer){ mark = '❗'; color = 'rgba(255,216,77,.95)'; }
+      /* (v399e) 부탁이 없는 지도 담당자(bdMapGuide)는 📖 로 표시 — 상리 사서 도현 */
+      var marks = roles.map(function(r){ return { npc: r.npc, mark: r.thanks ? '?' : (r.offer ? '❗' : null), color: r.thanks ? 'rgba(140,255,180,.95)' : 'rgba(255,216,77,.95)' }; });
+      try{ (stage.objects||[]).forEach(function(o){ if (o && o.resident && o.bdMapGuide && !o.hidden && !marks.some(function(m){ return m.npc === o; })) marks.push({ npc:o, mark:'📖', color:'rgba(150,210,255,.95)' }); }); }catch(eMG){}
+      marks.forEach(function(r){
+        var mark = r.mark, color = r.color;
         if (!mark) return;
         var o = r.npc;
         var x = toScreenX(o.rx + (o.rw||0)/2, canvas);

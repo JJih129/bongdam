@@ -1046,7 +1046,15 @@ function bdQuestProgress(){
   renderQuestHud();
   // (v220) 중간 정화는 짧은 배너로만 — 컷신 없이 탐색 흐름 유지
   if(o.cur < o.need){
-    try{ bdToast('✨ 그림자가 흩어졌다! (' + o.cur + '/' + o.need + ')'); }catch(e){}
+    /* (v399e) 지도 % 체계(v287)에서는 «57/100» 이 아니라 «지도 57% — 부탁 2/3 · 시설 0/3» 로 무엇이 남았는지 보여 준다 */
+    try{
+      var __rid = { ch1:'wawoo', ch2:'sang', ch3:'donghwa', ch4:'suyeong' }[q.id];
+      var __nm = { ch1:'와우리', ch2:'상리', ch3:'동화리', ch4:'수영리' }[q.id];
+      var __mp = (__rid && window.BD_MapProgress) ? BD_MapProgress.region(__rid) : null;
+      if (o.need === 100 && __mp && __mp.req && __mp.visit)
+        bdToast('🗺️ ' + __nm + ' 지도 ' + __mp.pct + '% — 부탁 ' + __mp.req.cur + '/' + __mp.req.max + ' · 시설 ' + __mp.visit.cur + '/' + __mp.visit.max);
+      else bdToast('✨ 그림자가 흩어졌다! (' + o.cur + '/' + o.need + ')');
+    }catch(e){}
   }
   if(o.cur >= o.need){
     // 단계 완료 → 보상 지급
@@ -1175,21 +1183,13 @@ function grantReward(q){
   const doneScene = { prologue:'ch1_intro', ch1:'ch1_done', ch2:'ch2_done', ch3:'ch3_done', ch4:'ch4_done', final:'final_done' }[q.id];
   // 다음 단계로
   if(BD.questIdx < QUESTS.length-1){ BD.questIdx++; }
-  // ── (v160) 동료 합류 연출 + 배지 통신 서브퀘 자동 수락 ──
+  // ── (v399e) 친구 3인 연락처 교환 — 구 «파티에 합류했다» 토스트(v160, 동료 시스템은 v239 폐지)가 장 전환마다 그대로 떠 있었다 ──
   try{
-    const _joinLines = {
-      sea:    ['🎮 세아가 파티에 합류했다!', '세아: "겜에서 배운 대로… 버프는 내가 뿌릴게! 대신 룰렛이라 뭐가 나올진 몰라, 헤헤."'],
-      jaei:   ['🔍 재이가 파티에 합류했다!', '재이: "사건 현장은 관찰이 절반이야. 약점은 내가 밝혀낼게. …키 얘기는 하지 말고."'],
-      jaehyun:['🧢 재현이가 파티에 합류했다!', '재현: "…남 일 아니니까. 뒤는 내가 막을게."'],
-    };
     Object.keys(window.BD_PARTY||{}).forEach(function(id){
       const k = window.BD_PARTY[id];
       if(k.joinAfterQuestIdx === BD.questIdx){
-        const L = _joinLines[id] || ['🤝 '+k.name+'가 파티에 합류했다!'];
-        setTimeout(function(){ bdToast(L[0]); }, 6200);
-        if(L[1]) setTimeout(function(){ bdToast(L[1]); }, 8600);
-        // (v72) 합류 = 함께 다니는 사이 → 연락처도 자연스럽게 교환 (문자 도착의 전제)
-        setTimeout(function(){ try{ if(window.BD_addContact) BD_addContact(k.name); }catch(e){} }, 9600);
+        setTimeout(function(){ bdToast('📱 ' + k.name + '와 연락처를 주고받았어요 — 무슨 일 생기면 전화가 와요'); }, 6200);
+        setTimeout(function(){ try{ if(window.BD_addContact) BD_addContact(k.name); }catch(e){} }, 6400);
       }
     });
     // (v72) 구 '배지 통신 부탁'·'주민 심부름' 자동 수락 제거 —
@@ -2293,11 +2293,16 @@ const SCENARIO = {
     { n:'문화의집 선생님', t:'네가 한 건 싸움이 아니라 치우기였어. 그래서 더 오래 갈 거고.' },
     { n:'나', t:'저 혼자 한 건 아니에요. 은지도, 세아도, 재이도, 재현이도, 하늘 씨도, 도윤 약사님도… 다들 먼저 말을 걸어 줬어요.' },
     { n:'나', t:'말해 주는 사람이 있으면 보이더라고요. 안 보이면 그냥 지나쳤을 것들이.' },
+    /* (v399e) 친구 3인이 이름으로만 언급되던 엔딩 — 한 줄씩 직접 말한다 */
+    { n:'세아', t:'야, 봤지? 다음엔 내가 먼저 알아챌 거야. 소문은 내가 제일 빠르니까.' },
+    { n:'재이', t:'…사건 종결. 보고서 마지막 줄엔 네 이름을 적어 두지.' },
+    { n:'재현', t:'…수고했다. 두 번 말 안 한다.' },
     { n:'문화의집 선생님', t:'그게 지킴이야. 대단한 힘이 아니라, 먼저 알아채고 먼저 손을 대는 것.' },
     { n:'문화의집 선생님', t:'그동안 모은 카드로 "봉담 안전 지도"가 완성됐어. 어디가 안전하고, 어디를 더 살펴야 하는지 한눈에 보일 거야.' },
     { n:'문화의집 선생님', t:'많이 돌아다녔나 보네. 배지가 처음보다 훨씬 반짝이는 것 같아.' },
     { n:'나', t:'봉담에 갈 수 있는 좋은 곳이 생각보다 정말 많았어요. 도움이 필요할 때 어디로 가야 하는지도 알게 됐고요.' },
     { n:'문화의집 선생님', t:'그걸 알게 됐다면 배지를 준 보람이 있네.' },
+    { n:'문화의집 선생님', t:'수고했으니 3층 PC존이랑 노래연습실에서 놀다 가. 오늘부터 열어 둘게.' },   /* (v399e) 엔딩 후 자유 탐험의 목적지 */
     { n:'담이', t:'저희 둘만 아는 비밀도 생겼고요.' },
     { n:'나', t:'응. 앞으로도 잘 부탁해, 담이.' },
     { n:'담이', t:'지도에 아직 빈칸이 남았다면 언제든 같이 채우러 가요. 새로운 장소와 이야기는 계속 생기니까요.' },

@@ -341,7 +341,7 @@
           window.BD_DAMI.show('\uC704\uCABD \uBA54\uB274\uC5D0\uC11C \uC7A5\uBE44\u00B7\uCE74\uB4DC\u00B7\uC548\uC804\uC9C0\uB3C4\uB97C \uBCFC \uC218 \uC788\uC5B4\uC694', { face:'base', once:'dami_menu', channel:'tut', when:function(){ return Number(currentStage) === CULT; } }); }catch(e){}
         setTimeout(function(){
           say('\uBB38\uD654\uC758\uC9D1 \uC120\uC0DD\uB2D8', [
-            '조심히 다녀와. 아, 돌아오면 PC존이랑 노래연습실도 들렀다 가.',   /* (v399) 존댓말 1줄 이탈 → 반말 통일, PC존 안내 이동 */
+            '조심히 다녀와. 지도를 다 채우고 돌아오면 PC존이랑 노래연습실도 열어 줄게.',   /* (v399) 존댓말 1줄 이탈 → 반말 통일, PC존 안내 이동 */
           ], function(){
             if (window.BD_DAMI) {
               window.BD_DAMI.show('\uC704\uCABD \uC5D8\uB9AC\uBCA0\uC774\uD130\uB97C \uD0C0\uACE0 \uB0B4\uB824\uAC00\uC694. \uC81C\uAC00 \uAE38\uC744 \uC54C\uB824\uB4DC\uB9B4\uAC8C\uC694!', { face:'base', channel:'tut', when:function(){ return Number(currentStage) === CULT; } });   /* (v374) 이미 나갔으면 생략 */

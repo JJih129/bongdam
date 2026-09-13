@@ -82,6 +82,14 @@
     if (window.__bdArcadeOpen) return;
     if (e.key !== 'f' && e.key !== 'F') return;
     if (!near() || uiBusy()) return;
+    /* (v399e) 엔딩 후 자유 탐험 보상 — 지도를 완성하기 전엔 잠근다 */
+    if (!(window.BD && BD.gameCleared)){
+      try{
+        var __g = window.__bdArcadeGateAt || 0;
+        if (Date.now() - __g > 3500){ window.__bdArcadeGateAt = Date.now(); if (window.BD_DAMI && BD_DAMI.show) BD_DAMI.show('여긴 봉담 안전지도를 완성하면 열려요. 먼저 동네를 돌아보고 와요!', { face:'base' }); }
+      }catch(eG){}
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); return;
+    }
     /* (v147) 바로 옆에 주민이 서 있으면 대화를 먼저 양보한다.
        이 두 핸들러는 window 캡처라 주민 대화(document 캡처)보다 «먼저» 실행된다.
        그래서 PC존·노래방 반경 안에 서 있는 밴드부 4명 중 3명은

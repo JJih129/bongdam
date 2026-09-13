@@ -66,11 +66,15 @@
         var q = Q.find(function(x){ return x && x.id === qid; });
         if (q && q.objectives && q.objectives[0]){
           if (q.objectives[0].need !== 100) q.objectives[0].need = 100;
+          /* (v399e) 항목별 진행을 문구에 — «57/100» 만으로는 부탁을 끝내고도 왜 안 끝나는지 알 수 없었다 */
           var want = NAMES[sid] + ' 안전지도 채우기 (M 지도)';
-          if (q.objectives[0].t !== want) q.objectives[0].t = want;
           try{
             var __RID = { 212:'wawoo', 213:'sang', 211:'donghwa', 210:'suyeong' }[sid];
             var __mp = window.BD_MapProgress ? BD_MapProgress.region(__RID) : null;
+            if (__mp && __mp.req && __mp.visit) want = NAMES[sid] + ' 안전지도 채우기 — 부탁 ' + __mp.req.cur + '/' + __mp.req.max + ' · 시설 ' + __mp.visit.cur + '/' + __mp.visit.max;
+          }catch(eW){}
+          if (q.objectives[0].t !== want) q.objectives[0].t = want;
+          try{
             if (__mp && q.objectives[0].cur < 100){
               var __cur = Math.min(__mp.pct, 99);
               if (q.objectives[0].cur !== __cur) q.objectives[0].cur = __cur;

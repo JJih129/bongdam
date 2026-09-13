@@ -195,7 +195,7 @@
           if (!mp || mp.pct < 100) return;
           // 장 완료 → 안전 조각 + 노선 해금 (§11 보상)
           sp.collectedSafetyFragmentIds.push(ch.fragmentId);
-          try { if (typeof bdToast === 'function') bdToast('🧩 ' + ch.doneName + ' 지역 안전 조각 획득! (' + sp.collectedSafetyFragmentIds.length + '/4)'); } catch (e2) { }
+          try { if (typeof bdToast === 'function') bdToast('🧩 ' + ch.doneName + ' 지역 안전 조각 획득! (' + sp.collectedSafetyFragmentIds.length + '/4)' + (ch.unlocksRegion ? ' · 다음 동네 🚌 버스가 열렸어요' : ' · 이제 마지막 정리를 시작할 수 있어요')); } catch (e2) { }
           if (ch.unlocksRegion) {
             setTimeout(function () { try { window.BD_Bus && BD_Bus.unlockRegion(ch.unlocksRegion); } catch (e3) { } }, 1600);
           } else {
