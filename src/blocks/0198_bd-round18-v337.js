@@ -112,7 +112,11 @@
         var mc = String(cs.color).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
         if (mc){
           var lum2 = (+mc[1] + +mc[2] + +mc[3]) / 3;
-          if (lum2 < 95) el.style.setProperty('color', '#e6ebf7', 'important');
+          /* (v399e 검수) 카드 «그림»(0091 아이보리 카드 아트) 위의 글자는 바탕이 어두워지지 않는데 글자만 밝게 뒤집혀
+             수첩의 획득 카드 제목·설명이 안 보였다 — 조상 중 배경 이미지가 있고 단색 배경이 없는 요소 안이면 건드리지 않는다 */
+          var onArt = false;
+          try{ var ae = el; while (ae && ae !== root.parentElement){ var ac = getComputedStyle(ae); var abg = String(ac.backgroundColor).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?/); if (abg && (abg[4] === undefined || parseFloat(abg[4]) > 0.4)) break; if (ac.backgroundImage && ac.backgroundImage !== 'none' && /url\(/.test(ac.backgroundImage)){ onArt = true; break; } ae = ae.parentElement; } }catch(eA){}
+          if (lum2 < 95 && !onArt) el.style.setProperty('color', '#e6ebf7', 'important');
         }
       });
     }catch(e){}
