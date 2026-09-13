@@ -79,11 +79,14 @@
     'html.bd-pc #dialogue-name{left:4%!important}' +
     /* A-7 설정 추가 행 */
     '#bd-settings-modal .bd-pc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;color:#cbd5e1;font-size:13px}' +
+    /* (v399e 검수) 라벨 «UI 크기»가 열 폭 부족으로 한 글자씩 세로 배열되던 문제 */
+    '#bd-settings-modal .bd-pc-row>span:first-child{white-space:nowrap;flex:0 0 auto}' +
+    '#bd-settings-modal .bd-pc-row .seg button{white-space:nowrap}' +
     '#bd-settings-modal .bd-pc-row .seg{display:flex;gap:4px}' +
     '#bd-settings-modal .bd-pc-row button{padding:6px 9px;border-radius:7px;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);color:#e7ecf5;font-size:12px}' +
     '#bd-settings-modal .bd-pc-row button.on{background:rgba(255,213,74,.2);border-color:#ffd54a;color:#ffd54a}' +
     '#bd-pc-help{position:fixed;inset:0;z-index:3700;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55)}' +
-    '#bd-pc-help .box{background:rgba(15,19,32,.98);border:1px solid #c8902a;border-radius:14px;padding:18px 22px;width:min(560px,92vw);color:#e7ecf5;font-size:14px;line-height:1.75}' +
+    '#bd-pc-help .box{background:rgba(15,19,32,.98);border:1px solid #c8902a;border-radius:14px;padding:18px 22px;width:min(560px,92vw);color:#e7ecf5;font-size:14px;line-height:1.75;word-break:keep-all;overflow-wrap:anywhere}' +
     '#bd-pc-help kbd{display:inline-block;min-width:22px;text-align:center;padding:1px 6px;border-radius:5px;background:#1d2333;border:1px solid #556;color:#ffd86b;font-weight:800;font-size:12px;margin:0 2px}' +
     '#bd-pc-help h4{margin:10px 0 4px;color:#ffd54a;font-size:14px}' +
     '#bd-pc-help button{width:100%;margin-top:14px;padding:9px;border-radius:8px;cursor:pointer;background:rgba(255,213,74,.15);border:1px solid #ffd54a;color:#ffd54a;font-weight:700}';
@@ -460,7 +463,9 @@
       t.appendChild(b);
     } catch (e) {}
   }
-  var tick = function () { boot(); keybarTick(); floorTick(); decorateSettings(); titleBadge(); };
+  /* (v399e 검수) 타이틀 화면에서 연 설정에는 «← 메인 메뉴로 돌아가기»가 의미 없다(붉은 초기화 버튼 옆이라 위험 동작처럼 읽힘) — 열릴 때마다 판정 */
+  function settingsMainBtn() { try { var m = $('bd-settings-modal'); if (!m || !vis(m)) return; var mainBtn = m.querySelector('#bd-set-main'); if (!mainBtn) return; var t = $('bd-title-screen'); var titleOn = !!(t && vis(t)); mainBtn.style.display = titleOn ? 'none' : ''; } catch (e) {} }
+  var tick = function () { boot(); keybarTick(); floorTick(); decorateSettings(); settingsMainBtn(); titleBadge(); };
   if (window.BD_addTick) BD_addTick(tick, 400); else setInterval(tick, 400);
 
   window.BD_PC399 = { fine: FINE, topModal: topModal, panelOpen: panelOpen, help: helpModal, hot: function () { return hot; } };

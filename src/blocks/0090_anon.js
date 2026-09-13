@@ -233,7 +233,7 @@ window.BD_ASSET_CONFIG = {
         + '</div>';
     }).join('');
     return '<h3>📔 안전 수첩</h3>'
-      + '<div class="bd-cdx-sub">정화한 위험요소 ' + got + ' / ' + vs.length
+      + '<div class="bd-cdx-sub">배운 안전 지식 ' + got + ' / ' + vs.length   /* (v399e 검수) 리포트의 «정화한 위험요소 n/13»(개수)과 다른 척도(종류) — 이름을 구분 */
       + ' — 봉담을 지키며 배운 안전 지식이 쌓여요</div>'
       + '<div class="bd-cdx-grid">' + rows + '</div>'
       + '<button id="bd-codex-close" type="button">닫기 (ESC)</button>';

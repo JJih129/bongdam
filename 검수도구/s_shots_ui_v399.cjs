@@ -81,12 +81,14 @@ async function gotoObj(p, sid, pred, dy = 0.02) {
   await p.keyboard.press('f'); await p.waitForTimeout(900);
   await snap(p, 'dialogue_teacher', '대화창 — 문화의집 선생님 (배지 수여)', '프롤로그');
   await pressUntilDialogueGone(p, 16);
-  await p.waitForTimeout(800);
-  await snap(p, 'dami_hud', '담이 말풍선 (좌하단 HUD)', '프롤로그');
 
   /* ── 필드(와우리) — 튜토리얼 스킵 ── */
   await ev(p, `(function(){['bd_dami_awake','bd_tut2_done','bd_dami_tutorial_done','bd_battle_tutorial_done','bd_battle_tutorial_seen','bd_shop_tutorial_done_v75','bd_map_tuto_done'].forEach(function(k){localStorage.setItem(k,'1')});try{BD.gold=(BD.gold||0)+300;}catch(e){}fadeToStage(212,0.33,0.40,200);})()`);
-  await p.waitForTimeout(2500); await pressUntilDialogueGone(p, 10); await closeAll(p);
+  await p.waitForTimeout(2500); await pressUntilDialogueGone(p, 10);
+  for (let i = 0; i < 10; i++) { const g = await ev(p, `!!window.__bdGuideOpen`); if (g !== true) break; await p.keyboard.press('Space'); await p.waitForTimeout(400); }
+  await p.waitForTimeout(600);
+  await snap(p, 'dami_hud', '담이 말풍선 (좌하단 HUD) — 와우리 도착 직후', '프롤로그');
+  await closeAll(p);
   await snap(p, 'field_wawoo', '필드 — 와우리 (상단 메뉴·키바·미니 HUD·길안내 화살표)', '필드·HUD');
   /* ── 중반 진행 상태 시드 (빈 메뉴가 아니라 실제 쓰임새가 보이게) ── */
   const seeded = await ev(p, `(function(){try{BD.items={snack:3,drink:2,potion:1};BD.gold=805;BD.unlockedSkills=['sticker','fan','wash'];BD.equippedSkill='fan';`+
@@ -94,6 +96,7 @@ async function gotoObj(p, sid, pred, dy = 0.02) {
     `['trash','bicycle','bottle','cigarette'].forEach(function(v){try{BD_codexRecord(v);}catch(e){}});`+
     `try{BD.greetedResidents=['bdnpc_seah','ow_npc_parkguard'];}catch(e){}`+
     `try{['facility_wawoo_library','facility_youth_house','facility_bongdam_library'].forEach(function(f){BD_Facility.completeActivity(f,'district_visit');});}catch(e){}`+
+    `try{localStorage.setItem('bd_hzquest_v57',JSON.stringify({ow212_kickboard_1:'a'}));}catch(e){}`+
     `try{BD.questIdx=1;}catch(e){}try{if(typeof bdSave==='function')bdSave();}catch(e){}return 'ok';}catch(e){return 'ERR '+e.message;}})()`);
   log('시드: ' + seeded); await p.waitForTimeout(1200); await closeAll(p);
   await p.keyboard.press('m'); await p.waitForTimeout(900);
@@ -107,7 +110,7 @@ async function gotoObj(p, sid, pred, dy = 0.02) {
   log('가방 탭: ' + JSON.stringify(tabs));
   if (Array.isArray(tabs)) for (let i = 0; i < tabs.length && i < 6; i++) {
     await ev(p, `(function(){var t=document.querySelectorAll('.inv-tab')[${i}];if(t)t.click();})()`); await p.waitForTimeout(500);
-    await ev(p, `(function(){var c=document.querySelector('.inv-card,.inv-item,[data-inv-id]');if(c)c.click();})()`); await p.waitForTimeout(400);
+    await ev(p, `(function(){var c=document.querySelector('#inv-overlay .inv-slot, .inv-slot');if(c)c.click();})()`); await p.waitForTimeout(400);
     await snap(p, 'bag_tab' + i, '가방 — 탭 「' + tabs[i] + '」 (첫 칸 클릭 상세)', '가방');
   }
   await closeAll(p);
@@ -135,7 +138,7 @@ async function gotoObj(p, sid, pred, dy = 0.02) {
   /* ── 시설 창·상점 ── */
   await gotoObj(p, 212, `function(o){return o&&/와우약국/.test(o.label||'')&&o.interactionX!=null}`, 0.012);
   await p.keyboard.press('f'); await p.waitForTimeout(1000);
-  await snap(p, 'facility_pharmacy', '시설 창 — 와우약국 (안내·활동·쉬어 가기)', '시설');
+  await snap(p, 'facility_pharmacy', '시설 창 — 와우약국 (물건 구경하기·시설 설명·닫기)', '시설');
   await ev(p, `(function(){var m=document.getElementById('bd-district-facility-modal');var b=m&&[...m.querySelectorAll('button')].find(function(x){return /물건 구경/.test(x.textContent||'')});if(b)b.click();else if(window.BD_openShop)BD_openShop();})()`);
   await p.waitForTimeout(1000);
   await snap(p, 'shop', '상점 — 물건 구경하기', '시설');
@@ -170,7 +173,10 @@ async function gotoObj(p, sid, pred, dy = 0.02) {
   await p.keyboard.press('Escape'); await p.waitForTimeout(300);
   await snap(p, 'battle_flee_hint', '전투 — ESC 1회: 물러나기 안내 (2회 확인)', '전투');
   await p.keyboard.press('Escape'); await p.waitForTimeout(1500);
+  for (let i = 0; i < 6; i++) { const on = await ev(p, `!!(window.HSR&&HSR.active)`); if (on !== true) break; await ev(p, `(function(){try{var b=document.querySelector('.hsr-act.hsr-flee');if(b)b.click();}catch(e){}})()`); await p.waitForTimeout(700); await ev(p, `(function(){try{var b=document.querySelector('.hsr-act.hsr-flee');if(b)b.click();}catch(e){}})()`); await p.waitForTimeout(1500); }
+  for (let i = 0; i < 10; i++) { const on = await ev(p, `!!(window.HSR&&HSR.active)`); if (on !== true) break; await p.keyboard.press('Space'); await p.waitForTimeout(500); }
   await pressUntilDialogueGone(p, 8); await closeAll(p);
+  log('전투 종료 확인: HSR.active=' + await ev(p, `!!(window.HSR&&HSR.active)`));
 
   /* ── 다른 리 ── */
   for (const [sid, nm, x, y] of [[213, '상리', 0.5, 0.5], [211, '동화리', 0.5, 0.5], [210, '수영리', 0.5, 0.55]]) {
