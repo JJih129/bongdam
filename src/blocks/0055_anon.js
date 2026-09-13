@@ -366,7 +366,7 @@ function bdResidentContextLines(){
   try{
     const h = new Date().getHours();
     if(h >= 5 && h < 11)       out.push('좋은 아침이에요! 아침 공기가 참 맑네요.');
-    else if(h >= 11 && h < 14) out.push('점심은 챙겨 먹었어요? 밥심으로 다니는 거예요.');
+    else if(h >= 11 && h < 14) out.push('점심은 챙겨 먹었어요? 잘 먹어야 힘이 나요.');
     else if(h >= 14 && h < 18) out.push('오후에도 부지런히 다니네요. 대단해요!');
     else if(h >= 18 && h < 21) out.push('벌써 저녁이네요. 어두워지기 전에 조심히 다녀요.');
     else                       out.push('이 시간까지 동네를 지켜줘서 고마워요. 밤길 조심해요!');
@@ -375,7 +375,7 @@ function bdResidentContextLines(){
     if(window.BD){
       const purified = Object.keys(BD.purified||{}).length;
       if(BD.gameCleared)      out.push('봉담이 완전히 안전해졌다면서요? 우리 동네의 영웅이에요!');
-      else if(purified >= 7)  out.push('동네가 몰라보게 안전해졌어요. 지킴이님 소문이 자자해요!');
+      else if(purified >= 7)  out.push('동네가 몰라보게 안전해졌어요. 지킴이님 소문이 다 났어요!');
       else if(purified >= 3)  out.push('요즘 거리가 조금씩 깨끗해지는 게 느껴져요. 지킴이님 덕분이죠?');
       else if(purified >= 1)  out.push('누가 위험한 걸 치우고 다닌다던데… 혹시 지킴이님이에요?');
       else                    out.push('요즘 길에 위험한 게 많아서 걱정이에요. 조심히 다녀요.');
@@ -767,15 +767,27 @@ document.addEventListener('keydown', function(e){
             if(typeof playerGold !== 'undefined'){
               playerGold += 5;
               if(typeof window.BD_save === 'function') window.BD_save();
-              setTimeout(function(){ if(typeof window.BD_toast==='function') window.BD_toast('💰 ' + (function(n){ n=n||'주민'; return /님$/.test(n)? n+'이' : n+'님이'; })(r.npcName) + ' 고마움의 표시로 5G를 주셨어요!'); }, 1600);
+              setTimeout(function(){ if(typeof window.BD_toast==='function') window.BD_toast('💰 ' + (function(n){ n=n||'주민'; return /(님|어머니|아버지|할머니|할아버지|선생님|반장|아저씨|아주머니)$/.test(n)? n+'이' : n+'님이'; })(r.npcName) + ' 고마움의 표시로 5G를 주셨어요!'); }, 1600);
             }
-            // (v163+) 동네 주민 10명 전원과 대화 완료 → 히든 카드 "봉담청소년문화의집" 획득
+            // (v163+/v399) 4개 리 주민 전원과 대화 완료 → 히든 카드 "봉담청소년문화의집" 획득
             try{
-              const totalResidents = (typeof RESIDENTS!=='undefined') ? RESIDENTS.length : 10;
-              if(BD.greetedResidents.length >= totalResidents && Array.isArray(BD.cards) && !BD.cards.includes('봉담청소년문화의집')){
-                BD.cards.push('봉담청소년문화의집');
+              /* (v399) v396 이후 RESIDENTS 가 비어 분모 0 → 첫 대화(프롤로그 선생님)에 즉시 지급되던 문제. 4개 리 주민 전원 포함 검사로 */
+              const _allIds = [];
+              try{
+                [210,211,212,213].forEach(function(sid){
+                  const s = (typeof STAGES!=='undefined') ? STAGES[sid] : null;
+                  (s && Array.isArray(s.objects) ? s.objects : []).forEach(function(o){
+                    if(!o || !o.resident || o.hidden || o._tut2npc || o._hyunji) return;
+                    const id = o.residentId || o.id || o.npcName;
+                    if(id && _allIds.indexOf(id) === -1) _allIds.push(id);
+                  });
+                });
+              }catch(e){}
+              const _allGreeted = _allIds.length > 0 && _allIds.every(function(id){ return BD.greetedResidents.indexOf(id) !== -1; });
+              if(_allGreeted && Array.isArray(BD.cards) && !BD.cards.includes('문화의집')){
+                BD.cards.push('문화의집');
                 if(typeof window.BD_save === 'function') window.BD_save();
-                setTimeout(function(){ if(typeof window.BD_toast==='function') window.BD_toast('🗂 동네 주민 모두와 인사했어요! 히든 카드 「봉담청소년문화의집」 획득!'); }, 3200);
+                setTimeout(function(){ if(typeof window.BD_toast==='function') window.BD_toast('🗂 동네 주민 모두와 인사했어요! 히든 카드 「문화의집」 획득!'); }, 3200);
                 setTimeout(function(){ if(typeof window.BD_subQuestProgress==='function') window.BD_subQuestProgress('sub_cards'); }, 3400);  // (v193 수정) 전역 미노출로 미동작하던 훅
               }
             }catch(e){}

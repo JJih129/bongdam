@@ -58,7 +58,7 @@ const SKILLS = [
   { id:'light',   name:'안전 점검 라이트',elem:'M', sp:1,  power:1.65, unlock:false,
     desc:'어두운 곳을 비춰 숨은 위험을 드러낸다 — 드러난 그림자는 힘을 잃는다 (빛 · 시설·파손에 강함)' },
   { id:'cheer',   name:'힘내라 봉담!', elem:'N', sp:1,  power:1.85, unlock:false,
-    desc:'주민들의 응원을 모아 내지르는 한마디 — 외면이 만든 그림자에 가장 아프다 (속성 없음)' },
+    desc:'주민들의 응원을 모아 내지르는 한마디 — 모른 척한 마음이 만든 그림자에 제일 잘 통한다 (속성 없음)' },
 ];
 // (v160) MP 시스템 제거 → 파티 공용 SP (전투 중에만 존재. 최대 5, 시작 3)
 //  기본 공격: SP +1 / 스킬: SP -1 / 아이템: 행동만 소비
@@ -435,7 +435,7 @@ function bdLoad(){
         }
       } catch(e){}
     }
-    if(Array.isArray(d.cards)) BD.cards=d.cards;
+    if(Array.isArray(d.cards)) BD.cards=d.cards.map(function(c){ return c==='봉담청소년문화의집' ? '문화의집' : c; }).filter(function(c,i,a){ return a.indexOf(c)===i; });   /* (v399) 구 세이브의 중복 카드명 승계 */
     if(typeof d.regionIdx==='number') BD.regionIdx=d.regionIdx;
     if(d.regionCleared && typeof d.regionCleared==='object') BD.regionCleared=d.regionCleared;
     if(d.equip && typeof d.equip==='object'){
@@ -798,7 +798,7 @@ window.BD_selectQuest = function(idx){
   document.querySelectorAll('.bd-qlog2-item').forEach(function(el){
     el.classList.toggle('sel', el.getAttribute('data-qidx')===String(idx));
   });
-  if(!entry){ detail.innerHTML = '<div class="bd-qlog2-empty2">진행 중인 임무가 없습니다.</div>'; return; }
+  if(!entry){ detail.innerHTML = '<div class="bd-qlog2-empty2">진행 중인 임무가 없어요.</div>'; return; }
   const q = entry.q;
   const o = q.objectives && q.objectives[0];
   const prog = o ? (Math.min(o.cur||0, o.need) + ' / ' + o.need) : '';
@@ -1199,7 +1199,7 @@ function grantReward(q){
   // ── (v160) 동료 합류 연출 + 배지 통신 서브퀘 자동 수락 ──
   try{
     const _joinLines = {
-      sea:    ['🎮 세아가 파티에 합류했다!', '세아: "겜에서 배운 대로… 버프는 제가 뿌릴게요! 대신 룰렛이라 뭐가 나올진 몰라요, 헤헤."'],
+      sea:    ['🎮 세아가 파티에 합류했다!', '세아: "겜에서 배운 대로… 버프는 내가 뿌릴게! 대신 룰렛이라 뭐가 나올진 몰라, 헤헤."'],
       jaei:   ['🔍 재이가 파티에 합류했다!', '재이: "사건 현장은 관찰이 절반이야. 약점은 내가 밝혀낼게. …키 얘기는 하지 말고."'],
       jaehyun:['🧢 재현이가 파티에 합류했다!', '재현: "…남 일 아니니까. 뒤는 내가 막을게."'],
     };
@@ -1252,7 +1252,7 @@ function grantReward(q){
   if(doneScene){
     // (v220) 구역당 마무리 컷신 1회만 — 다음 장 인트로는 자동 재생하지 않는다.
     //  다음 행선지는 각 마무리 대사의 마지막 줄(배지 통신)로만 안내하고, 이동은 플레이어가 직접 한다.
-    const chain = { ch1:['ch1_done'], ch2:['ch2_done'], ch3:['ch3_done'], ch4:['ch4_done'], prologue:['prologue_done'], final:['final_done'] }[q.id] || [doneScene];
+    const chain = { ch1:['ch1_done'], ch2:['ch2_done'], ch3:['ch3_done'], ch4:['ch4_done'], prologue:['prologue_done','ch1_intro'], final:['final_done'] }[q.id] || [doneScene];   /* (v399) ch1_intro 는 매핑만 있고 폴백이 죽어 있어 한 번도 재생되지 않았다 — 1장만 도입 컷신이 없던 원인 */
     const isFinal = (q.id === 'final');
     setTimeout(function(){
       // (v231) 정화 완료 결과창의 [확인]을 누른 뒤에 스토리가 이어지도록 대기
@@ -1634,7 +1634,7 @@ const REGIONS = [
     desc:'문화와 체험의 거리. 연기·소음(A) 위험 지대.' },
   { id:'suyeong',name:'수영리',   family:'dark',    facility:'안전지킴이집',
     desc:'안전하게 돌아가는 길. 어둠(C) 위험 구역.' },
-  { id:'house',  name:'문화의집', family:'dark',    facility:'봉담청소년문화의집',
+  { id:'house',  name:'문화의집', family:'dark',    facility:'문화의집',   /* (v399) 카드명 통일 */
     desc:'최종 복귀 지점. 쌓여있던 위험들과 대면.' },
 ];
 window.BD_REGIONS = REGIONS;
@@ -1652,7 +1652,7 @@ function clearRegion(){
   const r = currentRegion();
   if(BD.regionCleared[r.id]) return;
   BD.regionCleared[r.id] = true;
-  bdToast('✅ '+r.name+' 정화 완료! 다음 지역이 열렸습니다.');
+  bdToast('✅ '+r.name+' 정화 완료! 다음 동네가 열렸어요.');
   // 시설 카드 지급
   if(r.facility && !BD.cards.includes(r.facility)){
     BD.cards.push(r.facility);
@@ -1758,12 +1758,11 @@ window.BD_gainXp = gainXp;
 // 작업8: 시설 카드 수집 화면
 // =========================================================================
 const FACILITY_CARDS = {
-  '문화의집':      { region:'-', desc:'봉담청소년문화의집. 청소년의 안전한 배움과 놀이 공간.' },
+  '문화의집':      { region:'와우리', desc:'봉담청소년문화의집. 청소년의 안전한 배움과 놀이 공간 — 지킴이의 본거지.' },
   '봉담와우도서관':{ region:'와우리', desc:'조용히 책과 함께하는 지식의 안전지대.' },
   '봉담도서관':    { region:'상리', desc:'지역 주민 모두를 위한 열린 도서관.' },
   '어린이문화센터':{ region:'동화리', desc:'어린이 문화·체험 프로그램의 중심.' },
   '안전지킴이집':  { region:'수영리', desc:'위기 상황에 도움을 받을 수 있는 안전 거점.' },
-  '봉담청소년문화의집':{ region:'문화의집', desc:'봉담 안전 지도의 심장. 지킴이의 본거지.' },
   '봉담안전지도':  { region:'전지역', desc:'정화한 모든 시설을 이은 완성된 안전 지도!' },
 };
 window.BD_FACILITY_CARDS = FACILITY_CARDS;
@@ -2245,8 +2244,9 @@ const SCENARIO = {
   // 1장: 와우리
   ch1_intro: [
     { n:'', t:'— 와우리. 문화의집으로 가는 길. —' },
-    { n:'나', t:'(배지가 살짝 반응하네. 이 근처에 뭔가 있나 보다.)' },
-    { n:'나', t:'(❗ 표시가 있는 사람들에게 먼저 이야기를 들어보자.)' },
+    { n:'은지', t:'저기요… 저 길에 쓰레기가 너무 많아서 못 지나가겠어요.' },
+    { n:'담이', t:'저분, 아까부터 저기서 망설이고 계셨어요.', face:'worry' },
+    { n:'나', t:'(먼저 이야기부터 들어보자.)' },
   ],
   prologue_done: [
     { n:'담이', t:'봤죠? 그림자가 걷히니까 진짜로 깨끗해졌어요. 이게 정화예요!' },
@@ -2257,7 +2257,7 @@ const SCENARIO = {
   ch1_done: [
     { n:'', t:'— 세아와 함께 와우도서관에서 즐거운 오후를 보냈다. —' },
     { n:'담이', t:'잘했어요! "노트 부채질"을 배웠네요. 탁한 공기를 걷어내면 그 속에 뭉쳐 있던 그림자도 흩어져요.' },
-    { n:'담이', t:'…그리고요, 배지가 조금 따뜻해졌어요. 기분 탓일까요?', face:'base' }   /* (v370) 복선 1 */
+    { n:'담이', t:'…그리고요, 저 지금 조금 따뜻해요. 기분 탓일까요?', face:'base' }   /* (v370) 복선 1 */
   ],
   // 2장: 상리
   ch2_intro: [
@@ -2270,7 +2270,7 @@ const SCENARIO = {
     { n:'서연', t:'우와, 공원이 깨끗해졌어! 이제 저녁에도 놀 수 있겠다. 고마워!' },
     { n:'담이', t:'"물청소 정화"를 배웠어요! 더러워진 자리를 직접 씻어내면, 거기 붙어 있던 그림자도 함께 씻겨 나가요.' },
     { n:'담이', t:'이 동네는 이제 안심해도 되겠어요. 잠깐 숨 돌리고 가요!' },
-    { n:'담이', t:'가끔 배지가 혼자 깜빡여요. 뭘 가리키는진 아직 몰라요.', face:'worry' }   /* (v370) 복선 2 */
+    { n:'담이', t:'저요, 가끔 혼자 깜빡여요. 왜인지는 저도 몰라요.', face:'worry' }   /* (v370) 복선 2 */
   ],
   // 3장: 동화리
   ch3_intro: [
@@ -2283,7 +2283,7 @@ const SCENARIO = {
     { n:'하늘', t:'거리가 훨씬 깔끔해졌어요. 정말 고마워요!' },
     { n:'담이', t:'재현이, 걱정하는 거 맞죠? 티 났어요.', face:'proud' },   /* (v370) 상점 안내는 가게 튜토가 담당 — 담이는 이야기로 */
     { n:'담이', t:'거리에 아이들 웃음소리가 다시 들리네요. 잘하고 있어요!' },
-    { n:'담이', t:'…배지에 뭔가 모이고 있어요. 어디로 가는지는 아직 몰라요.', face:'worry' }   /* (v370) 복선 3 */
+    { n:'담이', t:'…제 안에 뭔가 모이고 있어요. 좋은 쪽인지는 모르겠어요.', face:'worry' }   /* (v370) 복선 3 */
   ],
   // 4장: 수영리
   ch4_intro: [
@@ -2295,7 +2295,7 @@ const SCENARIO = {
   ch4_done: [
     { n:'약사 도윤', t:'가로등이 다시 켜졌네요. 밤길이 한결 낫겠어요.' },
     { n:'담이', t:'"안전 점검 라이트"를 배웠어요! 어두워서 안 보이던 위험을 밝히면, 숨어 있던 그림자는 버티지 못해요.' },
-    { n:'담이', t:'어라…? 배지가 아까부터 자꾸 반짝여요. 문화의집 쪽인가….' }
+    { n:'담이', t:'어라…? 저 아까부터 자꾸 저쪽으로 당겨요. 문화의집 쪽이요.' }
   ],
   // 최종장: 문화의집 복귀
   final_intro: [
@@ -2777,7 +2777,7 @@ function showEnding(){
   const cardCells = BD.cards.map((name, i)=>{
     const info = (typeof FACILITY_CARDS!=='undefined' && FACILITY_CARDS[name]) || { region:'-', desc:'' };
     const icon = _ENDING_CARD_ICONS[name] || '🗂';
-    const hidden = (name==='봉담청소년문화의집') ? ' bd-end-card-hidden' : '';
+    const hidden = '';
     return '<div class="bd-end-card'+hidden+'" style="animation-delay:'+(0.9 + i*0.22)+'s">'
       + '<div class="bd-end-card-icon">'+icon+'</div>'
       + '<div class="bd-end-card-name">'+name+'</div>'
@@ -2793,7 +2793,7 @@ function showEnding(){
   }).join('');
   m.innerHTML='<div class="bd-modal-box" style="text-align:center;max-width:460px;">'
     + '<div class="bd-end-stage bd-end-title">🎉 봉담 안전 지도 완성!</div>'
-    + '<div class="bd-end-stage bd-end-sub">모든 위험을 정화하고 봉담을 안전하게 지켜냈습니다.<br>당신은 진정한 봉담문화의집 지킴이입니다.</div>'
+    + '<div class="bd-end-stage bd-end-sub">오늘 걸어 다닌 길이 전부 지도가 됐어요.<br>봉담청소년문화의집의 지킴이, 고마워요.</div>'
     + '<div class="bd-end-stage bd-end-cards">'+cardCells+'</div>'
     + '<div class="bd-end-stage bd-end-map">'+mapCells+'</div>'
     + '<div class="bd-end-stage bd-end-stats">획득 시설 카드 '+gotCards.length+'개 · Lv.'+BD.lv+'</div>'
@@ -2801,12 +2801,11 @@ function showEnding(){
         try{
           const totalCards = (typeof FACILITY_CARDS!=='undefined') ? Object.keys(FACILITY_CARDS).length : 7;
           const ownedCards = Array.isArray(BD.cards) ? BD.cards.length : 0;
-          const hasHidden = Array.isArray(BD.cards) && BD.cards.includes('봉담청소년문화의집');
-          let html = '<div class="bd-end-stage bd-end-extra" style="color:#cbd5e1;font-size:12px;margin-top:4px;">카드 수집 ' + ownedCards + '/' + totalCards + (hasHidden?' · 🗂 히든 카드 획득!':'') + '</div>';
+          let html = '<div class="bd-end-stage bd-end-extra" style="color:#cbd5e1;font-size:12px;margin-top:4px;">카드 수집 ' + ownedCards + '/' + totalCards + '</div>';
           if(ownedCards >= totalCards){
             html += '<div class="bd-end-stage bd-end-extra" style="color:#8effa0;font-size:13px;margin-top:8px;font-weight:bold;">🏅 완벽한 지킴이! 모든 시설 카드를 모았어요!</div>';
-          } else if(!hasHidden){
-            html += '<div class="bd-end-stage bd-end-extra" style="color:#94a3b8;font-size:11px;margin-top:6px;">💡 동네 주민 모두와 대화하면 히든 카드를 얻을 수 있어요.</div>';
+          } else {
+            html += '<div class="bd-end-stage bd-end-extra" style="color:#94a3b8;font-size:11px;margin-top:6px;">💡 시설을 방문하고 동네 주민 모두와 대화하면 카드가 늘어나요.</div>';
           }
           return html;
         }catch(e){ return ''; }

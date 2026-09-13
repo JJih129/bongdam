@@ -99,10 +99,10 @@
   var NEW_NPCS = [
     { sid:212, id:'bdnpc_seah',    asset:'npc_front_seah',    name:'세아', x:0.150, y:0.372, rh:0.0448,
       lines:['야! 여기서 보네. 나 세아! 앞으로 자주 보자!','이 동네 소문은 내가 제일 빨라. 궁금한 거 있으면 물어봐.'] },
-    { sid:212, id:'bdnpc_jaei',    asset:'npc_front_jaei',    name:'재이', x:0.186, y:0.384, rh:0.0448,
+    { sid:213, id:'bdnpc_jaei',    asset:'npc_front_jaei',    name:'재이', x:0.117, y:0.464, rh:0.0448,   /* (v399) 212→213: 에디터 배치(9/06) 위치. 212 는 0143 툼스톤 */
       lines:['…탐정 재이. 이 동네, 사건의 냄새가 난다.','수상한 건 전부 기록해 두고 있어. 너도 뭔가 보면 알려 줘.'] },
-    { sid:212, id:'bdnpc_jaehyun', asset:'npc_front_jaehyun', name:'재현', x:0.262, y:0.376, rh:0.0448,
-      lines:['…재현이다. 별일 없지?','위험한 데는 혼자 가지 마라. 걱정하는 건 아니고.'] },
+    { sid:211, id:'bdnpc_jaehyun', asset:'npc_front_jaehyun', name:'재현', x:0.209, y:0.576, rh:0.0448,   /* (v399) 212→211: 에디터 배치(9/06) 위치 */
+      lines:['…재현이야. 별일 없지?','위험한 데는 혼자 가지 마. 걱정하는 건 아니고.'] },
     { sid:101, id:'bdnpc_band_guitar', asset:'npc_front_band_guitar', name:'밴드부 기타 리아', x:0.435, y:0.800, rh:0.095,
       lines:['안녕! 우리 밴드부야. 지금 합주 준비 중이야~','새 합주곡이 정해지면 제일 먼저 들려줄게!'] },
     { sid:101, id:'bdnpc_band_bass', asset:'npc_front_band_bass', name:'밴드부 베이스 준', x:0.487, y:0.803, rh:0.095,

@@ -213,6 +213,12 @@ window.BD_ASSET_CONFIG = {
   function render() {
     var c = codex();
     var vs = variants();
+    /* (v399) 수첩 분모도 실제 배치된 변형만 — 리포트(0153)와 같은 기준. 배치 정보가 없으면 전체 */
+    try{
+      var placed = {};
+      [212,213,211,210].forEach(function(sid){ var st = (typeof STAGES!=='undefined') && STAGES[sid]; (st && st.objects || []).forEach(function(o){ if (o && o.interactable==='hazard' && !o.isBoss && o.hazardVariant) placed[o.hazardVariant==='dust' ? 'noise_bat' : o.hazardVariant] = 1; }); });
+      if (Object.keys(placed).length) vs = vs.filter(function(v){ return placed[v.id]; });
+    }catch(e){}
     var got = vs.filter(function (v) { return c[v.id]; }).length;
     var rows = vs.map(function (v) {
       var on = !!c[v.id];

@@ -76,7 +76,7 @@
     var label = String(shop.label || '가게');
     var ix = Number(shop.interactionX), iy = Number(shop.interactionY);
     // 골드 가드 — 간식(30G)을 못 사면 실습이 막힌다
-    try{ if (typeof playerGold !== 'undefined' && playerGold < 30){ playerGold += 50; setTimeout(function(){ try{ bdToast('💰 담이의 용돈 +50G — 가게에서 써 봐요!'); }catch(e){} }, 1500); } }catch(e){}
+    try{ if (typeof playerGold !== 'undefined' && playerGold < 30){ playerGold += 50; setTimeout(function(){ try{ bdToast('💰 선생님이 챙겨 주신 용돈 +50G — 가게에서 써 봐요!'); }catch(e){} }, 1500); } }catch(e){}
     var items0 = itemCount(), eq0 = equipCount(), bought = false;
 
     // 화살표(길안내) — 가게 문 앞. 튜토 종료 시 해제

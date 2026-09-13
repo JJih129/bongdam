@@ -12,13 +12,19 @@
     try{
       var pur = (window.BD && BD.purified) || {};
       s.purified = Object.keys(pur).filter(function(k){ return k.indexOf('final_boss')<0; }).length;
-      var seen = {};
+      var seen = {}, vset = {};
       [212,213,211,210].forEach(function(sid){
         var st = STAGES[sid]; if (!st) return;
         (st.objects||[]).forEach(function(o){
-          if (o && o.interactable==='hazard' && o.hazardId && !o.isBoss) seen[o.hazardId]=1; });
+          if (o && o.interactable==='hazard' && o.hazardId && !o.isBoss){
+            seen[o.hazardId]=1;
+            /* (v399) 배운 안전 지식 분모 = 실제 배치된 변형 수(sign_ghost 미배치 → 11). 0090 BD_codexRecord 와 같은 dust→noise_bat 정규화 */
+            var v = (o.hazardVariant === 'dust') ? 'noise_bat' : o.hazardVariant;
+            if (v && window.HAZARD_VARIANTS && HAZARD_VARIANTS[v]) vset[v]=1;
+          } });
       });
       s.hazardTotal = Object.keys(seen).length;
+      if (Object.keys(vset).length) s.codexTotal = Object.keys(vset).length;
     }catch(e){}
     try{ s.codex = Object.keys((BD.codex)||{}).length; }catch(e){}
     try{ s.cards = (BD_PROGRESS.facility.facilityStampIds||[]).length; }catch(e){}

@@ -1125,7 +1125,7 @@ window.BD_hsrUseItem = function(key){
   if(!ok) return;
   refreshHeroUI();
   if (typeof window.BD_updateMp === 'function') window.BD_updateMp();
-  say(key === 'snack' ? '🍪 간식을 먹었다! 체력을 회복했다.' : (key==='revive' ? '🚑 구급 배지로 동료를 일으켰다!' : '☕ 음료를 마셨다! 공용 SP가 2 회복됐다.'));
+  say(key === 'snack' ? '🍪 간식을 먹었다! 체력을 회복했다.' : (key==='revive' ? '🚑 구급 배지로 기운을 되찾았다!' : '☕ 음료를 마셨다! 시원하게 한 모금.'));
   if(isAlly) afterAllyAction(); else afterPlayerAction();
 };
 function setActionsEnabled(on){

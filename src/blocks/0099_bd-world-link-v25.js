@@ -70,7 +70,21 @@
       after: ['덕분에 밤길이 한결 안심돼요. 은지가 지킴이님 칭찬을 얼마나 하던지!'] },
     { sid: 210, id: 'ow_npc_doyun', name: '약사 도윤', asset: 'culture_npc_07', x: 0.876, y: 0.34, region: 'suyeong',
       before: ['수영약국 약사 도윤입니다. 다치면 참지 말고 바로 들러요.', '여름엔 더위 조심, 겨울엔 빙판 조심하고요.'],
-      after: ['요즘은 다쳐서 오는 분이 확 줄었어요. 지킴이님 덕분입니다!'] }
+      after: ['요즘은 다쳐서 오는 분이 확 줄었어요. 지킴이님 덕분입니다!'] },
+    /* (v399) v370 신규 주민 4명 — 지금까지 배치 JSON 에만 있어 웹판(JSON 을 읽지 않음)에는 존재하지 않았다.
+       좌표는 에디터 저장본(9/06) 중심점. hzTarget 은 0114 고정 짝 규칙(선택 위험요소도 부탁 대상에 포함). */
+    { sid: 212, id: 'ow_npc_parkguard', name: '박 반장', asset: 'npc_front_dohyun', x: 0.602, y: 0.377, region: 'wawoo', hzTarget: 'ow212_smoke_1',
+      before: ['단지 경비실 박 반장이야. 애들 등하교 시간엔 꼭 앞에 나와 있지.', '요즘 골목에 담배 피우는 사람이 있어서 영 신경 쓰여.'],
+      after: ['골목 공기가 다시 맑아졌어. 애들 지나가는 거 보니까 마음이 놓이네.'] },
+    { sid: 213, id: 'ow_npc_sunim', name: '순임 할머니', asset: 'npc_front_eunji_mother', x: 0.345, y: 0.701, region: 'sang', hzTarget: 'ow213_alley_1',
+      before: ['아이고, 배지 단 학생이구나. 이 공원은 내가 매일 걷는 데야.', '해만 안 지면 참 좋은 길인데… 저녁엔 무서워서 못 걷겠어.'],
+      after: ['저녁에도 걸을 만해졌어. 고맙다, 학생.'] },
+    { sid: 211, id: 'ow_npc_yeongja', name: '영자', asset: 'npc_front_haneul', x: 0.305, y: 0.311, region: 'donghwa', hzTarget: 'ow211_trash_1',
+      before: ['환경미화 영자예요. 이 광장은 내 담당이지.', '아침에 치워도 저녁이면 또 쌓여요. 누가 자꾸 두고 가나 봐.'],
+      after: ['오늘은 저녁에 와 봐도 깨끗하네. 덕분에 일이 반으로 줄었어.'] },
+    { sid: 210, id: 'ow_npc_junho', name: '준호', asset: 'npc_front_jaehyun', x: 0.589, y: 0.674, region: 'suyeong', hzTarget: 'ow210_alley_1',
+      before: ['어, 지킴이다! 나 준호. 학원 끝나고 집 가는 길이야.', '저 골목이 지름길인데 엄마가 어두우니까 다니지 말래.'],
+      after: ['이제 그 골목으로 다녀도 된대! 엄마도 허락했어.'] }
   ];
 
   var BUS = {
@@ -148,6 +162,7 @@
     return { _editorId: 'bdlink_' + n.id, type: 'prop', key: 'asset:' + n.asset, assetId: n.asset, customImage: true,
       rx: sz.rx, ry: sz.ry, rw: sz.rw, rh: sz.rh, label: '주민 · ' + n.name,
       resident: true, residentId: n.id, npcName: n.name, npcLines: n.before.slice(),
+      hzTarget: n.hzTarget || undefined,   /* (v399) 고정 짝 */
       bdLinkRegion: n.region, hidden: false, locked: false };
   }
 

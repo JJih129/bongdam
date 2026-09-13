@@ -5654,6 +5654,9 @@ function checkCyberPsycho() {
 //  업적 시스템
 // ═══════════════════════════════════════════════════════════
 
+/* (v399) 달성 불가 업적을 목록·총계에서 뺀다 — 대시(v199 제거)·일일 퀘스트(없음)·사이버 싸이코(하드웨어 폐지).
+   정의는 남겨 기존 저장의 achieveProgress 키와 호환한다. */
+const __BD_DEAD_ACH = { dash_first:1, dash_100:1, quest_first:1, quest_10:1, h_dash_500:1, h_quest_30:1, h_cyber_psycho:1 };
 const ACHIEVEMENTS = [
   // ── 탐험 ──
   { id:'first_step',  group:'탐험', icon:'👣', name:'첫 발걸음',     desc:'맵에서 처음으로 이동하기',              type:'walk',     target:1,     reward:'첫 발자국' },
@@ -5668,7 +5671,7 @@ const ACHIEVEMENTS = [
   // ── 생존 ──
   { id:'regen_first', group:'생존', icon:'💊', name:'회복의 기쁨',    desc:'처음으로 HP 회복하기',                  type:'regen',    target:1,     reward:'생존 본능' },
   { id:'regen_50',    group:'생존', icon:'💉', name:'불사신',         desc:'HP 총 50회 회복하기',                   type:'regen',    target:50,    reward:'회복 전문가' },
-  { id:'survive_dmg', group:'생존', icon:'🩹', name:'상처 입은 전사', desc:'피해를 처음으로 받기',                  type:'damage',   target:1,     reward:'용감한 자' },
+  { id:'survive_dmg', group:'생존', icon:'🩹', name:'첫 상처',         desc:'피해를 처음으로 받기',                  type:'damage',   target:1,     reward:'용감한 자' },
   // ── 성장 ──
   { id:'safety_lv3',  group:'성장', icon:'🛡️', name:'안전 수호자',    desc:'안전도 레벨 3 달성하기',                type:'safety_lv',target:3,    reward:'수호의 방패' },
   { id:'safety_lv5',  group:'성장', icon:'⚔️', name:'철벽 방어',      desc:'안전도 레벨 5 달성하기',                type:'safety_lv',target:5,    reward:'철벽의 수호자' },
@@ -5702,7 +5705,7 @@ HIDDEN_ACHIEVEMENTS.forEach(a => { achieveProgress[a.id] = 0; achieveDone[a.id] 
 // 업적 진행도 업데이트
 function achieveTrack(type, amount) {
   amount = amount || 1;
-  const allAchieves = [...ACHIEVEMENTS, ...HIDDEN_ACHIEVEMENTS];
+  const allAchieves = [...ACHIEVEMENTS, ...HIDDEN_ACHIEVEMENTS].filter(a => !__BD_DEAD_ACH[a.id]);
   allAchieves.forEach(a => {
     if (a.type !== type) return;
     if (achieveDone[a.id]) return;
@@ -5734,18 +5737,18 @@ function renderAchievePanel(targetId) {
   if (!panel) return;
   panel.innerHTML = '';
 
-  const total      = ACHIEVEMENTS.length + HIDDEN_ACHIEVEMENTS.length;
+  const total      = ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).length + HIDDEN_ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).length;
   const done       = [...ACHIEVEMENTS, ...HIDDEN_ACHIEVEMENTS].filter(a => achieveDone[a.id]).length;
   const hiddenDone = HIDDEN_ACHIEVEMENTS.filter(a => achieveDone[a.id]).length;
 
   // 요약
   const summary = document.createElement('div');
   summary.className = 'achieve-summary';
-  summary.textContent = `🏆 달성: ${done} / ${total}  (히든: ${hiddenDone} / ${HIDDEN_ACHIEVEMENTS.length})`;
+  summary.textContent = `🏆 달성: ${done} / ${total}  (히든: ${hiddenDone} / ${HIDDEN_ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).length})`;
   panel.appendChild(summary);
 
   // 일반 업적 그룹별
-  const groups = [...new Set(ACHIEVEMENTS.map(a => a.group))];
+  const groups = [...new Set(ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).map(a => a.group))];
   groups.forEach(group => {
     const groupWrap = document.createElement('div');
 
@@ -5754,7 +5757,7 @@ function renderAchievePanel(targetId) {
     groupTitle.textContent = `— ${group} —`;
     groupWrap.appendChild(groupTitle);
 
-    ACHIEVEMENTS.filter(a => a.group === group).forEach(a => {
+    ACHIEVEMENTS.filter(a => a.group === group && !__BD_DEAD_ACH[a.id]).forEach(a => {
       const prog = achieveProgress[a.id] || 0;
       const pct  = Math.min(100, Math.round(prog / a.target * 100));
       const done = achieveDone[a.id];

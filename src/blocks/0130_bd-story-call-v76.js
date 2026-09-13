@@ -10,7 +10,7 @@
     ch2: { done:'상리', caller:'재이', next:'동화리',
            friend:'재현', trouble:'벽에 지워지지 않는 낙서 때문에 혼자 애먹고 있다고' },
     ch3: { done:'동화리', caller:'재현', next:'수영리',
-           friend:'은지 어머니', trouble:'어두운 골목 때문에 아이 하교가 걱정된다고' },
+           friend:'은지 어머니', friendRef:'은지네 어머니', honor:true, trouble:'어두운 골목 때문에 은지 데리러 다니기가 무섭다고' },   /* (v399) «내 친구 은지 어머니» → «은지네 어머니가 … 하시더라고» */
     ch4: { done:'수영리', caller:'재이', next:null }
   };
   // (v76a) 한글 조사 자동 선택 — "상리으로", "서연이(가)" 같은 어색함 제거
@@ -89,7 +89,7 @@
     setTimeout(function(){
       say(s.caller, [
         '야, 뭐 해? 지금 혹시 도와줄 수 있어…?',
-        '내 친구 ' + josa(s.friend, '이', '가') + ' ' + s.next + '에서 ' + s.trouble + ' 하더라고.',
+        (s.friendRef ? s.friendRef + '가 ' : '내 친구 ' + josa(s.friend, '이', '가') + ' ') + s.next + '에서 ' + s.trouble + (s.honor ? ' 하시더라고.' : ' 하더라고.'),
         '너라면 어떻게든 해 줄 것 같아서. 부탁해도 될까?'
       ]);
     }, 9200);

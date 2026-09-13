@@ -186,7 +186,7 @@
     var learn = LEARN[v] || LEARN._default;
     var out = [];
     if (t && t.thank_pre) out.push(t.thank_pre);
-    out.push(head, '정말 고마워! 약소하지만 이거 받아 줘.', learn, nextHint(roles, r.key, isFriend(r.npc)));
+    out.push(head, '정말 고마워! 이거 받아 줘.', learn, nextHint(roles, r.key, isFriend(r.npc)));
     return out;
   }
 
