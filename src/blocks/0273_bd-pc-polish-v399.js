@@ -440,7 +440,27 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', boot);
   window.addEventListener('resize', syncZoomVar);
-  var tick = function () { boot(); keybarTick(); floorTick(); decorateSettings(); };
+  /* B-7(최소) — 클리어 세이브가 있으면 타이틀에 완주 표식. 저장 슬롯을 덮어쓰기 전에 «이미 한 번 완주했다»가 보이게 */
+  function titleBadge() {
+    try {
+      if (!onTitle()) return;
+      var t = $('bd-title-screen'); if (!t || $('bd-pc-clear')) return;
+      var cleared = !!(window.BD_PROGRESS && BD_PROGRESS.story && BD_PROGRESS.story.storyPhase === 'cleared');
+      /* 클리어 상태는 슬롯(fantasyRPG_save 의 auto/0~2, bongdam_guardian_slot_N)의 story 스냅샷에 남는다 — 아무 슬롯이든 하나면 표식 */
+      if (!cleared) {
+        try {
+          var keys = ['fantasyRPG_save', 'bongdam_guardian_v160', 'bongdam_guardian_slot_0', 'bongdam_guardian_slot_1', 'bongdam_guardian_slot_2'];
+          for (var i = 0; i < keys.length && !cleared; i++) { var raw = localStorage.getItem(keys[i]); if (raw && /"storyPhase":"cleared"/.test(raw)) cleared = true; }
+        } catch (e) {}
+      }
+      if (!cleared) return;
+      var b = document.createElement('div'); b.id = 'bd-pc-clear';
+      b.style.cssText = 'position:absolute;right:22px;bottom:16px;z-index:2;font-size:13px;font-weight:800;color:#ffe08a;background:rgba(10,14,26,.6);border:1px solid rgba(255,216,107,.5);border-radius:999px;padding:5px 12px;pointer-events:none';
+      b.textContent = '✔ 봉담 안전지도 완성 — 이어하기로 자유 탐험';
+      t.appendChild(b);
+    } catch (e) {}
+  }
+  var tick = function () { boot(); keybarTick(); floorTick(); decorateSettings(); titleBadge(); };
   if (window.BD_addTick) BD_addTick(tick, 400); else setInterval(tick, 400);
 
   window.BD_PC399 = { fine: FINE, topModal: topModal, panelOpen: panelOpen, help: helpModal, hot: function () { return hot; } };
