@@ -3298,7 +3298,7 @@ function renderMap(canvas) {
             ctx.fillStyle = '#fff';
             ctx.fillText(nm, dx + dw/2, sy - 6);
             try {
-              if (typeof window.BD_nearResident==='function' && window.BD_nearResident() === obj) {
+              if (typeof window.BD_nearResident==='function' && window.BD_nearResident() === obj && !((STAGES[currentStage]||{}).__districtWorldV24)) {   /* (v399e 검수) 신월드는 0181 태그로 */
                 ctx.fillStyle = '#ffd54a';
                 ctx.fillText('[F] 대화', dx + dw/2, sy - 22);
               }
@@ -3568,7 +3568,8 @@ function renderMap(canvas) {
       // 근처(상호작용 범위)에 있으면 [F] 조사 안내
       const _hdx = heroX - (obj.rx + (obj.rw||0)/2);
       const _hdy = heroY - (obj.ry + (obj.rh||0)/2);
-      if (Math.sqrt(_hdx*_hdx + _hdy*_hdy) <= 0.11) {
+      /* (v399e 검수) 신월드(4개 리)에서는 0181 점선 상자의 «F · 조사» 태그가 있어 캔버스 글자가 이름표와 겹쳐 둘 다 못 읽었다 */
+      if (Math.sqrt(_hdx*_hdx + _hdy*_hdy) <= 0.11 && !((STAGES[currentStage]||{}).__districtWorldV24)) {
         const fy = cy + rad + 18*currentScale;
         ctx.font = `bold ${Math.round(15*currentScale)}px sans-serif`;
         ctx.fillStyle = 'rgba(167,139,250,1)';
@@ -5035,10 +5036,10 @@ const ITEM_POOL = [
     price: 0, hidden:true, featured:true },
   { id:'gold_bookmark', tab:'misc', icon:'🎫', name:'도서관 문화상품권', desc:'사서 도현이 감사 인사로 챙겨준 문화상품권. 편의점이나 문화의집에서 쓸 수 있다.', price: 200, hidden:true },
   // (v240g) 학생 콘셉트 리뉴얼 — 회복은 실효과, 용품은 정직한 소품 설명 (RPG 잔재 제거)
-  { id:'rice_ball',   tab:'consumable', icon:'🍙', name:'삼각김밥',        desc:'HP를 20 회복합니다.',                    price: 15  },
-  { id:'hp_potion',   tab:'consumable', icon:'🥪', name:'든든 샌드위치',   desc:'HP를 50 회복합니다.',                    price: 30  },
-  { id:'bandage',     tab:'consumable', icon:'🩹', name:'반창고',          desc:'HP를 5 회복합니다.',                     price: 8   },
-  { id:'elixir',      tab:'consumable', icon:'🧋', name:'엄마표 홍삼 스틱', desc:'HP를 완전 회복합니다. 역시 엄마 최고.',   price: 150 },
+  { id:'rice_ball',   tab:'consumable', icon:'🍙', name:'삼각김밥',        desc:'체력을 20 회복해요.',                    price: 15  },
+  { id:'hp_potion',   tab:'consumable', icon:'🥪', name:'든든 샌드위치',   desc:'체력을 50 회복해요.',                    price: 30  },
+  { id:'bandage',     tab:'consumable', icon:'🩹', name:'반창고',          desc:'체력을 5 회복해요.',                     price: 8   },
+  { id:'elixir',      tab:'consumable', icon:'🧋', name:'엄마표 홍삼 스틱', desc:'체력을 모두 회복해요. 역시 엄마 최고.',   price: 150 },
   { id:'coffee',      tab:'consumable', icon:'🧃', name:'에너지 음료',     desc:'이동속도 +20% (60초)',                   price: 20  },
   { id:'boots',       tab:'equip',      icon:'👟', name:'새 운동화',       desc:'발걸음이 가볍다! 이동속도 +10% (10분)',   price: 120 },
   { id:'squishy',     tab:'misc',       icon:'🧸', name:'말랑이',          desc:'조물조물… 아무 효과도 없지만 마음이 말랑해진다.', price: 12 },
@@ -5467,8 +5468,8 @@ function showInvDetail(item) {
 // 상세 패널 초기화
 function resetInvDetail() {
   document.getElementById('inv-detail-icon').textContent = '🎒';
-  document.getElementById('inv-detail-name').textContent = '아이템을 선택하세요';
-  document.getElementById('inv-detail-desc').textContent = '인벤토리에서 아이템을 클릭하면 상세 정보를 확인하고 사용할 수 있습니다.';
+  document.getElementById('inv-detail-name').textContent = '아이템을 골라 보세요';
+  document.getElementById('inv-detail-desc').textContent = '가방의 아이템을 누르면 설명이 보이고 바로 쓸 수 있어요.';   /* (v399e 검수) «인벤토리» 용어·격식체 정리 */
   document.getElementById('inv-use-btn').style.display = 'none';
   selectedInvItemId = null;
 }
@@ -5661,13 +5662,13 @@ const ACHIEVEMENTS = [
   // ── 탐험 ──
   { id:'first_step',  group:'탐험', icon:'👣', name:'첫 발걸음',     desc:'맵에서 처음으로 이동하기',              type:'walk',     target:1,     reward:'첫 발자국' },
   { id:'walk_10k',    group:'탐험', icon:'🥾', name:'만 보 걷기',     desc:'총 10,000보 걷기',                      type:'walk',     target:10000, reward:'워킹마스터' },
-  { id:'walk_100k',   group:'탐험', icon:'🗺️',  name:'대장정',        desc:'총 100,000보 걷기',                     type:'walk',     target:100000,reward:'탐험가' },
+  { id:'walk_100k',   group:'탐험', icon:'🗺️',  name:'긴 여행',        desc:'총 100,000보 걷기',                     type:'walk',     target:100000,reward:'탐험가' },
   { id:'dash_first',  group:'탐험', icon:'💨', name:'첫 대시',        desc:'처음으로 대시 사용하기',                type:'dash',     target:1,     reward:'순발력' },
   { id:'dash_100',    group:'탐험', icon:'⚡', name:'번개처럼',       desc:'대시 100번 사용하기',                   type:'dash',     target:100,   reward:'대시 고수' },
   // ── 상업 ──
-  { id:'first_buy',   group:'상업', icon:'🛒', name:'첫 구매',        desc:'처음으로 아이템 구매하기',              type:'buy',      target:1,     reward:'쇼핑 입문' },
-  { id:'buy_50',      group:'상업', icon:'💸', name:'큰손',           desc:'아이템 총 50개 구매하기',               type:'buy',      target:50,    reward:'VIP 고객' },
-  { id:'shop_visit3', group:'상업', icon:'🏪', name:'동네 탐방',      desc:'서로 다른 상점 3곳 방문하기',           type:'visit_shop', target:3,  reward:'동네 주민' },
+  { id:'first_buy',   group:'가게', icon:'🛒', name:'첫 구매',        desc:'처음으로 아이템 구매하기',              type:'buy',      target:1,     reward:'쇼핑 입문' },
+  { id:'buy_50',      group:'가게', icon:'💸', name:'큰손',           desc:'아이템 총 50개 구매하기',               type:'buy',      target:50,    reward:'VIP 고객' },
+  { id:'shop_visit3', group:'가게', icon:'🏪', name:'동네 탐방',      desc:'서로 다른 상점 3곳 방문하기',           type:'visit_shop', target:3,  reward:'동네 주민' },
   // ── 생존 ──
   { id:'regen_first', group:'생존', icon:'💊', name:'회복의 기쁨',    desc:'처음으로 HP 회복하기',                  type:'regen',    target:1,     reward:'생존 본능' },
   { id:'regen_50',    group:'생존', icon:'💉', name:'불사신',         desc:'HP 총 50회 회복하기',                   type:'regen',    target:50,    reward:'회복 전문가' },
@@ -5717,7 +5718,7 @@ function achieveTrack(type, amount) {
     if (achieveProgress[a.id] >= a.target && !achieveDone[a.id]) {
       achieveDone[a.id] = true;
       const isHidden = HIDDEN_ACHIEVEMENTS.some(h => h.id === a.id);
-      (typeof bdToast==='function'?bdToast:function(){})(`${isHidden ? '🔮 히든 업적' : '🏆 업적'} 달성: ${a.icon} ${a.name}! (+${isHidden ? 150 : 50}G)`);
+      (typeof bdToast==='function'?bdToast:function(){})(`${isHidden ? '🔮 숨은 업적' : '🏆 업적'} 달성: ${a.icon} ${a.name}! (+${isHidden ? 150 : 50}G)`);
       playerGold += isHidden ? 150 : 50;
       // 사이버 싸이코 특수 보상/패널티
       if (a.id === 'h_cyber_psycho') {
@@ -5744,7 +5745,7 @@ function renderAchievePanel(targetId) {
   // 요약
   const summary = document.createElement('div');
   summary.className = 'achieve-summary';
-  summary.textContent = `🏆 달성: ${done} / ${total}  (히든: ${hiddenDone} / ${HIDDEN_ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).length})`;
+  summary.textContent = `🏆 달성: ${done} / ${total}  (숨은 업적: ${hiddenDone} / ${HIDDEN_ACHIEVEMENTS.filter(a => !__BD_DEAD_ACH[a.id]).length})`;
   panel.appendChild(summary);
 
   // 일반 업적 그룹별
@@ -5786,7 +5787,7 @@ function renderAchievePanel(targetId) {
 
   const hiddenTitle = document.createElement('div');
   hiddenTitle.style.cssText = 'font-size:0.75rem;color:#9966cc;font-weight:700;margin:10px 0 4px;padding-left:2px;letter-spacing:0.05em;';
-  hiddenTitle.textContent = '— 히든 —';
+  hiddenTitle.textContent = '— 숨은 업적 —';
   hiddenWrap.appendChild(hiddenTitle);
 
   HIDDEN_ACHIEVEMENTS.forEach(a => {

@@ -18,7 +18,7 @@
   background-image:var(--m42-board); background-size:100% 100%; background-repeat:no-repeat;
   filter:grayscale(1) saturate(0) brightness(.73) contrast(.92); image-rendering:pixelated; }
 #bd-map-v342 .m42-lockov{ position:absolute; z-index:4; -webkit-backdrop-filter:grayscale(1) brightness(.62);backdrop-filter:grayscale(1) brightness(.62)
-  background:rgba(10,14,26,.38); display:flex; align-items:center; justify-content:center; font-size:42px; }
+  background:rgba(10,14,26,.38); display:flex; align-items:flex-start; justify-content:flex-end; padding:6px 8px; font-size:22px; }   /* (v399e 검수) 자물쇠가 건물 타일 중앙을 덮지 않게 모서리로 */
 #bd-map-v342 .m42-dimp{ position:absolute; z-index:2; background:rgba(6,10,18,.08); border-radius:6px; cursor:pointer; }
 #bd-map-v342 .m42-dimp:hover{ outline:2px solid rgba(255,216,107,.85); outline-offset:1px; }
 #bd-map-v342 .m42-donebg{ position:absolute; z-index:1; pointer-events:none; }
@@ -26,10 +26,10 @@
 @keyframes m42bob{ 0%,100%{ margin-top:0; } 50%{ margin-top:-7px; } }
 #bd-map-v342 .m42-vchk{ position:absolute; z-index:3; font-size:15px; text-shadow:0 1px 3px rgba(0,0,0,.6);
   transform:translate(-50%,-50%); }
-#bd-map-v342 .m42-rname{ position:absolute; z-index:5; pointer-events:none; font-size:13px; font-weight:900; color:#fff;
-  background:rgba(10,16,30,.82); border-radius:8px; padding:3px 9px; border:1px solid rgba(255,255,255,.28); }
-#bd-map-v342 .m42-pct{ position:absolute; z-index:5; pointer-events:none; font-size:12px; font-weight:900; color:#ffd86b;
-  background:rgba(10,16,30,.82); border-radius:8px; padding:3px 8px; border:1px solid rgba(255,216,107,.4); }
+#bd-map-v342 .m42-rname{ position:absolute; z-index:5; pointer-events:none; font-size:11px; font-weight:900; color:#fff;
+  background:rgba(10,16,30,.8); border-radius:7px; padding:1px 6px; border:1px solid rgba(255,255,255,.28); line-height:1.5; }   /* (v399e 검수) 타일을 덜 덮게 축소 */
+#bd-map-v342 .m42-pct{ position:absolute; z-index:5; pointer-events:none; font-size:11px; font-weight:900; color:#ffd86b;
+  background:rgba(10,16,30,.8); border-radius:7px; padding:1px 6px; border:1px solid rgba(255,216,107,.4); line-height:1.5; }
 #bd-map-v342 .m42-done{ position:absolute; z-index:5; pointer-events:none; font-size:11px; font-weight:800; color:#c9f7c9;
   background:rgba(10,26,14,.85); border:1px solid rgba(142,255,160,.45); border-radius:8px; padding:2px 8px; }
 /* (v368) 마커를 «핀»처럼 지점 위에 띄우고(하단 앵커) 크기를 줄여 건물을 덜 가리게 (QA ISSUE-05) */

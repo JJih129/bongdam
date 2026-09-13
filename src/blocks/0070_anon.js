@@ -17,6 +17,7 @@
     if (done()) return;
     if (!(window.HSR && HSR.active)){ clear(); return; }
     if (HSR.state !== 'player'){ clear(); return; }
+    if (document.getElementById('hsr-skill-menu')){ clear(); return; }   /* (v399e 검수) 배지 스킬 카드 팝업 위로 겹치던 툴팁 */
     var btn = document.querySelector('.hsr-act.hsr-basic');
     if (!btn || !btn.offsetParent){ clear(); return; }
     // (v79) 담이 튜토리얼이 같은 버튼을 안내 중이면 구 가이드는 뜨지 않는다 (중복 강조 방지)

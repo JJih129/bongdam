@@ -2554,7 +2554,7 @@ HSR.start = function(){
 
   // UI 초기화
   el.heroName.firstChild.textContent = ((typeof heroName!=='undefined'?heroName:'영웅')) + ' ';
-  el.heroCls.textContent = 'Lv.' + ((window.BD && BD.lv) || 5) + ' 지킴이 · SPD ' + HSR.hero.spd;
+  el.heroCls.textContent = 'Lv.' + ((window.BD && BD.lv) || 5) + ' · SPD ' + HSR.hero.spd;   /* (v399e 검수) 이름 «지킴이»와 중복 */
   var enemyLv = document.getElementById('hsr-enemy-lv');
   if(enemyLv) enemyLv.textContent = 'Lv.5 · SPD ' + HSR.enemy.spd;
   el.heroSprite.innerHTML =

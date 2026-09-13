@@ -493,7 +493,11 @@
           action = (function(){
             try{
               var __st = STAGES[Number(currentStage)];
-              if (__st && __st.interior) return '엘리베이터를 타고 밖으로 나가세요';
+              if (__st && __st.interior){
+                /* (v399e 검수) 배지를 받기 전엔 엘리베이터가 막혀 있는데 «밖으로 나가세요»라고 해 튜토(선생님)와 충돌했다 */
+                var __badge = false; try{ __badge = !!(window.BD_PROGRESS && BD_PROGRESS.story.tutorialFlags && BD_PROGRESS.story.tutorialFlags.badgeGiven); }catch(eB){}
+                return __badge ? '엘리베이터를 타고 밖으로 나가세요' : '먼저 문화의집 선생님과 이야기해요';
+              }
               var NM = { 212:'와우리', 213:'상리', 211:'동화리', 210:'수영리' };
               var want = (mainDestination != null) ? Number(mainDestination) : null;
               if (want && NM[want]) return NM[want] + ' 방향 도로 끝까지 걸어가세요';
@@ -909,7 +913,7 @@
     const actionPrefix = navigation.status === 'unreachable' ? '지도 ' : (navigation.done ? '완료 ' : '다음 ');
     ctx.fillText(navFitText(ctx, actionPrefix + '› ' + navigation.action, footerInnerWidth), footerInnerX, footerY + unit(compact ? 51 : 58));
     ctx.fillStyle = '#83a8ba';
-    ctx.font = '650 ' + Math.round(unit(compact ? 6.8 : 7.6)) + 'px "Noto Sans KR", sans-serif';
+    ctx.font = '650 ' + Math.round(unit(compact ? 7.8 : 9)) + 'px "Noto Sans KR", sans-serif';   /* (v399e 검수) 9px 범례 → 키움 */
     ctx.fillText(compact ? '◆ 목적지 · ⇢ 이동 · ▬ 공사중' : 'J 임무  ·  ◆ 목적지  ·  ⇢ 지역 이동  ·  ▬ 공사중', footerInnerX, footerY + footerHeight - unit(9));
 
     ctx.imageSmoothingEnabled = oldSmoothing;

@@ -251,8 +251,9 @@
 .bd-title-hit.bd-title-hit-fallback:hover:not(:disabled){ background:linear-gradient(180deg,rgba(34,48,82,.95),rgba(20,28,50,.96)); }
 .bd-title-hit.bd-title-hit-fallback.locked{ opacity:.55; }
 .bd-title-hit.bd-title-hit-fallback.locked::after{ background:transparent; font-size:11px; align-items:flex-end; padding-bottom:3px; }
-.bd-title-hit.locked::after{ content:'저장 없음'; position:absolute; inset:0; display:flex; align-items:center;
-  justify-content:flex-end; padding-right:14px; color:#fff; font-size:12px; font-weight:700; opacity:.85;
-  text-shadow:0 1px 3px rgba(0,0,0,.8); }
+.bd-title-hit.locked{ opacity:.62; filter:grayscale(.45); cursor:default; }   /* (v399e 검수) 비활성이 보이게 */
+.bd-title-hit.locked::after{ content:'저장 없음'; position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:rgba(15,19,32,.88); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:2px 9px;
+  color:#fff; font-size:11px; font-weight:700; letter-spacing:.02em; }
 .bd-title-foot{ position:absolute; left:22px; bottom:16px; z-index:2; font-size:13px; color:#e8eef7;
   font-weight:700; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,.7); }

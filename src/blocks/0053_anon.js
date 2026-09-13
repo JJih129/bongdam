@@ -2527,7 +2527,7 @@ window.BD_showInteractChoice = showInteractChoice;
 // 작업10: 시설별 회복·상점 + 아이템 3종
 // =========================================================================
 const ITEMS = {
-  snack:{ name:'문화의집 간식', icon:'🍪', heal:'hp', amount:40, price:30, desc:'HP 40 회복' },
+  snack:{ name:'문화의집 간식', icon:'🍪', heal:'hp', amount:40, price:30, desc:'체력 40 회복' },
   // (v239) 따뜻한 음료(SP 회복)·구급 봉담 활동 배지(동료 부활) 제거 — SP·동료 시스템 폐지
 };
 // (v160) 장비 상점 목록 — 종류별 1회만 구매, 강화·등급·판매 없음

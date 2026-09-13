@@ -1104,8 +1104,9 @@
       if ((!landmark.majorFacility || landmark.minorFacility)
           && !nearby && !editorEnabled && !window.BD_DISTRICT_SHOW_ALL_LABELS) return;
       const x = toScreenX(Number(landmark.labelX), canvasElement);
-      const y = toScreenY(Number(landmark.labelY), canvasElement);
+      let y = toScreenY(Number(landmark.labelY), canvasElement);
       if (x < -220 || x > canvasElement.width + 220 || y < -80 || y > canvasElement.height + 80) return;
+      if (y < 78 * scale) y = 78 * scale;   /* (v399e 검수) 상단 HP·메뉴 HUD 뒤에 숨던 간판 라벨 */
       const sharedEntries = landmark.sharedEntryGroup ? SHARED_OPTIONS[landmark.sharedEntryGroup] : null;
       const virtualIds = sharedEntries
         ? sharedEntries.map(function (entry) { return entry.id; })

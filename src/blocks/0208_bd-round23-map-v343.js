@@ -237,6 +237,8 @@
       +   '<span class="m42-leg"><img src="'+(A.mark['위험요소']||'')+'">위험요소</span>'
       +   '<span class="m42-leg"><img src="'+(A.mark['정화완료']||'')+'">정화 완료</span>'
       +   '<span class="m42-leg">🌑 어두운 곳 = 아직 해결 전</span>'
+      +   '<span class="m42-leg">✓ 들러 본 시설</span>'
+      +   '<span class="m42-leg">🔒 아직 안 열린 동네</span>'
       + '</div>'
       + '</div>';
     document.body.appendChild(d);
