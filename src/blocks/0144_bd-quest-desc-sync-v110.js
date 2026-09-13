@@ -21,8 +21,11 @@
         }catch(e){}
         if (!names.length) return;
         var uniq = names.filter(function(v,i,a){ return a.indexOf(v)===i; });
-        var want = '❗ 표시가 있는 ' + c.name + ' 주민(' + uniq.join('·') + ')에게 말을 걸어 '
-                 + '부탁을 듣고, 위험 요소를 정화해 주자. 해결하면 다시 찾아가 알려 주자.';
+        /* (v399e) 문장 전체를 1장 형식으로 덮지 않고 괄호 안 이름만 바꾼다 — 2~4장의 장별 서술(공원길·아이들이 다니는 거리·어두운 귀갓길)이 지워지던 문제 */
+        var want = /주민\([^)]*\)/.test(q.desc)
+          ? q.desc.replace(/주민\([^)]*\)/, '주민(' + uniq.join('·') + ')')
+          : ('❗ 표시가 있는 ' + c.name + ' 주민(' + uniq.join('·') + ')에게 말을 걸어 '
+             + '부탁을 듣고, 위험 요소를 정화해 주자. 해결하면 다시 찾아가 알려 주자.');
         if (q.desc !== want) q.desc = want;
       });
     }catch(e){}

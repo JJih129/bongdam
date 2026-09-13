@@ -69,7 +69,6 @@
     setGold(G() - def.price);
     BD.items = BD.items || {}; BD.items[def.key] = (BD.items[def.key] || 0) + 1;
     save(); toast('🛒 ' + def.name + ' 구매! 가방(E)·전투 아이템에서 쓸 수 있어요');
-    try{ bdSubQuestProgress && bdSubQuestProgress('npc_haneul'); }catch(e){}
     return true;
   }
   function buyToy(id){

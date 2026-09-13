@@ -56,16 +56,16 @@
     { sid: 212, id: 'ow_npc_eunji', name: '은지', asset: 'culture_npc_02', x: 0.43, y: 0.49, region: 'wawoo',   /* (v399) 0.392,0.48 → 약국 문(0.336,0.457) 위에 서 있어 F 가 대화로 새고 완주 런이 멈추던 문제 */
       before: ['안녕하세요, 지킴이! 저는 은지예요. 이 앞 아파트에 살아요.', '이 동네는 사람도 많고 길도 넓어서, 늘 조금씩 신경 쓰이는 게 생겨요.'],
       after: ['길이 훨씬 깨끗해졌어요! 고마워요, 지킴이님!', '이제 도서관 가는 길도 무섭지 않아요.'] },
-    { sid: 213, id: 'ow_npc_dohyun', name: '사서 도현', asset: 'culture_npc_05', x: 0.33, y: 0.272, region: 'sang',
+    { sid: 213, id: 'ow_npc_dohyun', name: '사서 도현', asset: 'culture_npc_05', x: 0.243, y: 0.166, region: 'sang',   /* (v399e) 에디터 저장본 위치(도서관 앞) — 종전 0.33,0.272 */
       before: ['봉담도서관 사서 도현이에요. 1·2층이 도서관, 3층이 청소년문화의집이에요.', '조용히 공부하거나 책 읽기 좋은 곳이니 언제든 들러요.'],
       after: ['공원길이 안전해졌네요. 이용객들도 마음 놓고 다니겠어요. 고마워요!'] },
-    { sid: 213, id: 'ow_npc_seoyeon', name: '서연', asset: 'culture_npc_03', x: 0.044, y: 0.516, region: 'sang',
+    { sid: 213, id: 'ow_npc_seoyeon', name: '서연', asset: 'culture_npc_03', x: 0.651, y: 0.318, region: 'sang', hzTarget: 'ow213_bottle_1',   /* (v399e) 세아 전화 «서연이 … 술병» 과 짝 고정 + 에디터 저장본 위치(술병 골목). 종전 0.044,0.516 은 거리 짝이 재이·도현에게 밀려 부탁이 없었고 0121 화살표가 영영 서연을 가리켰다 */
       before: ['안녕! 나 서연이야. 방과 후엔 거의 이 공원에서 놀아.', '지킴이가 자주 들러 주면 다들 좋아할 거야!'],
       after: ['공원이 다시 밝아진 것 같아! 고마워, 지킴이!'] },
     { sid: 211, id: 'ow_npc_haneul', name: '하늘', asset: 'culture_npc_06', x: 0.198, y: 0.25, region: 'donghwa',
       before: ['어린이문화센터에서 일하는 하늘이에요. 아이들 프로그램을 맡고 있어요.', '센터 앞은 아이들이 뛰어다니니까 늘 조심조심이에요.'],
       after: ['거리가 조용하고 깨끗해졌어요! 아이들이 안심하고 다녀요. 고마워요!'] },
-    { sid: 210, id: 'ow_npc_eunji_mother', name: '은지 어머니', asset: 'culture_npc_04', x: 0.462, y: 0.612, region: 'suyeong',
+    { sid: 210, id: 'ow_npc_eunji_mother', name: '은지 어머니', asset: 'culture_npc_04', x: 0.462, y: 0.612, region: 'suyeong', hzTarget: 'ow210_streetlight_1',   /* (v399e) 재현 전화 «은지네 어머니가 … 가로등» 과 짝 고정(어두운 골목은 준호 담당) */
       before: ['은지 엄마예요. 우리 은지랑 와우리에서 여기까지 자주 오간답니다.', '지킴이 활동 한다고 들었어요. 은지랑도 친하게 지내 줘요.'],
       after: ['덕분에 밤길이 한결 안심돼요. 은지가 지킴이님 칭찬을 얼마나 하던지!'] },
     { sid: 210, id: 'ow_npc_doyun', name: '약사 도윤', asset: 'culture_npc_07', x: 0.876, y: 0.34, region: 'suyeong',

@@ -11,7 +11,8 @@
       if (!V || !V.noise_bat) return false;
       if (V.noise_bat.__bdFixed) return true;
       // (v113a) noise_bat 과 dust 가 같은 객체를 공유하고 있어 한쪽만 고치면 둘 다 바뀐다.
-      //  → noise_bat 에 별도 사본을 만들어 소음 전용으로 분리한다. (dust 는 원래 문구 유지)
+      //  → noise_bat 에 별도 사본을 만들어 소음 전용으로 분리한다.
+      // (v399e) 0051 원문이 같은 문자열로 정리돼 이제 사실상 no-op — 호환용 잔존. dust getter 도 같은 객체를 돌려준다.
       var src = V.noise_bat;
       var copy = {};
       Object.keys(src).forEach(function(k){ copy[k] = src[k]; });

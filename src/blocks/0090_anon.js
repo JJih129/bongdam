@@ -208,7 +208,7 @@ window.BD_ASSET_CONFIG = {
     + '#bd-codex-close:hover{background:rgba(255,255,255,.16)}';
   (function () { var s = document.createElement('style'); s.textContent = css; document.head.appendChild(s); })();
 
-  var FAM_NAME = { smoke: '공기·연기', pollute: '오염·정리', dark: '시설·어둠' };
+  var FAM_NAME = { smoke: '약점 💨 바람', pollute: '약점 🌿 자연', dark: '약점 🔧 시설' };   /* (v399e) 속성 표기 통일 */
 
   function render() {
     var c = codex();

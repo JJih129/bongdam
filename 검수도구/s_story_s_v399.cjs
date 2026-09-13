@@ -2,6 +2,7 @@
  *   node 검수도구/s_story_s_v399.cjs [--url=http://localhost:8788/new/]
  *   S1 주민 첫 대사가 원문인가 · 웹판에 신규 4명 + 재이(213)·재현(211) 존재 · 4명 부탁 고정 짝
  *   S2 프롤로그 선생님 대화 후 히든 카드 미지급 · S4 프롤로그 완료 chain 에 ch1_intro · S5 수첩/리포트 분모 11 · S6 카드명 통일
+ *   (v399e) A16 스토리 지목 인물(서연·재현·은지 어머니) 고정 짝 · A4 임무 desc 이름 · A9 소음 변형 원문 · A10 속성 표기 · A15 구 심부름 0건
  */
 'use strict';
 const { chromium } = require('playwright');
@@ -39,6 +40,25 @@ const ok = (c, l, d) => { console.log('  ' + (c ? '✅' : '❌') + ' ' + l + (d 
   ok(res[212].some(x => x.n === '박 반장' && x.hz === 'ow212_smoke_1') && res[210].some(x => x.n === '준호' && x.hz === 'ow210_alley_1'), '신규 주민 hzTarget 고정 짝', '');
   const map = await p.evaluate(() => { try { return (window.BD_hzQuestMap ? BD_hzQuestMap(212) : []).map(m => JSON.stringify(m).slice(0, 120)); } catch (e) { return ['ERR ' + e.message]; } });
   ok(map.some(x => /박 반장/.test(x) && /ow212_smoke_1/.test(x)), '와우리 부탁 맵에 박 반장→담배 연기', map.join(' | '));
+  /* A16: 스토리 전화가 지목한 인물이 실제로 그 위험요소의 부탁을 갖는다 */
+  console.log('A16 스토리 지목 인물 ↔ 부탁 짝');
+  const a16 = await p.evaluate(() => { const o = {}; [213, 211, 210].forEach(s => { try { o[s] = BD_hzQuestMap(s).map(m => m.npc + '→' + m.id); } catch (e) { o[s] = ['ERR ' + e.message]; } }); return o; });
+  ok(a16[213].includes('서연→ow213_bottle_1'), '서연 → 버려진 술병 (세아 전화)', a16[213].join(', '));
+  ok(a16[211].includes('재현→ow211_graffiti_1'), '재현 → 낙서 (재이 전화)', a16[211].join(', '));
+  ok(a16[210].includes('은지 어머니→ow210_streetlight_1'), '은지 어머니 → 가로등 (재현 전화)', a16[210].join(', '));
+  /* A4: 임무 desc 의 괄호 이름 = 실제 부탁 주민, 장별 서술 유지 */
+  const a4 = await p.evaluate(() => { const Q = window.QUESTS || window.BD_QUESTS; const q = id => (Q.find(x => x && x.id === id) || {}).desc || ''; return { ch1: q('ch1'), ch2: q('ch2'), ch3: q('ch3'), ch4: q('ch4') }; });
+  ok(/주민\(박 반장·세아·은지\)/.test(a4.ch1), 'ch1 desc 주민(박 반장·세아·은지) (A4)', a4.ch1.slice(0, 60));
+  ok(/주민\(서연·순임 할머니·재이\)/.test(a4.ch2) && /공원길/.test(a4.ch2), 'ch2 desc 주민(서연·순임 할머니·재이) + 장별 서술 유지 (A4)', a4.ch2.slice(0, 70));
+  ok(/주민\(재현·영자·하늘\)/.test(a4.ch3) && /아이들이 다니는/.test(a4.ch3), 'ch3 desc 주민(재현·영자·하늘) (A4)', a4.ch3.slice(0, 70));
+  ok(/주민\(은지 어머니·준호·약사 도윤\)/.test(a4.ch4) && /해가 저물었다/.test(a4.ch4), 'ch4 desc 주민(은지 어머니·준호·약사 도윤) (A4)', a4.ch4.slice(0, 70));
+  /* A9·A10·A15 */
+  const a9 = await p.evaluate(() => { const V = window.HAZARD_VARIANTS || window.BD_HAZARD_VARIANTS || {}; const n = V.noise_bat || {}; return { name: n.name, icon: n.icon, msg: n.skills && n.skills[0] && n.skills[0].msg, edu: (n.edu || '').slice(0, 12) }; });
+  ok(a9.name === '밤의 소음 그림자' && a9.icon === '🔊' && /소리를 지른다/.test(a9.msg || ''), 'noise_bat 원문 = 소음 (A9)', JSON.stringify(a9));
+  const a10 = await p.evaluate(() => { const S = window.BD_SKILLS || window.SKILLS || null; const d = S ? Object.values(S).map(x => x && x.desc || '').join(' ') : ''; const E = window.BD_EQUIP_ITEMS || window.EQUIP_ITEMS || null; return { skillDesc: d, protW: E && E.prot_W && E.prot_W.icon, protM: E && E.prot_M && E.prot_M.icon }; });
+  ok(!a10.skillDesc || (/💨 바람/.test(a10.skillDesc) && /🌿 자연/.test(a10.skillDesc) && /🔧 시설/.test(a10.skillDesc)), '스킬 desc 속성 표기 💨/🌿/🔧 (A10)' + (a10.skillDesc ? '' : ' — 전역 미노출, 소스로 확인'), a10.skillDesc.slice(0, 40));
+  const a15 = await p.evaluate(() => ({ legacy: (window.BD_NPC_QUESTS || []).filter(q => q && /^npc_/.test(q.id)).map(q => q.id), catchup: typeof window.bdV193Catchup }));
+  ok(a15.legacy.length === 0, '구 심부름(npc_*) 0건 (A15)', a15.legacy.join(','));
   /* S5·S6 */
   const s56 = await p.evaluate(() => { const st = window.BD_reportStats ? BD_reportStats() : null; let codexUi = null; try { BD_codexOpen(); const t = (document.querySelector('#bd-codex-ov .bd-cdx-sub') || {}).textContent || ''; codexUi = (t.match(/(\d+) \/ (\d+)/) || [])[2]; BD_codexClose(); } catch (e) { codexUi = 'ERR ' + e.message; } return { codexTotal: st && st.codexTotal, hazardTotal: st && st.hazardTotal, codexUi }; });
   ok(s56.codexTotal === 11 && String(s56.codexUi) === '11', '배운 안전 지식 분모 11 — 리포트·수첩 (S5)', JSON.stringify(s56));

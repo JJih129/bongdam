@@ -25,8 +25,10 @@
             var mp2 = (window.BD_hzQuestMap ? BD_hzQuestMap(sid) : []);
             var mine = mp2.find(function(m){ return m.npc === want; });
             // 아직 그 사람의 부탁을 안 받았을 때만 유효
-            if (!mine || !s2[mine.id]) return { t: center(wo), label:'이야기 듣기' };
-            window.__bdStoryTargetNpc = null;   // 받았으면 해제 → 원래 흐름
+            // (v399e) 짝 맵은 있는데 그 사람 몫이 없으면 지목을 풀고 원래 흐름 — 화살표가 영영 그 사람을 가리키던 문제(완주 런 213 정체)
+            if (!mine && mp2.length) window.__bdStoryTargetNpc = null;
+            else if (!mine || !s2[mine.id]) return { t: center(wo), label:'이야기 듣기' };
+            else window.__bdStoryTargetNpc = null;   // 받았으면 해제 → 원래 흐름
           }
         }
       }catch(eS){}

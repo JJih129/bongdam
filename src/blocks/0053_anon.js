@@ -52,11 +52,11 @@ const SKILLS = [
   { id:'sticker', name:'정화 스티커', elem:'N', sp:0,  power:1.0,  unlock:true,
     desc:'기본 공격 · 사용 횟수 제한 없음' },
   { id:'fan',     name:'노트 부채질', elem:'W', sp:1,  power:1.6,  unlock:false,
-    desc:'노트를 펼쳐 탁한 공기를 흩어버린다 (바람 · 연기·소음에 강함)' },
+    desc:'노트를 펼쳐 탁한 공기를 흩어버린다 (💨 바람 · 연기·소음에 강함)' },
   { id:'wash',    name:'물청소 정화',   elem:'G', sp:1,  power:1.6,  unlock:false,
-    desc:'텀블러 물로 얼룩을 씻어내 그림자의 힘을 지운다 (물 · 오염·쓰레기에 강함)' },
+    desc:'텀블러 물로 얼룩을 씻어내 그림자의 힘을 지운다 (🌿 자연 · 오염·쓰레기에 강함)' },
   { id:'light',   name:'안전 점검 라이트',elem:'M', sp:1,  power:1.65, unlock:false,
-    desc:'어두운 곳을 비춰 숨은 위험을 드러낸다 — 드러난 그림자는 힘을 잃는다 (빛 · 시설·파손에 강함)' },
+    desc:'어두운 곳을 비춰 숨은 위험을 드러낸다 — 드러난 그림자는 힘을 잃는다 (🔧 시설 · 파손·어둠에 강함)' },
   { id:'cheer',   name:'힘내라 봉담!', elem:'N', sp:1,  power:1.85, unlock:false,
     desc:'주민들의 응원을 모아 내지르는 한마디 — 모른 척한 마음이 만든 그림자에 제일 잘 통한다 (속성 없음)' },
 ];
@@ -126,9 +126,9 @@ const BD_PARTY = {
     basic: { name:'돋보기 찌르기', elem:'N', power:0.9, desc:'무속성 기본 공격' },
     skill: { name:'약점 분석', sp:1, type:'addWeakness',
       choose:['W','M','G'],
-      desc:'적에게 W/M/G 중 선택한 약점을 추가 부여. 재이의 공격은 적 약점 개수에 비례해 강해진다' },
+      desc:'적에게 💨 바람·🔧 시설·🌿 자연 중 선택한 약점을 추가 부여. 재이의 공격은 적 약점 개수에 비례해 강해진다' },
     ult: { name:'사건의 전모', icon:'🕵️', type:'revealAll',
-      desc:'적 1명에게 모든 약점(W/M/G)을 부여한 뒤 강한 단일 공격 (위력 2.2배 × 약점 보너스)' },
+      desc:'적 1명에게 모든 약점(💨·🔧·🌿)을 부여한 뒤 강한 단일 공격 (위력 2.2배 × 약점 보너스)' },
   },
   jaehyun: {
     id:'jaehyun', name:'재현', icon:'🧢', grade:'중3',
@@ -164,22 +164,22 @@ const QUESTS = [
     reward:{ lv:1, skill:null, card:'문화의집', gold:35 } },
   { id:'ch1', chapter:'1장', title:'와우리 - 문화의집으로 가는 길',
     type:'main',
-    desc:'❗ 표시가 있는 와우리 주민(은지·세아·재현)에게 말을 걸어 부탁을 듣고, 위험 요소를 정화해 주자. 해결하면 다시 찾아가 알려 주자.',
+    desc:'❗ 표시가 있는 와우리 주민(박 반장·세아·은지)에게 말을 걸어 부탁을 듣고, 위험 요소를 정화해 주자. 해결하면 다시 찾아가 알려 주자.',   /* (v399e) 실제 부탁 주민 — 0144 가 런타임에도 이름만 동기화 */
     objectives:[{t:'주민의 부탁 해결',need:2,cur:0}],
     reward:{ lv:2, skill:'fan', card:'봉담와우도서관', gold:70 } },
   { id:'ch2', chapter:'2장', title:'상리 - 도서관과 공원길',
     type:'main',
-    desc:'❗ 표시가 있는 상리 주민(서연·재이 등)의 부탁을 듣고, 공원길의 위험 요소를 정화해 주자.',
+    desc:'❗ 표시가 있는 상리 주민(서연·순임 할머니·재이)의 부탁을 듣고, 공원길의 위험 요소를 정화해 주자.',
     objectives:[{t:'주민의 부탁 해결',need:2,cur:0}],
     reward:{ lv:3, skill:'wash', card:'봉담도서관', gold:70 } },
   { id:'ch3', chapter:'3장', title:'동화리 - 문화와 체험의 거리',
     type:'main',
-    desc:'❗ 표시가 있는 동화리 주민(하늘·재현 등)의 부탁을 듣고, 아이들이 다니는 거리의 위험 요소를 정화해 주자.',
+    desc:'❗ 표시가 있는 동화리 주민(재현·영자·하늘)의 부탁을 듣고, 아이들이 다니는 거리의 위험 요소를 정화해 주자.',
     objectives:[{t:'주민의 부탁 해결',need:2,cur:0}],
     reward:{ lv:4, skill:'cheer', card:'어린이문화센터', gold:95 } },
   { id:'ch4', chapter:'4장', title:'수영리 - 안전하게 돌아가는 길',
     type:'main',
-    desc:'해가 저물었다. ❗ 표시가 있는 수영리 주민(약사 도윤·은지 어머니)의 부탁을 듣고, 어두운 귀갓길을 정리하자.',
+    desc:'해가 저물었다. ❗ 표시가 있는 수영리 주민(은지 어머니·준호·약사 도윤)의 부탁을 듣고, 어두운 귀갓길을 정리하자.',
     objectives:[{t:'주민의 부탁 해결',need:2,cur:0}],
     reward:{ lv:5, skill:'light', card:'안전지킴이집', gold:95 } },
   { id:'final', chapter:'최종장', title:'봉담 안전 지도 완성',
@@ -200,29 +200,8 @@ const SUB_QUESTS = [
 ];
 // ---- NPC 퀘스트 (주민들의 부탁) ----
 const NPC_QUESTS = [
-  { id:'npc_hyunji', type:'npc', giver:'임현지', title:'임현지의 부탁', accepted:false,
-    desc:'와우도서관 앞 임현지에게 말을 걸어 주기',
-    objectives:[{t:'임현지와 대화',need:1,cur:0}], reward:{ gold:35 } },
-  { id:'npc_dohyun', type:'npc', giver:'사서 도현', title:'사서 도현의 부탁', accepted:false,
-    desc:'봉담와우도서관의 신입 사서 도현이 도서관 주변 정리를 부탁했다.',
-    objectives:[{t:'사서 도현과 대화',need:1,cur:0}], reward:{ gold:35 } },
-  // ── (v160) 배지 통신으로 도착하는 주민 부탁 ──
-  { id:'npc_seoyeon', type:'npc', giver:'서연', title:'서연의 부탁', accepted:false,
-    desc:'[배지 통신] "상리 공원에서 자주 노는 서연이야. 요즘 공원이 무섭다는 애들이 많아… 지킴이가 자주 들러 주면 다들 좋아할 거야!"',
-    objectives:[{t:'공원 들러서 안전 확인하기',need:2,cur:0}], reward:{ gold:30 } },
-  { id:'npc_haneul', type:'npc', giver:'하늘', title:'하늘의 부탁', accepted:false,
-    desc:'[배지 통신] "어린이문화센터 안내데스크의 하늘이에요. 아이들 간식이랑 물품이 부족한데, 편의점에서 물건을 좀 사다 주실 수 있나요?"',
-    objectives:[{t:'상점에서 물건 구매하기',need:2,cur:0}], reward:{ gold:30 } },
-  // ── (v193) 새 주민 연계 심부름 퀘스트 — 저장은 배열 인덱스 기준이므로 반드시 끝에만 추가 ──
-  { id:'npc_junho', type:'npc', giver:'준호', title:'준호의 부탁', accepted:false,
-    desc:'[배지 통신] "체육 강사 준호예요! 야외 수업 전에 아이들이 쉬는 공원이 안전한지 봐줄 수 있어요? 공원에 들러 확인해 주면 든든할 것 같아요."',
-    objectives:[{t:'공원에 들러 안전 확인하기',need:1,cur:0}], reward:{ gold:25 } },
-  { id:'npc_yeongja', type:'npc', giver:'영자', title:'영자씨의 부탁', accepted:false,
-    desc:'[배지 통신] "장보러 나온 영자예요. 요즘 무릎이 안 좋아서… 상점에서 필요한 물건 하나만 대신 사다 줄 수 있을까? 고마워서 어쩌나."',
-    objectives:[{t:'상점에서 물건 사다 주기',need:1,cur:0}], reward:{ gold:25 } },
-  { id:'npc_sunim', type:'npc', giver:'순임', title:'순임 할머니의 부탁', accepted:false,
-    desc:'[배지 통신] "경로당 순임이야. 요즘 동네 사람들 얼굴 보기가 힘들어… 지킴이가 다니면서 이웃들한테 인사 좀 전해 줄래?"',
-    objectives:[{t:'동네 주민과 인사하기',need:3,cur:0}], reward:{ gold:35 } },
+  /* (v399e) 구 심부름 7건(임현지·사서 도현·서연·하늘·준호·영자·순임) 삭제 — v57 부탁 체계(0114) 가 hzq_* 항목을 런타임에 끝에 push 한다.
+     저장은 배열 인덱스 기준이지만 hzq_ 상태는 bd_hzquest_v57 에서 0.5초마다 재계산돼 자가 복구된다. */
 ];
 window.BD_SUB_QUESTS = SUB_QUESTS;
 window.BD_NPC_QUESTS = NPC_QUESTS;
@@ -2548,9 +2527,9 @@ const ITEMS = {
 };
 // (v160) 장비 상점 목록 — 종류별 1회만 구매, 강화·등급·판매 없음
 const EQUIP_SHOP = {
-  prot_W:{ slot:'protector', val:'W', name:'바람막이 조끼', icon:'🌬️', price:80, desc:'방어 +10% · 💨 바람(공기·소음) 피해 25% 감소', unlockQ:1 },
+  prot_W:{ slot:'protector', val:'W', name:'바람막이 조끼', icon:'💨', price:80, desc:'방어 +10% · 💨 바람(공기·소음) 피해 25% 감소', unlockQ:1 },
   prot_G:{ slot:'protector', val:'G', name:'초록 앞치마',   icon:'🌿', price:80, desc:'방어 +10% · 🌿 자연(환경·오염) 피해 25% 감소', unlockQ:1 },
-  prot_M:{ slot:'protector', val:'M', name:'안전 작업복',   icon:'🔩', price:80, desc:'방어 +10% · 🔧 시설(금속·파손) 피해 25% 감소', unlockQ:2 },
+  prot_M:{ slot:'protector', val:'M', name:'안전 작업복',   icon:'🔧', price:80, desc:'방어 +10% · 🔧 시설(파손·어둠) 피해 25% 감소', unlockQ:2 },
   memo_hp:{ slot:'memento', val:'hp', name:'문화의집 단체사진', icon:'📸', price:70, desc:'최대 HP +30', unlockQ:1 },
   // (v239) 봉담 마라톤 메달(속도) 제거 — 액션 게이지를 없애 체감이 사라졌다
 };
@@ -2582,8 +2561,6 @@ function useFacility(type){
     BD.hp=Math.min(BD.maxHp, BD.hp+50);
     if(typeof window.BD_syncHP==='function') window.BD_syncHP(BD.hp, false);
     bdSave(); bdToast('🌳 공원: HP 50 회복');
-    try{ bdSubQuestProgress('npc_seoyeon'); }catch(e){}   // (v160) 서연의 부탁 진행
-    try{ bdSubQuestProgress('npc_junho'); }catch(e){}     // (v193) 준호의 부탁 진행
   } else if(type==='library'){
     // (v231) 첫 방문 보상: 배지 에너지 최대치 +1 (영구 — 전투 MP 한도가 늘어난다)
     if(!BD._libVisited){
@@ -2649,8 +2626,6 @@ function buyItem(k){
   playerGold = gold - price;   // (v160) 소지금 단일화 — 편의점·퀘스트 보상과 같은 장부 사용
   BD.items[k]=(BD.items[k]||0)+1;
   bdSave(); bdToast('🛒 '+it.name+' 구매!');
-  try{ bdSubQuestProgress('npc_haneul'); }catch(e){}   // (v160) 하늘의 부탁 진행
-  try{ bdSubQuestProgress('npc_yeongja'); }catch(e){}  // (v193) 영자씨의 부탁 진행
   try{ if(typeof window.BD_renderQuest==='function') window.BD_renderQuest(); }catch(e){}
   return true;
 }
@@ -3039,21 +3014,22 @@ function hazardInteract(obj){
   const hid = obj.hazardId || obj.id || (obj.label || 'hazard');
   // 이미 정화된 오브젝트면 안전 대사만 — (v153) 위험요소 종류별로 다양하게
   if(isPurified(hid)){
+    /* (v399e) 키를 hazardVariant 로 — 구맵 id(tutorial_/ch1_~ch4_) 접두 매칭은 현행 ow2xx_* hazardId 와 하나도 맞지 않아 늘 폴백이었다 */
     const cleanedLines = {
-      tutorial_trash: '깨끗하게 치워둔 자리야. 이제 사람들이 편하게 지나다녀.',
-      ch1_cigarette:  '담배 연기가 걷힌 골목. 공기가 한결 맑아졌어.',
-      ch1_kickboard:  '킥보드도 잘 세워뒀고, 길이 뻥 뚫렸네.',
-      ch2_bottle:     '유리병을 다 치운 곳이야. 이제 맨발로 뛰어도 안전하겠다.',
-      ch2_glass:      '반짝이던 유리 조각이 사라졌어. 아이들이 놀아도 걱정 없겠어.',
-      ch3_graffiti:   '낙서를 지운 벽. 원래 색이 이렇게 예뻤구나.',
-      ch3_noise:      '시끄럽던 곳이 조용해졌어. 다들 편히 쉬겠지.',
-      ch4_streetlight:'가로등이 다시 환하게 켜졌어. 밤에도 안심이야.',
-      ch4_crack:      '갈라진 길을 정비해뒀어. 이제 발 헛디딜 일 없겠다.',
+      trash:       '깨끗하게 치워둔 자리야. 이제 사람들이 편하게 지나다녀.',
+      cigarette:   '담배 연기가 걷힌 골목. 공기가 한결 맑아졌어.',
+      kickboard:   '킥보드도 잘 세워뒀고, 길이 뻥 뚫렸네.',
+      bicycle:     '자전거를 한쪽에 잘 세워뒀어. 인도가 다시 넓어졌네.',
+      bottle:      '유리병을 다 치운 곳이야. 이제 맨발로 뛰어도 안전하겠다.',
+      glass:       '반짝이던 유리 조각이 사라졌어. 아이들이 놀아도 걱정 없겠어.',
+      graffiti:    '낙서를 지운 벽. 원래 색이 이렇게 예뻤구나.',
+      noise_bat:   '시끄럽던 곳이 조용해졌어. 다들 편히 쉬겠지.',
+      dark_alley:  '어둡던 길이 환해졌어. 이제 저녁에도 마음 놓고 다닐 수 있겠다.',
+      streetlight: '가로등이 다시 환하게 켜졌어. 밤에도 안심이야.',
+      road_crack:  '갈라진 길을 정비해뒀어. 이제 발 헛디딜 일 없겠다.',
+      sign_ghost:  '쓰러졌던 표지판을 다시 세워뒀어. 이제 위험을 제대로 알릴 수 있겠다.',
     };
-    let line = '여기는 이미 정리했었지. 안전한 상태야.';
-    for (const key in cleanedLines) {
-      if (String(hid).indexOf(key) === 0) { line = cleanedLines[key]; break; }
-    }
+    const line = cleanedLines[String(obj.hazardVariant || '')] || '여기는 이미 정리했었지. 안전한 상태야.';
     showDialog('나', [line]);
     return true;
   }
@@ -3183,7 +3159,7 @@ function startHazardBattle(obj, family, hid){
       setTimeout(function(){
         window.BD_tip && window.BD_tip('battle_elem', { icon:'⚔️', title:'약점 속성을 노리세요!',
           text:'위험 요소마다 <b>약한 속성(💨 바람·🌿 자연·🔧 시설)</b>이 있어요.<br>'
-             + '약점 속성 스킬로 공격하면 피해 <b>2배</b>, 저항 속성이면 0.4배로 뚝 떨어져요!<br>'
+             + '약점 속성 스킬로 공격하면 피해 <b>1.5배</b>, 잘못된 대처(⚠)면 오히려 약해져요!<br>'
              + '전투가 어렵다면 <b>E 가방</b>에서 다른 속성 스킬로 바꿔보세요.' });
       }, 1600);
     }

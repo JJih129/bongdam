@@ -467,7 +467,7 @@ const ELEM_ICON = {
 };
 const ELEM_NAME = {
   fire:'화염', ice:'얼음', lightning:'번개', wind:'바람', quantum:'양자', physical:'물리', water:'물',
-  W:'바람', G:'자연', M:'시설', N:'정화',   // (v238) (v375) 우리말 한 단어
+  W:'바람', G:'자연', M:'시설', N:'무속성',   // (v238) (v375) 우리말 한 단어 · (v399e) N 은 0053 과 통일
 };
 
 // 허수아비의 약점 속성 (스타레일: 약점 속성으로 때리면 인성 깎임 → BREAK)
@@ -527,19 +527,19 @@ const HAZARD_VARIANTS = {
       { name:'짙은 연막',   w:1, power:0,   kind:'guard', toughUp:30, msg:'{n}가 몸을 연막으로 감싼다! (다음 공격을 견딘다)' },
     ],
     edu:'담배 연기는 간접흡연으로 주변 사람의 건강도 해쳐요. 청소년에게 특히 위험해요.' },
-  // (v239) 소음 박쥐 → 먼지 회오리. 'W 부채질=환기'가 정답이 되도록 테마를 맞춤.
-  //  기존 맵 데이터 호환을 위해 id(noise_bat)는 그대로 두고 dust 별칭을 아래에서 연결한다.
+  // 「골목의 소음」(ow211_noise_1) 전용 변형 — W(바람·공기·소음) 계열. (v399e) 구 v239 '먼지 회오리' 리네임이 0145 런타임 패치와
+  //  충돌해(이름·설명 따로, 스킬 대사는 먼지) 원본을 소음으로 되돌렸다. id(noise_bat)·약점·fam 은 세이브 호환을 위해 그대로.
   noise_bat: {
-    fam:'smoke', name:'먼지 회오리', icon:'🌫️',
+    fam:'smoke', name:'밤의 소음 그림자', icon:'🔊',
     weakness:['W'], hp:75, spd:120, lv:5, atk:5, tough:70,   /* (v303) 시연 밸런스 */
-    trait:{ id:'swift', name:'흩날림', desc:'가볍게 떠다녀 행동 순서가 자주 돌아온다.' },
+    trait:{ id:'swift', name:'울림', desc:'소리처럼 가볍게 퍼져 행동 순서가 자주 돌아온다.' },
     skills:[
-      { name:'먼지 폭풍', w:3, power:0.8, kind:'atk', msg:'{n}가 먼지를 확 일으킨다!' },
-      { name:'연속 흩날리기', w:2, power:0.5, kind:'multi', hits:2, msg:'{n}가 두 번 몰아친다!' },
+      { name:'귀청 울리기', w:3, power:0.8, kind:'atk', msg:'{n}가 귀청이 울리도록 소리를 지른다!' },
+      { name:'연속 소음', w:2, power:0.5, kind:'multi', hits:2, msg:'{n}가 두 번 몰아친다!' },
     ],
-    edu:'쌓인 먼지는 기침과 알레르기를 일으켜요. 창문을 열어 환기하고 자주 닦아내요.' },
+    edu:'늦은 밤 큰 소음은 이웃의 잠을 방해해요. 소리는 줄이고, 심하면 어른께 알려요.' },
 
-  // (v239) 신규 배치용 별칭 — noise_bat 과 동일 개체
+  // (v239) 신규 배치용 별칭 — noise_bat 과 동일 개체 (배치 0건, 호환용)
   get dust(){ return this.noise_bat; },
 
   // ── 오염·정리 계열 (pollute): 맷집형, 약점=물·물리 ──
@@ -1991,7 +1991,7 @@ function bdAllySkill(a){
     // 재이: W/M/G 약점 부여 (플레이어 선택)
     const cur = enemyWeakness();
     bdChoicePopup('🔍 어떤 약점을 밝혀낼까?', ['W','M','G'].map(e=>({
-      label:{W:'🌬️ W — 바람·공기',M:'🔩 M — 금속·시설',G:'🌿 G — 환경·정화'}[e],
+      label:{W:'💨 바람 (공기·소음)',M:'🔧 시설 (파손·어둠)',G:'🌿 자연 (환경·오염)'}[e],
       sub: cur.includes(e) ? '이미 알려진 약점' : '새 약점 부여',
       disabled: cur.includes(e),
     })), (i)=>{
@@ -2001,7 +2001,7 @@ function bdAllySkill(a){
       HSR.state='anim'; setActionsEnabled(false);
       HSR.enemy._extraWeak = HSR.enemy._extraWeak || [];
       if(!HSR.enemy._extraWeak.includes(elem)) HSR.enemy._extraWeak.push(elem);
-      say('🔍 분석 완료! 적에게 '+elem+' 약점이 드러났다! (약점 '+bdEnemyWeakCount()+'개)');
+      say('🔍 분석 완료! 적에게 '+(ELEM_ICON[elem]||'')+' '+(ELEM_NAME[elem]||elem)+' 약점이 드러났다! (약점 '+bdEnemyWeakCount()+'개)');
       a.ult = Math.min(100, a.ult+30);
       try{ renderWeakness(); }catch(e){}
       bdRefreshParty();

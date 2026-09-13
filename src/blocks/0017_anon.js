@@ -153,7 +153,7 @@ const STAGES = {
       { type:"hazard", rx:0.22, ry:0.38, rw:0.08, rh:0.08, label:"벽을 더럽힌 낙서",
         cx:0.22, cy:0.38, cw:0.08, ch:0.08, interactable:"hazard",
         hazardVariant:"graffiti", hazardFamily:"pollute", hazardId:"ch3_graffiti_1" },
-      { type:"hazard", rx:0.28, ry:0.72, rw:0.08, rh:0.08, label:"먼지 회오리",
+      { type:"hazard", rx:0.28, ry:0.72, rw:0.08, rh:0.08, label:"골목의 소음",
         cx:0.28, cy:0.72, cw:0.08, ch:0.08, interactable:"hazard",
         hazardVariant:"noise_bat", hazardFamily:"smoke", hazardId:"ch3_noise_1" },
       // ── (v193) 동화리 추가 위험요소 (선택) ──

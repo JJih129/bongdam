@@ -762,7 +762,6 @@ document.addEventListener('keydown', function(e){
           if(!Array.isArray(BD.greetedResidents)) BD.greetedResidents = [];
           if(rid && BD.greetedResidents.indexOf(rid) === -1){
             BD.greetedResidents.push(rid);
-            try{ if(typeof window.BD_subQuestProgress==='function') window.BD_subQuestProgress('npc_sunim'); }catch(e){}  // (v193) 순임 할머니의 부탁
 
             if(typeof playerGold !== 'undefined'){
               playerGold += 5;

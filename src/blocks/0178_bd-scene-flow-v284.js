@@ -93,35 +93,7 @@
     }catch(e){}
   }
 
-  /* ── 스탬프 리마인더 — 챕터는 지났는데 지도(스탬프)가 비어 있는 지역 ── */
-  var REGQ = [ { id:'wawoo', name:'와우리', qi:2 }, { id:'sang', name:'상리', qi:3 },
-               { id:'donghwa', name:'동화리', qi:4 }, { id:'suyeong', name:'수영리', qi:5 } ];
-  function stampTick(){
-    try{
-      if (busy()) return;
-      if (!window.BD || !window.BD_MapProgress || !window.BD_REGISTRY_CHAPTERS) return;
-      for (var i = 0; i < REGQ.length; i++){
-        var r = REGQ[i];
-        if ((BD.questIdx || 0) < r.qi) continue;
-        var k = 'map_stamp_hint_' + r.id;
-        if (seen(k)) continue;
-        var data = BD_MapProgress.region(r.id);
-        if (data.stamp) { mark(k); continue; }
-        var CH = BD_REGISTRY_CHAPTERS[r.id];
-        var names = [];
-        try{
-          names = (CH.stampAnyOf || []).map(function(fid){
-            var f = BD_REGISTRY.FACILITY_DEFINITIONS[fid];
-            return f ? f.displayName : null;
-          }).filter(Boolean);
-        }catch(eN){}
-        mark(k);
-        if (window.BD_DAMI) BD_DAMI.show(r.name + ' 지도를 완성하려면 시설 체험이 남았어요! ' +
-          (names.length ? names.join('이나 ') + '에 들러 봐요.' : '핵심 시설에 들러 봐요.'), { face:'base' });
-        return;
-      }
-    }catch(e){}
-  }
+  /* (v399e) 스탬프 리마인더(stampTick) 삭제 — v287 지도 100% 체계로 대체된 뒤 호출부가 없었다 */
 
   function tick(){ if (!window.__bdDamiArbiter) installQueue(); introTick(); }   /* (v374) 조정자(0239)가 있으면 구 큐 미설치 */   /* (v287) 스탬프 리마인더는 지도 100% 체계로 대체 */
   if (window.BD_addTick) BD_addTick(tick, 1100);

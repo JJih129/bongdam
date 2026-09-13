@@ -8,7 +8,7 @@
      같은 빌드를 다시 열면 아무 것도 하지 않아 에디터 작업은 그대로 유지된다. */
 (function(){
   'use strict';
-  var BUILD = 'bd-bake-45134d3c-3145728';   /* (v319) 베이크 내용 해시 — 데이터가 바뀌면 자동으로 새 스탬프 */
+  var BUILD = 'bd-bake-9a3f9c34-3145728';   /* (v319) 베이크 내용 해시 — 데이터가 바뀌면 자동으로 새 스탬프 */
   var STAMP = 'bd_bake_stamp';
   var K  = 'bongdam_rpg_editor_data_v5_2_quest';
   var LK = 'bongdam_rpg_editor_project_v5_2_quest';
