@@ -22,6 +22,8 @@ const B64 = s => Buffer.from(s, 'utf8').toString('base64');
 /* base64 → UTF-8 복원 (atob 만 쓰면 한글이 깨져 '은지'·'닫기' 비교가 조용히 실패한다) */
 async function ev(p, js) { return await p.evaluate(b => eval(new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0)))), B64(js)).catch(e => 'ERR ' + e.message); }
 async function closeAll(p) {
+  /* 배지 수여 연출(#bd-badge-ov)이 떠 있으면 먼저 넘긴다 — 시드가 questIdx 를 올리면 뜬다 */
+  for (let i = 0; i < 6; i++) { const bo = await ev(p, `(function(){var e=document.getElementById('bd-badge-ov');if(!e)return false;var cs=getComputedStyle(e);return cs.display!=='none'&&e.getBoundingClientRect().height>2;})()`); if (bo !== true) break; await p.keyboard.press('Space'); await p.waitForTimeout(500); }
   for (let i = 0; i < 6; i++) {
     const open = await ev(p, `(function(){var on=function(e){if(!e)return false;var cs=getComputedStyle(e);if(cs.display==='none'||cs.visibility==='hidden')return false;var r=e.getBoundingClientRect();return r.width>2&&r.height>2;};
       var m=[...document.querySelectorAll('.bd-modal.show,#bd-district-facility-modal.open,#inv-overlay,#quest-overlay,#bd-codex-ov,#bd-report,#bd-map-v342.show,#bd-place-card,#hsr-skill-menu')].filter(on);return m.length;})()`);
