@@ -314,8 +314,42 @@
 
   /* ── 부트: 필요한 전역이 모두 준비된 뒤 1회 연결 + 유지 틱 ── */
   var tries = 0;
+  /* (v400) 에디터 저장본 배치(0071 window.__BD_PLACEMENT) 적용 — 좌표·hzTarget·선택 여부·보스 위치·삭제 툼스톤은 에디터가 정본.
+     대사·에셋은 코드 정본. 저장본에만 있는 주민·위험요소는 새로 만든다(주민은 저장본 assetId·npcLines 사용). */
+  function applyPlacement() {
+    var PL = window.__BD_PLACEMENT; if (!PL || !PL.stages || STATE._placed) return; STATE._placed = true;
+    try {
+      Object.keys(PL.stages).forEach(function (sid) {
+        var S = PL.stages[sid]; if (!S) return;
+        var del = S.deletedSysIds || [], delHz = S.deletedHazardIds || [];
+        /* 주민 */
+        Object.keys(S.npcs || {}).forEach(function (eid) {
+          if (!/^bdlink_/.test(eid)) return;
+          var p = S.npcs[eid], id = eid.replace(/^bdlink_/, '');
+          var n = null; NPCS.some(function (x) { if (x.id === id) { n = x; return true; } return false; });
+          if (n) { n.sid = Number(sid); n.x = p.x; n.y = p.yc; if (p.hzTarget) n.hzTarget = p.hzTarget; else delete n.hzTarget; }
+          else NPCS.push({ sid: Number(sid), id: id, name: p.name || id, asset: p.asset || 'culture_npc_02', x: p.x, y: p.yc, region: ({210:'suyeong',211:'donghwa',212:'wawoo',213:'sang'})[Number(sid)],
+                          hzTarget: p.hzTarget || undefined, before: ['안녕하세요, 지킴이!', '이 동네도 잘 부탁해요.'], after: ['고마워요, 지킴이님!'] });
+        });
+        for (var i = NPCS.length - 1; i >= 0; i--) { if (Number(NPCS[i].sid) === Number(sid) && del.indexOf('bdlink_' + NPCS[i].id) >= 0) NPCS.splice(i, 1); }
+        /* 위험요소 */
+        var list = HAZARDS[sid] = HAZARDS[sid] || [];
+        Object.keys(S.hazards || {}).forEach(function (hid) {
+          var p = S.hazards[hid]; if (delHz.indexOf(hid) >= 0) return;
+          var idx = -1; list.some(function (h, k) { if (h.hazardId === hid) { idx = k; return true; } return false; });
+          var cur = idx >= 0 ? list[idx] : null;
+          var nh = hz(Number(sid), hid, p.variant || (cur && cur.hazardVariant) || 'trash', p.family || (cur && cur.hazardFamily) || 'pollute', p.x, p.y, p.label || (cur && cur.label) || '위험요소', !!p.optional);
+          if (idx >= 0) list[idx] = nh; else list.push(nh);
+        });
+        for (var j = list.length - 1; j >= 0; j--) { if (delHz.indexOf(list[j].hazardId) >= 0) list.splice(j, 1); }
+        if (Number(sid) === 212 && S.boss) { BOSS_POS.x = S.boss.x; BOSS_POS.y = S.boss.y; }
+      });
+      log('placement ' + (PL.savedAt || ''));
+    } catch (e) { log('placement err ' + e.message); }
+  }
   var boot = setInterval(function () {
     tries++;
+    applyPlacement();
     var ok = false;
     try {
       ok = (typeof STAGES !== 'undefined') && window.BD_REGISTRY && window.BD_REGISTRY_CHAPTERS &&

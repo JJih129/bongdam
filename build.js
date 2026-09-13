@@ -29,6 +29,8 @@ console.log('  출력 : ' + outDir);
 /* (v399) 산출 assets/ 를 먼저 비운다 — webbuild 는 «쓰는 것만 복사»하고 지우지는 않아, 이름이 바뀐(재압축된)
    에셋의 옛 파일이 dist 에 남고 publish.js 가 그대로 main 에 올렸다(sub900.woff2 136KB 가 실제로 그랬다). */
 fs.rmSync(path.join(outDir, 'assets'), { recursive: true, force: true });
+/* (v400) 에디터 저장본 → 배치 데이터(0071) 재생성 — 웹판이 에디터 배치를 따라오게 */
+try { const g = require(path.join(root, '검수도구', 'tools', 'gen_placement.js'))(); console.log('  배치 데이터: 주민 ' + g.nNpc + ' · 위험요소 ' + g.nHz + (g.changed ? ' (갱신)' : '')); } catch (e) { console.error('배치 데이터 생성 실패: ' + e.message); process.exit(1); }
 execFileSync(process.execPath, [builder, srcDir, outDir], { stdio: 'inherit', cwd: root });
 
 /* 인라인 JS 최소화 — 주석·들여쓰기 제거. terser 가 없으면 조용히 넘어간다.

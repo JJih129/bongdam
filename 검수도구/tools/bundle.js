@@ -4,6 +4,8 @@ const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const [, , SRC, OUT] = process.argv;
 const chk = (process.argv.find(a => a.startsWith('--check=')) || '').slice(8);
 if (!SRC || !OUT) { console.error('usage: node bundle.js <srcdir> <out.html> [--check=orig.html]'); process.exit(1); }
+/* (v400) 에디터 저장본 → 배치 데이터(0071) 재생성 */
+try { require('./gen_placement.js')(); } catch (e) { console.error('배치 데이터 생성 실패: ' + e.message); process.exit(1); }
 const rd = rel => fs.readFileSync(path.join(SRC, rel)).toString('latin1');
 const manifest = JSON.parse(fs.readFileSync(path.join(SRC, 'manifest.json'), 'utf8'));
 const b64cache = new Map();

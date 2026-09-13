@@ -8,6 +8,7 @@
   setInterval(function(){
     try{
       if (fixed) return;
+      if (window.__BD_PLACEMENT){ fixed = true; return; }   /* (v400) 에디터 배치(0071)가 정본 — 하드코딩 이동 안 함 */
       var st = STAGES[211]; if (!st) return;
       var j = (st.objects||[]).find(function(o){ return o && o.npcName==='재현'; });
       var g = (st.objects||[]).find(function(o){ return o && o.hazardVariant==='graffiti'; });

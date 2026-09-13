@@ -121,6 +121,19 @@
           if (target) swapArt(st, o, target);
         });
       });
+      /* (v400) 에디터 저장본 배치(0071) — 친구 3인의 스테이지·좌표(중심 x·발끝 y)·hzTarget 은 에디터가 정본 */
+      try{
+        var PL = window.__BD_PLACEMENT;
+        if (PL && PL.stages && !window.__bdNpcArtPlaced){
+          window.__bdNpcArtPlaced = true;
+          NEW_NPCS.forEach(function(n){
+            Object.keys(PL.stages).forEach(function(sid){
+              var p = PL.stages[sid].npcs && PL.stages[sid].npcs[n.id]; if (!p) return;
+              n.sid = Number(sid); n.x = p.x; n.y = p.yf; if (p.hzTarget) n.hzTarget = p.hzTarget; else delete n.hzTarget;
+            });
+          });
+        }
+      }catch(ePL){}
       NEW_NPCS.forEach(function(n){
         var st = STAGES[n.sid]; if (!st || !Array.isArray(st.objects)) return;
         // (v50) 삭제 툼스톤 존중 — 에디터에서 지운 NPC(세아·재이·재현 등)는 다시 만들지 않는다
