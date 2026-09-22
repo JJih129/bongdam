@@ -1,23 +1,21 @@
-const CACHE="bongdam-fac27a2a29";
-const CORE=["index.html","manifest.webmanifest"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+const CACHE="bongdam-2120915e83";
+const CORE=["index.html","manifest.webmanifest","assets/0a0f65fe_game.a.js","assets/5dcd141f_game.b.js"];
+// (v401) 설치 때 문서·매니페스트·게임 JS(splitjs 가 CORE 에 덧붙임)를 미리 담는다. 새 SW 는 «대기»하고, 페이지 배너가 skipWaiting 을 요청할 때 교체된다.
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)));});
+self.addEventListener("message",e=>{if(e.data&&e.data.type==="skipWaiting")self.skipWaiting();});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-// 에셋은 요청 시 캐시(런타임 캐싱) — 첫 설치를 가볍게, 재방문·오프라인은 빠르게.
-// (v398) 다만 문서(index.html)만은 «네트워크 우선 + 2.5초 타임아웃»으로 가져온다.
-//   캐시 우선이면 배포해도 기존 접속자가 계속 옛 버전을 본다. match 의 ignoreSearch
-//   때문에 ?쿼리를 붙여도 캐시가 나와 강제 새로고침 수단이 없었다.
-//   네트워크가 느리거나 끊기면 캐시로 떨어지므로 오프라인 동작은 그대로다.
+// 문서(index.html): 캐시가 있으면 즉시 주고(재방문 0.1초·오프라인), 뒤에서 새로 받아 캐시를 갱신한다(stale-while-revalidate).
+//   새 버전은 sw.js 자체가 바뀌므로 updatefound → 배너로 알려 준다. 캐시가 없으면(첫 방문) 네트워크.
+// 에셋(해시 파일명): 캐시 우선, 없으면 네트워크 후 캐시.
 self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;
  const nav=(e.request.mode==="navigate");
  e.respondWith(caches.open(CACHE).then(async c=>{
   if(nav){
-   try{
-    const net=fetch(e.request);
-    const r=await Promise.race([net,new Promise((_,rj)=>setTimeout(()=>rj(new Error("slow")),2500))]);
-    if(r&&r.ok){try{c.put("index.html",r.clone());}catch(_){}return r;}
-   }catch(_){}
-   const idx=await c.match("index.html");if(idx)return idx;
-   return fetch(e.request);
+   const cached=await c.match("index.html");
+   const net=fetch(e.request).then(r=>{if(r&&r.ok){try{c.put("index.html",r.clone());}catch(_){}}return r;}).catch(()=>null);
+   if(cached){e.waitUntil(net);return cached;}
+   const r=await net;if(r)return r;
+   return new Response("오프라인이에요 — 인터넷에 연결한 뒤 다시 열어 주세요.",{status:503,headers:{"Content-Type":"text/plain; charset=utf-8"}});
   }
   const hit=await c.match(e.request,{ignoreSearch:true});
   if(hit)return hit;

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><script>document.documentElement.classList.add("bd-booting");setTimeout(function(){document.documentElement.classList.remove("bd-booting");},8000);</script><style>html.bd-booting{pointer-events:none!important}</style><script id="bd-handler-stubs">(function(){var q=window.__bdPendCalls=[];["advanceDialogue","closeInventory","closeModal","closeQuestPanel","continueFromAutosave","createNewGame","forceExitGame","goToMainMenu","openModal","openSaveSlotModal","quitGame","restartAsNewGame","selectCharacter","switchInvTab","useSelectedItem"].forEach(function(n){if(typeof window[n]==="function")return;var f=function(){q.push([n,this,Array.prototype.slice.call(arguments)]);};f.__bdStub=1;window[n]=f;});})();</script><script defer src="assets/9e236b52_game.js"></script>
+<head><script>document.documentElement.classList.add("bd-booting");setTimeout(function(){document.documentElement.classList.remove("bd-booting");},8000);</script><style>html.bd-booting{pointer-events:none!important}</style><script id="bd-handler-stubs">(function(){var q=window.__bdPendCalls=[];["advanceDialogue","closeInventory","closeModal","closeQuestPanel","continueFromAutosave","createNewGame","forceExitGame","goToMainMenu","openModal","openSaveSlotModal","quitGame","restartAsNewGame","selectCharacter","switchInvTab","useSelectedItem"].forEach(function(n){if(typeof window[n]==="function")return;var f=function(){q.push([n,this,Array.prototype.slice.call(arguments)]);};f.__bdStub=1;window[n]=f;});})();</script><link rel="preload" as="script" href="assets/5dcd141f_game.b.js"><script defer src="assets/0a0f65fe_game.a.js"></script>
+
 
 
 <meta charset="UTF-8">
@@ -9,15 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>봉담 안전지도 대작전</title><!-- build v397 -->
-<style id="bd-v268-cleanup">
-/* (v268) 사용하지 않는 도구 제거 — 게임저장 버튼·위험요소 배치(개발)·복사/붙여넣기·기본 배치·창 정리·대화 편집·쉬운 모드·프리팹·구세대 자료함 */
-#save-btn, [data-bdmb="dev"],
-#bge-copy, #bge-paste, #bge-tool-place, #bge-place-on,
-#bge-tab-resetpos, #bge-tab-dialog, #bge-tab-simple,
-.bge-prefab-list, #bge-prefab-add, #bge-prefab-save,
-#bge-v37-asset-panel, #bge-v3-panel, #bge-kid-panel, #bge-v43-panel
-{ display: none !important; }
-</style>
+
 <meta property="og:title" content="봉담청소년문화의집 지킴이">
 <meta property="og:description" content="봉담읍 곳곳의 위험 요소를 정화하고 청소년 시설을 알아가는 2D 안전교육 RPG">
 <meta property="og:type" content="website">
@@ -27,13 +20,38 @@
 
 
 
-<style id="bd-embedded-font">/* (v398) Noto Serif KR — 게임이 실제로 쓰는 1034자만 담은 서브셋 (400/700 두 벌).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="bd-css">
+/* (v268) 사용하지 않는 도구 제거 — 게임저장 버튼·위험요소 배치(개발)·복사/붙여넣기·기본 배치·창 정리·대화 편집·쉬운 모드·프리팹·구세대 자료함 */
+#save-btn, [data-bdmb="dev"],
+#bge-copy, #bge-paste, #bge-tool-place, #bge-place-on,
+#bge-tab-resetpos, #bge-tab-dialog, #bge-tab-simple,
+.bge-prefab-list, #bge-prefab-add, #bge-prefab-save,
+#bge-v37-asset-panel, #bge-v3-panel, #bge-kid-panel, #bge-v43-panel
+{ display: none !important; }
+
+/* (v398) Noto Serif KR — 게임이 실제로 쓰는 1034자만 담은 서브셋 (400/700 두 벌).
    unicode-range 밖의 글자(예: #hero-name 에 입력한 이름)는 이 폰트가 관여하지 않고
    스택의 다음 항목(serif)으로 넘어가 시스템 한글 명조로 렌더된다.
    재생성: node 검수도구/tools/font_subset.js src */
 @font-face{font-family:'Noto Serif KR';font-style:normal;font-weight:400;font-display:swap;src:url(assets/91a43f19_sub400.woff2) format('woff2');unicode-range:U+20-7E,U+A7,U+AB,U+B1,U+B7,U+BB,U+D7,U+F7,U+F9,U+200D,U+2013-2014,U+2018-2019,U+201C-201D,U+2026,U+203A-203B,U+2139,U+2190-2194,U+21A9-21AA,U+21B3,U+21D2,U+21E2,U+21E7,U+221E,U+222A,U+2248,U+2260,U+229E,U+2302,U+2328,U+23E9,U+23F1,U+23F8,U+2460-2467,U+2500-2501,U+2550,U+258C,U+25AB-25AC,U+25B2,U+25B6-25B8,U+25BC,U+25C0,U+25C6-25C8,U+25CB,U+25CF,U+25EF,U+25FB,U+2605-2606,U+2611,U+2615,U+2620,U+2630,U+2669,U+2694,U+2699,U+26A0-26A1,U+26D1,U+26F6,U+2705,U+270F,U+2713-2715,U+2726,U+2728,U+2744,U+274C,U+2753-2754,U+2757,U+2764,U+2796,U+27A4,U+27F3,U+283F,U+2B06-2B07,U+2B1B-2B1C,U+2B50,U+2B55,U+300C-300F,U+30FB,U+3131,U+3161,U+65E5,U+672C,U+7AE0,U+8A9E,U+AC00-AC01,U+AC04,U+AC07-AC08,U+AC10-AC16,U+AC19-AC1A,U+AC1C-AC1D,U+AC24,U+AC31,U+AC70-AC71,U+AC74,U+AC77-AC78,U+AC80-AC81,U+AC83,U+AC89,U+AC8C,U+AC9C,U+AC9F-ACA0,U+ACA8-ACAA,U+ACAC,U+ACB0,U+ACB8-ACB9,U+ACBC-ACBD,U+ACC4,U+ACE0-ACE1,U+ACE4,U+ACE7-ACE8,U+ACF1,U+ACF3,U+ACF5,U+ACFC-ACFD,U+AD00,U+AD04,U+AD11,U+AD1C,U+AD34,U+AD50,U+AD6C-AD6D,U+AD70,U+AD73-AD75,U+AD7D,U+AD81,U+AD8C,U+ADA4,U+ADC0,U+ADDC,U+ADE0,U+ADF8-ADF9,U+ADFC,U+AE00,U+AE08-AE09,U+AE0B,U+AE30,U+AE34,U+AE38,U+AE40-AE41,U+AE43,U+AE45,U+AE4A,U+AE4C,U+AE4E,U+AE50,U+AE54,U+AE5C-AE5D,U+AE65,U+AE68,U+AEBC,U+AEBE,U+AECF-AED0,U+AED8,U+AEF4,U+AF2C-AF2D,U+AF34,U+AF42-AF43,U+AF64,U+AFB8-AFB9,U+AFBC,U+AFC0,U+AFC8,U+AFD4,U+B00C,U+B010,U+B01C-B01D,U+B044,U+B048,U+B04A,U+B04C,U+B054,U+B057,U+B05D,U+B07C,U+B080,U+B08C,U+B098-B099,U+B09C,U+B0A0-B0A1,U+B0A8-B0A9,U+B0AB-B0AE,U+B0B1,U+B0B3-B0B4,U+B0B8,U+B0BC,U+B0C4-B0C5,U+B0C8,U+B0E0,U+B0E5,U+B108-B109,U+B110,U+B113,U+B118,U+B123-B124,U+B12C,U+B140-B141,U+B144,U+B150,U+B154-B155,U+B158,U+B178-B179,U+B17C,U+B180,U+B18D,U+B192-B193,U+B204,U+B208,U+B20C,U+B220,U+B274,U+B290,U+B294,U+B298-B299,U+B2A0,U+B2A5-B2A6,U+B2AC,U+B2C8-B2C9,U+B2CC,U+B2D0,U+B2D8,U+B2DB,U+B2DD,U+B2E4-B2E6,U+B2E8,U+B2EB-B2EC,U+B2F4-B2F5,U+B2F9,U+B2FF-B300,U+B304,U+B308,U+B311,U+B354-B355,U+B358,U+B35C,U+B364,U+B367,U+B369,U+B36E,U+B370-B371,U+B378,U+B3C4-B3C5,U+B3C8,U+B3CB-B3CC,U+B3D9,U+B3FC,U+B410,U+B418,U+B41C,U+B420,U+B428-B429,U+B450,U+B454,U+B458,U+B460-B461,U+B465,U+B480,U+B4A4,U+B4B7,U+B4B9,U+B4C8,U+B4DC-B4DD,U+B4E0,U+B4E3-B4E4,U+B4E6,U+B4EC-B4ED,U+B4EF,U+B4F1,U+B514,U+B518,U+B51C,U+B524-B525,U+B527,U+B529-B52A,U+B530-B531,U+B540,U+B545,U+B54C,U+B550,U+B5A0,U+B5A4,U+B5A8,U+B5B4,U+B5BB-B5BC,U+B5C0,U+B5D0,U+B610-B611,U+B69D,U+B6AB,U+B6B1,U+B6F0,U+B6F4,U+B700-B701,U+B728-B729,U+B72C,U+B730,U+B738,U+B73B,U+B744,U+B760,U+B775,U+B77C-B77D,U+B780,U+B78C-B78D,U+B790-B791,U+B798-B799,U+B79C,U+B7A8,U+B7AB-B7AC,U+B7B5,U+B7C9,U+B7EC,U+B7F0,U+B7F4,U+B7FC-B7FD,U+B7FF-B800,U+B807-B809,U+B80C,U+B819,U+B81B,U+B824-B825,U+B828,U+B82C,U+B834-B835,U+B837-B839,U+B840,U+B85C-B85D,U+B860,U+B864,U+B86C-B86D,U+B86F,U+B871,U+B8B0,U+B8CC,U+B8E8-B8E9,U+B8EC,U+B8F0,U+B8F8-B8F9,U+B8FB,U+B904,U+B958,U+B960,U+B968,U+B974,U+B978,U+B97C,U+B984-B985,U+B989,U+B98E,U+B9AC-B9AD,U+B9B0,U+B9B4,U+B9BC-B9BD,U+B9BF,U+B9C1,U+B9C8-B9C9,U+B9CC,U+B9CE,U+B9D0-B9D1,U+B9D9,U+B9DB,U+B9DD-B9DE,U+B9E1,U+B9E4-B9E5,U+B9E8,U+B9F4-B9F5,U+B9F7-B9F8,U+B9FA,U+BA38-BA39,U+BA3C,U+BA40,U+BA48,U+BA4B,U+BA4D,U+BA54,U+BA58,U+BA5C,U+BA70-BA71,U+BA74,U+BA78,U+BA85,U+BA87,U+BAA8-BAA9,U+BAAB-BAAC,U+BAB0,U+BAB8-BAB9,U+BABB,U+BB18,U+BB34-BB36,U+BB38,U+BB3B-BB3C,U+BB49,U+BB50,U+BB54,U+BB58,U+BBAC,U+BBC0,U+BBF8-BBF9,U+BBFC,U+BBFF-BC00,U+BC0C-BC0D,U+BC0F,U+BC11,U+BC14-BC16,U+BC18,U+BC1B-BC1D,U+BC1F,U+BC24-BC25,U+BC29,U+BC30-BC31,U+BC34,U+BC38,U+BC40,U+BC84-BC85,U+BC88,U+BC8C,U+BC94-BC95,U+BC97,U+BCA0-BCA1,U+BCA4,U+BCA8,U+BCBC-BCBD,U+BCC0,U+BCC4,U+BCCD,U+BCD1,U+BCF4-BCF5,U+BCF8,U+BCFC,U+BD04,U+BD09,U+BD10,U+BD24,U+BD80-BD81,U+BD84,U+BD88-BD89,U+BD93,U+BD95,U+BD99,U+BDF0,U+BE0C,U+BE14,U+BE44,U+BE48,U+BE4C,U+BE57,U+BE59,U+BE5B,U+BE60-BE61,U+BE68,U+BE80,U+BE8F-BE90,U+BED0,U+BED4,U+BED7,U+BEE4-BEE5,U+BF08,U+BF40,U+BF51,U+BFCC,U+BFD0,U+BFD4,U+BFDC,U+C068,U+C090,U+C0AC-C0AD,U+C0B0,U+C0B4,U+C0BC-C0BD,U+C0C0-C0C1,U+C0C8-C0C9,U+C0CC,U+C0D8,U+C0DD,U+C0E4,U+C0F5,U+C0F7,U+C11C-C11E,U+C120,U+C124,U+C12C-C12D,U+C131,U+C138-C139,U+C13C,U+C140,U+C148-C149,U+C14B,U+C154,U+C158,U+C168,U+C18C-C18D,U+C190,U+C194,U+C19C,U+C19F,U+C1A1,U+C1C4,U+C1E0,U+C1FC,U+C20D,U+C218-C219,U+C21C,U+C220,U+C228,U+C22B,U+C232,U+C26C,U+C274,U+C27C-C27D,U+C288,U+C290,U+C2A4,U+C2A8,U+C2AC,U+C2B5,U+C2B7,U+C2B9,U+C2DC-C2DD,U+C2E0,U+C2E4,U+C2EC-C2ED,U+C2F1,U+C2F6,U+C2F8-C2F9,U+C2FC,U+C30C-C30D,U+C313,U+C368,U+C378,U+C37C,U+C384,U+C3D8,U+C42C,U+C4F0,U+C4F4,U+C4F8,U+C500,U+C50C,U+C528-C529,U+C52C,U+C53B,U+C544-C545,U+C548-C54A,U+C54C,U+C554-C555,U+C557-C559,U+C55E,U+C560-C561,U+C564,U+C571,U+C575,U+C57C-C57D,U+C580,U+C587,U+C591,U+C598,U+C5B4-C5B5,U+C5B8-C5B9,U+C5BB-C5BC,U+C5C4-C5C9,U+C5CE,U+C5D0,U+C5D4,U+C5D8,U+C5E1,U+C5E3,U+C5EC-C5ED,U+C5F0,U+C5F4,U+C5FC,U+C600-C601,U+C606,U+C608,U+C61B,U+C624-C625,U+C628,U+C62C,U+C62E,U+C634-C635,U+C637,U+C640,U+C644,U+C651,U+C654-C655,U+C65C,U+C660,U+C678,U+C67C,U+C694,U+C6A9,U+C6B0-C6B1,U+C6B4,U+C6B8,U+C6C0,U+C6C3,U+C6C5,U+C6CC,U+C6D0,U+C6D4,U+C6E0,U+C6E8,U+C6F9,U+C704,U+C708,U+C719,U+C720-C721,U+C724,U+C728,U+C735,U+C73C,U+C740,U+C744,U+C74C-C74D,U+C751,U+C758,U+C774-C775,U+C778,U+C77C-C77D,U+C783-C785,U+C787-C78A,U+C790-C791,U+C794,U+C796,U+C798,U+C7A0-C7A1,U+C7A5-C7A6,U+C7AC,U+C7B0,U+C7C1,U+C800-C801,U+C804,U+C808,U+C810-C811,U+C815,U+C81C-C81D,U+C820,U+C824,U+C82F,U+C838,U+C84C,U+C870-C871,U+C874,U+C878,U+C880-C881,U+C885,U+C88B-C88C,U+C8E0,U+C8FC-C8FD,U+C900,U+C904,U+C90C,U+C911,U+C918,U+C92C,U+C950,U+C988-C989,U+C990,U+C998,U+C99D,U+C9C0-C9C1,U+C9C4,U+C9C8,U+C9D0-C9D1,U+C9D5,U+C9D9-C9DA,U+C9DC-C9DD,U+C9E7,U+C9F8,U+CA4C-CA4D,U+CA61,U+CABD,U+CB49,U+CC0C-CC0D,U+CC14,U+CC22,U+CC28-CC29,U+CC2C,U+CC2E,U+CC30,U+CC38,U+CC3C-CC3E,U+CC44-CC45,U+CC48,U+CC55,U+CC59,U+CC98-CC99,U+CC9C,U+CCA0,U+CCA8-CCA9,U+CCAB,U+CCAD,U+CCB4,U+CCD0,U+CCE4,U+CD08-CD09,U+CD0C,U+CD18,U+CD1D,U+CD5C,U+CD94-CD95,U+CD98,U+CD9C,U+CDA4,U+CDA9,U+CDB0,U+CDE8,U+CE20-CE21,U+CE35,U+CE58-CE59,U+CE5C,U+CE60,U+CE68-CE69,U+CE6D,U+CE74-CE75,U+CE78,U+CE7C,U+CE84,U+CE89,U+CE90,U+CE94,U+CEA0-CEA1,U+CEE4,U+CEE8,U+CEEC,U+CEF4,U+CEF7,U+CF00,U+CF13,U+CF1C,U+CF30,U+CF54,U+CF58,U+CF5C,U+CF64,U+CF8C,U+CFE0,U+CFE8,U+CFF5,U+CFFC,U+D000,U+D018,U+D034,U+D050,U+D06C,U+D070,U+D074,U+D07C-D07D,U+D0A4-D0A5,U+D0A8,U+D0AC,U+D0B4-D0B5,U+D0B7,U+D0B9,U+D0C0-D0C1,U+D0C4,U+D0C8,U+D0D0-D0D1,U+D0D3,U+D0D5,U+D0DC-D0DD,U+D0EC-D0ED,U+D0EF,U+D130-D131,U+D134,U+D138,U+D140-D141,U+D14C-D14D,U+D150,U+D15C-D15D,U+D168,U+D1A0,U+D1A4,U+D1B1,U+D1B5,U+D1F4,U+D22C,U+D230,U+D234,U+D23C,U+D280,U+D29C,U+D2A0,U+D2B8-D2B9,U+D2BC,U+D2C0,U+D2C8,U+D2F0-D2F1,U+D2F4,U+D2F8,U+D300-D301,U+D305,U+D30C,U+D310,U+D314,U+D31D,U+D321,U+D328-D329,U+D32C,U+D338-D339,U+D37C,U+D380,U+D384,U+D38C,U+D398-D399,U+D39C,U+D3AB,U+D3B4,U+D3B8,U+D3BC,U+D3C9,U+D3D0,U+D3EC-D3ED,U+D3F0,U+D3F4,U+D3FC,U+D45C,U+D478-D479,U+D47C,U+D480,U+D488,U+D48D,U+D4E8,U+D504,U+D508,U+D50C,U+D53C-D53D,U+D540,U+D544,U+D54D,U+D551,U+D558-D559,U+D55C,U+D560,U+D568-D569,U+D56B,U+D56D,U+D574-D575,U+D578,U+D587-D589,U+D5A5,U+D5C8,U+D5D8,U+D5DB,U+D5E4,U+D5EC,U+D5F7,U+D600,U+D604,U+D611,U+D614-D615,U+D61C,U+D638-D639,U+D63C,U+D640,U+D648-D649,U+D64D,U+D654-D655,U+D658,U+D65C,U+D669,U+D68C-D68D,U+D69F,U+D6A1,U+D6A8,U+D6C4-D6C5,U+D6C8,U+D6D1,U+D6E4,U+D6E8,U+D718-D719,U+D720,U+D734,U+D749,U+D750-D751,U+D754,U+D758,U+D761,U+D769,U+D76C,U+D770,U+D788,U+D78C,U+D790,U+D798,U+FE0F,U+FF0B,U+FF0D,U+FF1F,U+1F175,U+1F195,U+1F199,U+1F300,U+1F305,U+1F308,U+1F30D,U+1F310-1F311,U+1F319,U+1F31F,U+1F32A-1F32C,U+1F331-1F333,U+1F33E-1F340,U+1F359,U+1F36A,U+1F37E,U+1F381,U+1F383,U+1F389,U+1F392,U+1F396,U+1F39B,U+1F3A3-1F3A4,U+1F3A8,U+1F3AB-1F3AF,U+1F3B2,U+1F3B5,U+1F3BC,U+1F3C3,U+1F3C5-1F3C6,U+1F3DB,U+1F3E0,U+1F3E2,U+1F3EA,U+1F3F7,U+1F40D,U+1F440-1F441,U+1F446,U+1F44B,U+1F451,U+1F45F,U+1F463,U+1F479,U+1F47E,U+1F480-1F481,U+1F489-1F48A,U+1F48E,U+1F496-1F497,U+1F499-1F49A,U+1F4A0-1F4A1,U+1F4A5-1F4A8,U+1F4AA-1F4AC,U+1F4B0,U+1F4B8,U+1F4BE,U+1F4C2,U+1F4C4,U+1F4CB-1F4CE,U+1F4D0,U+1F4D4,U+1F4D6,U+1F4DA,U+1F4DC,U+1F4DE,U+1F4E3,U+1F4E8,U+1F4F1,U+1F4F8,U+1F501,U+1F504,U+1F507,U+1F50A-1F50B,U+1F50D,U+1F512-1F514,U+1F525-1F527,U+1F529-1F52C,U+1F52E,U+1F530,U+1F539,U+1F573,U+1F575,U+1F579,U+1F58C,U+1F5A5,U+1F5BC,U+1F5C2,U+1F5D1,U+1F5DD,U+1F5FA,U+1F642,U+1F648,U+1F64B-1F64C,U+1F680,U+1F68C,U+1F691,U+1F6AA,U+1F6AC,U+1F6B2,U+1F6B6,U+1F6D2,U+1F6D7,U+1F6E0-1F6E1,U+1F6F4,U+1F6F9,U+1F916,U+1F91D,U+1F938,U+1F93E,U+1F964,U+1F96A,U+1F97E,U+1F9B1,U+1F9B8,U+1F9C3,U+1F9CB,U+1F9CD,U+1F9D1,U+1F9D8,U+1F9DF,U+1F9E2,U+1F9E9-1F9EA,U+1F9ED,U+1F9F1,U+1F9F8-1F9F9,U+1FA79-1FA7A,U+1FA80,U+1FA9C,U+1FAA2;}
-@font-face{font-family:'Noto Serif KR';font-style:normal;font-weight:700;font-display:swap;src:url(assets/b60f6511_sub700.woff2) format('woff2');unicode-range:U+20-7E,U+A7,U+AB,U+B1,U+B7,U+BB,U+D7,U+F7,U+F9,U+200D,U+2013-2014,U+2018-2019,U+201C-201D,U+2026,U+203A-203B,U+2139,U+2190-2194,U+21A9-21AA,U+21B3,U+21D2,U+21E2,U+21E7,U+221E,U+222A,U+2248,U+2260,U+229E,U+2302,U+2328,U+23E9,U+23F1,U+23F8,U+2460-2467,U+2500-2501,U+2550,U+258C,U+25AB-25AC,U+25B2,U+25B6-25B8,U+25BC,U+25C0,U+25C6-25C8,U+25CB,U+25CF,U+25EF,U+25FB,U+2605-2606,U+2611,U+2615,U+2620,U+2630,U+2669,U+2694,U+2699,U+26A0-26A1,U+26D1,U+26F6,U+2705,U+270F,U+2713-2715,U+2726,U+2728,U+2744,U+274C,U+2753-2754,U+2757,U+2764,U+2796,U+27A4,U+27F3,U+283F,U+2B06-2B07,U+2B1B-2B1C,U+2B50,U+2B55,U+300C-300F,U+30FB,U+3131,U+3161,U+65E5,U+672C,U+7AE0,U+8A9E,U+AC00-AC01,U+AC04,U+AC07-AC08,U+AC10-AC16,U+AC19-AC1A,U+AC1C-AC1D,U+AC24,U+AC31,U+AC70-AC71,U+AC74,U+AC77-AC78,U+AC80-AC81,U+AC83,U+AC89,U+AC8C,U+AC9C,U+AC9F-ACA0,U+ACA8-ACAA,U+ACAC,U+ACB0,U+ACB8-ACB9,U+ACBC-ACBD,U+ACC4,U+ACE0-ACE1,U+ACE4,U+ACE7-ACE8,U+ACF1,U+ACF3,U+ACF5,U+ACFC-ACFD,U+AD00,U+AD04,U+AD11,U+AD1C,U+AD34,U+AD50,U+AD6C-AD6D,U+AD70,U+AD73-AD75,U+AD7D,U+AD81,U+AD8C,U+ADA4,U+ADC0,U+ADDC,U+ADE0,U+ADF8-ADF9,U+ADFC,U+AE00,U+AE08-AE09,U+AE0B,U+AE30,U+AE34,U+AE38,U+AE40-AE41,U+AE43,U+AE45,U+AE4A,U+AE4C,U+AE4E,U+AE50,U+AE54,U+AE5C-AE5D,U+AE65,U+AE68,U+AEBC,U+AEBE,U+AECF-AED0,U+AED8,U+AEF4,U+AF2C-AF2D,U+AF34,U+AF42-AF43,U+AF64,U+AFB8-AFB9,U+AFBC,U+AFC0,U+AFC8,U+AFD4,U+B00C,U+B010,U+B01C-B01D,U+B044,U+B048,U+B04A,U+B04C,U+B054,U+B057,U+B05D,U+B07C,U+B080,U+B08C,U+B098-B099,U+B09C,U+B0A0-B0A1,U+B0A8-B0A9,U+B0AB-B0AE,U+B0B1,U+B0B3-B0B4,U+B0B8,U+B0BC,U+B0C4-B0C5,U+B0C8,U+B0E0,U+B0E5,U+B108-B109,U+B110,U+B113,U+B118,U+B123-B124,U+B12C,U+B140-B141,U+B144,U+B150,U+B154-B155,U+B158,U+B178-B179,U+B17C,U+B180,U+B18D,U+B192-B193,U+B204,U+B208,U+B20C,U+B220,U+B274,U+B290,U+B294,U+B298-B299,U+B2A0,U+B2A5-B2A6,U+B2AC,U+B2C8-B2C9,U+B2CC,U+B2D0,U+B2D8,U+B2DB,U+B2DD,U+B2E4-B2E6,U+B2E8,U+B2EB-B2EC,U+B2F4-B2F5,U+B2F9,U+B2FF-B300,U+B304,U+B308,U+B311,U+B354-B355,U+B358,U+B35C,U+B364,U+B367,U+B369,U+B36E,U+B370-B371,U+B378,U+B3C4-B3C5,U+B3C8,U+B3CB-B3CC,U+B3D9,U+B3FC,U+B410,U+B418,U+B41C,U+B420,U+B428-B429,U+B450,U+B454,U+B458,U+B460-B461,U+B465,U+B480,U+B4A4,U+B4B7,U+B4B9,U+B4C8,U+B4DC-B4DD,U+B4E0,U+B4E3-B4E4,U+B4E6,U+B4EC-B4ED,U+B4EF,U+B4F1,U+B514,U+B518,U+B51C,U+B524-B525,U+B527,U+B529-B52A,U+B530-B531,U+B540,U+B545,U+B54C,U+B550,U+B5A0,U+B5A4,U+B5A8,U+B5B4,U+B5BB-B5BC,U+B5C0,U+B5D0,U+B610-B611,U+B69D,U+B6AB,U+B6B1,U+B6F0,U+B6F4,U+B700-B701,U+B728-B729,U+B72C,U+B730,U+B738,U+B73B,U+B744,U+B760,U+B775,U+B77C-B77D,U+B780,U+B78C-B78D,U+B790-B791,U+B798-B799,U+B79C,U+B7A8,U+B7AB-B7AC,U+B7B5,U+B7C9,U+B7EC,U+B7F0,U+B7F4,U+B7FC-B7FD,U+B7FF-B800,U+B807-B809,U+B80C,U+B819,U+B81B,U+B824-B825,U+B828,U+B82C,U+B834-B835,U+B837-B839,U+B840,U+B85C-B85D,U+B860,U+B864,U+B86C-B86D,U+B86F,U+B871,U+B8B0,U+B8CC,U+B8E8-B8E9,U+B8EC,U+B8F0,U+B8F8-B8F9,U+B8FB,U+B904,U+B958,U+B960,U+B968,U+B974,U+B978,U+B97C,U+B984-B985,U+B989,U+B98E,U+B9AC-B9AD,U+B9B0,U+B9B4,U+B9BC-B9BD,U+B9BF,U+B9C1,U+B9C8-B9C9,U+B9CC,U+B9CE,U+B9D0-B9D1,U+B9D9,U+B9DB,U+B9DD-B9DE,U+B9E1,U+B9E4-B9E5,U+B9E8,U+B9F4-B9F5,U+B9F7-B9F8,U+B9FA,U+BA38-BA39,U+BA3C,U+BA40,U+BA48,U+BA4B,U+BA4D,U+BA54,U+BA58,U+BA5C,U+BA70-BA71,U+BA74,U+BA78,U+BA85,U+BA87,U+BAA8-BAA9,U+BAAB-BAAC,U+BAB0,U+BAB8-BAB9,U+BABB,U+BB18,U+BB34-BB36,U+BB38,U+BB3B-BB3C,U+BB49,U+BB50,U+BB54,U+BB58,U+BBAC,U+BBC0,U+BBF8-BBF9,U+BBFC,U+BBFF-BC00,U+BC0C-BC0D,U+BC0F,U+BC11,U+BC14-BC16,U+BC18,U+BC1B-BC1D,U+BC1F,U+BC24-BC25,U+BC29,U+BC30-BC31,U+BC34,U+BC38,U+BC40,U+BC84-BC85,U+BC88,U+BC8C,U+BC94-BC95,U+BC97,U+BCA0-BCA1,U+BCA4,U+BCA8,U+BCBC-BCBD,U+BCC0,U+BCC4,U+BCCD,U+BCD1,U+BCF4-BCF5,U+BCF8,U+BCFC,U+BD04,U+BD09,U+BD10,U+BD24,U+BD80-BD81,U+BD84,U+BD88-BD89,U+BD93,U+BD95,U+BD99,U+BDF0,U+BE0C,U+BE14,U+BE44,U+BE48,U+BE4C,U+BE57,U+BE59,U+BE5B,U+BE60-BE61,U+BE68,U+BE80,U+BE8F-BE90,U+BED0,U+BED4,U+BED7,U+BEE4-BEE5,U+BF08,U+BF40,U+BF51,U+BFCC,U+BFD0,U+BFD4,U+BFDC,U+C068,U+C090,U+C0AC-C0AD,U+C0B0,U+C0B4,U+C0BC-C0BD,U+C0C0-C0C1,U+C0C8-C0C9,U+C0CC,U+C0D8,U+C0DD,U+C0E4,U+C0F5,U+C0F7,U+C11C-C11E,U+C120,U+C124,U+C12C-C12D,U+C131,U+C138-C139,U+C13C,U+C140,U+C148-C149,U+C14B,U+C154,U+C158,U+C168,U+C18C-C18D,U+C190,U+C194,U+C19C,U+C19F,U+C1A1,U+C1C4,U+C1E0,U+C1FC,U+C20D,U+C218-C219,U+C21C,U+C220,U+C228,U+C22B,U+C232,U+C26C,U+C274,U+C27C-C27D,U+C288,U+C290,U+C2A4,U+C2A8,U+C2AC,U+C2B5,U+C2B7,U+C2B9,U+C2DC-C2DD,U+C2E0,U+C2E4,U+C2EC-C2ED,U+C2F1,U+C2F6,U+C2F8-C2F9,U+C2FC,U+C30C-C30D,U+C313,U+C368,U+C378,U+C37C,U+C384,U+C3D8,U+C42C,U+C4F0,U+C4F4,U+C4F8,U+C500,U+C50C,U+C528-C529,U+C52C,U+C53B,U+C544-C545,U+C548-C54A,U+C54C,U+C554-C555,U+C557-C559,U+C55E,U+C560-C561,U+C564,U+C571,U+C575,U+C57C-C57D,U+C580,U+C587,U+C591,U+C598,U+C5B4-C5B5,U+C5B8-C5B9,U+C5BB-C5BC,U+C5C4-C5C9,U+C5CE,U+C5D0,U+C5D4,U+C5D8,U+C5E1,U+C5E3,U+C5EC-C5ED,U+C5F0,U+C5F4,U+C5FC,U+C600-C601,U+C606,U+C608,U+C61B,U+C624-C625,U+C628,U+C62C,U+C62E,U+C634-C635,U+C637,U+C640,U+C644,U+C651,U+C654-C655,U+C65C,U+C660,U+C678,U+C67C,U+C694,U+C6A9,U+C6B0-C6B1,U+C6B4,U+C6B8,U+C6C0,U+C6C3,U+C6C5,U+C6CC,U+C6D0,U+C6D4,U+C6E0,U+C6E8,U+C6F9,U+C704,U+C708,U+C719,U+C720-C721,U+C724,U+C728,U+C735,U+C73C,U+C740,U+C744,U+C74C-C74D,U+C751,U+C758,U+C774-C775,U+C778,U+C77C-C77D,U+C783-C785,U+C787-C78A,U+C790-C791,U+C794,U+C796,U+C798,U+C7A0-C7A1,U+C7A5-C7A6,U+C7AC,U+C7B0,U+C7C1,U+C800-C801,U+C804,U+C808,U+C810-C811,U+C815,U+C81C-C81D,U+C820,U+C824,U+C82F,U+C838,U+C84C,U+C870-C871,U+C874,U+C878,U+C880-C881,U+C885,U+C88B-C88C,U+C8E0,U+C8FC-C8FD,U+C900,U+C904,U+C90C,U+C911,U+C918,U+C92C,U+C950,U+C988-C989,U+C990,U+C998,U+C99D,U+C9C0-C9C1,U+C9C4,U+C9C8,U+C9D0-C9D1,U+C9D5,U+C9D9-C9DA,U+C9DC-C9DD,U+C9E7,U+C9F8,U+CA4C-CA4D,U+CA61,U+CABD,U+CB49,U+CC0C-CC0D,U+CC14,U+CC22,U+CC28-CC29,U+CC2C,U+CC2E,U+CC30,U+CC38,U+CC3C-CC3E,U+CC44-CC45,U+CC48,U+CC55,U+CC59,U+CC98-CC99,U+CC9C,U+CCA0,U+CCA8-CCA9,U+CCAB,U+CCAD,U+CCB4,U+CCD0,U+CCE4,U+CD08-CD09,U+CD0C,U+CD18,U+CD1D,U+CD5C,U+CD94-CD95,U+CD98,U+CD9C,U+CDA4,U+CDA9,U+CDB0,U+CDE8,U+CE20-CE21,U+CE35,U+CE58-CE59,U+CE5C,U+CE60,U+CE68-CE69,U+CE6D,U+CE74-CE75,U+CE78,U+CE7C,U+CE84,U+CE89,U+CE90,U+CE94,U+CEA0-CEA1,U+CEE4,U+CEE8,U+CEEC,U+CEF4,U+CEF7,U+CF00,U+CF13,U+CF1C,U+CF30,U+CF54,U+CF58,U+CF5C,U+CF64,U+CF8C,U+CFE0,U+CFE8,U+CFF5,U+CFFC,U+D000,U+D018,U+D034,U+D050,U+D06C,U+D070,U+D074,U+D07C-D07D,U+D0A4-D0A5,U+D0A8,U+D0AC,U+D0B4-D0B5,U+D0B7,U+D0B9,U+D0C0-D0C1,U+D0C4,U+D0C8,U+D0D0-D0D1,U+D0D3,U+D0D5,U+D0DC-D0DD,U+D0EC-D0ED,U+D0EF,U+D130-D131,U+D134,U+D138,U+D140-D141,U+D14C-D14D,U+D150,U+D15C-D15D,U+D168,U+D1A0,U+D1A4,U+D1B1,U+D1B5,U+D1F4,U+D22C,U+D230,U+D234,U+D23C,U+D280,U+D29C,U+D2A0,U+D2B8-D2B9,U+D2BC,U+D2C0,U+D2C8,U+D2F0-D2F1,U+D2F4,U+D2F8,U+D300-D301,U+D305,U+D30C,U+D310,U+D314,U+D31D,U+D321,U+D328-D329,U+D32C,U+D338-D339,U+D37C,U+D380,U+D384,U+D38C,U+D398-D399,U+D39C,U+D3AB,U+D3B4,U+D3B8,U+D3BC,U+D3C9,U+D3D0,U+D3EC-D3ED,U+D3F0,U+D3F4,U+D3FC,U+D45C,U+D478-D479,U+D47C,U+D480,U+D488,U+D48D,U+D4E8,U+D504,U+D508,U+D50C,U+D53C-D53D,U+D540,U+D544,U+D54D,U+D551,U+D558-D559,U+D55C,U+D560,U+D568-D569,U+D56B,U+D56D,U+D574-D575,U+D578,U+D587-D589,U+D5A5,U+D5C8,U+D5D8,U+D5DB,U+D5E4,U+D5EC,U+D5F7,U+D600,U+D604,U+D611,U+D614-D615,U+D61C,U+D638-D639,U+D63C,U+D640,U+D648-D649,U+D64D,U+D654-D655,U+D658,U+D65C,U+D669,U+D68C-D68D,U+D69F,U+D6A1,U+D6A8,U+D6C4-D6C5,U+D6C8,U+D6D1,U+D6E4,U+D6E8,U+D718-D719,U+D720,U+D734,U+D749,U+D750-D751,U+D754,U+D758,U+D761,U+D769,U+D76C,U+D770,U+D788,U+D78C,U+D790,U+D798,U+FE0F,U+FF0B,U+FF0D,U+FF1F,U+1F175,U+1F195,U+1F199,U+1F300,U+1F305,U+1F308,U+1F30D,U+1F310-1F311,U+1F319,U+1F31F,U+1F32A-1F32C,U+1F331-1F333,U+1F33E-1F340,U+1F359,U+1F36A,U+1F37E,U+1F381,U+1F383,U+1F389,U+1F392,U+1F396,U+1F39B,U+1F3A3-1F3A4,U+1F3A8,U+1F3AB-1F3AF,U+1F3B2,U+1F3B5,U+1F3BC,U+1F3C3,U+1F3C5-1F3C6,U+1F3DB,U+1F3E0,U+1F3E2,U+1F3EA,U+1F3F7,U+1F40D,U+1F440-1F441,U+1F446,U+1F44B,U+1F451,U+1F45F,U+1F463,U+1F479,U+1F47E,U+1F480-1F481,U+1F489-1F48A,U+1F48E,U+1F496-1F497,U+1F499-1F49A,U+1F4A0-1F4A1,U+1F4A5-1F4A8,U+1F4AA-1F4AC,U+1F4B0,U+1F4B8,U+1F4BE,U+1F4C2,U+1F4C4,U+1F4CB-1F4CE,U+1F4D0,U+1F4D4,U+1F4D6,U+1F4DA,U+1F4DC,U+1F4DE,U+1F4E3,U+1F4E8,U+1F4F1,U+1F4F8,U+1F501,U+1F504,U+1F507,U+1F50A-1F50B,U+1F50D,U+1F512-1F514,U+1F525-1F527,U+1F529-1F52C,U+1F52E,U+1F530,U+1F539,U+1F573,U+1F575,U+1F579,U+1F58C,U+1F5A5,U+1F5BC,U+1F5C2,U+1F5D1,U+1F5DD,U+1F5FA,U+1F642,U+1F648,U+1F64B-1F64C,U+1F680,U+1F68C,U+1F691,U+1F6AA,U+1F6AC,U+1F6B2,U+1F6B6,U+1F6D2,U+1F6D7,U+1F6E0-1F6E1,U+1F6F4,U+1F6F9,U+1F916,U+1F91D,U+1F938,U+1F93E,U+1F964,U+1F96A,U+1F97E,U+1F9B1,U+1F9B8,U+1F9C3,U+1F9CB,U+1F9CD,U+1F9D1,U+1F9D8,U+1F9DF,U+1F9E2,U+1F9E9-1F9EA,U+1F9ED,U+1F9F1,U+1F9F8-1F9F9,U+1FA79-1FA7A,U+1FA80,U+1FA9C,U+1FAA2;}</style>
-<style>
+/* (v401) 700 굵기는 0281 이 타이틀 표시 뒤 유휴에 주입한다 — 186KB 가 첫 화면에서 game.js 와 대역폭을 다퉜다. */
+
   * { margin: 0; padding: 0; box-sizing: border-box; image-rendering: pixelated; }
 
   :root {
@@ -800,7 +818,7 @@
   #map-transition-overlay.fade { opacity: 1; }
 
   /* ── 상점 오버레이 ── */
-  /* ── 퀘스트 창 (봉담 와우 도서관) ── */
+  /* ── 퀘스트 창 (봉담와우도서관) ── */
   #quest-overlay {
     position: absolute;
     inset: 0;
@@ -2035,19 +2053,8 @@
   }
   #go-btn-main:active { transform: translateY(0); }
 
-</style>
 
 
-
-
-
-
-
-
-
-
-
-<style id="bd-mg-redesign-v121">
 /* (v121) 미니게임 리디자인 — DDR 화살표 · 마우스 라이트 */
 
 /* ── 공통 ── */
@@ -2130,9 +2137,8 @@
 .lt-bar{ height:6px; margin-top:12px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden; }
 .lt-bar span{ display:block; height:100%; width:100%;
   background:linear-gradient(90deg,#8fd0ff,#5aa6ff); transition:width .1s linear; }
-</style>
 
-<style id="bd-mobile-hud-v133">
+
 /* (v133) 모바일 상단 HUD 정리
    좁은 화면에서 임무창·길안내 패널·지역 패널이 한꺼번에 떠 글자가 서로 겹쳐 읽기 힘들었다.
    폭이 좁을 때만 크기를 줄이고 투명도를 낮춰, 게임 화면이 먼저 보이게 한다. */
@@ -2168,234 +2174,10 @@
   #bd-district-hud, #bd-district-minimap{ transform: scale(.7); transform-origin: top right; }
   #bd-keybar{ display: none; }
 }
-</style>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0f1526">
-<meta property="og:title" content="봉담 안전지도 대작전">
-<meta property="og:description" content="봉담 네 동네를 돌며 위험을 정화하는 청소년 안전 교육 RPG — 브라우저에서 바로 플레이!">
-<meta property="og:image" content="https://jjih129.github.io/bongdam/icon-512.png">
-<meta property="og:url" content="https://jjih129.github.io/bongdam/">
-<meta property="og:type" content="website">
-</head>
-<body>
-<!-- (v377) 조기 로딩 화면 — 본문 스크립트(수십 MB)가 내려오는 동안 흰 화면 대신 진행 안내를 먼저 그린다 -->
-<div id="bd-preload" style="position:fixed;inset:0;z-index:2147483000;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-family:'Noto Serif KR',serif;">
-<div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);margin-bottom:16px;">🛡️</div>
-<div style="font-size:12px;letter-spacing:6px;color:#c9a75c;font-weight:700;">BONGDAM</div>
-<div style="margin-top:6px;color:#ffd86b;font-size:25px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.6);">봉담 안전지도 대작전</div>
-<div style="margin-top:8px;color:#b7c4dc;font-size:13px;letter-spacing:1px;">우리 동네를 지키는 작은 모험</div>
-<div style="margin-top:26px;width:230px;height:7px;border-radius:4px;background:rgba(255,255,255,.10);overflow:hidden;border:1px solid rgba(255,216,107,.25);"><div id="bd-preload-bar" style="width:8%;height:100%;background:linear-gradient(90deg,#e8b64a,#ffd86b);border-radius:4px;transition:width .5s;"></div></div>
-<div id="bd-preload-msg" style="margin-top:12px;color:#8fa0bd;font-size:12px;">지도를 펼치는 중… 첫 접속은 시간이 조금 걸려요</div>
-</div>
-</div>
 
-<div id="bd-boot-loader" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;">
-  <div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);">🗺️</div>
-  <div style="margin-top:16px;color:#ffd86b;font-size:21px;font-weight:900;letter-spacing:2px;">봉담 안전지도 대작전</div>
-  <div style="margin-top:7px;color:#8fa0bd;font-size:12.5px;">안전지도를 펼치는 중이에요…</div>
-  <div style="margin-top:22px;width:230px;height:7px;border-radius:4px;background:rgba(255,255,255,.10);overflow:hidden;border:1px solid rgba(255,216,107,.25);">
-    <div id="bd-boot-bar" style="width:30%;height:100%;background:linear-gradient(90deg,#e8b64a,#ffd86b);border-radius:4px;animation:bdboot 1.2s ease-in-out infinite alternate;"></div>
-  </div>
-  <style>@keyframes bdboot{from{width:15%;}to{width:92%;}}</style>
-</div>
-<div id="bd-boot" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;color:#e8dcc0;transition:opacity .5s">
-  <div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);margin-bottom:16px;">🛡️</div>
-  <div style="font-size:12px;letter-spacing:6px;color:#c9a75c;font-weight:700;margin-bottom:6px">BONGDAM</div>
-  <div style="font-size:25px;font-weight:900;letter-spacing:2px;color:#ffd86b;margin-bottom:9px">봉담 안전지도 대작전</div>
-  <div style="font-size:13px;color:#b7c4dc;margin-bottom:26px">우리 동네를 지키는 작은 모험을 불러오는 중…</div>
-  <div style="display:flex;gap:9px">
-    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out 0s infinite"></span>
-    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out .18s infinite"></span>
-    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out .36s infinite"></span>
-  </div>
-  <style>@keyframes bdBoot{0%,100%{transform:translateY(0);opacity:.45}50%{transform:translateY(-8px);opacity:1}}</style>
-</div>
+@keyframes bdboot{from{width:15%;}to{width:92%;}}
+@keyframes bdBoot{0%,100%{transform:translateY(0);opacity:.45}50%{transform:translateY(-8px);opacity:1}}
 
-<div class="particles" id="particles"></div>
-
-<!-- ── 메인 메뉴 (봉담 타이틀로 대체됨, 숨김) ── -->
-<!-- (v239) 레거시 메뉴 플로트 제거 -->
-
-<!-- ══════════════════════════════════════════════
-     모달: 게임시작 (세이브 슬롯 선택)
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-continue">
-  <div class="modal">
-    <button class="close-btn" onclick="closeModal('continue')">✕</button>
-    <div class="modal-title">⚔️ 이어하기</div>
-    <div class="modal-body">저장된 모험을 선택하세요.</div>
-    <div id="continue-slots"></div>
-    <div style="margin-top:16px;display:flex;justify-content:center;">
-      <button class="modal-btn" onclick="closeModal('continue')">돌아가기</button>
-    </div>
-  </div>
-</div>
-
-<!-- (v68) 구버전 판타지 더미 슬롯 마크업 제거 — 닫는 태그 뒤에 고아로 남아
-     "슬롯 2 — 어둠의 숲 / 영웅 레벨 8" 같은 옛 콘셉트 텍스트가 DOM에 떠 있었다.
-     실제 저장 슬롯은 #continue-slots 가 동적으로 채운다. -->
-
-<!-- ══════════════════════════════════════════════
-     모달: 새 게임 (캐릭터 생성)
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-new">
-  <div class="modal">
-    <button class="close-btn" onclick="closeModal('new')">✕</button>
-    <div class="modal-title">🛡️ 지킴이 만들기</div>
-
-    <div style="margin-bottom:16px;">
-      <div class="option-row">
-        <span class="option-label">지킴이 이름</span>
-        <input id="hero-name" type="text" placeholder="이름을 입력하세요"
-          style="flex:1; background:#2a1e0e; border:1px solid var(--gold); border-radius:6px;
-                 color:var(--parchment-light); padding:6px 10px; font-family:'Noto Serif KR',serif;
-                 font-size:14px; outline:none;">
-      </div>
-    </div>
-
-      <div style="margin-top:16px;">
-        <div style="font-size:13px; color:var(--parchment-dark); font-family:'Noto Serif KR',serif;
-                    margin-bottom:10px; font-weight:600;">캐릭터 선택</div>
-        <div id="char-select-row" style="display:flex; gap:14px; justify-content:center;">
-          <div id="char-card-1" onclick="selectCharacter(1)"
-            style="border:3px solid var(--gold); border-radius:10px; padding:10px 16px;
-                   background:rgba(200,144,42,0.18); text-align:center;">
-            <img id="char-img-1" src="" width="68" height="90"
-                 style="image-rendering:pixelated; display:block; margin:0 auto 6px;">
-            <div style="font-size:12px; color:var(--parchment-light);
-                        font-family:'Noto Serif KR',serif;">여주인공</div>
-          </div>
-          <div id="char-card-2" onclick="selectCharacter(2)"
-            style="border:2px solid rgba(200,144,42,0.35); border-radius:10px; padding:10px 16px;
-                   background:rgba(0,0,0,0.18); text-align:center;">
-            <img id="char-img-2" src="" width="68" height="90"
-                 style="image-rendering:pixelated; display:block; margin:0 auto 6px;">
-            <div style="font-size:12px; color:var(--parchment-light);
-                        font-family:'Noto Serif KR',serif;">남주인공</div>
-          </div>
-        </div>
-      </div>
-
-
-    <div class="modal-btn-row">
-      <button class="modal-btn" onclick="createNewGame()">시작하기</button>
-      <button class="modal-btn danger" onclick="closeModal('new')">취소</button>
-    </div>
-  </div>
-</div>
-
-<!-- (v399) 옵션 모달(#modal-options: 사운드/화면/키 배치)은 제거 — 어떤 블록도 열지 않았고(호출처 0), 언어·화면 모드·밝기·키 재매핑 전부
-     핸들러가 없거나 게임에 반영되지 않는 «작동하는 척» UI 였다(PC 감사 S-5). 실제 설정은 ⚙ openSettings(0054) 하나로 통합(0273). -->
-
-<!-- ══════════════════════════════════════════════
-     모달: 새 게임 경고
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-new-confirm">
-  <div class="modal" style="text-align:center; max-width:380px;">
-    <div class="modal-title">⚠️ 주의</div>
-    <div class="modal-body">
-      기존 게임이 사라질 수 있습니다.<br>
-      <span style="font-size:13px; opacity:0.7;">정말로 새 게임을 시작하시겠습니까?</span>
-    </div>
-    <div class="modal-btn-row">
-      <button class="modal-btn" onclick="closeModal('new-confirm'); openModal('new')">확인</button>
-      <button class="modal-btn danger" onclick="closeModal('new-confirm')">취소</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── 저장 슬롯 선택 ── -->
-<div class="overlay" id="modal-save-slot">
-  <div class="modal" style="max-width:400px;">
-    <button class="close-btn" onclick="closeModal('save-slot')">✕</button>
-    <div class="modal-title">💾 저장하기</div>
-    <div class="modal-body">저장할 슬롯을 선택하세요.</div>
-    <div id="save-slot-list"></div>
-    <div style="margin-top:16px;display:flex;justify-content:center;"><button class="modal-btn" onclick="closeModal('save-slot')">취소</button></div>
-  </div>
-</div>
-<!-- ── 덮어쓰기 확인 ── -->
-<div class="overlay" id="modal-save-overwrite">
-  <div class="modal" style="text-align:center;max-width:380px;">
-    <div class="modal-title">⚠️ 덮어쓰기</div>
-    <div class="modal-body" id="overwrite-msg"></div>
-    <div class="modal-btn-row">
-      <button class="modal-btn" id="overwrite-yes-btn">예</button>
-      <button class="modal-btn danger" onclick="closeModal('save-overwrite');openModal('save-slot')">아니요</button>
-    </div>
-  </div>
-</div>
-<!-- ── ESC 경고 ── -->
-<div class="overlay" id="modal-esc-warn">
-  <div class="modal" style="text-align:center;max-width:380px;">
-    <div class="modal-title">⚠️ 저장되지 않았습니다</div>
-    <div class="modal-body">저장하지 않고 나가면 진행이 사라집니다.</div>
-    <div class="modal-btn-row">
-      <button class="modal-btn" onclick="closeModal('esc-warn');openSaveSlotModal(true)">저장 후 나가기</button>
-      <button class="modal-btn danger" onclick="closeModal('esc-warn');forceExitGame()">그냥 나가기</button>
-      <button class="modal-btn" onclick="closeModal('esc-warn')">계속 플레이</button>
-    </div>
-  </div>
-</div>
-<!-- ══════════════════════════════════════════════
-     모달: 나가기 확인
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-quit">
-  <div class="modal" style="text-align:center;">
-    <div class="modal-title">🚪 게임 종료</div>
-    <div class="modal-body">
-      모험을 떠나시겠습니까?<br>
-      <span style="font-size:13px; opacity:0.7;">저장되지 않은 진행상황은 사라집니다.</span>
-    </div>
-    <div class="modal-btn-row">
-      <button class="modal-btn danger" onclick="quitGame()">종료하기</button>
-      <button class="modal-btn" onclick="closeModal('quit')">계속 모험</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════
-     모달: 게임 시작됨 (데모)
-══════════════════════════════════════════════ -->
-<div class="overlay" id="modal-playing">
-  <div class="modal" style="max-width:380px;">
-    <button class="close-btn" onclick="closeModal('playing')">✕</button>
-    <div class="modal-title" id="play-title">⚔️ 모험 시작!</div>
-    <div class="game-screen">
-      <div class="hero-name" id="play-hero">아르엔</div>
-      <div style="font-size:13px; margin-bottom:14px; opacity:0.7;" id="play-loc">📍 봉담 · 봉담청소년문화의집</div>
-
-      <div class="stat-bar">
-        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">HP</span>
-        <div class="stat-bar-fill"><div class="stat-bar-inner bar-hp" style="width:80%"></div></div>
-        <span style="font-size:12px; color:var(--parchment-dark);">80/100</span>
-      </div>
-      <div class="stat-bar">
-        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">MP</span>
-        <div class="stat-bar-fill"><div class="stat-bar-inner bar-mp" style="width:60%"></div></div>
-        <span style="font-size:12px; color:var(--parchment-dark);">60/100</span>
-      </div>
-      <div class="stat-bar">
-        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">EXP</span>
-        <div class="stat-bar-fill"><div class="stat-bar-inner bar-exp" style="width:35%"></div></div>
-        <span style="font-size:12px; color:var(--parchment-dark);">350/1000</span>
-      </div>
-
-      <div style="margin-top:16px; font-size:13px; line-height:1.8; opacity:0.8;" id="play-msg">
-        "어서 와요, 지킴이.<br>봉담 곳곳에 돌보지 못한 것들이 쌓이고 있어요..."
-      </div>
-    </div>
-    <div style="margin-top:20px; display:flex; justify-content:center;">
-      <button class="modal-btn" onclick="closeModal('playing')">메인 메뉴로</button>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- ── 게임 화면 ── -->
-<style>
 /* ── 비주얼 노벨 대화창 ── */
 #dialogue-overlay {
   display: none;
@@ -2481,156 +2263,8 @@
   #dialogue-box { padding: 26px 5% 20px 34%; }
   #dialogue-name { left: 34%; }
 }
-</style>
-
-<div id="game-screen">
-  <canvas id="game-canvas"></canvas>
-  <div id="game-ui">
-    <!-- (v390) v220의 gs-* 호환 스팬·v268부터 숨겨져 있던 저장 버튼 물리 제거
-         (0017 갱신 코드는 null 가드 완료 · 저장은 자동저장+슬롯 모달이 담당) -->
-  </div>
-
-  <!-- ===== 모바일 터치 컨트롤 (모바일에서만 표시) ===== -->
-  <div id="touch-controls" aria-hidden="true">
-    <!-- 왼쪽: 이동 조이스틱 (브롤 스타즈 스타일) -->
-    <div id="tc-joystick">
-      <div id="tc-joy-base">
-        <div id="tc-joy-knob"></div>
-      </div>
-    </div>
-    <!-- 오른쪽: 버튼 그리드 -->
-    <div id="tc-actions">
-      <!-- (v233) 모바일 버튼 단순화: 보조 [가방] + 메인 [조사·대화] -->
-      <div class="tc-row">
-        <button id="tc-btn-e" class="tc-btn tc-btn-util" type="button">
-          <span class="tc-btn-icon">🎒</span>
-          <span class="tc-btn-label">가방</span>
-        </button>
-      </div>
-      <div class="tc-row">
-        <button id="tc-btn-f" class="tc-btn tc-btn-interact tc-btn-main" type="button">
-          <span class="tc-btn-icon" id="tc-f-icon">🔍</span>
-          <span class="tc-btn-label" id="tc-f-label">조사</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  
-
-  <!-- 인벤토리 오버레이 -->
-  <div id="inv-overlay">
-    <div id="inv-panel">
-      <div id="inv-header">
-        <div id="inv-title">🎒 가방</div>
-        <div id="inv-gold">💰 <span id="inv-gold-amount">500</span> G</div>
-        <button id="inv-close-btn" onclick="closeInventory()">✕</button>
-      </div>
-
-      <div id="inv-tabs">
-        <button class="inv-tab active" onclick="switchInvTab('all',this)">전체</button>
-        <button class="inv-tab" onclick="switchInvTab('consumable',this)">🧪 소모품</button>
-        <button class="inv-tab" onclick="switchInvTab('equip',this)">⚔️ 장비</button>
-        <button class="inv-tab" onclick="switchInvTab('achieve',this)">🏆 업적</button>
-        <button class="inv-tab" onclick="switchInvTab('safety',this)">🛡️ 안전도</button>
-      </div>
-
-      <!-- 아이템 탭 본문 -->
-      <div id="inv-body">
-        <div id="inv-grid"></div>
-      </div>
-
-      <!-- 안전도(스킬 트리) 탭 본문 -->
-      <div id="inv-safety-panel">
-        <!-- JS로 동적 생성 -->
-      </div>
-
-      <!-- 스킬 장착 탭 본문 -->
-      <div id="inv-skill-panel">
-        <!-- JS로 동적 생성 -->
-      </div>
-
-      <!-- 업적 탭 본문 -->
-      <div id="inv-achieve-panel">
-        <!-- JS로 동적 생성 -->
-      </div>
-
-      <div id="inv-detail">
-        <div id="inv-detail-icon">🎒</div>
-        <div id="inv-detail-info">
-          <div id="inv-detail-name">아이템을 선택하세요</div>
-          <div id="inv-detail-desc">인벤토리에서 아이템을 클릭하면 상세 정보를 확인하고 사용할 수 있습니다.</div>
-        </div>
-        <button id="inv-use-btn" onclick="useSelectedItem()">사용</button>
-      </div>
-
-      <div id="inv-footer">E 또는 ESC 키로 닫기</div>
-    </div>
-  </div>
-
-  <!-- 게임 오버 화면 -->
-  <div id="gameover-screen">
-    <div id="gameover-bg"></div>
-    <div id="gameover-content">
-      <div id="gameover-icon">☠</div>
-      <div id="gameover-title">위협요소 제거 실패</div>
-      <div id="gameover-sub">MISSION FAILED</div>
-      <div id="gameover-divider"></div>
-      <button class="go-btn" id="go-btn-restart" onclick="restartAsNewGame()">
-        🆕 &nbsp; 새로운 시작
-      </button>
-      <button class="go-btn" id="go-btn-continue" onclick="continueFromAutosave()">
-        🔄 &nbsp; 이어하기 (자동저장)
-      </button>
-      <button class="go-btn" id="go-btn-main" onclick="goToMainMenu()">
-        ⌂ &nbsp; 메인 화면으로 돌아가기
-      </button>
-    </div>
-  </div>
-
-  <div id="map-transition-overlay"></div>
-  <!-- (v220) 메인 메뉴 버튼은 설정 모달로 이동 -->
-
-  <!-- 퀘스트 창 (봉담 와우 도서관) -->
-  <div id="quest-overlay">
-    <div id="quest-panel">
-      <div id="quest-header">
-        <div id="quest-title">📚 봉담 와우 도서관 — 일일 퀘스트</div>
-        <div id="quest-subtitle">매일 자정 초기화됩니다</div>
-        <button id="quest-close-btn" onclick="closeQuestPanel()">✕</button>
-      </div>
-      <div id="quest-body">
-        <div id="quest-list"></div>
-      </div>
-      <div id="quest-footer">
-        <div id="quest-gold-row">💰 소지금: <span id="quest-gold-amount">0</span> G</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 구매 토스트 알림 -->
-  <div id="shop-toast"></div>
-
-  <!-- (v375) 구 상점 오버레이(#shop-overlay) 제거 — 상점은 #bd-shop-modal 한 경로 -->
-  <!-- 비주얼 노벨 대화창 -->
-  <div id="dialogue-overlay" ontouchstart="event.preventDefault(); advanceDialogue();">
-    <img id="dialogue-portrait" alt="" />
-    <div id="dialogue-box">
-      <div id="dialogue-name">임현지</div>
-      <div id="dialogue-text"></div>
-      <div id="dialogue-next">▼ [F]</div>
-    </div>
-  </div>
-</div>
 
 
-
-<!-- ============================================================
-     모바일 터치 컨트롤 (조이스틱 + Q/Z 버튼)
-     - 터치 기기에서만 활성화 (PC는 기존 그대로)
-     - 왼쪽 조이스틱: 8방향 이동 (moveKeys 제어 → 대시 방향도 자동 연동)
-     - 오른쪽 버튼: Q=대시, Z=스킬
-     ============================================================ -->
-<style>
   #touch-controls {
     display: none; /* 기본 숨김 — JS가 터치 기기에서만 표시 */
     position: fixed;
@@ -2787,16 +2421,8 @@
     box-shadow: 0 0 18px rgba(255,200,40,0.6), 0 4px 14px rgba(0,0,0,0.4);
     filter: brightness(1.25);
   }
-</style>
 
 
-<!-- ============================================================
-     봉담 RPG 콘텐츠 에디터 모드 v2
-     - 배치 목록 / 속성 창 / 콜라이더 직접 편집
-     - 맵 이동 후 진입 위치 찍기
-     - 에디터 카메라 전체보기 / 줌 / 화면 드래그 이동
-     ============================================================ -->
-<style>
   #bge-toggle {
     position: fixed; top: 76px; right: 14px; z-index: 99980;
     border: 1px solid rgba(240,184,48,0.85); border-radius: 10px;
@@ -2917,301 +2543,8 @@
   /* 중복 정리: 낡은 v37 그림 패널 숨김 (새 '내 그림 추가'로 대체) */
   #bge-v37-asset-panel { display: none !important; }
   #bge-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 99981; display: none; padding: 10px 14px; border-radius: 10px; background: rgba(20,12,4,0.94); border: 1px solid rgba(240,184,48,0.75); color: #f0c040; font-family: 'Noto Serif KR', serif; font-weight: 900; box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
-</style>
 
 
-<button id="bge-toggle" type="button" title="Ctrl+E">🛠 에디터</button>
-
-<div id="bge-toolbar" aria-label="에디터 툴바">
-  <button class="bge-btn" id="bge-tool-select" type="button">선택</button>
-  <button class="bge-btn secondary" id="bge-tool-pan" type="button">화면 이동</button>
-  <button class="bge-btn secondary" id="bge-tool-place" type="button">배치</button>
-  <button class="bge-btn secondary" id="bge-overview" type="button">전체보기</button>
-  <button class="bge-btn secondary" id="bge-runtime-view" type="button" title="인게임과 같은 카메라 배율·화면비로 편집합니다.">인게임 1:1</button>
-  <button class="bge-btn secondary" id="bge-zoom-out" type="button">-</button>
-  <button class="bge-btn secondary" id="bge-zoom-in" type="button">+</button>
-  <span class="bge-toolsep"></span>
-  <button class="bge-btn secondary" id="bge-undo" type="button" title="Ctrl+Z" disabled>↩ 되돌리기</button>
-  <button class="bge-btn secondary" id="bge-redo" type="button" title="Ctrl+Y" disabled>↪ 다시</button>
-  <button class="bge-btn secondary" id="bge-grid-toggle" type="button" title="격자에 맞춰 배치">⊞ 격자 OFF</button>
-  <button class="bge-btn secondary" id="bge-copy" type="button" title="Ctrl+C">📋 복사</button>
-  <button class="bge-btn secondary" id="bge-paste" type="button" title="Ctrl+V">📎 붙여넣기</button>
-</div>
-<div id="bge-tabbar" aria-label="에디터 패널 탭">
-  <button class="bge-tab bge-tab-on" id="bge-tab-hierarchy" type="button">📋 배치 목록</button>
-  <button class="bge-tab" id="bge-tab-props" type="button">🔧 속성 · 이미지</button>
-  <button class="bge-tab" id="bge-tab-dialog" type="button">💬 대화 편집</button>
-  <span class="bge-tabsep"></span>
-  <button class="bge-tab bge-tab-simple bge-tab-on" id="bge-tab-simple" type="button" title="어려운 항목을 숨겨 초보자도 쉽게">🌱 쉬운 모드</button>
-  <span class="bge-tabsep"></span>
-  <button class="bge-tab" id="bge-tab-resetpos" type="button" title="패널을 원래 위치로">📐 창 정리</button>
-</div>
-<div id="bge-minimap" aria-label="미니맵">
-  <div class="bge-mm-title">🗺 미니맵</div>
-  <canvas id="bge-mm-canvas" width="180" height="135"></canvas>
-</div>
-
-<div id="bge-hierarchy" aria-label="봉담 RPG 배치 목록">
-  <h3>배치 목록</h3>
-  <div class="bge-help">유니티 Hierarchy처럼 현재 맵의 오브젝트와 콜라이더를 관리합니다. 오브젝트/콜라이더 둘 다 맵에서 직접 드래그할 수 있습니다.</div>
-  <h4>스테이지</h4>
-  <label>현재 스테이지</label>
-  <select id="bge-stage-select"></select>
-  <label>스테이지 이름</label>
-  <input id="bge-stage-name" type="text" placeholder="예: 봉담 놀터">
-  <div class="bge-row">
-    <div><label>스폰 X</label><input id="bge-spawn-x" type="number" min="0" max="1" step="0.001"></div>
-    <div><label>스폰 Y</label><input id="bge-spawn-y" type="number" min="0" max="1" step="0.001"></div>
-  </div>
-  <label style="margin-top:6px;">이동 가능 구역 (좌 · 상 · 우 · 하, 0~1)</label>
-  <div class="bge-row3" style="grid-template-columns:repeat(4,1fr);">
-    <input id="bge-walk-x0" type="number" min="0" max="1" step="0.001" title="왼쪽 한계">
-    <input id="bge-walk-y0" type="number" min="0" max="1" step="0.001" title="위 한계">
-    <input id="bge-walk-x1" type="number" min="0" max="1" step="0.001" title="오른쪽 한계">
-    <input id="bge-walk-y1" type="number" min="0" max="1" step="0.001" title="아래 한계">
-  </div>
-  <div class="bge-btn-row">
-    <button class="bge-btn secondary" id="bge-pick-spawn" type="button">스폰 찍기</button>
-    <button class="bge-btn" id="bge-save" type="button">저장</button>
-  </div>
-  <h4>씬 오브젝트</h4>
-  <input id="bge-search" type="text" placeholder="검색: 이름 / 타입 / 키">
-  <div id="bge-object-list"></div>
-  <div class="bge-btn-row">
-    <button class="bge-btn secondary" id="bge-duplicate-obj" type="button">복제</button>
-    <button class="bge-btn secondary" id="bge-move-up" type="button">▲</button>
-    <button class="bge-btn secondary" id="bge-move-down" type="button">▼</button>
-  </div>
-  <h4>⭐ 내 프리팹 (자주 쓰는 것 저장)</h4>
-  <div class="bge-help">선택한 오브젝트를 프리팹으로 저장해 두면, 아래 버튼을 눌러 맵에 똑같이 여러 번 놓을 수 있어요.</div>
-  <div class="bge-btn-row">
-    <button class="bge-btn" id="bge-prefab-save" type="button">＋ 선택을 프리팹으로 저장</button>
-  </div>
-  <div id="bge-prefab-list" class="bge-prefab-list"></div>
-</div>
-
-<div id="bge-panel" aria-label="봉담 RPG 속성 창 패널">
-  <h3>속성 창</h3>
-
-  <div id="bge-myart" aria-label="내 그림 추가">
-    <h4>🎨 내 그림 추가</h4>
-    <div class="bge-myart-help">직접 그린 그림(PNG·JPG)을 올려서 오브젝트에 입힐 수 있어요. ①그림 고르기 → ②이름 정하고 저장 → ③오브젝트 고르고 "이 그림 입히기"</div>
-    <label>① 그림 파일 고르기</label>
-    <input id="bge-myart-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
-    <div id="bge-myart-preview" class="bge-myart-preview">그림을 고르면 여기에 미리보기가 나와요.</div>
-    <label>② 그림 이름</label>
-    <input id="bge-myart-name" type="text" placeholder="예: 나무, 우리집, 강아지">
-    <div class="bge-btn-row">
-      <button class="bge-btn" id="bge-myart-save" type="button">＋ 내 그림 저장</button>
-    </div>
-    <label>③ 저장한 그림 목록</label>
-    <div id="bge-myart-list" class="bge-myart-list"></div>
-    <div class="bge-btn-row">
-      <button class="bge-btn" id="bge-myart-apply" type="button">✅ 선택한 오브젝트에 이 그림 입히기</button>
-    </div>
-    <div class="bge-btn-row">
-      <button class="bge-btn secondary" id="bge-myart-place" type="button">🖼 새 오브젝트로 맵에 놓기</button>
-      <button class="bge-btn danger" id="bge-myart-remove" type="button">그림 벗기기</button>
-    </div>
-  </div>
-
-  <div id="bge-v37-asset-panel" class="bge-v37-panel">
-    <h4>그림 자료함 / 이미지 적용 v4.1</h4>
-    <div class="bge-v37-help">단일 HTML용 이미지 업로드 패널입니다. PNG/JPG를 등록한 뒤 오브젝트를 선택하고 적용하세요.</div>
-    <div id="bge-v37-current" class="bge-v37-current">오브젝트를 선택하면 현재 이미지 상태가 표시됩니다.</div>
-    <label>외부 이미지 업로드</label>
-    <input id="bge-v37-files" type="file" accept="image/*" multiple>
-    <div class="bge-row">
-      <div><label>적용할 이미지</label><select id="bge-v37-asset"></select></div>
-      <div><label>새로 배치할 이미지</label><select id="bge-v37-place-asset"></select></div>
-    </div>
-    <div class="bge-btn-row">
-      <button class="bge-btn" id="bge-v37-apply" type="button">선택 오브젝트에 적용</button>
-      <button class="bge-btn secondary" id="bge-v37-place" type="button">이미지 씬에 배치</button>
-      <button class="bge-btn danger" id="bge-v37-clear" type="button">이미지 해제</button>
-    </div>
-    <div class="bge-btn-row">
-      <button class="bge-btn secondary" id="bge-v37-export" type="button">에셋팩 내보내기</button>
-      <button class="bge-btn secondary" id="bge-v37-import-btn" type="button">에셋팩 가져오기</button>
-      <button class="bge-btn danger" id="bge-v37-delete" type="button">선택 에셋 삭제</button>
-    </div>
-    <input id="bge-v37-import" type="file" accept="application/json,.json" style="display:none">
-    <div class="bge-v37-help">다른 PC로 옮길 때는 에셋팩을 같이 내보내세요. 같은 PC/같은 브라우저에서는 자동 저장됩니다.</div>
-  </div>
-  <div class="bge-help">Ctrl+E: 에디터 토글 / 빈 공간 드래그: 화면 이동 / 휠: 줌 / 오브젝트 클릭: 선택</div>
-
-  <h4>카메라</h4>
-  <label>에디터 줌: <span id="bge-zoom-label">1.00x</span></label>
-  <input id="bge-zoom" type="range" min="0.25" max="12" step="0.01" value="1">
-  <div class="bge-row">
-    <div><label>카메라 X</label><input id="bge-cam-x" type="number" min="0" max="1" step="0.001"></div>
-    <div><label>카메라 Y</label><input id="bge-cam-y" type="number" min="0" max="1" step="0.001"></div>
-  </div>
-
-  <h4>스프라이트 / 배치 팔레트</h4>
-  <div class="bge-row">
-    <div><label>타입</label><select id="bge-palette-type"></select></div>
-    <div><label>이미지 Key</label><select id="bge-palette-key"></select></div>
-  </div>
-  <label>라벨</label>
-  <input id="bge-palette-label" type="text" placeholder="예: 봉담와우도서관">
-  <div class="bge-row4">
-    <div><label>W</label><input id="bge-palette-w" type="number" min="0.005" max="1" step="0.001" value="0.10"></div>
-    <div><label>H</label><input id="bge-palette-h" type="number" min="0.005" max="1" step="0.001" value="0.10"></div>
-    <div><label>CW</label><input id="bge-palette-cw" type="number" min="0" max="1" step="0.001" value="0.08"></div>
-    <div><label>CH</label><input id="bge-palette-ch" type="number" min="0" max="1" step="0.001" value="0.05"></div>
-  </div>
-  <div class="bge-btn-row">
-    <button class="bge-btn" id="bge-place-on" type="button">배치 모드 ON</button>
-    <button class="bge-btn" data-bge-add="building" type="button">건물</button>
-    <button class="bge-btn" data-bge-add="npc" type="button">NPC</button>
-    <button class="bge-btn" data-bge-add="info" type="button">안내판</button>
-    <button class="bge-btn" data-bge-add="quest_item" type="button">퀘스트</button>
-    <button class="bge-btn" data-bge-add="hazard" type="button">위험</button>
-    <button class="bge-btn" data-bge-add="monster_spawn" type="button">몬스터</button>
-  </div>
-
-  <h4>선택 항목</h4>
-  <div id="bge-selected-empty" class="bge-muted">선택된 항목이 없습니다.</div>
-  <div id="bge-selected-form" style="display:none">
-    <label>라벨 / 이름</label>
-    <input id="bge-obj-label" type="text">
-    <label>이름표 (코드에서 지목할 id) <span class="bge-muted">— 비우면 자동</span></label>
-    <input id="bge-obj-name-id" type="text" placeholder="예: culture_house, desk_3f, npc_hyunji">
-    <div class="bge-muted" id="bge-name-id-warn" style="display:none;color:#ffb0a0;margin-top:3px"></div>
-    <div class="bge-row">
-      <div><label>타입</label><select id="bge-obj-type"></select></div>
-      <div><label>이미지 Key</label><input id="bge-obj-key" type="text" placeholder="small, shop, books"></div>
-    </div>
-    <div class="bge-coord-hint" id="bge-coord-hint">📍 위치는 화면 기준 0~100% 입니다. 방향키로 미세 이동, Shift+방향키로 크게 이동돼요.</div>
-    <div class="bge-row bge-coord-grid">
-      <div><label>가로위치 X<span class="bge-pct-badge" id="bge-pct-x"></span></label><input id="bge-obj-rx" type="number" min="0" max="1" step="0.001"></div>
-      <div><label>세로위치 Y<span class="bge-pct-badge" id="bge-pct-y"></span></label><input id="bge-obj-ry" type="number" min="0" max="1" step="0.001"></div>
-      <div><label>너비 W<span class="bge-pct-badge" id="bge-pct-w"></span></label><input id="bge-obj-rw" type="number" min="0.005" max="1" step="0.001"></div>
-      <div><label>높이 H<span class="bge-pct-badge" id="bge-pct-h"></span></label><input id="bge-obj-rh" type="number" min="0.005" max="1" step="0.001"></div>
-    </div>
-    <label>상호작용</label>
-    <select id="bge-obj-interactable"><option value="">없음</option><option value="shop">shop</option><option value="quest">quest</option><option value="info">info</option><option value="hazard">hazard</option><option value="portal">portal</option><option value="minigame">minigame</option><option value="battle">battle</option></select>
-    <div id="bge-hazard-fields" class="bge-adv-only" style="display:none">
-      <label>위험 계열 (전투 몬스터 속성)</label>
-      <select id="bge-obj-hazard-family">
-        <option value="">자동 (지역 기본)</option>
-        <option value="smoke">공기·소음 (W속성 약점)</option>
-        <option value="pollute">환경·오염 (G속성 약점)</option>
-        <option value="dark">시설·파손 (M속성 약점)</option>
-      </select>
-      <label>위험 요소 ID (정화 기록용, 비우면 자동)</label>
-      <input id="bge-obj-hazard-id" type="text" placeholder="예: wawoo_trash_1">
-      <label>세부 위험 요소 (지역별 고유 몹·교육 메시지)</label>
-      <select id="bge-obj-hazard-variant">
-        <option value="">계열 기본</option>
-        <optgroup label="공기·소음 (W속성 약점)">
-          <option value="cigarette">🚬 담배 연기</option>
-          <option value="noise_bat">🔊 골목의 소음</option>
-        </optgroup>
-        <optgroup label="환경·오염 (G속성 약점)">
-          <option value="trash">🗑️ 쓰레기 더미</option>
-          <option value="glass">🔪 깨진 유리</option>
-          <option value="bottle">🍾 방치된 술병</option>
-          <option value="graffiti">🖌️ 낙서</option>
-          <option value="kickboard">🛴 길막 킥보드</option>
-        </optgroup>
-        <optgroup label="시설·파손 (M속성 약점)">
-          <option value="streetlight">💡 고장난 가로등</option>
-          <option value="road_crack">🕳️ 부서진 도로</option>
-          <option value="sign_ghost">⚠️ 위험 표지판</option>
-        </optgroup>
-      </select>
-      <label>몬스터 수</label>
-      <select id="bge-obj-hazard-count">
-        <option value="1">1마리 (일반 전투)</option>
-        <option value="2">2마리 (1대2 특수 전투)</option>
-      </select>
-      <label style="display:flex;align-items:center;gap:6px;margin-top:6px">
-        <input id="bge-obj-is-boss" type="checkbox" style="width:auto"> 👑 최종 보스전 (HP↑·페이즈·물러나기 불가)
-      </label>
-    </div>
-    <label style="display:flex;align-items:center;gap:6px;margin-top:8px" class="bge-adv-only">
-      <input id="bge-obj-quest-target" type="checkbox" style="width:auto"> 🧭 이 오브젝트를 목표 지점으로 (미니맵 별·화살표 안내)
-    </label>
-    <div id="bge-npc-fields" class="bge-adv-only" style="display:none">
-      <label>NPC 역할 (대사가 역할·퀘스트에 따라 달라짐)</label>
-      <select id="bge-obj-npc-role">
-        <option value="">기본</option>
-        <option value="teacher">문화의집 선생님</option>
-        <option value="friend">친구</option>
-        <option value="librarian">도서관 사서</option>
-        <option value="kid">초등학생</option>
-        <option value="shopkeeper">상점 점주</option>
-      </select>
-    </div>
-    <label>대사 / 메모</label>
-    <textarea id="bge-obj-note" placeholder="아이들이 참고할 설명, NPC 대사, 퀘스트 메모"></textarea>
-    <div class="bge-btn-row">
-      <button class="bge-btn" id="bge-web-export" type="button" style="background:#2e7d46">🌐 게시용 HTML 내보내기</button>
-      <button class="bge-btn" id="bge-release-export" type="button" style="background:#7d4e2e" title="에디터·개발 로그가 제거된 최종 배포본 (§27)">🚀 배포용 HTML</button>
-      <button class="bge-btn secondary" id="bge-create-collider" type="button">콜라이더 생성</button>
-      <button class="bge-btn secondary" id="bge-create-collider-all" type="button" title="콜라이더 없는 건물·장식 전체에 하단부 기준 자동 생성">콜라이더 일괄 생성</button>
-      <button class="bge-btn secondary" id="bge-restore-sys" type="button" title="이 맵에서 삭제한 시스템 오브젝트(정류장·동네 슈퍼·주민)를 다시 생성">시스템 복원</button>
-      <button class="bge-btn secondary" id="bge-copy-collider" type="button">콜라이더=크기</button>
-      <button class="bge-btn danger" id="bge-delete-collider" type="button">콜라이더 삭제</button>
-      <button class="bge-btn danger" id="bge-delete-obj" type="button">오브젝트 삭제</button>
-    </div>
-  </div>
-
-  <div id="bge-collider-form" style="display:none">
-    <h4>선택 콜라이더</h4>
-    <div class="bge-row4">
-      <div><label>CX</label><input id="bge-obj-cx" type="number" min="0" max="1" step="0.001"></div>
-      <div><label>CY</label><input id="bge-obj-cy" type="number" min="0" max="1" step="0.001"></div>
-      <div><label>CW</label><input id="bge-obj-cw" type="number" min="0" max="1" step="0.001"></div>
-      <div><label>CH</label><input id="bge-obj-ch" type="number" min="0" max="1" step="0.001"></div>
-    </div>
-  </div>
-
-  <div id="bge-exit-form" class="bge-adv-only">
-  <h4>출구 연결 / 진입 위치</h4>
-  <label>방향</label>
-  <select id="bge-exit-dir"><option value="top">top</option><option value="bottom">bottom</option><option value="left">left</option><option value="right">right</option></select>
-  <label><input id="bge-exit-active" type="checkbox"> 출구 활성화</label>
-  <div class="bge-row3">
-    <div><label>다음 스테이지</label><input id="bge-exit-next" type="number" step="1"></div>
-    <div><label>진입 X</label><input id="bge-exit-entry-x" type="number" min="0" max="1" step="0.001"></div>
-    <div><label>진입 Y</label><input id="bge-exit-entry-y" type="number" min="0" max="1" step="0.001"></div>
-  </div>
-  <div class="bge-row3">
-    <div><label>통과 구간 시작</label><input id="bge-exit-band-min" type="number" min="0" max="1" step="0.001"></div>
-    <div><label>통과 구간 끝</label><input id="bge-exit-band-max" type="number" min="0" max="1" step="0.001"></div>
-    <div style="align-self:end;font-size:10px;opacity:.75;">가장자리에서 이동 가능한 구간(0~1)</div>
-  </div>
-  <div class="bge-btn-row">
-    <button class="bge-btn secondary" id="bge-pick-entry" type="button">이동 후 위치 찍기</button>
-    <button class="bge-btn secondary" id="bge-preview-entry" type="button">대상 맵 보기</button>
-  </div>
-  </div>
-
-  <h4>데이터</h4>
-  <div class="bge-btn-row">
-    <button class="bge-btn" id="bge-export" type="button">JSON 내보내기</button>
-    <button class="bge-btn secondary" id="bge-import-btn" type="button">JSON 가져오기</button>
-    <button class="bge-btn danger" id="bge-reset" type="button">초기화</button>
-  </div>
-  <input id="bge-import-file" type="file" accept="application/json,.json" style="display:none">
-</div>
-<div id="bge-toast"></div>
-
-
-
-
-
-<!-- ============================================================
-     봉담 RPG 씬 에디터 모드 v3
-     - 유니티식 리사이즈 핸들 / 숫자 드래그 조정
-     - 이미지 업로드 에셋 라이브러리 / 에셋 배치
-     - 휠 카메라 이동 + Ctrl 휠 줌 / 중클릭 화면 이동
-     - 비주얼 노벨 스타일 대화창 데이터 편집
-     ============================================================ -->
-<style>
   #bge-v3-panel {
     position: fixed; z-index: 99978; display: none; left: 328px; bottom: 14px;
     width: min(620px, calc(100vw - 704px)); max-height: 34vh; overflow: auto;
@@ -3248,64 +2581,8 @@
   .bge-v3-scrub { cursor: ew-resize !important; }
   .bge-v3-asset-thumb { width:36px; height:36px; object-fit:cover; border-radius:6px; border:1px solid rgba(168,221,255,.35); vertical-align:middle; margin-right:6px; background:rgba(255,255,255,.08); }
   @media (max-width: 1100px) { #bge-v3-panel { left:14px; right:14px; width:auto; bottom:14px; max-height:28vh; } }
-</style>
-
-<div id="bge-v3-panel" aria-label="봉담 RPG v3 씬 에디터 확장 패널">
-  <h3>v3 씬 에디터 확장</h3>
-  <div class="bge-v3-help">
-    마우스로 선택 오브젝트의 모서리/변 핸들을 잡아 크기를 조절할 수 있습니다. 휠은 카메라 이동, 휠은 확대/축소(커서 중심), 중간 버튼 드래그는 화면 이동, Shift+휠은 가로 · Ctrl+휠은 세로 스크롤입니다. 숫자 입력칸은 좌우 드래그로 값을 조절합니다.
-  </div>
-
-  <h4>이미지 / 스프라이트 에셋 라이브러리</h4>
-  <div class="bge-v3-row">
-    <div><label>새 이미지 가져오기</label><input id="bge-v3-asset-file" type="file" accept="image/*"></div>
-    <div><label>에셋 이름</label><input id="bge-v3-asset-name" type="text" placeholder="예: 봉담와우도서관 건물"></div>
-  </div>
-  <div class="bge-v3-row">
-    <div><label>등록된 이미지</label><select id="bge-v3-asset-select"></select></div>
-    <div><label>선택 에셋 미리보기</label><div id="bge-v3-asset-preview" class="bge-v3-help">등록된 에셋 없음</div></div>
-  </div>
-  <div class="bge-v3-btn-row">
-    <button id="bge-v3-upload-asset" class="bge-v3-btn" type="button">이미지 등록</button>
-    <button id="bge-v3-apply-asset" class="bge-v3-btn" type="button">선택 오브젝트에 적용</button>
-    <button id="bge-v3-place-asset" class="bge-v3-btn warn" type="button">에셋 배치 모드</button>
-    <button id="bge-v3-delete-asset" class="bge-v3-btn danger" type="button">에셋 삭제</button>
-  </div>
-  <div><span class="bge-v3-chip">권장: PNG</span><span class="bge-v3-chip">탑뷰 배치용</span><span class="bge-v3-chip">배경도 큰 오브젝트로 배치 가능</span></div>
-
-  <h4>비주얼 노벨 스타일 대화창 데이터</h4>
-  <div class="bge-v3-row">
-    <div><label>화자 이름</label><input id="bge-v3-speaker" type="text" placeholder="예: 문화의집 안내 선생님"></div>
-    <div><label>초상화 에셋</label><select id="bge-v3-portrait"></select></div>
-  </div>
-  <label>대사 내용</label>
-  <textarea id="bge-v3-dialogue" placeholder="예: 이곳은 봉담청소년문화의집입니다. 청소년들이 안전하게 쉬고 활동할 수 있는 공간이에요."></textarea>
-  <div class="bge-v3-row3">
-    <div><label>대화창 스타일</label><select id="bge-v3-dialogue-style"><option value="vn_dark">비주얼노벨 어두운 패널</option><option value="vn_light">밝은 안내 패널</option><option value="quest_notice">퀘스트 알림 패널</option></select></div>
-    <div><label>상호작용 키</label><input id="bge-v3-action-key" type="text" value="Z"></div>
-    <div><label>대화 후 퀘스트 ID</label><input id="bge-v3-quest-id" type="text" placeholder="선택 사항"></div>
-  </div>
-  <div id="bge-v3-vn-preview"><div class="speaker">화자</div><div class="line">선택된 오브젝트에 대사를 입력하면 이곳에 미리보기로 표시됩니다.</div></div>
-
-  <h4>프로젝트 백업</h4>
-  <div class="bge-v3-btn-row">
-    <button id="bge-v3-export-project" class="bge-v3-btn" type="button">스테이지+이미지 통합 내보내기</button>
-    <button id="bge-v3-import-project-btn" class="bge-v3-btn" type="button">통합 가져오기</button>
-  </div>
-  <input id="bge-v3-import-project-file" type="file" accept="application/json,.json" style="display:none">
-</div>
 
 
-
-
-
-<!-- ============================================================
-     v3.1 에셋/리사이즈 안정화 패치
-     - 속성 창에서 선택 오브젝트 이미지가 실제로 적용되도록 보강
-     - 여러 이미지 한번에 가져오기, 에셋팩 가져오기/내보내기
-     - 꼭지점/변 핸들 직접 리사이즈 로직 강화
-     ============================================================ -->
-<style>
   #bge-v31-quick-inspector { margin-top: 10px; padding: 10px; border: 1px solid rgba(116,217,255,.35); border-radius: 10px; background: rgba(20,38,58,.55); }
   #bge-v31-quick-inspector label { display:block; margin: 6px 0 4px; color:#a8ddff; font-size:12px; }
   #bge-v31-quick-inspector select, #bge-v31-quick-inspector input { width:100%; padding:6px 8px; border-radius:6px; border:1px solid rgba(168,221,255,.3); background:#101927; color:#eaf6ff; }
@@ -3317,20 +2594,8 @@
   #bge-v31-preview { min-height:42px; display:flex; align-items:center; gap:8px; padding:6px; border-radius:8px; background:rgba(0,0,0,.25); color:#d7edff; font-size:12px; }
   #bge-v31-preview img { width:44px; height:44px; object-fit:cover; border-radius:6px; border:1px solid rgba(168,221,255,.35); }
   .bge-v31-handle-label { font-size:10px; color:#102c46; text-align:center; }
-</style>
 
 
-
-
-
-<!-- ============================================================
-     v3.2 필수 수정 패치
-     - 이미지/스프라이트 패널을 실제 오른쪽 Inspector(#bge-panel)에 강제 삽입
-     - 이미지 Key 드롭다운 변경 즉시 반영
-     - 외부 이미지 다중 가져오기 / 에셋팩 가져오기·내보내기
-     - 선택 오브젝트 꼭지점 드래그 리사이즈 안정화
-     ============================================================ -->
-<style>
   #bge-v32-asset-panel{margin:10px 0 12px;padding:10px;border:2px solid rgba(119,217,255,.65);border-radius:12px;background:rgba(10,25,42,.92);box-shadow:0 0 18px rgba(0,180,255,.16) inset;color:#eaf6ff;font-family:'Noto Serif KR',serif}
   #bge-v32-asset-panel h4{margin:0 0 8px!important;padding:0!important;border:0!important;color:#78d9ff!important;font-size:14px!important}
   #bge-v32-asset-panel label{display:block;margin:7px 0 3px;color:#bfefff;font-size:11px}
@@ -3343,29 +2608,8 @@
   #bge-v32-current{min-height:46px;display:flex;gap:8px;align-items:center;margin-top:8px;padding:7px;border-radius:9px;background:rgba(0,0,0,.32);font-size:11px;line-height:1.35;color:#d8f1ff}
   #bge-v32-current img{width:44px;height:44px;object-fit:cover;border-radius:7px;border:1px solid rgba(168,221,255,.45);background:#111}
   #bge-v32-help{font-size:11px;color:#b7d6e8;line-height:1.45;margin-top:8px;padding:7px;border-radius:8px;background:rgba(255,255,255,.06)}
-</style>
 
 
-
-<!-- ============================================================
-     모바일 터치 컨트롤 (조이스틱 + Q/Z 버튼)
-     - 터치 기기에서만 활성화 (PC는 기존 그대로)
-     - 왼쪽 조이스틱: 8방향 이동 (moveKeys 제어 → 대시 방향도 자동 연동)
-     - 오른쪽 버튼: Q=대시, Z=스킬
-     ============================================================ -->
-<!-- (v235) 중복 삽입돼 있던 터치 컨트롤 사본(style+script)을 제거했습니다.
-     동일 블록이 위쪽에 이미 있어 버튼 리스너가 두 번 붙었고,
-     터치 한 번에 대시/공격이 2회 발동했습니다. -->
-
-
-<!-- ============================================================
-     봉담 RPG 씬 에디터 v3.3 디버그/개선 패치
-     - 배치 목록 눈 아이콘 실제 표시/숨김 구현
-     - 숨김 오브젝트 렌더링/충돌/상호작용 제외
-     - 배치 목록 잠금 아이콘 추가: 씬에서 실수로 이동/크기변경 방지
-     - 숨김/잠금 상태 localStorage 및 JSON 저장 데이터에 포함
-     ============================================================ -->
-<style>
   #bge-object-list .bge-eye, #bge-object-list .bge-lock {
     display:inline-flex; align-items:center; justify-content:center;
     width:20px; height:20px; margin-right:4px; border-radius:6px;
@@ -3385,29 +2629,11 @@
     cursor:pointer; margin:3px 4px 3px 0; font-size:11px;
   }
   #bge-v33-selected-tools button.active { background:rgba(153,102,24,.92); color:#fff0ba; }
-</style>
 
 
-<!-- ============================================================
-     봉담 RPG 씬 에디터 v3.4 유니티식 리사이즈 입력 패치
-     - 리사이즈 핸들 클릭이 오브젝트 재선택/선택해제로 먹히는 문제 수정
-     - document capture 단계에서 핸들을 먼저 잡아 기존 canvas mousedown보다 우선 처리
-     - 선택 유지, 잠금 오브젝트 보호, 드래그 중 속성 창 수치 실시간 동기화
-     ============================================================ -->
-<style>
   #bge-toast.bge-v34-toast { box-shadow:0 0 0 2px rgba(0,212,255,.25), 0 8px 24px rgba(0,0,0,.35); }
-</style>
 
 
-
-<!-- ============================================================
-     v3.5 스프라이트/에셋 적용 안정화 패치
-     - 업로드 이미지, 상대경로 이미지 둘 다 지원
-     - 속성 창 상단에 강제 패널 삽입
-     - 선택 즉시 실제 렌더링에 반영
-     - 에셋팩 가져오기/내보내기
-     ============================================================ -->
-<style>
   #bge-v35-asset-panel{margin:10px 0 12px;padding:12px;border:2px solid rgba(116,217,255,.75);border-radius:12px;background:rgba(7,18,30,.96);box-shadow:0 0 20px rgba(0,200,255,.18) inset;color:#eaf6ff;font-family:'Noto Serif KR',serif}
   #bge-v35-asset-panel h4{margin:0 0 8px!important;padding:0!important;border:0!important;color:#78d9ff!important;font-size:14px!important}
   #bge-v35-asset-panel label{display:block;margin:7px 0 3px;color:#bfefff;font-size:11px}
@@ -3420,99 +2646,12 @@
   #bge-v35-current{min-height:48px;display:flex;gap:8px;align-items:center;margin-top:8px;padding:7px;border-radius:9px;background:rgba(0,0,0,.32);font-size:11px;line-height:1.35;color:#d8f1ff}
   #bge-v35-current img{width:46px;height:46px;object-fit:cover;border-radius:7px;border:1px solid rgba(168,221,255,.45);background:#111}
   #bge-v35-help{font-size:11px;color:#b7d6e8;line-height:1.45;margin-top:8px;padding:7px;border-radius:8px;background:rgba(255,255,255,.06)}
-</style>
 
+/* 웹판 — 에디터/개발 블록 0037 제외 */
+/* 웹판 — 에디터/개발 블록 0042 제외 */
+/* 웹판 — 에디터/개발 블록 0044 제외 */
+/* 웹판 — 에디터/개발 블록 0045 제외 */
 
-
-
-<!-- ============================================================
-     v3.8 이미지 업로드/드롭다운 실제 동작 고정 패치
-     - v3.7의 스크립트 삽입 문제를 우회하여 실제 실행되는 스크립트로 다시 바인딩
-     - 파일 선택 후 드롭다운 즉시 갱신
-     - 선택 오브젝트에 업로드 이미지 즉시 적용
-     ============================================================ -->
-
-
-<!-- ============================================================
-     봉담 RPG 제작 도구 v3.9 안정화 패치
-     - 기존 v3.8 작업 진행상황과 저장 키를 유지합니다.
-     - 아이들이 보는 UI 용어를 한국어로 정리합니다.
-     - 이미지 업로드 → 선택 목록 → 배치물 적용 → 자동 저장 → 작업 파일 내보내기 흐름을 하나로 연결합니다.
-     ============================================================ -->
-<style id="bge-korean-v39-style">/* 웹판 — 에디터/개발 블록 0037 제외 */</style>
-
-
-
-
-
-
-
-
-
-<!-- Bongdam RPG v4.5: 되돌리기 / 다시 실행 / F1 제작 UI 숨김 -->
-<style id="bge-v45-undo-f1-style">/* 웹판 — 에디터/개발 블록 0042 제외 */</style>
-
-
-
-<!-- v46 스타일 제거됨 (배치목록 v5.2로 대체) -->
-<!-- v46 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
-
-
-<!-- v47 스타일 제거됨 (배치목록 v5.2로 대체) -->
-
-<!-- v47 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
-
-
-<!-- v48 스타일 제거됨 (배치목록 v5.2로 대체) -->
-
-<!-- v48 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
-
-
-<style id="bge-v49-style">/* 웹판 — 에디터/개발 블록 0044 제외 */</style>
-
-<style id="bge-unity-dock">/* 웹판 — 에디터/개발 블록 0045 제외 */</style>
-
-
-
-<div id="bge-v49-dock">
-  <h3>전체 오브젝트 목록 v5.2</h3>
-  <div class="v49-help">
-    기존 왼쪽 목록과 별개로 강제로 띄운 전체 목록입니다. 건물만 보이면 이 패널의 필터를 사용하세요.
-  </div>
-  <div id="bge-v49-tabs">
-    <button type="button" data-v49-filter="all" class="active">전체</button>
-    <button type="button" data-v49-filter="virtual">맵/캐릭터</button>
-    <button type="button" data-v49-filter="object">배치물</button>
-    <button type="button" data-v49-filter="npc">NPC</button>
-  </div>
-  <button type="button" id="bge-v49-refresh">목록 새로고침</button>
-  <div id="bge-v49-list"></div>
-  <div id="bge-v49-inspector">
-    <h4>선택 속성</h4>
-    <div id="bge-v49-fields"></div>
-    <button type="button" id="bge-v49-apply">적용</button>
-    <div id="bge-v49-extra"></div>
-    <div id="bge-v49-note"></div>
-  </div>
-  <div id="bge-v49-debug"></div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========================================================= -->
-<!--  붕괴 스타레일식 턴제 전투 시스템 (봉담 광장 서문 허수아비) -->
-<!--  속도바(액션 게이지) + 궁극기 + 약점(속성) 시스템             -->
-<!-- ========================================================= -->
-<style>
 #hsr-battle{
   position:fixed; inset:0; z-index:99999; display:none;
   font-family:'Pretendard','Malgun Gothic',sans-serif;
@@ -3762,7 +2901,13 @@
 .hsr-act:active{ transform:translateY(0); }
 .hsr-act .hsr-ai{ font-size:26px; margin-bottom:4px; }
 .hsr-act .hsr-at{ font-size:14px; font-weight:700; }
-.hsr-act .hsr-ad{ font-size:10px; opacity:.65; margin-top:3px; line-height:1.3; }
+/* (v404d) 전투 행동 버튼의 설명 줄이 6px 넘쳐 글자가 잘렸다(«🏅배지 스킬 [E] 카드에서 골라»).
+   flex 항목이라 min-width 가 auto 면 줄지 않는다 — 0 으로 두고 설명은 넘치면 접히게 한다. */
+.hsr-act{ min-width:0; }
+/* (v404) overflow-wrap:anywhere 는 한글을 글자 단위로 쪼갠다 — «전투 중에도 회복 가능» 이
+   «…회 / 복 가능» 으로 끊겼다(전투 화면 스크린샷). 낱말은 지키고, 정 안 들어가는 낱말만 쪼갠다. */
+.hsr-act .hsr-ad{ font-size:10px; opacity:.65; margin-top:3px; line-height:1.3;
+  word-break:keep-all; overflow-wrap:break-word; }
 .hsr-act.hsr-basic{ border-color:rgba(96,165,250,.5); }
 .hsr-act.hsr-skill{ border-color:rgba(52,211,153,.5); }
 .hsr-act.hsr-ult{ border-color:rgba(250,204,21,.7); background:linear-gradient(180deg,#3b2f0a,#1a1405); }
@@ -3842,71 +2987,8 @@
 }
 .hsr-elem-btn:hover{ transform:scale(1.1); }
 .hsr-elem-btn.hsr-isweak{ box-shadow:0 0 10px #ffd86b; border-color:#ffd86b; }
-</style>
-
-<div id="hsr-battle" aria-hidden="true">
-  <canvas id="hsr-stars"></canvas>
-  <div id="hsr-arena">
-    <div id="hsr-ground-grid"></div>
-
-    <!-- 속도바 -->
-    <div id="hsr-speedbar">
-      <div id="hsr-speed-label">⏱ 액션 게이지</div>
-      <div id="hsr-speed-track"></div>
-    </div>
-
-    <!-- 영웅 -->
-    <div class="hsr-unit hsr-hero" id="hsr-u-hero">
-      <div class="hsr-info">
-        <div class="hsr-name" id="hsr-hero-name">영웅 <span class="hsr-lv" id="hsr-hero-cls"></span></div>
-        <div class="hsr-hpbar"><i id="hsr-hero-hp"></i></div>
-        <div class="hsr-hptext" id="hsr-hero-hptext">100 / 100</div>
-      </div>
-      <div class="hsr-sprite" id="hsr-hero-sprite">🦸</div>
-    </div>
-
-    <!-- 허수아비 -->
-    <div class="hsr-unit hsr-enemy" id="hsr-u-enemy">
-      <div class="hsr-info">
-        <div class="hsr-name">각성한 허수아비 <span class="hsr-lv" id="hsr-enemy-lv">Lv.5</span></div>
-        <div class="hsr-hpbar"><i id="hsr-enemy-hp"></i></div>
-        <div class="hsr-hptext" id="hsr-enemy-hptext">300 / 300</div>
-        <div class="hsr-tough" id="hsr-enemy-tough-wrap"><i id="hsr-enemy-tough"></i></div>
-        <div class="hsr-weak" id="hsr-enemy-weak"></div>
-      </div>
-      <div class="hsr-sprite" id="hsr-enemy-sprite">🎃</div>
-    </div>
-
-    <!-- BREAK 연출 -->
-    <div id="hsr-break">BREAK!</div>
-
-    <!-- 속성 선택 -->
-    <div id="hsr-elem-pick"></div>
-
-    <!-- 하단 커맨드 -->
-    <div id="hsr-cmd">
-      <div id="hsr-turnmsg">전투 시작!</div>
-      <div id="hsr-ult-wrap">
-        <span id="hsr-ult-label">⚡ 궁극기</span>
-        <div id="hsr-ult-track"><i></i></div>
-        <span id="hsr-ult-pct">0%</span>
-      </div>
-      <div id="hsr-actions"></div>
-    </div>
-
-    <!-- 결과 -->
-    <div id="hsr-result">
-      <h2 id="hsr-result-title">승리</h2>
-      <p id="hsr-result-sub"></p>
-      <button id="hsr-result-btn">돌아가기</button>
-    </div>
-  </div>
-</div>
 
 
-
-<!-- ================= 봉담문화의집 지킴이 시스템 (BD) ================= -->
-<style>
 /* 퀘스트 목표 HUD */
 #bd-quest-hud{
   position:fixed; top:150px; left:16px;
@@ -4160,29 +3242,17 @@
 .bd-title-hit.bd-title-hit-fallback.locked{ opacity:.55; }
 .bd-title-hit.bd-title-hit-fallback.locked::after{ background:transparent; font-size:11px; align-items:flex-end; padding-bottom:3px; }
 .bd-title-hit.locked{ opacity:.62; filter:grayscale(.45); cursor:default; }   /* (v399e 검수) 비활성이 보이게 */
-.bd-title-hit.locked::after{ content:'저장 없음'; position:absolute; right:10px; top:50%; transform:translateY(-50%);
+/* (v404) 배지가 버튼 그림 밖으로 14px 나갔다 — 누르는 영역(307px)이 나무판 그림보다
+   넓은데 right 를 px 로 박아 둔 탓. 폭에 비례하게 두면 어느 해상도에서도 판 안에 앉는다. */
+.bd-title-hit.locked::after{ content:'저장 없음'; position:absolute; right:11%; top:50%; transform:translateY(-50%);
   background:rgba(15,19,32,.88); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:2px 9px;
   color:#fff; font-size:11px; font-weight:700; letter-spacing:.02em; }
 .bd-title-foot{ position:absolute; left:22px; bottom:16px; z-index:2; font-size:13px; color:#e8eef7;
   font-weight:700; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,.7); }
-</style>
 
-<div id="bd-quest-hud"><div class="bd-hud-head">◈ 추적 중인 임무</div><div class="bd-ch"></div><div class="bd-obj"></div><div class="bd-done-label">✔ 임무 완료</div></div>
-<div id="bd-toast"></div>
-<!-- (v390) 메뉴줄 정리 — 장소수첩은 안전지도 모달 안 [도장수첩] 버튼으로 흡수,
-     소리 토글은 ⚙ 설정 모달과 중복이라 제거, v268부터 CSS로만 숨겨져 있던
-     위험요소 배치·실행취소(dev)와 배치 힌트 마크업도 물리 제거 (함수·에디터는 유지) -->
-<div id="bd-menu-btns" style="position:fixed;top:14px;right:62px;z-index:901;display:flex;gap:8px;">
-  <button id="bd-mb-equip" data-bdmb="1" onclick="window.BD_openEquipModal&&window.BD_openEquipModal()" style="background:rgba(16,24,44,.92);border:1px solid rgba(52,211,153,.5);color:#6ee7b7;border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;">🔧 장비</button>
-  <button id="bd-mb-map" data-bdmb="1" onclick="window.BD_openSafetyMap&&window.BD_openSafetyMap()" style="background:rgba(16,24,44,.92);border:1px solid rgba(142,255,160,.5);color:#8effa0;border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;">🗺️ 안전지도</button>
-</div>
+@keyframes bdGuidePulse{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes bdrot{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
 
-
-<!-- ================= /봉담 지킴이 시스템 ================= -->
-
-
-
-<style id="bd-controls-style">
 #bd-controls-ov{ display:none; position:fixed; inset:0; z-index:920; background:rgba(5,9,18,.78);
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px) font-family:'Noto Serif KR',serif; }
 #bd-controls-ov .bd-ct-box{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
@@ -4196,17 +3266,17 @@
   background:#1b2740; border:1px solid rgba(232,201,115,.4); border-bottom-width:3px;
   border-radius:6px; color:#e8c973; font-family:inherit; font-weight:700; font-size:13px; }
 #bd-controls-ov .bd-ct-close{ margin-top:16px; font-size:12px; color:#8fa0bd; }
-</style>
 
-<style id="bd-tut2-style">
+
 #bd-tut2-mark{ display:none; position:fixed; z-index:893; font-size:24px; color:#7CFC9A;
   text-shadow:0 0 8px rgba(0,0,0,.85); pointer-events:none;
   animation:bdTutBounce .7s ease-in-out infinite alternate; }
 @keyframes bdTutBounce{ from{ transform:translate(-50%,0); } to{ transform:translate(-50%,-10px); } }
-</style>
 
+@keyframes bdBadgeIn{0%{transform:scale(.15) rotate(-25deg);opacity:0}60%{transform:scale(1.25) rotate(6deg)}100%{transform:scale(1) rotate(0)}}'
+      + '@keyframes bdBadgeGlow{0%,100%{box-shadow:0 0 34px 10px rgba(255,216,77,.45)}50%{box-shadow:0 0 60px 22px rgba(255,216,77,.75)}}'
+      + '@keyframes bdBadgeTxt{0%{transform:translateY(16px);opacity:0}100%{transform:translateY(0);opacity:1}}
 
-<style id="bd-easy-style">
 /* (v199) 모바일 대시 버튼 숨김 — 대시 기능 제거 */
 #tc-btn-q{ display:none !important; }
 /* 키 힌트 바 (첫 정화까지) */
@@ -4227,11 +3297,9 @@
   text-shadow:0 0 8px rgba(0,0,0,.8); pointer-events:none;
   animation:bdGoalBounce .7s ease-in-out infinite alternate; }
 @keyframes bdGoalBounce{ from{ transform:translate(-50%,0); } to{ transform:translate(-50%,-10px); } }
-</style>
 
-<style id="bd-pal-style">/* 웹판 — 에디터/개발 블록 0064 제외 */</style>
+/* 웹판 — 에디터/개발 블록 0064 제외 */
 
-<style id="bd-v198-ui">
 /* ═══════════ 봉담지킴이 v198 UI 리스킨 — 네이비+골드 RPG 패널 테마 ═══════════ */
 :root{
   --bdg-gold:#e8c973; --bdg-gold-dim:rgba(200,144,42,.55); --bdg-gold-soft:rgba(232,201,115,.28);
@@ -4371,11 +3439,8 @@
   background:linear-gradient(180deg,#c8902a,#8a6218); border-radius:6px; border:2px solid rgba(9,13,28,.9);
 }
 .bd-modal-box::-webkit-scrollbar-track, #bd-achieve-modal-body::-webkit-scrollbar-track{ background:rgba(255,255,255,.04); border-radius:6px; }
-</style>
 
 
-
-<style id="bd-battle-guide-style">
 .bd-guide-pulse{ animation: bdGuidePulse 1s ease-in-out infinite !important;
   box-shadow: 0 0 0 3px rgba(255,216,77,.9), 0 0 22px rgba(255,216,77,.8) !important; }
 @keyframes bdGuidePulse{ 0%,100%{ transform: translateY(0) scale(1); } 50%{ transform: translateY(-4px) scale(1.05); } }
@@ -4385,18 +3450,8 @@
   font-family:'Noto Serif KR', serif; box-shadow:0 6px 18px rgba(0,0,0,.5); }
 #bd-guide-tip:after{ content:''; position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
   border:7px solid transparent; border-bottom:none; border-top-color:rgba(255,216,77,.8); }
-</style>
 
 
-
-
-
-
-
-<!-- v234: 문화의집 3층 PC존에 독립 게임을 통합한 컴퓨터 상호작용
-     (v237 병합) 직접 F 실행/자체 프롬프트를 제거하고, 오락실 PC '게임 선택창'의
-     4번째 항목(INFERNO)으로 실행 경로를 통일했다. BD_openComputerGame()으로 연다. -->
-<style id="bd-pc-game-style">
   #bd-pc-game-prompt{
     display:none;position:fixed;left:50%;bottom:76px;z-index:2147482900;
     transform:translateX(-50%);align-items:center;gap:10px;padding:10px 16px;
@@ -4439,31 +3494,9 @@
     #bd-pc-game-close{padding:8px 10px}
     #bd-pc-game-prompt{bottom:138px;font-size:12px}
   }
-</style>
-<div id="bd-pc-game-prompt" aria-hidden="true"><kbd>F</kbd><span>컴퓨터 게임 실행</span></div>
-<section id="bd-pc-game-overlay" role="dialog" aria-modal="true" aria-label="문화의집 컴퓨터 게임" aria-hidden="true">
-  <header id="bd-pc-game-toolbar">
-    <div><strong>PC존 · 좀비 게임</strong><span>게임을 종료하면 문화의집 컴퓨터 앞으로 돌아옵니다.</span></div>
-    <button id="bd-pc-game-close" type="button">게임 종료 <kbd>ESC</kbd></button>
-  </header>
-  <iframe id="bd-pc-game-frame" title="인페르노 프로토콜 미니게임" sandbox="allow-scripts allow-pointer-lock" allow="autoplay; fullscreen; gamepad"></iframe>
-</section>
 
+#installBtn{display:none!important}
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--__BD_CONCEPT_MAPS_BEGIN__-->
-<style id="bd-concept-map-style">
   #bd-concept-map-button {
     position: absolute;
     top: 62px;
@@ -4705,14 +3738,8 @@
     #bd-concept-map-panel { top: 92px; right: 10px; width: calc(100% - 20px); }
     #bd-quest-hud .bd-nav-guide { margin-left: 18px; padding: 6px 7px; font-size: 11px; }
   }
-</style>
 
-<!--__BD_CONCEPT_MAPS_END__-->
-<!--__BD_OPENWORLD_V09_BEGIN__-->
-<!--__BD_OPENWORLD_V09_END__-->
 
-<!--__BD_DISTRICT_WORLD_V19_BEGIN__-->
-<style id="bd-district-world-v19-style">
 #game-canvas {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -5123,14 +4150,8 @@ body.bd-concept-screenshot #bd-district-editor-nav {
   }
 }
 
-</style>
 
 
-<!--__BD_DISTRICT_WORLD_V19_END__-->
-
-
-
-<style id="bd-nav-msg-v26-style">
 /* (v26) 좌측 퀘스트 HUD — 추적 상태 헤더 가시화 */
 #bd-quest-hud .bd-hud-head{
   display:block !important; font-size:12px; letter-spacing:.4px;
@@ -5160,55 +4181,16 @@ body.bd-concept-screenshot #bd-district-editor-nav {
 #bd-msg .bd-msg-from{ color:#ffd86b; }
 #bd-msg .bd-msg-hint{ margin-left:auto; font-size:10px; color:#94a3b8; font-weight:600; }
 #bd-msg .bd-msg-text{ color:#e3e9f8; min-height:20px; word-break:keep-all; }
-</style>
 
 
-
-
-
-
-
-
-
-
-<style id="bd-dami-intro-dim-style">
 #bd-dami-dim{ position:fixed; inset:0; z-index:2390; background:rgba(4,7,16,.62);
   opacity:0; transition:opacity .4s; pointer-events:none; }
 #bd-dami-dim.show{ opacity:1; }
 #bd-dami-hud.bd-dami-glow{ z-index:2400 !important;
   filter: drop-shadow(0 0 18px rgba(255,216,77,.95)) drop-shadow(0 0 40px rgba(255,216,77,.5)); }
-</style>
 
+.bdtb{background:#243244;color:#efe6d0;border:1px solid #56657d;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer}.bdtb:hover{border-color:#ffd77a}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="bd-battle-bg-full-v68">
 /* (v68) 전투 배경을 화면 전체로 — 아레나 기본 지면/언덕 장식 비활성 */
 body.bd-battle-photo-bg #hsr-arena::before,
 body.bd-battle-photo-bg #hsr-arena::after { display: none !important; }
@@ -5216,9 +4198,8 @@ body.bd-battle-photo-bg #hsr-ground,
 body.bd-battle-photo-bg .hsr-ground,
 body.bd-battle-photo-bg #hsr-field { display: none !important; }
 body.bd-battle-photo-bg #hsr-arena { inset: 0 !important; background-repeat: no-repeat; }
-</style>
 
-<style id="bd-overlay-dim-v68">
+
 /* (v68) 배지 수여·컷신 오버레이 중에는 우측 길안내·에디터 버튼 등 HUD를 감춘다
    — 연출 딤 위로 UI가 떠 있어 몰입이 깨지던 문제 */
 body.bd-cinematic #bd-district-hud,
@@ -5229,103 +4210,8 @@ body.bd-cinematic .bd-district-mini-grid,
 body.bd-cinematic .bd-district-mini,
 body.bd-cinematic [id^="bge-"],
 body.bd-cinematic [class*="bge-open"] { opacity: 0 !important; pointer-events: none !important; transition: opacity .25s ease; }
-</style>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="bd-panel-hud-css-v147">
 /* (v147) 가방·인벤토리·상점 같은 전체 패널은 게임 화면(#game-screen) 안에 들어 있어
    화면에 고정된 HUD(임무 추적창·안내 카드 등)보다 «아래»에 그려진다.
    그래서 패널을 열면 임무 글자와 안내 상자가 패널 위로 비쳐 글씨가 겹쳐 보였다. */
@@ -5343,12 +4229,8 @@ body.bd-panel-open #bd-locked-hint,
 body.bd-panel-open #bd-interact-glow,
 body.bd-panel-open #bd-track-chip,
 body.bd-panel-open #bd-guide-ov { opacity:0 !important; pointer-events:none !important; transition:opacity .15s ease; }   /* (v379) §5 — 대화/조사/접근 표시가 인벤토리·지도 위로 비치던 문제 */
-</style>
 
 
-
-
-<style id="bd-ui-polish-css-v147">
 /* (v147) 화면 정리 — 대사창 외 상단·하단 상시 알림 UI 중 불필요한 것 제거
    · 상단 중앙 「◯◯리 · 도로 끝에서 인접 리로 자연 이동 · 주요시설 0/16」 배너:
      같은 정보가 우측 길안내 패널·리 이동 패널에 이미 있다 → 숨김
@@ -5359,26 +4241,8 @@ body.bd-panel-open #bd-guide-ov { opacity:0 !important; pointer-events:none !imp
 #bd-build-tag, [id^="bd-build-tag"]{ display:none !important; }
 body.bd-editor-open #bd-uitune-toggle{ display:block !important; }
 body.bd-editor-open #bd-build-tag, body.bd-editor-open [id^="bd-build-tag"]{ display:block !important; }
-</style>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="bd-ui-restyle-v292">
 /* ═══════════════════════════════════════════════════════════════
    (v292) 출시 품질 UI 리스킨 — 단일 디자인 시스템
    · 팔레트: 딥네이비(#101828) + 골드(#ffd86b) + 아이보리 대사창
@@ -5540,32 +4404,8 @@ body.bd-editor-open #bd-build-tag, body.bd-editor-open [id^="bd-build-tag"]{ dis
 .bd-modal-box button:focus-visible, #bd-district-facility-modal button:focus-visible{
   outline: 2px solid var(--uiGold) !important; outline-offset: 2px !important;
 }
-</style>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="bd-round15-css-v332">
 /* (v332) ⑦ LD(VN) 대화 중 고정 HUD 정리 — LD·대화창이 항상 최상위로 */
 body.bd-vn-on #bd-quest-hud, body.bd-vn-on #bd-menu-btns, body.bd-vn-on #bd-keybar,
 body.bd-vn-on #bd-goal-down, body.bd-vn-on #bd-worry, body.bd-vn-on #bd-locked-hint,
@@ -5592,14 +4432,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 #bd-hp-dom .xp-track{ flex:1; height:6px; border-radius:3px; background:rgba(8,12,26,.9); overflow:hidden; }
 #bd-hp-dom .xp-fill{ height:100%; border-radius:3px; background:linear-gradient(180deg,#79b9ff,#2a63d8); transition:width .18s; }
 #bd-hp-dom .xp-num{ font-size:10.5px; color:#93a2c8; min-width:46px; text-align:right; }
-</style>
 
 
-
-
-
-
-<style id="bd-round18-css-v337">
 /* (v337) ② 전투 플레이어 배율 0.8 — 애니메이션 transform과 충돌하지 않게 내부 이미지에 적용 */
 #hsr-hero-sprite img, #hsr-hero-sprite > div{ transform: scale(0.8); transform-origin: bottom center; }
 /* (v337) ③ 상점 다크 리스킨 — 구버전 아이보리 톤 제거, 퀘스트 HUD 톤앤매너 */
@@ -5614,14 +4448,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
   border: 1px solid rgba(122,150,210,.25) !important; border-radius: 12px !important; color: #e8ecf7 !important; }
 #shop-panel .shop-buy-btn{ background: #2a63d8 !important; color: #fff !important; border: none !important; border-radius: 10px !important; }
 #shop-panel #shop-footer{ color: #93a2c8 !important; }
-</style>
 
 
-
-
-
-
-<style id="bd-round20-css-v339">
 /* (v339) 담이 UI 2배 — 배지·말풍선 가독성 (HUD에서 잘 보이게) */
 #bd-dami-hud{ transform: scale(2); transform-origin: left bottom; }
 #bd-dami-hud #bd-dami-text{ max-width: 300px; }
@@ -5630,14 +4458,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 /* (v339) 장난감 버스트 */
 .bd-toy-burst{ position: fixed; left: 0; top: 0; pointer-events: none; z-index: 100050; }
 .bd-toy-burst span{ position: absolute; font-size: 26px; transition: transform 1s cubic-bezier(.17,.67,.3,1.2), opacity 1s; opacity: 1; }
-</style>
 
 
-
-
-
-
-<style id="bd-round23-css-v341">
 #bd-ending-fx{ position: fixed; inset: 0; z-index: 100200; pointer-events: none;
   display: flex; align-items: center; justify-content: center; flex-direction: column;
   background: radial-gradient(ellipse at center, rgba(20,28,55,.55), rgba(5,8,18,.88));
@@ -5654,16 +4476,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 #bd-ending-fx .efx-stats div{ background: rgba(13,19,36,.9); border: 1px solid rgba(255,216,107,.4);
   border-radius: 12px; padding: 10px 18px; color: #ffd86b; font-weight: 700; font-size: 15px; }
 #bd-ending-fx canvas{ position: absolute; inset: 0; width: 100%; height: 100%; }
-</style>
 
 
-
-
-
-
-
-
-<style id="bd-round23-map-css-v343">
 #bd-map-v342{ position:fixed; inset:0; z-index:99000; display:none; align-items:center; justify-content:center;
   background:rgba(4,7,15,.84); -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px) }
 #bd-map-v342.show{ display:flex; }
@@ -5731,15 +4545,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 #bd-map-v342 .m42-foot b{ color:#ffd86b; }
 #bd-map-v342 .m42-leg{ display:flex; align-items:center; gap:5px; }
 #bd-map-v342 .m42-leg img{ width:18px; vertical-align:middle; image-rendering:pixelated; }
-</style>
 
 
-
-
-
-
-
-<style id="bd-round24-ending-css-v345">
 #bd-ending-fx2{ position:fixed; inset:0; z-index:100200; display:flex; align-items:center; justify-content:center;
   flex-direction:column; gap:16px; background:radial-gradient(ellipse at center, rgba(16,22,44,.92), rgba(3,5,12,.985));
   opacity:0; transition:opacity .6s; }
@@ -5785,11 +4592,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 #bd-ending-fx2 canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 #bd-ending-fx2 .e2-done{ position:absolute; opacity:0; transition:opacity .9s; }
 #bd-ending-fx2.on .e2-done{ opacity:1; }
-</style>
 
 
-
-<style id="bd-round24-track-css-v346">
 #bd-track-chip{ position:fixed; top:64px; left:50%; transform:translateX(-50%); z-index:26;
   display:none; align-items:center; gap:8px; background:rgba(13,19,36,.94);
   border:1px solid rgba(255,216,107,.6); border-radius:999px; padding:7px 16px;
@@ -5798,28 +4602,16 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 #bd-track-chip.on{ display:flex; }
 #bd-track-chip .tk-arrow{ display:inline-block; font-size:17px; transition:transform .3s; color:#8effa0; }
 #bd-track-chip .tk-x{ color:#9fb3d1; font-size:12px; margin-left:2px; }
-</style>
 
 
-
-
-
-
-<style id="bd-round25-css-v353">
 #bd-settings-modal .bd-uiscale-row{ display:flex; align-items:center; gap:6px; flex-wrap:wrap;
   padding:10px 0; border-top:1px solid rgba(255,255,255,.12); margin-top:6px; }
 #bd-settings-modal .bd-uiscale-row > span{ margin-right:6px; }
 #bd-settings-modal .bd-uiscale-row button{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25);
   color:#dfe7f5; border-radius:8px; padding:5px 10px; font-size:12.5px; font-weight:700; cursor:pointer; }
 #bd-settings-modal .bd-uiscale-row button.on{ background:rgba(255,216,107,.22); border-color:rgba(255,216,107,.75); color:#ffd86b; }
-</style>
 
 
-
-
-
-
-<style id="bd-round27-css-v356">
 /* 알 페이즈 — 미완성 형체: 블러·저채도·타원 실루엣·맥동 */
 .hsr-enemy.bd-egg-phase .hsr-sprite img{
   filter: blur(6px) brightness(.62) saturate(.55) !important;
@@ -5834,11 +4626,8 @@ body.bd-vn-on #bd-toast{ opacity:.15 !important; }
 @keyframes bdEggFlash{ 0%{opacity:0} 18%{opacity:.95} 100%{opacity:0} }
 /* 증강 선택 중 담이 말풍선 숨김 */
 body.bd-aug-on #bd-dami-bubble{ opacity:0 !important; visibility:hidden !important; }
-</style>
 
 
-
-<style id="bd-round27-css2-v357">
 /* 플레이어 HP 패널 — 히어로 스프라이트 머리 위 */
 .hsr-hero .hsr-info{
   position:absolute !important;
@@ -5851,13 +4640,8 @@ body.bd-aug-on #bd-dami-bubble{ opacity:0 !important; visibility:hidden !importa
 @media (max-width:900px){
   .hsr-hero .hsr-info{ min-width:190px; max-width:240px; }
 }
-</style>
 
 
-
-
-
-<style id="bd-round27-dami-v359">
 /* (v359) 담이 HUD 2배(v339) → 1.35배 — 좌하단 유지, 게임 신 가림 완화 */
 #bd-dami-hud{ transform: scale(1.35) !important; transform-origin: left bottom !important; }
 #bd-dami-bubble{ max-width: min(380px, 42vw) !important; }
@@ -5865,10 +4649,8 @@ body.bd-aug-on #bd-dami-bubble{ opacity:0 !important; visibility:hidden !importa
   #bd-dami-hud{ transform: scale(1.25) !important; }
   #bd-dami-bubble{ max-width: min(330px, 48vw) !important; }
 }
-</style>
 
 
-<style id="bd-round27-wrap-css-v360">
 html.bd-touch-mode .hsr-flee{ min-height:44px !important; }
 
 /* (v394) 스마트폰 티어(v391, 높이<480 → body zoom 0.65) 역보정 —
@@ -5891,17 +4673,8 @@ html.bd-touch-mode .hsr-flee{ min-height:44px !important; }
   html.bd-touch-mode .hsr-flee{ min-height:52px !important; }
   html.bd-touch-mode .bd-choice-row{ min-height:54px !important; }
 }
-</style>
 
 
-
-
-
-
-
-
-
-<style id="bd-round30-css-v365">
 .bd-safetip{ margin:12px 0 4px; padding:10px 14px; border-radius:12px; text-align:left;
   background:rgba(52,211,153,.10); border:1px solid rgba(52,211,153,.45);
   color:#c9f7dd; font-size:13.5px; line-height:1.55; }
@@ -5916,14 +4689,8 @@ html.bd-touch-mode .hsr-flee{ min-height:44px !important; }
 #bd-gate-left{ left:14px; top:50%; transform:translateY(-50%); }
 #bd-gate-top{ top:64px; left:50%; transform:translateX(-50%); }
 #bd-gate-bottom{ bottom:64px; left:50%; transform:translateX(-50%); }
-</style>
 
 
-
-
-
-
-<style id="bd-round31-css-v367">
 /* (v367) 튜토 스포트라이트를 HUD 아래로 — 강조 박스가 퀘스트 HUD·미니맵을 가리던 문제 */
 #bd-spot{ z-index:660 !important; }
 #bd-spot-block{ z-index:659 !important; }
@@ -5936,10 +4703,8 @@ body.bd-battle-on #bd-spot2{ z-index:100000 !important; }
 body.bd-shop-tuto-on #bd-spot{ z-index:100000 !important; }
 body.bd-shop-tuto-on #bd-spot-block{ z-index:99990 !important; }
 body.bd-shop-tuto-on #bd-spot2{ z-index:100000 !important; }
-</style>
 
-
-<style id="bd-round33-ux-css-v369">/* (v369-ux) 대화창 화자 이름 가독성 — 어두운 배경 위에서 안 보이던 이름표를 양피지 배지로. 본문 18px·줄간격 1.7 */
+/* (v369-ux) 대화창 화자 이름 가독성 — 어두운 배경 위에서 안 보이던 이름표를 양피지 배지로. 본문 18px·줄간격 1.7 */
 #dialogue-name{ background:rgba(255,248,230,.97) !important; border:1px solid #b89968 !important; border-radius:10px !important;
   padding:5px 16px !important; font-size:15px !important; color:#5b4127 !important; box-shadow:0 2px 8px rgba(0,0,0,.35) !important; }
 #dialogue-text{ font-size:18px !important; line-height:1.7 !important; }
@@ -5948,13 +4713,8 @@ body.bd-shop-tuto-on #bd-spot2{ z-index:100000 !important; }
 html.bd-touch-mode #bd-keybar{ font-size:15px !important; }
 /* (v369-ux) U-08 안전지도 열림 중 담이 말풍선이 지도 하단 범례·통계를 가림 → 지도 열림 중엔 말풍선 숨김(배지는 유지) */
 body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:hidden !important; }
-</style>
 
 
-
-
-
-<style id="bd-quest-hud-text-v375">
 /* (v375) 임무 HUD — 배경 패널 제거(건물을 가리던 문제), 텍스트만 + 진한 외곽 그림자로 가독성 확보 */
 #bd-quest-hud{
   background: none !important; border: 0 !important; box-shadow: none !important;
@@ -6006,10 +4766,13 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
 /* 스킬 카드 속성 태그도 그림 포함 크게 */
 .bd-elem-tag{ font-size:12px !important; padding:2px 9px !important; }
 .bd-el-C{ background:rgba(251,146,60,.22) !important; color:#fdba74 !important; }
-</style>
+
+/* (v404) 임무 이름이 비어 있는 임무를 추적 중이면 «◈» 글머리만 남아
+   HUD 두 번째 줄에 **아이콘 하나짜리 빈 줄**이 생겼다(1장 필드 스크린샷).
+   내용이 없으면 줄 자체를 없앤다 — 글머리는 ::before 라 :empty 로 사라진다. */
+#bd-quest-hud .bd-ch:empty{ display:none !important; }
 
 
-<style id="bd-bag-shop-css-v375">
 /* (v375) 가방 카드형 리디자인 + 상점 모달 섹션 */
 #inv-grid{ grid-template-columns: repeat(4, minmax(0,1fr)) !important; gap: 10px !important; align-content: start; }
 .inv-slot.inv-card375{
@@ -6044,7 +4807,1346 @@ body.bd-map-open #bd-dami-hud #bd-dami-bubble{ opacity:0 !important; visibility:
 .bd-shop375 .bd-shop-owned{ opacity: .75; }
 .bd-shop375 .bd-equip-up:disabled{ opacity: .5; cursor: default; }
 .bd-shop375{ max-height: 84vh; overflow-y: auto; }
-</style>
+</style><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1526">
+<meta property="og:title" content="봉담 안전지도 대작전">
+<meta property="og:description" content="봉담 네 동네를 돌며 위험을 정화하는 청소년 안전 교육 RPG — 브라우저에서 바로 플레이!">
+<meta property="og:image" content="https://jjih129.github.io/bongdam/og.png">
+<meta property="og:url" content="https://jjih129.github.io/bongdam/">
+<meta property="og:type" content="website">
+</head>
+<body>
+<!-- (v377) 조기 로딩 화면 — 본문 스크립트(수십 MB)가 내려오는 동안 흰 화면 대신 진행 안내를 먼저 그린다 -->
+<div id="bd-preload" style="position:fixed;inset:0;z-index:2147483000;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-family:'Noto Serif KR',serif;">
+<div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);margin-bottom:16px;">🛡️</div>
+<div style="font-size:12px;letter-spacing:6px;color:#c9a75c;font-weight:700;">BONGDAM</div>
+<div style="margin-top:6px;color:#ffd86b;font-size:25px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.6);">봉담 안전지도 대작전</div>
+<div style="margin-top:8px;color:#b7c4dc;font-size:13px;letter-spacing:1px;">우리 동네를 지키는 작은 모험</div>
+<div style="margin-top:26px;width:230px;height:7px;border-radius:4px;background:rgba(255,255,255,.10);overflow:hidden;border:1px solid rgba(255,216,107,.25);"><div id="bd-preload-bar" style="width:8%;height:100%;background:linear-gradient(90deg,#e8b64a,#ffd86b);border-radius:4px;transition:width .5s;"></div></div>
+<div id="bd-preload-msg" style="margin-top:12px;color:#8fa0bd;font-size:12px;">지도를 펼치는 중… 첫 접속은 시간이 조금 걸려요</div>
+</div>
+</div>
+
+<div id="bd-boot-loader" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;">
+  <div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);">🗺️</div>
+  <div style="margin-top:16px;color:#ffd86b;font-size:21px;font-weight:900;letter-spacing:2px;">봉담 안전지도 대작전</div>
+  <div style="margin-top:7px;color:#8fa0bd;font-size:12.5px;">안전지도를 펼치는 중이에요…</div>
+  <div style="margin-top:22px;width:230px;height:7px;border-radius:4px;background:rgba(255,255,255,.10);overflow:hidden;border:1px solid rgba(255,216,107,.25);">
+    <div id="bd-boot-bar" style="width:30%;height:100%;background:linear-gradient(90deg,#e8b64a,#ffd86b);border-radius:4px;animation:bdboot 1.2s ease-in-out infinite alternate;"></div>
+  </div>
+  
+</div>
+<!-- (v404) 로딩 화면이 끝나지 않을 때 — 해 볼 것과 «어디서 멈췄는지»를 화면에 띄운다.
+     이 화면(#bd-boot-loader)은 HTML·CSS 만으로 그려지고 움직여서, 뒤의 스크립트가 멈춰도
+     바가 계속 왔다 갔다 한다. 0186 이 치우기 전에 15초가 지나면 안내를 붙인다.
+     «멈춘 곳» 은 지금까지 읽힌 마지막 스크립트 태그의 id — 화면 사진 한 장으로 위치를 짚을 수 있다.
+     (이 주석에 스크립트 태그 글자를 그대로 쓰면 빌드 도구가 진짜 스크립트로 잘못 읽는다) -->
+<script id="bd-boot-watchdog" data-bd-inline>!function(){try{var t=Date.now(),e=[];addEventListener("error",function(t){try{if(e.length>=3)return;var n=t&&t.target;n&&n!==window&&n.tagName?e.push("못 불러옴 "+n.tagName.toLowerCase()+" "+String(n.src||n.href||"").slice(0,40)):e.push(String(t&&t.message||t).slice(0,90))}catch(t){}},!0),setTimeout(function tick(){try{var n=document.getElementById("bd-boot-loader");if(!n)return;var o=Math.round((Date.now()-t)/1e3);if(o>=15){var r=document.getElementById("bd-boot-help");if(!r){(r=document.createElement("div")).id="bd-boot-help",r.style.cssText="margin-top:22px;max-width:440px;padding:0 18px;text-align:center;color:#c7d2ea;font-size:13px;line-height:1.7;";var a=document.createElement("div");a.textContent="생각보다 오래 걸리고 있어요.";var i=document.createElement("div");i.style.cssText="margin-top:4px;opacity:.85;",i.textContent="file:"===location.protocol?"계속 이대로면 크롬 «시크릿 창»(Ctrl+Shift+N)에 이 파일을 끌어다 놓아 열어 보세요.":"계속 이대로면 다시 불러오기를 눌러 보세요.";var d=document.createElement("button");d.type="button",d.textContent="다시 불러오기",d.style.cssText="margin-top:12px;padding:8px 18px;border-radius:10px;cursor:pointer;background:rgba(255,216,107,.15);border:1px solid #ffd86b;color:#ffd86b;font-weight:700;font-size:13px;",d.onclick=function(){location.reload()};var c=document.createElement("div");c.id="bd-boot-help-diag",c.style.cssText="margin-top:12px;opacity:.55;font-size:11px;word-break:break-all;",r.appendChild(a),r.appendChild(i),r.appendChild(d),r.appendChild(c),n.appendChild(r)}for(var l=document.scripts,p="-",s=l.length-1;s>=0;s--)if(l[s].id){p=l[s].id+(s<l.length-1?" 뒤 "+(l.length-1-s)+"개":"");break}var g=document.getElementById("bd-boot-help-diag");g&&(g.textContent="멈춘 곳: "+p+" · 스크립트 "+l.length+"개 · "+document.readyState+" · "+o+"초"+(e.length?" · 오류: "+e.join(" / "):""))}setTimeout(tick,1e3)}catch(t){}},1e3)}catch(t){}}();</script>
+<div id="bd-boot" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 38%,#1a2440 0%,#0f1526 62%,#0a0f1d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;color:#e8dcc0;transition:opacity .5s">
+  <div style="width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;background:radial-gradient(circle at 35% 30%,#2a3350,#141a2c);border:3px solid #ffd86b;box-shadow:0 0 24px rgba(255,216,107,.35);margin-bottom:16px;">🛡️</div>
+  <div style="font-size:12px;letter-spacing:6px;color:#c9a75c;font-weight:700;margin-bottom:6px">BONGDAM</div>
+  <div style="font-size:25px;font-weight:900;letter-spacing:2px;color:#ffd86b;margin-bottom:9px">봉담 안전지도 대작전</div>
+  <div style="font-size:13px;color:#b7c4dc;margin-bottom:26px">우리 동네를 지키는 작은 모험을 불러오는 중…</div>
+  <div style="display:flex;gap:9px">
+    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out 0s infinite"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out .18s infinite"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#ffd86b;animation:bdBoot 1s ease-in-out .36s infinite"></span>
+  </div>
+  
+</div>
+
+<div class="particles" id="particles"></div>
+
+<!-- ── 메인 메뉴 (봉담 타이틀로 대체됨, 숨김) ── -->
+<!-- (v239) 레거시 메뉴 플로트 제거 -->
+
+<!-- ══════════════════════════════════════════════
+     모달: 게임시작 (세이브 슬롯 선택)
+══════════════════════════════════════════════ -->
+<div class="overlay" id="modal-continue">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('continue')">✕</button>
+    <div class="modal-title">⚔️ 이어하기</div>
+    <div class="modal-body">저장된 모험을 선택하세요.</div>
+    <div id="continue-slots"></div>
+    <div style="margin-top:16px;display:flex;justify-content:center;">
+      <button class="modal-btn" onclick="closeModal('continue')">돌아가기</button>
+    </div>
+  </div>
+</div>
+
+<!-- (v68) 구버전 판타지 더미 슬롯 마크업 제거 — 닫는 태그 뒤에 고아로 남아
+     "슬롯 2 — 어둠의 숲 / 영웅 레벨 8" 같은 옛 콘셉트 텍스트가 DOM에 떠 있었다.
+     실제 저장 슬롯은 #continue-slots 가 동적으로 채운다. -->
+
+<!-- ══════════════════════════════════════════════
+     모달: 새 게임 (캐릭터 생성)
+══════════════════════════════════════════════ -->
+<div class="overlay" id="modal-new">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('new')">✕</button>
+    <div class="modal-title">🛡️ 지킴이 만들기</div>
+
+    <div style="margin-bottom:16px;">
+      <div class="option-row">
+        <span class="option-label">지킴이 이름</span>
+        <input id="hero-name" type="text" placeholder="이름을 입력하세요"
+          style="flex:1; background:#2a1e0e; border:1px solid var(--gold); border-radius:6px;
+                 color:var(--parchment-light); padding:6px 10px; font-family:'Noto Serif KR',serif;
+                 font-size:14px; outline:none;">
+      </div>
+    </div>
+
+      <div style="margin-top:16px;">
+        <div style="font-size:13px; color:var(--parchment-dark); font-family:'Noto Serif KR',serif;
+                    margin-bottom:10px; font-weight:600;">캐릭터 선택</div>
+        <div id="char-select-row" style="display:flex; gap:14px; justify-content:center;">
+          <div id="char-card-1" onclick="selectCharacter(1)"
+            style="border:3px solid var(--gold); border-radius:10px; padding:10px 16px;
+                   background:rgba(200,144,42,0.18); text-align:center;">
+            <img id="char-img-1" src="" width="68" height="90"
+                 style="image-rendering:pixelated; display:block; margin:0 auto 6px;">
+            <div style="font-size:12px; color:var(--parchment-light);
+                        font-family:'Noto Serif KR',serif;">여주인공</div>
+          </div>
+          <div id="char-card-2" onclick="selectCharacter(2)"
+            style="border:2px solid rgba(200,144,42,0.35); border-radius:10px; padding:10px 16px;
+                   background:rgba(0,0,0,0.18); text-align:center;">
+            <img id="char-img-2" src="" width="68" height="90"
+                 style="image-rendering:pixelated; display:block; margin:0 auto 6px;">
+            <div style="font-size:12px; color:var(--parchment-light);
+                        font-family:'Noto Serif KR',serif;">남주인공</div>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="modal-btn-row">
+      <button class="modal-btn" onclick="createNewGame()">시작하기</button>
+      <button class="modal-btn danger" onclick="closeModal('new')">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- (v399) 옵션 모달(#modal-options: 사운드/화면/키 배치)은 제거 — 어떤 블록도 열지 않았고(호출처 0), 언어·화면 모드·밝기·키 재매핑 전부
+     핸들러가 없거나 게임에 반영되지 않는 «작동하는 척» UI 였다(PC 감사 S-5). 실제 설정은 ⚙ openSettings(0054) 하나로 통합(0273). -->
+
+<!-- ══════════════════════════════════════════════
+     모달: 새 게임 경고
+══════════════════════════════════════════════ -->
+<div class="overlay" id="modal-new-confirm">
+  <div class="modal" style="text-align:center; max-width:380px;">
+    <div class="modal-title">⚠️ 주의</div>
+    <div class="modal-body">
+      기존 게임이 사라질 수 있습니다.<br>
+      <span style="font-size:13px; opacity:0.7;">정말로 새 게임을 시작하시겠습니까?</span>
+    </div>
+    <div class="modal-btn-row">
+      <button class="modal-btn" onclick="closeModal('new-confirm'); openModal('new')">확인</button>
+      <button class="modal-btn danger" onclick="closeModal('new-confirm')">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 저장 슬롯 선택 ── -->
+<div class="overlay" id="modal-save-slot">
+  <div class="modal" style="max-width:400px;">
+    <button class="close-btn" onclick="closeModal('save-slot')">✕</button>
+    <div class="modal-title">💾 저장하기</div>
+    <div class="modal-body">저장할 슬롯을 선택하세요.</div>
+    <div id="save-slot-list"></div>
+    <div style="margin-top:16px;display:flex;justify-content:center;"><button class="modal-btn" onclick="closeModal('save-slot')">취소</button></div>
+  </div>
+</div>
+<!-- ── 덮어쓰기 확인 ── -->
+<div class="overlay" id="modal-save-overwrite">
+  <div class="modal" style="text-align:center;max-width:380px;">
+    <div class="modal-title">⚠️ 덮어쓰기</div>
+    <div class="modal-body" id="overwrite-msg"></div>
+    <div class="modal-btn-row">
+      <button class="modal-btn" id="overwrite-yes-btn">예</button>
+      <button class="modal-btn danger" onclick="closeModal('save-overwrite');openModal('save-slot')">아니요</button>
+    </div>
+  </div>
+</div>
+<!-- ── ESC 경고 ── -->
+<div class="overlay" id="modal-esc-warn">
+  <div class="modal" style="text-align:center;max-width:380px;">
+    <div class="modal-title">⚠️ 저장되지 않았습니다</div>
+    <div class="modal-body">저장하지 않고 나가면 진행이 사라집니다.</div>
+    <div class="modal-btn-row">
+      <button class="modal-btn" onclick="closeModal('esc-warn');openSaveSlotModal(true)">저장 후 나가기</button>
+      <button class="modal-btn danger" onclick="closeModal('esc-warn');forceExitGame()">그냥 나가기</button>
+      <button class="modal-btn" onclick="closeModal('esc-warn')">계속 플레이</button>
+    </div>
+  </div>
+</div>
+<!-- ══════════════════════════════════════════════
+     모달: 나가기 확인
+══════════════════════════════════════════════ -->
+<div class="overlay" id="modal-quit">
+  <div class="modal" style="text-align:center;">
+    <div class="modal-title">🚪 게임 종료</div>
+    <div class="modal-body">
+      모험을 떠나시겠습니까?<br>
+      <span style="font-size:13px; opacity:0.7;">저장되지 않은 진행상황은 사라집니다.</span>
+    </div>
+    <div class="modal-btn-row">
+      <button class="modal-btn danger" onclick="quitGame()">종료하기</button>
+      <button class="modal-btn" onclick="closeModal('quit')">계속 모험</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     모달: 게임 시작됨 (데모)
+══════════════════════════════════════════════ -->
+<div class="overlay" id="modal-playing">
+  <div class="modal" style="max-width:380px;">
+    <button class="close-btn" onclick="closeModal('playing')">✕</button>
+    <div class="modal-title" id="play-title">⚔️ 모험 시작!</div>
+    <div class="game-screen">
+      <div class="hero-name" id="play-hero">아르엔</div>
+      <div style="font-size:13px; margin-bottom:14px; opacity:0.7;" id="play-loc">📍 봉담 · 봉담청소년문화의집</div>
+
+      <div class="stat-bar">
+        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">HP</span>
+        <div class="stat-bar-fill"><div class="stat-bar-inner bar-hp" style="width:80%"></div></div>
+        <span style="font-size:12px; color:var(--parchment-dark);">80/100</span>
+      </div>
+      <div class="stat-bar">
+        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">MP</span>
+        <div class="stat-bar-fill"><div class="stat-bar-inner bar-mp" style="width:60%"></div></div>
+        <span style="font-size:12px; color:var(--parchment-dark);">60/100</span>
+      </div>
+      <div class="stat-bar">
+        <span style="font-size:12px; min-width:28px; color:var(--parchment-dark);">EXP</span>
+        <div class="stat-bar-fill"><div class="stat-bar-inner bar-exp" style="width:35%"></div></div>
+        <span style="font-size:12px; color:var(--parchment-dark);">350/1000</span>
+      </div>
+
+      <div style="margin-top:16px; font-size:13px; line-height:1.8; opacity:0.8;" id="play-msg">
+        "어서 와요, 지킴이.<br>봉담 곳곳에 돌보지 못한 것들이 쌓이고 있어요..."
+      </div>
+    </div>
+    <div style="margin-top:20px; display:flex; justify-content:center;">
+      <button class="modal-btn" onclick="closeModal('playing')">메인 메뉴로</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ── 게임 화면 ── -->
+
+
+<div id="game-screen">
+  <canvas id="game-canvas"></canvas>
+  <div id="game-ui">
+    <!-- (v390) v220의 gs-* 호환 스팬·v268부터 숨겨져 있던 저장 버튼 물리 제거
+         (0017 갱신 코드는 null 가드 완료 · 저장은 자동저장+슬롯 모달이 담당) -->
+  </div>
+
+  <!-- ===== 모바일 터치 컨트롤 (모바일에서만 표시) ===== -->
+  <div id="touch-controls" aria-hidden="true">
+    <!-- 왼쪽: 이동 조이스틱 (브롤 스타즈 스타일) -->
+    <div id="tc-joystick">
+      <div id="tc-joy-base">
+        <div id="tc-joy-knob"></div>
+      </div>
+    </div>
+    <!-- 오른쪽: 버튼 그리드 -->
+    <div id="tc-actions">
+      <!-- (v233) 모바일 버튼 단순화: 보조 [가방] + 메인 [조사·대화] -->
+      <div class="tc-row">
+        <button id="tc-btn-e" class="tc-btn tc-btn-util" type="button">
+          <span class="tc-btn-icon">🎒</span>
+          <span class="tc-btn-label">가방</span>
+        </button>
+      </div>
+      <div class="tc-row">
+        <button id="tc-btn-f" class="tc-btn tc-btn-interact tc-btn-main" type="button">
+          <span class="tc-btn-icon" id="tc-f-icon">🔍</span>
+          <span class="tc-btn-label" id="tc-f-label">조사</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- 인벤토리 오버레이 -->
+  <div id="inv-overlay">
+    <div id="inv-panel">
+      <div id="inv-header">
+        <div id="inv-title">🎒 가방</div>
+        <div id="inv-gold">💰 <span id="inv-gold-amount">500</span> G</div>
+        <button id="inv-close-btn" onclick="closeInventory()">✕</button>
+      </div>
+
+      <div id="inv-tabs">
+        <button class="inv-tab active" onclick="switchInvTab('all',this)">전체</button>
+        <button class="inv-tab" onclick="switchInvTab('consumable',this)">🧪 소모품</button>
+        <button class="inv-tab" onclick="switchInvTab('equip',this)">⚔️ 장비</button>
+        <button class="inv-tab" onclick="switchInvTab('achieve',this)">🏆 업적</button>
+        <button class="inv-tab" onclick="switchInvTab('safety',this)">🛡️ 안전도</button>
+      </div>
+
+      <!-- 아이템 탭 본문 -->
+      <div id="inv-body">
+        <div id="inv-grid"></div>
+      </div>
+
+      <!-- 안전도(스킬 트리) 탭 본문 -->
+      <div id="inv-safety-panel">
+        <!-- JS로 동적 생성 -->
+      </div>
+
+      <!-- 스킬 장착 탭 본문 -->
+      <div id="inv-skill-panel">
+        <!-- JS로 동적 생성 -->
+      </div>
+
+      <!-- 업적 탭 본문 -->
+      <div id="inv-achieve-panel">
+        <!-- JS로 동적 생성 -->
+      </div>
+
+      <div id="inv-detail">
+        <div id="inv-detail-icon">🎒</div>
+        <div id="inv-detail-info">
+          <div id="inv-detail-name">아이템을 선택하세요</div>
+          <div id="inv-detail-desc">인벤토리에서 아이템을 클릭하면 상세 정보를 확인하고 사용할 수 있습니다.</div>
+        </div>
+        <button id="inv-use-btn" onclick="useSelectedItem()">사용</button>
+      </div>
+
+      <div id="inv-footer">E 또는 ESC 키로 닫기</div>
+    </div>
+  </div>
+
+  <!-- 게임 오버 화면 -->
+  <div id="gameover-screen">
+    <div id="gameover-bg"></div>
+    <div id="gameover-content">
+      <div id="gameover-icon">☠</div>
+      <div id="gameover-title">위협요소 제거 실패</div>
+      <div id="gameover-sub">MISSION FAILED</div>
+      <div id="gameover-divider"></div>
+      <button class="go-btn" id="go-btn-restart" onclick="restartAsNewGame()">
+        🆕 &nbsp; 새로운 시작
+      </button>
+      <button class="go-btn" id="go-btn-continue" onclick="continueFromAutosave()">
+        🔄 &nbsp; 이어하기 (자동저장)
+      </button>
+      <button class="go-btn" id="go-btn-main" onclick="goToMainMenu()">
+        ⌂ &nbsp; 메인 화면으로 돌아가기
+      </button>
+    </div>
+  </div>
+
+  <div id="map-transition-overlay"></div>
+  <!-- (v220) 메인 메뉴 버튼은 설정 모달로 이동 -->
+
+  <!-- 퀘스트 창 (봉담와우도서관) -->
+  <div id="quest-overlay">
+    <div id="quest-panel">
+      <div id="quest-header">
+        <div id="quest-title">📚 봉담와우도서관 — 일일 퀘스트</div>
+        <div id="quest-subtitle">매일 자정 초기화됩니다</div>
+        <button id="quest-close-btn" onclick="closeQuestPanel()">✕</button>
+      </div>
+      <div id="quest-body">
+        <div id="quest-list"></div>
+      </div>
+      <div id="quest-footer">
+        <div id="quest-gold-row">💰 소지금: <span id="quest-gold-amount">0</span> G</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 구매 토스트 알림 -->
+  <div id="shop-toast"></div>
+
+  <!-- (v375) 구 상점 오버레이(#shop-overlay) 제거 — 상점은 #bd-shop-modal 한 경로 -->
+  <!-- 비주얼 노벨 대화창 -->
+  <div id="dialogue-overlay" ontouchstart="event.preventDefault(); advanceDialogue();">
+    <img id="dialogue-portrait" alt="" />
+    <div id="dialogue-box">
+      <div id="dialogue-name">임현지</div>
+      <div id="dialogue-text"></div>
+      <div id="dialogue-next">▼ [F]</div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ============================================================
+     모바일 터치 컨트롤 (조이스틱 + Q/Z 버튼)
+     - 터치 기기에서만 활성화 (PC는 기존 그대로)
+     - 왼쪽 조이스틱: 8방향 이동 (moveKeys 제어 → 대시 방향도 자동 연동)
+     - 오른쪽 버튼: Q=대시, Z=스킬
+     ============================================================ -->
+
+
+
+<!-- ============================================================
+     봉담 RPG 콘텐츠 에디터 모드 v2
+     - 배치 목록 / 속성 창 / 콜라이더 직접 편집
+     - 맵 이동 후 진입 위치 찍기
+     - 에디터 카메라 전체보기 / 줌 / 화면 드래그 이동
+     ============================================================ -->
+
+
+
+<button id="bge-toggle" type="button" title="Ctrl+E">🛠 에디터</button>
+
+<div id="bge-toolbar" aria-label="에디터 툴바">
+  <button class="bge-btn" id="bge-tool-select" type="button">선택</button>
+  <button class="bge-btn secondary" id="bge-tool-pan" type="button">화면 이동</button>
+  <button class="bge-btn secondary" id="bge-tool-place" type="button">배치</button>
+  <button class="bge-btn secondary" id="bge-overview" type="button">전체보기</button>
+  <button class="bge-btn secondary" id="bge-runtime-view" type="button" title="인게임과 같은 카메라 배율·화면비로 편집합니다.">인게임 1:1</button>
+  <button class="bge-btn secondary" id="bge-zoom-out" type="button">-</button>
+  <button class="bge-btn secondary" id="bge-zoom-in" type="button">+</button>
+  <span class="bge-toolsep"></span>
+  <button class="bge-btn secondary" id="bge-undo" type="button" title="Ctrl+Z" disabled>↩ 되돌리기</button>
+  <button class="bge-btn secondary" id="bge-redo" type="button" title="Ctrl+Y" disabled>↪ 다시</button>
+  <button class="bge-btn secondary" id="bge-grid-toggle" type="button" title="격자에 맞춰 배치">⊞ 격자 OFF</button>
+  <button class="bge-btn secondary" id="bge-copy" type="button" title="Ctrl+C">📋 복사</button>
+  <button class="bge-btn secondary" id="bge-paste" type="button" title="Ctrl+V">📎 붙여넣기</button>
+</div>
+<div id="bge-tabbar" aria-label="에디터 패널 탭">
+  <button class="bge-tab bge-tab-on" id="bge-tab-hierarchy" type="button">📋 배치 목록</button>
+  <button class="bge-tab" id="bge-tab-props" type="button">🔧 속성 · 이미지</button>
+  <button class="bge-tab" id="bge-tab-dialog" type="button">💬 대화 편집</button>
+  <span class="bge-tabsep"></span>
+  <button class="bge-tab bge-tab-simple bge-tab-on" id="bge-tab-simple" type="button" title="어려운 항목을 숨겨 초보자도 쉽게">🌱 쉬운 모드</button>
+  <span class="bge-tabsep"></span>
+  <button class="bge-tab" id="bge-tab-resetpos" type="button" title="패널을 원래 위치로">📐 창 정리</button>
+</div>
+<div id="bge-minimap" aria-label="미니맵">
+  <div class="bge-mm-title">🗺 미니맵</div>
+  <canvas id="bge-mm-canvas" width="180" height="135"></canvas>
+</div>
+
+<div id="bge-hierarchy" aria-label="봉담 RPG 배치 목록">
+  <h3>배치 목록</h3>
+  <div class="bge-help">유니티 Hierarchy처럼 현재 맵의 오브젝트와 콜라이더를 관리합니다. 오브젝트/콜라이더 둘 다 맵에서 직접 드래그할 수 있습니다.</div>
+  <h4>스테이지</h4>
+  <label>현재 스테이지</label>
+  <select id="bge-stage-select"></select>
+  <label>스테이지 이름</label>
+  <input id="bge-stage-name" type="text" placeholder="예: 봉담 놀터">
+  <div class="bge-row">
+    <div><label>스폰 X</label><input id="bge-spawn-x" type="number" min="0" max="1" step="0.001"></div>
+    <div><label>스폰 Y</label><input id="bge-spawn-y" type="number" min="0" max="1" step="0.001"></div>
+  </div>
+  <label style="margin-top:6px;">이동 가능 구역 (좌 · 상 · 우 · 하, 0~1)</label>
+  <div class="bge-row3" style="grid-template-columns:repeat(4,1fr);">
+    <input id="bge-walk-x0" type="number" min="0" max="1" step="0.001" title="왼쪽 한계">
+    <input id="bge-walk-y0" type="number" min="0" max="1" step="0.001" title="위 한계">
+    <input id="bge-walk-x1" type="number" min="0" max="1" step="0.001" title="오른쪽 한계">
+    <input id="bge-walk-y1" type="number" min="0" max="1" step="0.001" title="아래 한계">
+  </div>
+  <div class="bge-btn-row">
+    <button class="bge-btn secondary" id="bge-pick-spawn" type="button">스폰 찍기</button>
+    <button class="bge-btn" id="bge-save" type="button">저장</button>
+  </div>
+  <h4>씬 오브젝트</h4>
+  <input id="bge-search" type="text" placeholder="검색: 이름 / 타입 / 키">
+  <div id="bge-object-list"></div>
+  <div class="bge-btn-row">
+    <button class="bge-btn secondary" id="bge-duplicate-obj" type="button">복제</button>
+    <button class="bge-btn secondary" id="bge-move-up" type="button">▲</button>
+    <button class="bge-btn secondary" id="bge-move-down" type="button">▼</button>
+  </div>
+  <h4>⭐ 내 프리팹 (자주 쓰는 것 저장)</h4>
+  <div class="bge-help">선택한 오브젝트를 프리팹으로 저장해 두면, 아래 버튼을 눌러 맵에 똑같이 여러 번 놓을 수 있어요.</div>
+  <div class="bge-btn-row">
+    <button class="bge-btn" id="bge-prefab-save" type="button">＋ 선택을 프리팹으로 저장</button>
+  </div>
+  <div id="bge-prefab-list" class="bge-prefab-list"></div>
+</div>
+
+<div id="bge-panel" aria-label="봉담 RPG 속성 창 패널">
+  <h3>속성 창</h3>
+
+  <div id="bge-myart" aria-label="내 그림 추가">
+    <h4>🎨 내 그림 추가</h4>
+    <div class="bge-myart-help">직접 그린 그림(PNG·JPG)을 올려서 오브젝트에 입힐 수 있어요. ①그림 고르기 → ②이름 정하고 저장 → ③오브젝트 고르고 "이 그림 입히기"</div>
+    <label>① 그림 파일 고르기</label>
+    <input id="bge-myart-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+    <div id="bge-myart-preview" class="bge-myart-preview">그림을 고르면 여기에 미리보기가 나와요.</div>
+    <label>② 그림 이름</label>
+    <input id="bge-myart-name" type="text" placeholder="예: 나무, 우리집, 강아지">
+    <div class="bge-btn-row">
+      <button class="bge-btn" id="bge-myart-save" type="button">＋ 내 그림 저장</button>
+    </div>
+    <label>③ 저장한 그림 목록</label>
+    <div id="bge-myart-list" class="bge-myart-list"></div>
+    <div class="bge-btn-row">
+      <button class="bge-btn" id="bge-myart-apply" type="button">✅ 선택한 오브젝트에 이 그림 입히기</button>
+    </div>
+    <div class="bge-btn-row">
+      <button class="bge-btn secondary" id="bge-myart-place" type="button">🖼 새 오브젝트로 맵에 놓기</button>
+      <button class="bge-btn danger" id="bge-myart-remove" type="button">그림 벗기기</button>
+    </div>
+  </div>
+
+  <div id="bge-v37-asset-panel" class="bge-v37-panel">
+    <h4>그림 자료함 / 이미지 적용 v4.1</h4>
+    <div class="bge-v37-help">단일 HTML용 이미지 업로드 패널입니다. PNG/JPG를 등록한 뒤 오브젝트를 선택하고 적용하세요.</div>
+    <div id="bge-v37-current" class="bge-v37-current">오브젝트를 선택하면 현재 이미지 상태가 표시됩니다.</div>
+    <label>외부 이미지 업로드</label>
+    <input id="bge-v37-files" type="file" accept="image/*" multiple>
+    <div class="bge-row">
+      <div><label>적용할 이미지</label><select id="bge-v37-asset"></select></div>
+      <div><label>새로 배치할 이미지</label><select id="bge-v37-place-asset"></select></div>
+    </div>
+    <div class="bge-btn-row">
+      <button class="bge-btn" id="bge-v37-apply" type="button">선택 오브젝트에 적용</button>
+      <button class="bge-btn secondary" id="bge-v37-place" type="button">이미지 씬에 배치</button>
+      <button class="bge-btn danger" id="bge-v37-clear" type="button">이미지 해제</button>
+    </div>
+    <div class="bge-btn-row">
+      <button class="bge-btn secondary" id="bge-v37-export" type="button">에셋팩 내보내기</button>
+      <button class="bge-btn secondary" id="bge-v37-import-btn" type="button">에셋팩 가져오기</button>
+      <button class="bge-btn danger" id="bge-v37-delete" type="button">선택 에셋 삭제</button>
+    </div>
+    <input id="bge-v37-import" type="file" accept="application/json,.json" style="display:none">
+    <div class="bge-v37-help">다른 PC로 옮길 때는 에셋팩을 같이 내보내세요. 같은 PC/같은 브라우저에서는 자동 저장됩니다.</div>
+  </div>
+  <div class="bge-help">Ctrl+E: 에디터 토글 / 빈 공간 드래그: 화면 이동 / 휠: 줌 / 오브젝트 클릭: 선택</div>
+
+  <h4>카메라</h4>
+  <label>에디터 줌: <span id="bge-zoom-label">1.00x</span></label>
+  <input id="bge-zoom" type="range" min="0.25" max="12" step="0.01" value="1">
+  <div class="bge-row">
+    <div><label>카메라 X</label><input id="bge-cam-x" type="number" min="0" max="1" step="0.001"></div>
+    <div><label>카메라 Y</label><input id="bge-cam-y" type="number" min="0" max="1" step="0.001"></div>
+  </div>
+
+  <h4>스프라이트 / 배치 팔레트</h4>
+  <div class="bge-row">
+    <div><label>타입</label><select id="bge-palette-type"></select></div>
+    <div><label>이미지 Key</label><select id="bge-palette-key"></select></div>
+  </div>
+  <label>라벨</label>
+  <input id="bge-palette-label" type="text" placeholder="예: 봉담와우도서관">
+  <div class="bge-row4">
+    <div><label>W</label><input id="bge-palette-w" type="number" min="0.005" max="1" step="0.001" value="0.10"></div>
+    <div><label>H</label><input id="bge-palette-h" type="number" min="0.005" max="1" step="0.001" value="0.10"></div>
+    <div><label>CW</label><input id="bge-palette-cw" type="number" min="0" max="1" step="0.001" value="0.08"></div>
+    <div><label>CH</label><input id="bge-palette-ch" type="number" min="0" max="1" step="0.001" value="0.05"></div>
+  </div>
+  <div class="bge-btn-row">
+    <button class="bge-btn" id="bge-place-on" type="button">배치 모드 ON</button>
+    <button class="bge-btn" data-bge-add="building" type="button">건물</button>
+    <button class="bge-btn" data-bge-add="npc" type="button">NPC</button>
+    <button class="bge-btn" data-bge-add="info" type="button">안내판</button>
+    <button class="bge-btn" data-bge-add="quest_item" type="button">퀘스트</button>
+    <button class="bge-btn" data-bge-add="hazard" type="button">위험</button>
+    <button class="bge-btn" data-bge-add="monster_spawn" type="button">몬스터</button>
+  </div>
+
+  <h4>선택 항목</h4>
+  <div id="bge-selected-empty" class="bge-muted">선택된 항목이 없습니다.</div>
+  <div id="bge-selected-form" style="display:none">
+    <label>라벨 / 이름</label>
+    <input id="bge-obj-label" type="text">
+    <label>이름표 (코드에서 지목할 id) <span class="bge-muted">— 비우면 자동</span></label>
+    <input id="bge-obj-name-id" type="text" placeholder="예: culture_house, desk_3f, npc_hyunji">
+    <div class="bge-muted" id="bge-name-id-warn" style="display:none;color:#ffb0a0;margin-top:3px"></div>
+    <div class="bge-row">
+      <div><label>타입</label><select id="bge-obj-type"></select></div>
+      <div><label>이미지 Key</label><input id="bge-obj-key" type="text" placeholder="small, shop, books"></div>
+    </div>
+    <div class="bge-coord-hint" id="bge-coord-hint">📍 위치는 화면 기준 0~100% 입니다. 방향키로 미세 이동, Shift+방향키로 크게 이동돼요.</div>
+    <div class="bge-row bge-coord-grid">
+      <div><label>가로위치 X<span class="bge-pct-badge" id="bge-pct-x"></span></label><input id="bge-obj-rx" type="number" min="0" max="1" step="0.001"></div>
+      <div><label>세로위치 Y<span class="bge-pct-badge" id="bge-pct-y"></span></label><input id="bge-obj-ry" type="number" min="0" max="1" step="0.001"></div>
+      <div><label>너비 W<span class="bge-pct-badge" id="bge-pct-w"></span></label><input id="bge-obj-rw" type="number" min="0.005" max="1" step="0.001"></div>
+      <div><label>높이 H<span class="bge-pct-badge" id="bge-pct-h"></span></label><input id="bge-obj-rh" type="number" min="0.005" max="1" step="0.001"></div>
+    </div>
+    <label>상호작용</label>
+    <select id="bge-obj-interactable"><option value="">없음</option><option value="shop">shop</option><option value="quest">quest</option><option value="info">info</option><option value="hazard">hazard</option><option value="portal">portal</option><option value="minigame">minigame</option><option value="battle">battle</option></select>
+    <div id="bge-hazard-fields" class="bge-adv-only" style="display:none">
+      <label>위험 계열 (전투 몬스터 속성)</label>
+      <select id="bge-obj-hazard-family">
+        <option value="">자동 (지역 기본)</option>
+        <option value="smoke">공기·소음 (W속성 약점)</option>
+        <option value="pollute">환경·오염 (G속성 약점)</option>
+        <option value="dark">시설·파손 (M속성 약점)</option>
+      </select>
+      <label>위험 요소 ID (정화 기록용, 비우면 자동)</label>
+      <input id="bge-obj-hazard-id" type="text" placeholder="예: wawoo_trash_1">
+      <label>세부 위험 요소 (지역별 고유 몹·교육 메시지)</label>
+      <select id="bge-obj-hazard-variant">
+        <option value="">계열 기본</option>
+        <optgroup label="공기·소음 (W속성 약점)">
+          <option value="cigarette">🚬 담배 연기</option>
+          <option value="noise_bat">🔊 골목의 소음</option>
+        </optgroup>
+        <optgroup label="환경·오염 (G속성 약점)">
+          <option value="trash">🗑️ 쓰레기 더미</option>
+          <option value="glass">🔪 깨진 유리</option>
+          <option value="bottle">🍾 방치된 술병</option>
+          <option value="graffiti">🖌️ 낙서</option>
+          <option value="kickboard">🛴 길막 킥보드</option>
+        </optgroup>
+        <optgroup label="시설·파손 (M속성 약점)">
+          <option value="streetlight">💡 고장난 가로등</option>
+          <option value="road_crack">🕳️ 부서진 도로</option>
+          <option value="sign_ghost">⚠️ 위험 표지판</option>
+        </optgroup>
+      </select>
+      <label>몬스터 수</label>
+      <select id="bge-obj-hazard-count">
+        <option value="1">1마리 (일반 전투)</option>
+        <option value="2">2마리 (1대2 특수 전투)</option>
+      </select>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:6px">
+        <input id="bge-obj-is-boss" type="checkbox" style="width:auto"> 👑 최종 보스전 (HP↑·페이즈·물러나기 불가)
+      </label>
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;margin-top:8px" class="bge-adv-only">
+      <input id="bge-obj-quest-target" type="checkbox" style="width:auto"> 🧭 이 오브젝트를 목표 지점으로 (미니맵 별·화살표 안내)
+    </label>
+    <div id="bge-npc-fields" class="bge-adv-only" style="display:none">
+      <label>NPC 역할 (대사가 역할·퀘스트에 따라 달라짐)</label>
+      <select id="bge-obj-npc-role">
+        <option value="">기본</option>
+        <option value="teacher">문화의집 선생님</option>
+        <option value="friend">친구</option>
+        <option value="librarian">도서관 사서</option>
+        <option value="kid">초등학생</option>
+        <option value="shopkeeper">상점 점주</option>
+      </select>
+    </div>
+    <label>대사 / 메모</label>
+    <textarea id="bge-obj-note" placeholder="아이들이 참고할 설명, NPC 대사, 퀘스트 메모"></textarea>
+    <div class="bge-btn-row">
+      <button class="bge-btn" id="bge-web-export" type="button" style="background:#2e7d46">🌐 게시용 HTML 내보내기</button>
+      <button class="bge-btn" id="bge-release-export" type="button" style="background:#7d4e2e" title="에디터·개발 로그가 제거된 최종 배포본 (§27)">🚀 배포용 HTML</button>
+      <button class="bge-btn secondary" id="bge-create-collider" type="button">콜라이더 생성</button>
+      <button class="bge-btn secondary" id="bge-create-collider-all" type="button" title="콜라이더 없는 건물·장식 전체에 하단부 기준 자동 생성">콜라이더 일괄 생성</button>
+      <button class="bge-btn secondary" id="bge-restore-sys" type="button" title="이 맵에서 삭제한 시스템 오브젝트(정류장·동네 슈퍼·주민)를 다시 생성">시스템 복원</button>
+      <button class="bge-btn secondary" id="bge-copy-collider" type="button">콜라이더=크기</button>
+      <button class="bge-btn danger" id="bge-delete-collider" type="button">콜라이더 삭제</button>
+      <button class="bge-btn danger" id="bge-delete-obj" type="button">오브젝트 삭제</button>
+    </div>
+  </div>
+
+  <div id="bge-collider-form" style="display:none">
+    <h4>선택 콜라이더</h4>
+    <div class="bge-row4">
+      <div><label>CX</label><input id="bge-obj-cx" type="number" min="0" max="1" step="0.001"></div>
+      <div><label>CY</label><input id="bge-obj-cy" type="number" min="0" max="1" step="0.001"></div>
+      <div><label>CW</label><input id="bge-obj-cw" type="number" min="0" max="1" step="0.001"></div>
+      <div><label>CH</label><input id="bge-obj-ch" type="number" min="0" max="1" step="0.001"></div>
+    </div>
+  </div>
+
+  <div id="bge-exit-form" class="bge-adv-only">
+  <h4>출구 연결 / 진입 위치</h4>
+  <label>방향</label>
+  <select id="bge-exit-dir"><option value="top">top</option><option value="bottom">bottom</option><option value="left">left</option><option value="right">right</option></select>
+  <label><input id="bge-exit-active" type="checkbox"> 출구 활성화</label>
+  <div class="bge-row3">
+    <div><label>다음 스테이지</label><input id="bge-exit-next" type="number" step="1"></div>
+    <div><label>진입 X</label><input id="bge-exit-entry-x" type="number" min="0" max="1" step="0.001"></div>
+    <div><label>진입 Y</label><input id="bge-exit-entry-y" type="number" min="0" max="1" step="0.001"></div>
+  </div>
+  <div class="bge-row3">
+    <div><label>통과 구간 시작</label><input id="bge-exit-band-min" type="number" min="0" max="1" step="0.001"></div>
+    <div><label>통과 구간 끝</label><input id="bge-exit-band-max" type="number" min="0" max="1" step="0.001"></div>
+    <div style="align-self:end;font-size:10px;opacity:.75;">가장자리에서 이동 가능한 구간(0~1)</div>
+  </div>
+  <div class="bge-btn-row">
+    <button class="bge-btn secondary" id="bge-pick-entry" type="button">이동 후 위치 찍기</button>
+    <button class="bge-btn secondary" id="bge-preview-entry" type="button">대상 맵 보기</button>
+  </div>
+  </div>
+
+  <h4>데이터</h4>
+  <div class="bge-btn-row">
+    <button class="bge-btn" id="bge-export" type="button">JSON 내보내기</button>
+    <button class="bge-btn secondary" id="bge-import-btn" type="button">JSON 가져오기</button>
+    <button class="bge-btn danger" id="bge-reset" type="button">초기화</button>
+  </div>
+  <input id="bge-import-file" type="file" accept="application/json,.json" style="display:none">
+</div>
+<div id="bge-toast"></div>
+
+
+
+
+
+
+<!-- ============================================================
+     봉담 RPG 씬 에디터 모드 v3
+     - 유니티식 리사이즈 핸들 / 숫자 드래그 조정
+     - 이미지 업로드 에셋 라이브러리 / 에셋 배치
+     - 휠 카메라 이동 + Ctrl 휠 줌 / 중클릭 화면 이동
+     - 비주얼 노벨 스타일 대화창 데이터 편집
+     ============================================================ -->
+
+
+<div id="bge-v3-panel" aria-label="봉담 RPG v3 씬 에디터 확장 패널">
+  <h3>v3 씬 에디터 확장</h3>
+  <div class="bge-v3-help">
+    마우스로 선택 오브젝트의 모서리/변 핸들을 잡아 크기를 조절할 수 있습니다. 휠은 카메라 이동, 휠은 확대/축소(커서 중심), 중간 버튼 드래그는 화면 이동, Shift+휠은 가로 · Ctrl+휠은 세로 스크롤입니다. 숫자 입력칸은 좌우 드래그로 값을 조절합니다.
+  </div>
+
+  <h4>이미지 / 스프라이트 에셋 라이브러리</h4>
+  <div class="bge-v3-row">
+    <div><label>새 이미지 가져오기</label><input id="bge-v3-asset-file" type="file" accept="image/*"></div>
+    <div><label>에셋 이름</label><input id="bge-v3-asset-name" type="text" placeholder="예: 봉담와우도서관 건물"></div>
+  </div>
+  <div class="bge-v3-row">
+    <div><label>등록된 이미지</label><select id="bge-v3-asset-select"></select></div>
+    <div><label>선택 에셋 미리보기</label><div id="bge-v3-asset-preview" class="bge-v3-help">등록된 에셋 없음</div></div>
+  </div>
+  <div class="bge-v3-btn-row">
+    <button id="bge-v3-upload-asset" class="bge-v3-btn" type="button">이미지 등록</button>
+    <button id="bge-v3-apply-asset" class="bge-v3-btn" type="button">선택 오브젝트에 적용</button>
+    <button id="bge-v3-place-asset" class="bge-v3-btn warn" type="button">에셋 배치 모드</button>
+    <button id="bge-v3-delete-asset" class="bge-v3-btn danger" type="button">에셋 삭제</button>
+  </div>
+  <div><span class="bge-v3-chip">권장: PNG</span><span class="bge-v3-chip">탑뷰 배치용</span><span class="bge-v3-chip">배경도 큰 오브젝트로 배치 가능</span></div>
+
+  <h4>비주얼 노벨 스타일 대화창 데이터</h4>
+  <div class="bge-v3-row">
+    <div><label>화자 이름</label><input id="bge-v3-speaker" type="text" placeholder="예: 문화의집 안내 선생님"></div>
+    <div><label>초상화 에셋</label><select id="bge-v3-portrait"></select></div>
+  </div>
+  <label>대사 내용</label>
+  <textarea id="bge-v3-dialogue" placeholder="예: 이곳은 봉담청소년문화의집입니다. 청소년들이 안전하게 쉬고 활동할 수 있는 공간이에요."></textarea>
+  <div class="bge-v3-row3">
+    <div><label>대화창 스타일</label><select id="bge-v3-dialogue-style"><option value="vn_dark">비주얼노벨 어두운 패널</option><option value="vn_light">밝은 안내 패널</option><option value="quest_notice">퀘스트 알림 패널</option></select></div>
+    <div><label>상호작용 키</label><input id="bge-v3-action-key" type="text" value="Z"></div>
+    <div><label>대화 후 퀘스트 ID</label><input id="bge-v3-quest-id" type="text" placeholder="선택 사항"></div>
+  </div>
+  <div id="bge-v3-vn-preview"><div class="speaker">화자</div><div class="line">선택된 오브젝트에 대사를 입력하면 이곳에 미리보기로 표시됩니다.</div></div>
+
+  <h4>프로젝트 백업</h4>
+  <div class="bge-v3-btn-row">
+    <button id="bge-v3-export-project" class="bge-v3-btn" type="button">스테이지+이미지 통합 내보내기</button>
+    <button id="bge-v3-import-project-btn" class="bge-v3-btn" type="button">통합 가져오기</button>
+  </div>
+  <input id="bge-v3-import-project-file" type="file" accept="application/json,.json" style="display:none">
+</div>
+
+
+
+
+
+<!-- ============================================================
+     v3.1 에셋/리사이즈 안정화 패치
+     - 속성 창에서 선택 오브젝트 이미지가 실제로 적용되도록 보강
+     - 여러 이미지 한번에 가져오기, 에셋팩 가져오기/내보내기
+     - 꼭지점/변 핸들 직접 리사이즈 로직 강화
+     ============================================================ -->
+
+
+
+
+
+
+<!-- ============================================================
+     v3.2 필수 수정 패치
+     - 이미지/스프라이트 패널을 실제 오른쪽 Inspector(#bge-panel)에 강제 삽입
+     - 이미지 Key 드롭다운 변경 즉시 반영
+     - 외부 이미지 다중 가져오기 / 에셋팩 가져오기·내보내기
+     - 선택 오브젝트 꼭지점 드래그 리사이즈 안정화
+     ============================================================ -->
+
+
+
+
+<!-- ============================================================
+     모바일 터치 컨트롤 (조이스틱 + Q/Z 버튼)
+     - 터치 기기에서만 활성화 (PC는 기존 그대로)
+     - 왼쪽 조이스틱: 8방향 이동 (moveKeys 제어 → 대시 방향도 자동 연동)
+     - 오른쪽 버튼: Q=대시, Z=스킬
+     ============================================================ -->
+<!-- (v235) 중복 삽입돼 있던 터치 컨트롤 사본(style+script)을 제거했습니다.
+     동일 블록이 위쪽에 이미 있어 버튼 리스너가 두 번 붙었고,
+     터치 한 번에 대시/공격이 2회 발동했습니다. -->
+
+
+<!-- ============================================================
+     봉담 RPG 씬 에디터 v3.3 디버그/개선 패치
+     - 배치 목록 눈 아이콘 실제 표시/숨김 구현
+     - 숨김 오브젝트 렌더링/충돌/상호작용 제외
+     - 배치 목록 잠금 아이콘 추가: 씬에서 실수로 이동/크기변경 방지
+     - 숨김/잠금 상태 localStorage 및 JSON 저장 데이터에 포함
+     ============================================================ -->
+
+
+
+<!-- ============================================================
+     봉담 RPG 씬 에디터 v3.4 유니티식 리사이즈 입력 패치
+     - 리사이즈 핸들 클릭이 오브젝트 재선택/선택해제로 먹히는 문제 수정
+     - document capture 단계에서 핸들을 먼저 잡아 기존 canvas mousedown보다 우선 처리
+     - 선택 유지, 잠금 오브젝트 보호, 드래그 중 속성 창 수치 실시간 동기화
+     ============================================================ -->
+
+
+
+
+<!-- ============================================================
+     v3.5 스프라이트/에셋 적용 안정화 패치
+     - 업로드 이미지, 상대경로 이미지 둘 다 지원
+     - 속성 창 상단에 강제 패널 삽입
+     - 선택 즉시 실제 렌더링에 반영
+     - 에셋팩 가져오기/내보내기
+     ============================================================ -->
+
+
+
+
+
+<!-- ============================================================
+     v3.8 이미지 업로드/드롭다운 실제 동작 고정 패치
+     - v3.7의 스크립트 삽입 문제를 우회하여 실제 실행되는 스크립트로 다시 바인딩
+     - 파일 선택 후 드롭다운 즉시 갱신
+     - 선택 오브젝트에 업로드 이미지 즉시 적용
+     ============================================================ -->
+
+
+<!-- ============================================================
+     봉담 RPG 제작 도구 v3.9 안정화 패치
+     - 기존 v3.8 작업 진행상황과 저장 키를 유지합니다.
+     - 아이들이 보는 UI 용어를 한국어로 정리합니다.
+     - 이미지 업로드 → 선택 목록 → 배치물 적용 → 자동 저장 → 작업 파일 내보내기 흐름을 하나로 연결합니다.
+     ============================================================ -->
+
+
+
+
+
+
+
+
+
+
+<!-- Bongdam RPG v4.5: 되돌리기 / 다시 실행 / F1 제작 UI 숨김 -->
+
+
+
+
+<!-- v46 스타일 제거됨 (배치목록 v5.2로 대체) -->
+<!-- v46 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
+
+
+<!-- v47 스타일 제거됨 (배치목록 v5.2로 대체) -->
+
+<!-- v47 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
+
+
+<!-- v48 스타일 제거됨 (배치목록 v5.2로 대체) -->
+
+<!-- v48 배치목록: v5.2로 대체되어 제거됨 (리팩토링) -->
+
+
+
+
+
+
+
+
+<div id="bge-v49-dock">
+  <h3>전체 오브젝트 목록 v5.2</h3>
+  <div class="v49-help">
+    기존 왼쪽 목록과 별개로 강제로 띄운 전체 목록입니다. 건물만 보이면 이 패널의 필터를 사용하세요.
+  </div>
+  <div id="bge-v49-tabs">
+    <button type="button" data-v49-filter="all" class="active">전체</button>
+    <button type="button" data-v49-filter="virtual">맵/캐릭터</button>
+    <button type="button" data-v49-filter="object">배치물</button>
+    <button type="button" data-v49-filter="npc">NPC</button>
+  </div>
+  <button type="button" id="bge-v49-refresh">목록 새로고침</button>
+  <div id="bge-v49-list"></div>
+  <div id="bge-v49-inspector">
+    <h4>선택 속성</h4>
+    <div id="bge-v49-fields"></div>
+    <button type="button" id="bge-v49-apply">적용</button>
+    <div id="bge-v49-extra"></div>
+    <div id="bge-v49-note"></div>
+  </div>
+  <div id="bge-v49-debug"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================= -->
+<!--  붕괴 스타레일식 턴제 전투 시스템 (봉담 광장 서문 허수아비) -->
+<!--  속도바(액션 게이지) + 궁극기 + 약점(속성) 시스템             -->
+<!-- ========================================================= -->
+
+
+<div id="hsr-battle" aria-hidden="true">
+  <canvas id="hsr-stars"></canvas>
+  <div id="hsr-arena">
+    <div id="hsr-ground-grid"></div>
+
+    <!-- 속도바 -->
+    <div id="hsr-speedbar">
+      <div id="hsr-speed-label">⏱ 액션 게이지</div>
+      <div id="hsr-speed-track"></div>
+    </div>
+
+    <!-- 영웅 -->
+    <div class="hsr-unit hsr-hero" id="hsr-u-hero">
+      <div class="hsr-info">
+        <div class="hsr-name" id="hsr-hero-name">영웅 <span class="hsr-lv" id="hsr-hero-cls"></span></div>
+        <div class="hsr-hpbar"><i id="hsr-hero-hp"></i></div>
+        <div class="hsr-hptext" id="hsr-hero-hptext">100 / 100</div>
+      </div>
+      <div class="hsr-sprite" id="hsr-hero-sprite">🦸</div>
+    </div>
+
+    <!-- 허수아비 -->
+    <div class="hsr-unit hsr-enemy" id="hsr-u-enemy">
+      <div class="hsr-info">
+        <div class="hsr-name">각성한 허수아비 <span class="hsr-lv" id="hsr-enemy-lv">Lv.5</span></div>
+        <div class="hsr-hpbar"><i id="hsr-enemy-hp"></i></div>
+        <div class="hsr-hptext" id="hsr-enemy-hptext">300 / 300</div>
+        <div class="hsr-tough" id="hsr-enemy-tough-wrap"><i id="hsr-enemy-tough"></i></div>
+        <div class="hsr-weak" id="hsr-enemy-weak"></div>
+      </div>
+      <div class="hsr-sprite" id="hsr-enemy-sprite">🎃</div>
+    </div>
+
+    <!-- BREAK 연출 -->
+    <div id="hsr-break">BREAK!</div>
+
+    <!-- 속성 선택 -->
+    <div id="hsr-elem-pick"></div>
+
+    <!-- 하단 커맨드 -->
+    <div id="hsr-cmd">
+      <div id="hsr-turnmsg">전투 시작!</div>
+      <div id="hsr-ult-wrap">
+        <span id="hsr-ult-label">⚡ 궁극기</span>
+        <div id="hsr-ult-track"><i></i></div>
+        <span id="hsr-ult-pct">0%</span>
+      </div>
+      <div id="hsr-actions"></div>
+    </div>
+
+    <!-- 결과 -->
+    <div id="hsr-result">
+      <h2 id="hsr-result-title">승리</h2>
+      <p id="hsr-result-sub"></p>
+      <button id="hsr-result-btn">돌아가기</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ================= 봉담문화의집 지킴이 시스템 (BD) ================= -->
+
+
+<div id="bd-quest-hud"><div class="bd-hud-head">◈ 추적 중인 임무</div><div class="bd-ch"></div><div class="bd-obj"></div><div class="bd-done-label">✔ 임무 완료</div></div>
+<div id="bd-toast"></div>
+<!-- (v390) 메뉴줄 정리 — 장소수첩은 안전지도 모달 안 [도장수첩] 버튼으로 흡수,
+     소리 토글은 ⚙ 설정 모달과 중복이라 제거, v268부터 CSS로만 숨겨져 있던
+     위험요소 배치·실행취소(dev)와 배치 힌트 마크업도 물리 제거 (함수·에디터는 유지) -->
+<div id="bd-menu-btns" style="position:fixed;top:14px;right:62px;z-index:901;display:flex;gap:8px;">
+  <button id="bd-mb-equip" data-bdmb="1" onclick="window.BD_openEquipModal&&window.BD_openEquipModal()" style="background:rgba(16,24,44,.92);border:1px solid rgba(52,211,153,.5);color:#6ee7b7;border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;">🔧 장비</button>
+  <button id="bd-mb-map" data-bdmb="1" onclick="window.BD_openSafetyMap&&window.BD_openSafetyMap()" style="background:rgba(16,24,44,.92);border:1px solid rgba(142,255,160,.5);color:#8effa0;border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;">🗺️ 안전지도</button>
+</div>
+
+
+<!-- ================= /봉담 지킴이 시스템 ================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- v234: 문화의집 3층 PC존에 독립 게임을 통합한 컴퓨터 상호작용
+     (v237 병합) 직접 F 실행/자체 프롬프트를 제거하고, 오락실 PC '게임 선택창'의
+     4번째 항목(INFERNO)으로 실행 경로를 통일했다. BD_openComputerGame()으로 연다. -->
+
+<div id="bd-pc-game-prompt" aria-hidden="true"><kbd>F</kbd><span>컴퓨터 게임 실행</span></div>
+<section id="bd-pc-game-overlay" role="dialog" aria-modal="true" aria-label="문화의집 컴퓨터 게임" aria-hidden="true">
+  <header id="bd-pc-game-toolbar">
+    <div><strong>PC존 · 좀비 게임</strong><span>게임을 종료하면 문화의집 컴퓨터 앞으로 돌아옵니다.</span></div>
+    <button id="bd-pc-game-close" type="button">게임 종료 <kbd>ESC</kbd></button>
+  </header>
+  <iframe id="bd-pc-game-frame" title="인페르노 프로토콜 미니게임" sandbox="allow-scripts allow-pointer-lock" allow="autoplay; fullscreen; gamepad"></iframe>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--__BD_CONCEPT_MAPS_BEGIN__-->
+
+
+<!--__BD_CONCEPT_MAPS_END__-->
+<!--__BD_OPENWORLD_V09_BEGIN__-->
+<!--__BD_OPENWORLD_V09_END__-->
+
+<!--__BD_DISTRICT_WORLD_V19_BEGIN__-->
+
+
+
+<!--__BD_DISTRICT_WORLD_V19_END__-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
