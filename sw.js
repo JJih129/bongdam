@@ -1,5 +1,5 @@
-const CACHE="bongdam-817e93d3e5";
-const CORE=["index.html","manifest.webmanifest","assets/d162564d_game.a.js","assets/c0e41853_game.b.js"];
+const CACHE="bongdam-2185b94996";
+const CORE=["index.html","manifest.webmanifest","assets/234e5d16_game.a.js","assets/e1426e52_game.b.js"];
 // (v401) 설치 때 문서·매니페스트·게임 JS(splitjs 가 CORE 에 덧붙임)를 미리 담는다. 새 SW 는 «대기»하고, 페이지 배너가 skipWaiting 을 요청할 때 교체된다.
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)));});
 self.addEventListener("message",e=>{if(e.data&&e.data.type==="skipWaiting")self.skipWaiting();});
@@ -7,7 +7,7 @@ self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 // 문서(index.html): 캐시가 있으면 즉시 주고(재방문 0.1초·오프라인), 뒤에서 새로 받아 캐시를 갱신한다(stale-while-revalidate).
 //   새 버전은 sw.js 자체가 바뀌므로 updatefound → 배너로 알려 준다. 캐시가 없으면(첫 방문) 네트워크.
 // 에셋(해시 파일명): 캐시 우선, 없으면 네트워크 후 캐시.
-self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;
+self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;if(new URL(e.request.url).pathname.indexOf("/download/")>=0)return;
  const nav=(e.request.mode==="navigate");
  e.respondWith(caches.open(CACHE).then(async c=>{
   if(nav){
