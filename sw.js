@@ -1,5 +1,5 @@
-const CACHE="bongdam-2185b94996";
-const CORE=["index.html","manifest.webmanifest","assets/234e5d16_game.a.js","assets/e1426e52_game.b.js"];
+const CACHE="bongdam-4edeb3c54c";
+const CORE=["index.html","manifest.webmanifest","assets/a8b2e177_game.a.js","assets/944d394f_game.b.js"];
 // (v401) 설치 때 문서·매니페스트·게임 JS(splitjs 가 CORE 에 덧붙임)를 미리 담는다. 새 SW 는 «대기»하고, 페이지 배너가 skipWaiting 을 요청할 때 교체된다.
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)));});
 self.addEventListener("message",e=>{if(e.data&&e.data.type==="skipWaiting")self.skipWaiting();});
